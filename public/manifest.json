@@ -1,0 +1,9 @@
+{
+  "short_name": "React App",
+  "name": "Create React App Sample",
+  "version": "1.0",
+    "manifest_version": 2,
+    "browser_action": {
+        "default_popup": "index.html"
+    }
+}
