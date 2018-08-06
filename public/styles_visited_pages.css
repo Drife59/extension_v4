@@ -1,0 +1,26 @@
+/* Corail - Let's meet the future 
+note(BG): ho uiiiiiiiii the future :) */
+
+/* This syle applies to the web pages the user visit */
+
+
+/* To apply to all field we fill. */ 
+.corail_bg{
+    background-color: rgba(86, 184, 242,0.2) !important;
+}
+
+.corail_bg option:checked{
+    background-color: rgba(86, 184, 242,0.1);
+}
+
+.corail_bg option{
+    background-color: initial;
+}
+
+/* To apply only if field is long enough*/
+.corail_image{
+    background-image: url(https://image.ibb.co/bS0ZTS/logo_corail_1.png) !important;
+    background-size: 30px !important;
+    background-position: right !important;
+    background-repeat: no-repeat !important;
+}

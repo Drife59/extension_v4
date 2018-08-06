@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Extension Corail",
+  "name": "Extension Corail V4",
   "version": "1.0",
     "manifest_version": 2,
     "browser_action": {
