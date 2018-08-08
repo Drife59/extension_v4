@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 export class Disconnected extends Component {
+    
     render() {
         return (
             <section id="main">
