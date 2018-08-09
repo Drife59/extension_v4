@@ -3,9 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 
 import { Disconnected } from './Disconnected';
+import { Signup } from './Signup';
+import { Signin } from './Signin';
+
 
 //String correspond to the name of the class to manage
-const DISCONNECTED_STATE = "Disconnected";
+const DISCONNECTED_COMPONENT = "Disconnected";
 const SIGNUP_STATE = "Signup";
 const SIGNIN_STATE = "Signin";
 
@@ -18,10 +21,24 @@ class App extends Component {
         }
     }
 
+    /* Functions below set central content */
+
     setAppCentralContent(app_content){
         this.setState({
             central_content: app_content
         });
+    }
+
+    setDisconnectedContent(){
+        this.setAppCentralContent(Disconnected);
+    }
+
+    setSignupContent(){
+        this.setAppCentralContent(Signup);
+    }
+
+    setSigninContent(){
+        this.setAppCentralContent(Signin);
     }
 
     render() {
