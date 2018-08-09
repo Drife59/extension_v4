@@ -5,12 +5,8 @@ import './App.css';
 import { Disconnected } from './Disconnected';
 import { Signup } from './Signup';
 import { Signin } from './Signin';
+import { footerPrevNext } from './FooterPrevNext';
 
-
-//String correspond to the name of the class to manage
-const DISCONNECTED_COMPONENT = "Disconnected";
-const SIGNUP_STATE = "Signup";
-const SIGNIN_STATE = "Signin";
 
 class App extends Component {
     
@@ -39,19 +35,16 @@ class App extends Component {
     setDisconnectedContent(){
         console.log("Set disconnected content");
         this.setAppCentralContent(Disconnected);
-        this.render();
     }
 
     setSignupContent(){
         console.log("Set Signup content");
         this.setState({ central_content: Signup });
-        this.render();
     }
 
     setSigninContent(){
         console.log("Set sign in content");
         this.setAppCentralContent(Signin);
-        this.render();
     }
 
     render() {
