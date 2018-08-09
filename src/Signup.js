@@ -27,12 +27,12 @@ export class Signup extends Component {
 
                 <div id="validation" class="container">
                     <div id="wrong_email" class="form col-12">
-                        <p> <img src="images/careful_icon.png" width="5%"/>  Your email already exists. </p>
+                        <p> <img alt="careful" src="images/careful_icon.png" width="5%"/>  Your email already exists. </p>
                     </div>
                     <div id="password_rules" class="form col-12">
-                        <p> <img src="images/cross_icon3.png" width="5%"/>  Your email must be valid. </p>
-                        <p> <img src="images/cross_icon3.png" width="5%"/>  At least 8 characters. </p>
-                        <p> <img src="images/valid_icon.png" width="5%"/>  Contain a number or a symbol. </p>
+                        <p> <img alt="cross" src="images/cross_icon3.png" width="5%"/>  Your email must be valid. </p>
+                        <p> <img alt="cross" src="images/cross_icon3.png" width="5%"/>  At least 8 characters. </p>
+                        <p> <img alt="valid" src="images/valid_icon.png" width="5%"/>  Contain a number or a symbol. </p>
                     </div>
                 </div>
             </section>

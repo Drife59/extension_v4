@@ -1,22 +1,27 @@
 import React, { Component } from 'react';
 
 export class Disconnected extends Component {
-    
+
+    constructor(props){
+        super(props);
+    }
+
     render() {
+        console.log('Disconnected: I was triggered during render');
         return (
             <section id="main">
                 <div id="login" class="container">
                     <div class="row">
                         <div class="col-1"></div>
                         <div class="col-10">
-                            <h1>Autofill your informations online instantly !</h1>
+                            <h1>Autofill your informations online instantly ! {this.props.name} </h1>
                         </div>
                         <div class="col-1"></div>
 
                         <div class="col-12">
-                            <a href="signup1.html" class="button signup">Sign up</a>
+                            <a class="button signup" onClick={this.props.setSignupContent}>Sign up</a>
                             <br />
-                            <p><u><a>I already have an account.</a></u></p>
+                            <p><u><a onClick={this.props.setSigninContent}>I already have an account.</a></u></p>
                         </div>
                     </div>
                 </div>

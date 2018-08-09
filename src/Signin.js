@@ -31,10 +31,10 @@ export class Signin extends Component {
             
             <div id="validation" class="container">
                     <div id="wrong_email" class="form col-12">
-                        <p> <img src="images/careful_icon.png" width="5%"/>  This email doesn't exist. </p>
+                        <p> <img alt="careful" src="images/careful_icon.png" width="5%"/>  This email doesn't exist. </p>
                     </div>
                     <div id="wrong_password" class="form col-12">
-                        <p> <img src="images/careful_icon.png" width="5%"/>  Your password is incorrect. </p>
+                        <p> <img alt="careful" src="images/careful_icon.png" width="5%"/>  Your password is incorrect. </p>
                     </div>
                     <br />
             </div>

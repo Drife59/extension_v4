@@ -19,6 +19,13 @@ class App extends Component {
         this.state = {
             central_content: Disconnected
         }
+
+        //These bind are needed to execute function from child component
+        this.setAppCentralContent   = this.setAppCentralContent.bind(this);
+        this.setDisconnectedContent = this.setDisconnectedContent.bind(this);
+        this.setSignupContent       = this.setSignupContent.bind(this);
+        this.setSigninContent       = this.setSigninContent.bind(this);
+
     }
 
     /* Functions below set central content */
@@ -30,15 +37,21 @@ class App extends Component {
     }
 
     setDisconnectedContent(){
+        console.log("Set disconnected content");
         this.setAppCentralContent(Disconnected);
+        this.render();
     }
 
     setSignupContent(){
-        this.setAppCentralContent(Signup);
+        console.log("Set Signup content");
+        this.setState({ central_content: Signup });
+        this.render();
     }
 
     setSigninContent(){
+        console.log("Set sign in content");
         this.setAppCentralContent(Signin);
+        this.render();
     }
 
     render() {
@@ -56,7 +69,7 @@ class App extends Component {
                     </div>
                 </header>
 
-                <Tag />
+                <Tag setSignupContent={this.setSignupContent} setSigninContent={this.setSigninContent}/>
 
                 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
