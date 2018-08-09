@@ -1,5 +1,15 @@
 /* Corail - Let's meet the future */
 
+/* Addition for V4 integration */
+
+.error_msg {
+    display: none;
+}
+
+.validation_msg {
+    display: none;
+}
+
 /* Basic */
 
 /* Material Design */
