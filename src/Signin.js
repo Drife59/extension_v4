@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { FooterPrevNext } from './FooterPrevNext';
+
 export class Signin extends Component {
     render() {
         return(
@@ -38,6 +40,7 @@ export class Signin extends Component {
                     </div>
                     <br />
             </div>
+            <FooterPrevNext back_action={this.props.setDisconnectedContent} next_action={null} />
         </section>
         )
     }

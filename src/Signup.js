@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { FooterPrevNext } from './FooterPrevNext';
+
 export class Signup extends Component {
     render() {
         return (
@@ -35,6 +37,7 @@ export class Signup extends Component {
                         <p class="validation_msg"> <img alt="valid" src="images/valid_icon.png" width="5%"/>  Contain a number or a symbol. </p>
                     </div>
                 </div>
+                <FooterPrevNext back_action={this.props.setDisconnectedContent} next_action={null} />
             </section>
         );
     }

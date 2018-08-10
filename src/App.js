@@ -5,7 +5,6 @@ import './App.css';
 import { Disconnected } from './Disconnected';
 import { Signup } from './Signup';
 import { Signin } from './Signin';
-import { footerPrevNext } from './FooterPrevNext';
 
 
 class App extends Component {
@@ -13,39 +12,41 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            central_content: Disconnected
+            central_content: Disconnected,
+            display_footer: false
         }
 
         //These bind are needed to execute function from child component
-        this.setAppCentralContent   = this.setAppCentralContent.bind(this);
+        this.setContent   = this.setContent.bind(this);
         this.setDisconnectedContent = this.setDisconnectedContent.bind(this);
         this.setSignupContent       = this.setSignupContent.bind(this);
         this.setSigninContent       = this.setSigninContent.bind(this);
 
     }
 
-    /* Functions below set central content */
+    /* Functions below set content except Header*/
 
-    setAppCentralContent(app_content){
+    setContent(app_content){
         this.setState({
-            central_content: app_content
+            central_content: app_content,
         });
     }
 
     setDisconnectedContent(){
         console.log("Set disconnected content");
-        this.setAppCentralContent(Disconnected);
+        this.setContent(Disconnected);
     }
 
     setSignupContent(){
         console.log("Set Signup content");
-        this.setState({ central_content: Signup });
+        this.setContent(Signup);
     }
 
     setSigninContent(){
         console.log("Set sign in content");
-        this.setAppCentralContent(Signin);
+        this.setContent(Signin);
     }
+
 
     render() {
         const Tag = this.state.central_content;
@@ -62,7 +63,9 @@ class App extends Component {
                     </div>
                 </header>
 
-                <Tag setSignupContent={this.setSignupContent} setSigninContent={this.setSigninContent}/>
+                <Tag setSignupContent       = {this.setSignupContent} 
+                     setSigninContent       = {this.setSigninContent} 
+                     setDisconnectedContent = {this.setDisconnectedContent}/>
 
                 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

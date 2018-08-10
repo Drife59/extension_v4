@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 
 export class Disconnected extends Component {
 
-    constructor(props){
-        super(props);
-    }
-
     render() {
         console.log('Disconnected: I was triggered during render');
         return (
