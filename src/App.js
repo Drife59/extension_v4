@@ -35,22 +35,18 @@ class App extends Component {
     }
 
     setDisconnectedContent(){
-        console.log("Set disconnected content");
         this.setContent(Disconnected);
     }
 
     setSignupContent(){
-        console.log("Set Signup content");
         this.setContent(Signup);
     }
 
     setSigninContent(){
-        console.log("Set sign in content");
         this.setContent(Signin);
     }
 
     setConnectedContent(){
-        console.log("Set connected content");
         this.setContent(Connected);
     }
 

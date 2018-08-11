@@ -42,8 +42,6 @@ export class Signin extends Component {
         .then(function(response) {
             console.log("status: " + response.status + " type: " + typeof(response.status) )
             if (response.status == 200) {
-                //TODO(BG): Connect user
-                console.log("connect user");
                 signin_component.props.setConnectedContent();             
             }else if (response.status == 404){
                 msg_wrong_email.style.display = 'block';
@@ -60,7 +58,6 @@ export class Signin extends Component {
 
     handleKeyPress = (event) => {
         if(event.key == 'Enter'){
-            console.log('enter press here! ');    
             this.handleConnection(event);
         }
     }
