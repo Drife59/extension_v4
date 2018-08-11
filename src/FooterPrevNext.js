@@ -14,7 +14,7 @@ export class FooterPrevNext extends Component {
                     </div>
                     <div class="col-6">
                         <a >
-                            <p> NEXT <i class="arrow right"></i></p>
+                            <p onClick={this.props.next_action}> NEXT <i class="arrow right"></i></p>
                         </a>
                     </div>
                 </div>

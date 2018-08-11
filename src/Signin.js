@@ -3,6 +3,52 @@ import React, { Component } from 'react';
 import { FooterPrevNext } from './FooterPrevNext';
 
 export class Signin extends Component {
+
+    constructor(props){
+        super(props);
+        this.handleConnection = this.handleConnection.bind(this);
+    }
+
+    handleConnection(e){
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var msg_wrong_email = document.getElementById('wrong_email');
+        var msg_wrong_password = document.getElementById('wrong_password');
+
+        //first hide old error message (if present)
+        msg_wrong_email.style.display = "none";
+        msg_wrong_password.style.display = "none";
+
+        var url = "http://localhost:1665/user/" + email + "/" + password;
+        fetch(
+            url, 
+            {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+            }
+        )
+        .then(function(response) {
+            console.log("status: " + response.status + " type: " + typeof(response.status) )
+            if (response.status == 200) {
+                //TODO(BG): Connect user
+                console.log("connect user");                
+            }else if (response.status == 404){
+                msg_wrong_email.style.display = 'block';
+            }else if (response.status == 403){
+                msg_wrong_password.style.display = 'block';
+            }
+
+            return response;
+        }).catch(function(error) {
+            //Unexpected error, from network connection for example
+            console.log(error);
+        });
+    }
+
     render() {
         return(
         <section id="main">
@@ -13,7 +59,6 @@ export class Signin extends Component {
                 </div>
                 <div class="col-1"></div>
             </div>
-
 
             <div id="login" class="container">
                     <div class="form col-12">
@@ -32,15 +77,15 @@ export class Signin extends Component {
             </div>
             
             <div id="validation" class="container">
-                    <div id="wrong_email" class="form col-12">
-                        <p class="error_msg"> <img alt="careful" src="images/careful_icon.png" width="5%"/>  This email doesn't exist. </p>
+                    <div id="wrong_email" class="form col-12 error_msg">
+                        <p> <img alt="careful" src="images/careful_icon.png" width="5%"/>  This email doesn't exist. </p>
                     </div>
-                    <div id="wrong_password" class="form col-12">
-                        <p class="error_msg"> <img alt="careful" src="images/careful_icon.png" width="5%"/>  Your password is incorrect. </p>
+                    <div id="wrong_password" class="form col-12 error_msg">
+                        <p> <img alt="careful" src="images/careful_icon.png" width="5%"/>  Your password is incorrect. </p>
                     </div>
                     <br />
             </div>
-            <FooterPrevNext back_action={this.props.setDisconnectedContent} next_action={null} />
+            <FooterPrevNext back_action={this.props.setDisconnectedContent} next_action={this.handleConnection} />
         </section>
         )
     }
