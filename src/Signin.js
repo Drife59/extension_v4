@@ -58,6 +58,12 @@ export class Signin extends Component {
         });
     }
 
+    handleKeyPress = (event) => {
+        if(event.key == 'Enter'){
+            console.log('enter press here! ');    
+            this.handleConnection(event);
+        }
+    }
     render() {
         return(
         <section id="main">
@@ -69,7 +75,7 @@ export class Signin extends Component {
                 <div class="col-1"></div>
             </div>
 
-            <div id="login" class="container">
+            <div id="login" class="container" onKeyPress={this.handleKeyPress}>
                     <div class="form col-12">
                         <p class="email">
                             <input required type="text" id="email" placeholder="Your email address"/>
