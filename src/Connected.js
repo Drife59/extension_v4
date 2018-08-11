@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { FooterPrevNext } from './FooterPrevNext';
+import { FooterContact } from './FooterContact';
 
 export class Connected extends Component {
 
@@ -23,6 +23,7 @@ export class Connected extends Component {
                         <label for="autofill_optin" class="label-success"></label>
                     </div>
                 </div>
+                <FooterContact />
             </section>
         )
     }
