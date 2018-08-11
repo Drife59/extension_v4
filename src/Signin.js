@@ -19,6 +19,9 @@ export class Signin extends Component {
         msg_wrong_email.style.display = "none";
         msg_wrong_password.style.display = "none";
 
+        //this is needed because we lose context in "fetch" callback
+        var signin_component = this;
+
         var url = "http://localhost:1665/user/" + email + "/" + password;
         fetch(
             url, 
@@ -35,7 +38,8 @@ export class Signin extends Component {
             console.log("status: " + response.status + " type: " + typeof(response.status) )
             if (response.status == 200) {
                 //TODO(BG): Connect user
-                console.log("connect user");                
+                console.log("connect user");
+                signin_component.props.setConnectedContent();             
             }else if (response.status == 404){
                 msg_wrong_email.style.display = 'block';
             }else if (response.status == 403){

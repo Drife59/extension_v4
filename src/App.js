@@ -5,6 +5,7 @@ import './App.css';
 import { Disconnected } from './Disconnected';
 import { Signup } from './Signup';
 import { Signin } from './Signin';
+import { Connected } from './Connected';
 
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
         this.setDisconnectedContent = this.setDisconnectedContent.bind(this);
         this.setSignupContent       = this.setSignupContent.bind(this);
         this.setSigninContent       = this.setSigninContent.bind(this);
+        this.setConnectedContent    = this.setConnectedContent.bind(this);
 
     }
 
@@ -47,6 +49,10 @@ class App extends Component {
         this.setContent(Signin);
     }
 
+    setConnectedContent(){
+        console.log("Set connected content");
+        this.setContent(Connected);
+    }
 
     render() {
         const Tag = this.state.central_content;
@@ -65,7 +71,9 @@ class App extends Component {
 
                 <Tag setSignupContent       = {this.setSignupContent} 
                      setSigninContent       = {this.setSigninContent} 
-                     setDisconnectedContent = {this.setDisconnectedContent}/>
+                     setDisconnectedContent = {this.setDisconnectedContent}
+                     setConnectedContent    = {this.setConnectedContent}
+                     />
 
                 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
