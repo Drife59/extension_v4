@@ -19,6 +19,11 @@ export class Signin extends Component {
         msg_wrong_email.style.display = "none";
         msg_wrong_password.style.display = "none";
 
+        if(password == "" || password == " "){
+            msg_wrong_password.style.display = 'block';
+            return false;
+        }
+
         //this is needed because we lose context in "fetch" callback
         var signin_component = this;
 
