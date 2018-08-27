@@ -10,6 +10,11 @@
     display: none;
 }
 
+/*For now don't display password rules */
+#password_rules {
+    display: none;
+}
+
 /* Basic */
 
 /* Material Design */
