@@ -16,6 +16,8 @@ export class Connected extends Component {
                         <input id="autofill_optin" name="sautofill_optin" type="checkbox" checked />
                         <label for="autofill_optin" class="label-success"></label>
                     </div>
+
+                    <p>You are connected as {this.props.getUser}</p>
                 </div>
                 <FooterContact />
             </section>

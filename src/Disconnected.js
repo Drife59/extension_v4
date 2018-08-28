@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 export class Disconnected extends Component {
 
     render() {
-        console.log('Disconnected: I was triggered during render');
         return (
             <section id="main">
                 <div id="login" class="container">

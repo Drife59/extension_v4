@@ -48,7 +48,6 @@ export class Signin extends Component {
             console.log("status: " + response.status + " type: " + typeof(response.status) )
             if (response.status === 200) {
                 signin_component.props.setConnectedContent();
-                console.log("In sign in, set user: " + email);
                 signin_component.props.setUser(email);             
             }else if (response.status === 404){
                 msg_wrong_email.style.display = 'block';
