@@ -19,12 +19,12 @@ export class Signin extends Component {
         msg_wrong_email.style.display = "none";
         msg_wrong_password.style.display = "none";
 
-        if(email == "" || email == " "){
+        if(email === "" || email === " "){
             msg_wrong_email.style.display = 'block';
             return false;
         }
 
-        if(password == "" || password == " "){
+        if(password === "" || password === " "){
             msg_wrong_password.style.display = 'block';
             return false;
         }
@@ -46,11 +46,13 @@ export class Signin extends Component {
         )
         .then(function(response) {
             console.log("status: " + response.status + " type: " + typeof(response.status) )
-            if (response.status == 200) {
-                signin_component.props.setConnectedContent();             
-            }else if (response.status == 404){
+            if (response.status === 200) {
+                signin_component.props.setConnectedContent();
+                console.log("In sign in, set user: " + email);
+                signin_component.props.setUser(email);             
+            }else if (response.status === 404){
                 msg_wrong_email.style.display = 'block';
-            }else if (response.status == 403){
+            }else if (response.status === 403){
                 msg_wrong_password.style.display = 'block';
             }
 
@@ -62,7 +64,7 @@ export class Signin extends Component {
     }
 
     handleKeyPress = (event) => {
-        if(event.key == 'Enter'){
+        if(event.key === 'Enter'){
             this.handleConnection(event);
         }
     }
