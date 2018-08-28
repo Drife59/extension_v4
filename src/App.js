@@ -1,5 +1,6 @@
+ /* global chrome */
+
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import { Disconnected } from './Disconnected';
@@ -50,6 +51,13 @@ class App extends Component {
         this.setContent(Connected);
     }
 
+    setUser(email){
+        console.log("Setting email");
+        chrome.storage.sync.set({user: email}, function() {
+            console.log('Value is set to ' + email);
+        });
+    }
+
     render() {
         const Tag = this.state.central_content;
 
@@ -59,17 +67,19 @@ class App extends Component {
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
-                                <img src="images/logo_corail.png" width="100" />
+                                <img alt="logo" src="images/logo_corail.png" width="100" />
                             </div>
                         </div>
                     </div>
                 </header>
 
-                <Tag setSignupContent       = {this.setSignupContent} 
-                     setSigninContent       = {this.setSigninContent} 
-                     setDisconnectedContent = {this.setDisconnectedContent}
-                     setConnectedContent    = {this.setConnectedContent}
-                     />
+                <Tag 
+                    setSignupContent       = {this.setSignupContent} 
+                    setSigninContent       = {this.setSigninContent} 
+                    setDisconnectedContent = {this.setDisconnectedContent}
+                    setConnectedContent    = {this.setConnectedContent}
+                    setUser                = {this.setUser}
+                />
 
                 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
