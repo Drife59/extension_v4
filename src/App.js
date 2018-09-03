@@ -26,6 +26,7 @@ class App extends Component {
         this.setSigninContent       = this.setSigninContent.bind(this);
         this.setConnectedContent    = this.setConnectedContent.bind(this);
         this.setUser                = this.setUser.bind(this);
+        this.getUser                = this.getUser.bind(this);
     }
 
     /* Functions below set content except Header*/
@@ -62,7 +63,7 @@ class App extends Component {
         });
     }
 
-    getUser(email){
+    getUser(){
         console.log("getting email...");
         return this.state.current_user;
     }
