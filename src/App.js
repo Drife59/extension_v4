@@ -17,6 +17,7 @@ class App extends Component {
 
         this.state = {
             central_content: Disconnected,
+            displayLogout: false,
             display_footer: false
         }
 
@@ -33,26 +34,27 @@ class App extends Component {
 
     /* Functions below set content except Header*/
 
-    setContent(app_content){
+    setContent(app_content, displayLogout){
         this.setState({
             central_content: app_content,
+            displayLogout: displayLogout
         });
     }
 
     setDisconnectedContent(){
-        this.setContent(Disconnected);
+        this.setContent(Disconnected, false);
     }
 
     setSignupContent(){
-        this.setContent(Signup);
+        this.setContent(Signup, false);
     }
 
     setSigninContent(){
-        this.setContent(Signin);
+        this.setContent(Signin, false);
     }
 
     setConnectedContent(){
-        this.setContent(Connected);
+        this.setContent(Connected, true);
     }
 
     setUser(email){
@@ -71,8 +73,6 @@ class App extends Component {
     }
 
     componentDidMount() {
-        console.log("Component did mount");
-
         var app = this;
 
         //Get user from storage and set it in State
@@ -94,7 +94,6 @@ class App extends Component {
             console.log("Removed current user from chrome storage");
         });
         this.setDisconnectedContent();
-        console.log("Go back to disconnected content");
     }
 
     render() {
@@ -102,7 +101,7 @@ class App extends Component {
 
         return (
             <div className="App">
-                <Header logout = {this.logout}/>
+                <Header logout = {this.logout} displayLogout = {this.state.displayLogout}/>
 
                 <Tag 
                     setSignupContent       = {this.setSignupContent} 

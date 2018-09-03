@@ -8,8 +8,15 @@ export class Header extends Component {
     }
 
     handleLogout(e){
-        console.log("haha, tu tente de te déloguer :p ? ");
         this.props.logout();
+    }
+
+    componentDidMount(){
+        console.log("componentDidMount, props.displayLogout: " + this.props.displayLogout);
+
+        /*if(this.props.displayLogout === false){
+            document.getElementById("menu").style.display = "none";
+        }*/
     }
 
     render() {
