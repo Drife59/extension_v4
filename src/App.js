@@ -7,6 +7,7 @@ import { Disconnected } from './Disconnected';
 import { Signup } from './Signup';
 import { Signin } from './Signin';
 import { Connected } from './Connected';
+import { Header } from './Header';
 
 
 class App extends Component {
@@ -27,6 +28,7 @@ class App extends Component {
         this.setConnectedContent    = this.setConnectedContent.bind(this);
         this.setUser                = this.setUser.bind(this);
         this.getUser                = this.getUser.bind(this);
+        this.logout                 = this.logout.bind(this);
     }
 
     /* Functions below set content except Header*/
@@ -84,20 +86,23 @@ class App extends Component {
         });
     }
 
+    logout() {
+        this.setState({ current_user: undefined });
+        console.log("Set email as undefined in state");
+
+        chrome.storage.sync.remove('current_user', function(result){
+            console.log("Removed current user from chrome storage");
+        });
+        this.setDisconnectedContent();
+        console.log("Go back to disconnected content");
+    }
+
     render() {
         const Tag = this.state.central_content;
 
         return (
             <div className="App">
-                <header id="header">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <img alt="logo" src="images/logo_corail.png" width="100" />
-                            </div>
-                        </div>
-                    </div>
-                </header>
+                <Header logout = {this.logout}/>
 
                 <Tag 
                     setSignupContent       = {this.setSignupContent} 
