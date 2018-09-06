@@ -11,12 +11,18 @@ export class Header extends Component {
         this.props.logout();
     }
 
-    componentDidMount(){
-        console.log("componentDidMount, props.displayLogout: " + this.props.displayLogout);
+    componentDidUpdate(){
+        var displayLogout = this.props.displayLogout;
+        
+        console.log("componentDidUpdate, props.displayLogout: " + displayLogout);
 
-        /*if(this.props.displayLogout === false){
+        if(displayLogout === false){
             document.getElementById("menu").style.display = "none";
-        }*/
+        }
+
+        if(displayLogout === true){
+            document.getElementById("menu").style.display = "block";
+        }
     }
 
     render() {

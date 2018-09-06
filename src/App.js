@@ -72,6 +72,19 @@ class App extends Component {
         return this.state.current_user;
     }
 
+    getDisplayLogout(){
+        try{
+            var res = this.state.displayLogout;
+            console.log("found getDisplayLogout()");
+            return res;
+        }
+        catch(error){
+            console.log("Could not find DisplayLogout in parent state");
+            //By default, don't display logout button
+            return false;
+        }
+    }
+
     componentDidMount() {
         var app = this;
 
@@ -98,10 +111,9 @@ class App extends Component {
 
     render() {
         const Tag = this.state.central_content;
-
         return (
             <div className="App">
-                <Header logout = {this.logout} displayLogout = {this.state.displayLogout}/>
+                <Header logout = {this.logout} displayLogout = {this.getDisplayLogout()}/>
 
                 <Tag 
                     setSignupContent       = {this.setSignupContent} 
