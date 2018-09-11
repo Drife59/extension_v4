@@ -21,12 +21,6 @@ Elles ne peuvent donc pas être définie dans le fichier de config.
 //par la page fille
 var app_launched = false;
 
-//Scrappe la page web et affiche les infos sur les champs trouvés
-analyse_page_web = false;
-
-//Bind l'écoute des champs clients pour exécution des algo
-bind_client = true;
-
 //Temps d'attente en ms avant remplissage des champs lors du chargement de page
 //Attention: un temps d'attente trop court risque de faire échouer le lancement
 //de l'app, pour cause de variable globale non-connue
@@ -163,11 +157,7 @@ function lancement_app(type_evt){
 		console.info("Lancement de l'App...");
 	app_launched = true;
 	setTimeout(function() {
-		if (analyse_page_web){
-			display_field();
-		}else if(bind_client) {
-			bind_user_action();		
-		}
+		bind_user_action();		
 		init_domaine();
 	}, timeout_parsing);
 }
