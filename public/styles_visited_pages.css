@@ -4,13 +4,20 @@ note(BG): ho uiiiiiiiii the future :) */
 /* This syle applies to the web pages the user visit */
 
 
+/* Corail - Let's meet the future 
+note(BG): ho uiiiiiiiii the future :) */
+
+/* This syle applies to the web pages the user visit */
+
+
 /* To apply to all field we fill. */ 
 .corail_bg{
-    background-color: rgba(86, 184, 242,0.2) !important;
+    background-image: url(https://i.goopics.net/kW4rG.png),url(https://i.goopics.net/9ay4w.png) !important;
+
 }
 
 .corail_bg option:checked{
-    background-color: rgba(86, 184, 242,0.1);
+    background-image: url(https://i.goopics.net/kW4rG.png),url(https://i.goopics.net/9ay4w.png) !important;
 }
 
 .corail_bg option{
@@ -19,8 +26,8 @@ note(BG): ho uiiiiiiiii the future :) */
 
 /* To apply only if field is long enough*/
 .corail_image{
-    background-image: url(https://image.ibb.co/bS0ZTS/logo_corail_1.png) !important;
-    background-size: 30px !important;
+    background-image: url(https://i.goopics.net/kW4rG.png), url(https://image.ibb.co/bS0ZTS/logo_corail_1.png),url(https://i.goopics.net/9ay4w.png) !important;
+    background-size: 100%, 30px, 100% !important;
     background-position: right !important;
     background-repeat: no-repeat !important;
 }

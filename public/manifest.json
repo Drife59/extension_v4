@@ -1,13 +1,42 @@
 {
-    "short_name": "Extension Corail",
-    "name": "Extension Corail V4",
-    "version": "0.1",
-    "manifest_version": 2,
-    "browser_action": {
-        "default_icon": "logo_corail.png",
-        "default_popup": "index.html"
-    },
-    "permissions": [
-        "storage"
-    ]
+"manifest_version": 2,
+  "name": "Autofill by Corail",
+  "description": "Accurate, secure and private autofill that will make your life easier.",
+  "version": "4.0.0",
+  "author": "Made with love <3",
+
+  "permissions": [
+                "http://*/",
+                "https://*/",
+                "tabs",
+                "storage"
+  ],
+  "optional_permissions": [
+              "http://*/",
+              "https://*/",
+             	"webRequest"
+  ],
+  "browser_action": {
+    "default_icon": "logo_corail.png",
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+  {
+    "matches": [
+      "<all_urls>"
+    ],
+    "js": [
+      "config.js",
+      "lib/log.js",
+      "lib/api_back.js",
+      "lib/utils.js",
+      "lib/heuristics.js",
+      "lib/afficheur.js",
+      "lib/front_db.js",
+      "lib/onChange.js",
+      "lib/OnLoad.js",
+      "front.js"],
+    "css" : ["styles_visited_pages.css"]
+  }
+  ]
 }
