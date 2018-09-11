@@ -11,7 +11,7 @@ export class FooterSkip extends Component {
                         </div>
                         <div class="col-6">
                             <a>
-                                <p> SKIP <i class="arrow right"></i></p>
+                                <p onClick={this.props.action}> SKIP <i class="arrow right"></i></p>
                             </a>
                         </div>
                     </div>

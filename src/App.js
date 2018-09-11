@@ -5,6 +5,7 @@ import './App.css';
 
 import { Disconnected } from './Disconnected';
 import { Signup } from './Signup';
+import { Welcome } from './Welcome';
 import { Signin } from './Signin';
 import { Connected } from './Connected';
 import { Header } from './Header';
@@ -25,6 +26,7 @@ class App extends Component {
         this.setContent   = this.setContent.bind(this);
         this.setDisconnectedContent = this.setDisconnectedContent.bind(this);
         this.setSignupContent       = this.setSignupContent.bind(this);
+        this.setWelcomeContent       = this.setWelcomeContent.bind(this);
         this.setSigninContent       = this.setSigninContent.bind(this);
         this.setConnectedContent    = this.setConnectedContent.bind(this);
         this.setUser                = this.setUser.bind(this);
@@ -47,6 +49,10 @@ class App extends Component {
 
     setSignupContent(){
         this.setContent(Signup, false);
+    }
+
+    setWelcomeContent(){
+        this.setContent(Welcome, false);
     }
 
     setSigninContent(){
@@ -116,7 +122,8 @@ class App extends Component {
                 <Header logout = {this.logout} displayLogout = {this.getDisplayLogout()}/>
 
                 <Tag 
-                    setSignupContent       = {this.setSignupContent} 
+                    setSignupContent       = {this.setSignupContent}
+                    setWelcomeContent      = {this.setWelcomeContent}  
                     setSigninContent       = {this.setSigninContent} 
                     setDisconnectedContent = {this.setDisconnectedContent}
                     setConnectedContent    = {this.setConnectedContent}

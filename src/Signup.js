@@ -54,7 +54,7 @@ export class Signup extends Component {
         .then(function(response) {
             console.log("status: " + response.status + " type: " + typeof(response.status) )
             if (response.status === 200) {
-                signup_component.props.setConnectedContent();             
+                signup_component.props.setWelcomeContent();             
             }else if (response.status === 409){
                 signup_error_msg.style.display = 'block';
                 signup_component.setState({
