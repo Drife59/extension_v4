@@ -109,14 +109,6 @@ POINT D'ENTREE DE L'APPLICATION
 ################################
 */
 
-
-//Affiche tous les champs détectés sous forme d'alert js
-function display_field(){
-	init_fields();
-	display_input();
-	display_select();
-}
-
 //Bind l'évènement onBlur sur les champs détectés
 function bind_user_action(){
 	init_fields();
@@ -181,21 +173,6 @@ function lancement_app(type_evt){
 }
 
 
-/* Point d'entrée final de l'exécution.
-Pour déclencher le point d'entrée lors de l'ouverture de l'extension:
-document.addEventListener('DOMContentLoaded', function () {
-	chrome.tabs.executeScript({
-		    //argument here is a string but function.toString() returns function's code
-            code: '(' + to_execute + ')();'
-        }, (result) => {
-			if( result == undefined || result == ""){
-					alert("Error");
-					return;
-			}
-      });
-}
-*/
-
 window.addEventListener('pageshow', function () {
 	if(enable_front_log)
 		console.info("window.pageshow event");
@@ -217,7 +194,6 @@ window.addEventListener('unload', function () {
 		lancement_app("UnLoad");
 });
 
-//Injection dans la page d'origine des scripts js
 window.addEventListener('load', function () {
 	if(enable_front_log)
 		console.info("window.load event");
