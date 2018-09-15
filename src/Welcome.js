@@ -1,9 +1,16 @@
+ /* global chrome */
+
 import React, { Component } from 'react';
 
 import { FooterSkip } from './FooterSkip';
 
 export class Welcome extends Component {
 
+    handleDemo(e){
+        var newURL = "https://www.corail.me";
+        chrome.tabs.create({ url: newURL });
+    }
+    
     render() {
         return (
             <section id="main">
@@ -22,7 +29,7 @@ export class Welcome extends Component {
                 <div id="login" class="container">
                     <div class="row">
                         <div class="col-12">
-                            <a id="demo" href="http://www.corail.me/step1.html" class="button special">Go !</a>
+                            <a id="demo" href="#" onClick={this.handleDemo} class="button special">Go !</a>
                         </div>
                     </div>
                 </div>

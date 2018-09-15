@@ -26,7 +26,7 @@ class App extends Component {
         this.setContent   = this.setContent.bind(this);
         this.setDisconnectedContent = this.setDisconnectedContent.bind(this);
         this.setSignupContent       = this.setSignupContent.bind(this);
-        this.setWelcomeContent       = this.setWelcomeContent.bind(this);
+        this.setWelcomeContent      = this.setWelcomeContent.bind(this);
         this.setSigninContent       = this.setSigninContent.bind(this);
         this.setConnectedContent    = this.setConnectedContent.bind(this);
         this.setUser                = this.setUser.bind(this);
