@@ -9,6 +9,8 @@ export class Welcome extends Component {
     handleDemo(e){
         var newURL = "https://www.corail.me";
         chrome.tabs.create({ url: newURL });
+
+        this.props.setConnectedContent();
     }
     
     render() {
