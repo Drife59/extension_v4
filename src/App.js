@@ -94,6 +94,11 @@ class App extends Component {
     componentDidMount() {
         var app = this;
 
+        //By default, don't display logout sign
+        this.setState({
+            displayLogout: false
+        });
+
         //Get user from storage and set it in State
         chrome.storage.sync.get('current_user', function(result) {
             console.log('Current user is ' + result.current_user);
