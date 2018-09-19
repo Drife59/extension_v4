@@ -97,7 +97,7 @@ export class Signup extends Component {
                     <div class="col-1"></div>
                 </div>
 
-                <div id="login" class="container">
+                <div id="login" class="container" onKeyPress={this.handleKeyPress} >
                         <div class="form col-12">
                             <p class="email">
                                 <input required type="text" id="email" placeholder="Email address" />
