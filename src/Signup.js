@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { FooterPrevNext } from './FooterPrevNext';
+import { validateEmail } from './utils';
 
 export class Signup extends Component {
 
@@ -23,6 +24,7 @@ export class Signup extends Component {
         //this is needed because we lose context in "fetch" callback
         var signup_component = this;
 
+        //First, check emptyness
         if(email === "" || email === " "){
             signup_error_msg.style.display = 'block';
             signup_component.setState({
@@ -35,6 +37,15 @@ export class Signup extends Component {
             signup_error_msg.style.display = 'block';
             signup_component.setState({
                 error_msg: "Password cannot be empty"
+            });
+            return false;
+        }
+
+        //Then, check syntax
+        if(! validateEmail(email)){
+            signup_error_msg.style.display = 'block';
+            signup_component.setState({
+                error_msg: "Email is not valid"
             });
             return false;
         }
