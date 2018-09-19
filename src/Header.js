@@ -36,7 +36,7 @@ export class Header extends Component {
                         </div>
                         <div id="menu" class="col-2">
                             <a href="#" onClick={this.handleLogout}>
-                                <img src="images/menu_icon.png" width="72%"/>
+                                <img src="images/switch.png" width="50%"/>
                             </a>
                         </div>
                     </div>
