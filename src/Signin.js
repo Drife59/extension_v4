@@ -68,6 +68,9 @@ export class Signin extends Component {
         }
     }
     render() {
+        var mail_body = "Hello Corail ! I forgot my password, can you send me back my password as soon as possible. Thank you.";
+        var subject = "Password forgotten";
+        var mailto = "mailto:contact@corail.me?subject=" + subject + "?body=" + mail_body;
         return(
         <section id="main">
             <div class="row">
@@ -90,7 +93,7 @@ export class Signin extends Component {
                         </p>
                     </div>
                     <div class="col-12">
-                        <p><u><a >I forgot my password.</a></u></p>
+                        <p><u><a href={mailto}>I forgot my password.</a></u></p>
                     </div>
             </div>
             
