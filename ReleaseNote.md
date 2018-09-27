@@ -2,6 +2,12 @@
 
 ##V4.X
 
+### *Bug fix*
+
+* Fix pointer design
+* Fix ON/OFF button design
+* Fix Connected page design
+
 ##V4.0
 
 ### *New feature*
