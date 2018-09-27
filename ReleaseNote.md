@@ -7,6 +7,7 @@
 * Fix pointer design
 * Fix ON/OFF button design
 * Fix Connected page design
+* Fix mailto issue on Signin page
 
 ##V4.0
 
