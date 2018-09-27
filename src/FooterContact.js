@@ -8,7 +8,7 @@ export class FooterContact extends Component {
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <p>We need you. Give us some feedback. 
+                            <p> Give us some feedback. 
                                 <a id="emailLnk" href="mailto:contact@corail.me?subject=My Feedback">
                                 <img alt="email" src="images/email.png" width="5%"/> 
                                 </a>

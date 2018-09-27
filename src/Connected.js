@@ -7,14 +7,16 @@ export class Connected extends Component {
     render() {
         return(
             <section>
-                <div id="main" class="col-8">
-                    <br />
-                    <br />
+                <div id="main" class="col-12">
+                    <div id="voice">
+                        <br />
+                        <br />
 
-                    <img src="images/need_you.png" width="150" />
-                    <br />
-                    <br />
-                    <p>You are connected as {this.props.getUser()}</p>
+                        <img src="images/need_you.png" />
+                        <br />
+                        <br />
+                    </div>    
+                    <p> Hey {this.props.getUser()}, we need you ! </p>
                 </div>
                 <FooterContact />
             </section>

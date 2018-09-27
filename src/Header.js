@@ -35,9 +35,11 @@ export class Header extends Component {
                             <img src="images/logo_corail.png" width="100" />
                         </div>
                         <div id="menu" class="col-2">
-                            <a href="#" onClick={this.handleLogout}>
-                                <img src="images/switch.png" width="50%"/>
-                            </a>
+                            <div id="logout">
+                                <a href="#" onClick={this.handleLogout}>
+                                    <img src="images/switch.png"/>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
