@@ -10,6 +10,10 @@
     display: none;
 }
 
+#img_connected {
+  height: 150px;
+}
+
 /*For now don't display password rules */
 #password_rules {
     display: none;
