@@ -1,6 +1,6 @@
 #Release Note
 
-##V4.X
+##V4.0.1
 
 ### *Bug fix*
 
@@ -8,6 +8,7 @@
 * Fix ON/OFF button design
 * Fix Connected page design
 * Fix mailto issue on Signin page
+* Fix Sign up link test
 
 ##V4.0
 

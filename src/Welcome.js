@@ -7,7 +7,7 @@ import { FooterSkip } from './FooterSkip';
 export class Welcome extends Component {
 
     handleDemo(e){
-        var newURL = "https://www.corail.me";
+        var newURL = "https://www.corail.me/step1.html";
         chrome.tabs.create({ url: newURL });
 
         this.props.setConnectedContent();
