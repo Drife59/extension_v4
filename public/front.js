@@ -148,6 +148,7 @@ function load_db_from_back(){
 
 //Lance l'app, cad le parsing et binding des champs
 function lancement_app(type_evt){
+	init_domaine();
 	if(enable_front_log)
 		console.log("Loading values from back...");
 	//TODO: make this more rare
@@ -158,7 +159,6 @@ function lancement_app(type_evt){
 	app_launched = true;
 	setTimeout(function() {
 		bind_user_action();		
-		init_domaine();
 	}, timeout_parsing);
 }
 
@@ -185,6 +185,7 @@ window.addEventListener('unload', function () {
 });
 
 window.addEventListener('load', function () {
+	init_domaine();
 	if(enable_front_log)
 		console.info("window.load event");
 	if( !app_launched )
