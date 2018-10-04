@@ -33,7 +33,7 @@ var separateur_cle = "_";
 // Log parameters
 // --------------
 
-var enable_heuristic_log = false;
+var enable_heuristic_log = true;
 var enable_front_db_log = false;
 var enable_load_log = false;
 var enable_change_log = false;
@@ -66,6 +66,9 @@ var CODE_CVV_STRING = "cvv";
 var CODE_CARDEXPIRYMONTH = "cardexpirymonth";
 var CODE_CARDEXPIRYYEAR = "cardexpiryyear";
 
+//V4.0 Heuristic
+var CODE_FULL_BIRTHDATE = "full_birthdate";
+
 //This code in is in db, does not correspond to "pivot name" field
 var CODE_RESEARCH = "research";
 
@@ -89,6 +92,9 @@ heuristic_ponderation[CODE_HOMEPHONE] = 1;
 heuristic_ponderation[CODE_CVV_STRING] = 1;
 heuristic_ponderation[CODE_CARDEXPIRYMONTH] = 1;
 heuristic_ponderation[CODE_CARDEXPIRYYEAR] = 1;
+
+//V4.0 heuristique
+heuristic_ponderation[CODE_FULL_BIRTHDATE] = 1;
 
 heuristic_ponderation[CODE_RESEARCH] = 1;
 
@@ -130,7 +136,9 @@ var homephone_string = ["telephonefixe", "telephone_fixe", "homephone","home_pho
 var cvv_string = ["cvv", "card-details-security-number","cardsecuritynumber", "securitycode_card"];
 var cardexpirydatemonth_string = ["card-details-expiry-date-month", "card_expdate_month", "monthidcardenddate", "cardexpirydatemonth", "cardexpdatemonth", "cardformdatemonth"];
 var cardexpirydateyear_string = ["card-details-expiry-date-year", "card_expdate_year", "yearidcardenddate", "cardexpirydateyear", "cardexpdateyear", "cardformdateyear"];
-    
+
+// New heuristique from V4.0
+var full_birthdate = ["date de naissance", "date_naissance", "date-naissance"]
 
 var INFINITE_WEIGTH = 1000;
 //Define nb occurence to force field type

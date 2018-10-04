@@ -13,7 +13,9 @@ Define heuristics, used for a new website to guess type of field.
 var all_heuristics = [CODE_FIRSTNAME, CODE_LASTNAME, CODE_POSTALCODE, CODE_CITY, CODE_CELLPHONE,
     CODE_MAIN_EMAIL, CODE_MAIN_FULL_ADDRESS, CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH,
     //V3.3 code 
-    CODE_COMPANY, CODE_HOMEPHONE, CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR];
+    CODE_COMPANY, CODE_HOMEPHONE, CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR,
+    //V4.0 code
+    CODE_FULL_BIRTHDATE];
 
 //Save all heuristics which have already been used for restitution
 //An heuristic should only be used once
@@ -166,6 +168,11 @@ function get_occurence_cardexpirydateyear(field){
 	return nb_keyword_in_field(field, cardexpirydateyear_string, heuristic_ponderation[CODE_CARDEXPIRYYEAR]);
 }
 
+//V4.0 Heuristic
+function get_occurence_full_birthdate(field){
+	return nb_keyword_in_field(field, full_birthdate, heuristic_ponderation[CODE_FULL_BIRTHDATE]);
+}
+
 //Define code heuristic / function matching
 //This NEED to be updated when creating a new heuristic
 var heuristic_code_function_match = new Object();
@@ -187,6 +194,9 @@ heuristic_code_function_match[CODE_HOMEPHONE] = get_occurence_homephone;
 heuristic_code_function_match[CODE_CVV_STRING] = get_occurence_cvv;
 heuristic_code_function_match[CODE_CARDEXPIRYMONTH] = get_occurence_cardexpirydateyear;
 heuristic_code_function_match[CODE_CARDEXPIRYYEAR] = get_occurence_cardexpirydateyear;
+
+//V4.0 heuristic
+heuristic_code_function_match[CODE_FULL_BIRTHDATE] = get_occurence_full_birthdate;
 
 
 //Loop on all heuristic available and find/set weight
