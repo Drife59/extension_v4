@@ -31,7 +31,7 @@ export class Welcome extends Component {
                 <div id="login" class="container">
                     <div class="row">
                         <div class="col-12">
-                            <a id="demo" href="#" onClick={this.handleDemo} class="button special">Go !</a>
+                            <a id="demo" onClick={this.handleDemo} class="button special">Go !</a>
                         </div>
                     </div>
                 </div>

@@ -32,12 +32,12 @@ export class Header extends Component {
                     <div class="row">
                         <div class="col-2"></div>
                         <div class="col-8">
-                            <img src="images/logo_corail.png" width="100" />
+                            <img alt="logo corail" src="images/logo_corail.png" width="100" />
                         </div>
                         <div id="menu" class="col-2">
                             <div id="logout">
-                                <a href="#" onClick={this.handleLogout}>
-                                    <img src="images/switch.png"/>
+                                <a onClick={this.handleLogout}>
+                                    <img alt="switch" src="images/switch.png"/>
                                 </a>
                             </div>
                         </div>

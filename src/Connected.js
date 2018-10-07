@@ -9,7 +9,7 @@ export class Connected extends Component {
             <section>
                 <div id="main" class="col-12">
                     <div id="voice">
-                        <img id="img_connected" src="images/need_you.png" />
+                        <img alt="img_connected" id="img_connected" src="images/need_you.png" />
                     </div>    
                     <p> Hey {this.props.getUser()}, we need you ! </p>
                 </div>
