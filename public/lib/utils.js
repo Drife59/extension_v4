@@ -130,4 +130,22 @@ function apply_corail_design(input){
 function string_to_float(string_number){
 	return parseFloat(string_number.replace(",", "."));
 }
-	
+
+//Get all siblings of an elt
+function getSiblings(el, filter) {
+    var siblings = [];
+    el = el.parentNode.firstChild;
+    do { if (!filter || filter(el)) siblings.push(el); } while (el = el.nextSibling);
+    return siblings;
+}
+
+// Filter an html element on type
+// string_type_elem can be "a", "input", etc.
+function genericFilter(elem, string_type_elem) {
+    return elem.nodeName.toLowerCase() == string_type_elem;
+}
+
+//Return True if element is a label
+function labelFilter(elem){
+    return genericFilter(elem, 'label');
+}

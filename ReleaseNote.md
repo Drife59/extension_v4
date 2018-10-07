@@ -5,6 +5,7 @@
 ### *New feature*
 
 * New heuristic full birthdate (one block)
+* Heuritic evolution: now fetch label of input (sibling only)
 
 ### *Bug fix*
 

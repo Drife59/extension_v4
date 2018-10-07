@@ -59,9 +59,25 @@ function search_name_in_field(field, words){
 	return false;
 }
 
+//Remove useless char in label text: ":", "*", useless space and generic word
+function cleanLabel(labelText){
+    //The spaces for pronoun are very important, since we don't want to break "classical" word (Ville, postal, etc)
+    var keywordToDelete = ["Votre", "Vos ", "Ton ", "Ta ", " Tes ", "Entrez", "Entrer", "Confirmez", "Confirmer", " Le ", " La ", " Les "];
+    var res = labelText.replace('*', '').replace(':', '');
+
+    for(var i=0 ; i <keywordToDelete.length ; i++){
+        res = res.replace(keywordToDelete[i], '');
+        res = res.replace(keywordToDelete[i].toLowerCase(), '');
+    }
+    return res.trim();
+}
+
 //Get number of keyword occurences for field
 function nb_keyword_in_field(field, words, indice_ponderation){
-	var nb_occurences = 0;
+    var nb_occurences = 0;
+    
+    //Get all label sibling and look for key word in text
+    var labelSibling = getSiblings(field, labelFilter);
 	for( var i=0 ; i<words.length ; i++){
 		if( field.name !== undefined && field.name.toLowerCase().indexOf(words[i]) != -1)
 			nb_occurences = nb_occurences + 1*indice_ponderation;
@@ -72,7 +88,18 @@ function nb_keyword_in_field(field, words, indice_ponderation){
 		if( field.id !== undefined && field.id.toLowerCase().indexOf(words[i]) != -1)
 			nb_occurences = nb_occurences + 1*indice_ponderation;
 		if( field.placeholder !== undefined && field.placeholder.toLowerCase().indexOf(words[i]) != -1)
-			nb_occurences = nb_occurences + 1*indice_ponderation;
+            nb_occurences = nb_occurences + 1*indice_ponderation;
+        
+        //A field can have many sibling, even if label should be unique
+        for(var j=0 ; j<labelSibling.length ; j++){
+            var labelFinal = cleanLabel(labelSibling[j].innerText);
+
+            //update score with label found
+            if( labelFinal !== undefined && labelFinal.toLowerCase().indexOf(words[i]) != -1){
+                heuristic_logger.info("Adding coeff because of keyword: " + words[i] + " for label: " + labelFinal);
+                nb_occurences = nb_occurences + 1*indice_ponderation;
+            }
+        }
 	}
 	return nb_occurences;
 }
