@@ -1,5 +1,20 @@
 #Release Note
 
+##V4.X
+
+### *New feature*
+
+* New heuristic full birthdate (one block)
+
+### *Bug fix*
+
+* Heuristic working even for first visit ever on website (improve init domain)
+* Fix demo address (Sign up)
+
+### *Limitations and know issues*
+
+* No "password forgotten" function 
+
 ##V4.0.1
 
 ### *Bug fix*
