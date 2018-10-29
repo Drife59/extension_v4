@@ -155,8 +155,11 @@ var NB_OCCURENCES_FORCE_TYPE = 100;
 //Serveur C# dev OVH
 //var endpoint_back_up = "https://corail.me:1664/"
 
-//Serveur C# prod
-var endpoint_back_up = "https://corail.me:50636/"
+//Serveur C# prod V3
+//var endpoint_back_up = "https://corail.me:50636/"
+
+//Serveur C# prod V4
+var endpoint_back_up = "https://corail.me:4001/"
 
 //Serveur OVH
 //var endpoint_back_up = "https://corail.me/"
