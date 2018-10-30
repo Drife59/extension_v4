@@ -25,6 +25,7 @@
 * Fix Connected page design
 * Fix mailto issue on Signin page
 * Fix Sign up link test
+* Fix endpoint for legacy software
 
 ##V4.0
 
