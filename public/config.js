@@ -150,19 +150,14 @@ var NB_OCCURENCES_FORCE_TYPE = 100;
 
 
 //Serveur C# dev local
-//var endpoint_back_up = "http://localhost:1665/"
-
-//Serveur C# dev OVH
-//var endpoint_back_up = "https://corail.me:1664/"
-
-//Serveur C# prod V3
-//var endpoint_back_up = "https://corail.me:50636/"
+var endpoint_back_up = "http://localhost:1665/"
 
 //Serveur C# prod V4
-var endpoint_back_up = "https://corail.me:4001/"
+//var endpoint_back_up = "https://corail.me:4001/"
 
-//Serveur OVH
-//var endpoint_back_up = "https://corail.me/"
+//Serveur C# integ V4
+//var endpoint_back_up = "https://corail.me:2001/"
+
 
 
 //Personalisation du js
