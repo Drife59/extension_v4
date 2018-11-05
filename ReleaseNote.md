@@ -1,6 +1,6 @@
 #Release Note
 
-##V4.X
+##V4.0.2
 
 ### *New feature*
 
@@ -11,6 +11,7 @@
 
 * Heuristic working even for first visit ever on website (improve init domain)
 * Fix demo address (Sign up)
+* Don't restitue user value is empty, when creating pivot from heuristic
 
 ### *Limitations and know issues*
 

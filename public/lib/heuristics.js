@@ -316,12 +316,7 @@ function find_heuristics_corresponding_to_weigth(weight_heuristic, weigth){
 
 //Set the field in html page and create pivot in domain
 function set_value_create_dom_pivot(input, cle_dom, user_value, code_heuristique){
-    input.value = user_value;
-    apply_corail_design(input);
-    heuristic_logger.info("filling from heuristic " + code_heuristique);
-
-    simulate_user_change(input, user_value);
-
+    //First part, creating new pivot
     var xhttp_dom_create = xhttp_add_pivot_domaine(cle_dom, code_heuristique);
 
     xhttp_dom_create.onreadystatechange = function () {
@@ -333,6 +328,19 @@ function set_value_create_dom_pivot(input, cle_dom, user_value, code_heuristique
 
     //Set a flag to indicate this heuristic has been used
     heuristic_activated[code_heuristique] = true;
+
+    //Second part, filling field is user value not empty
+
+    //If user value is empty, don't restitue it
+    if(is_empty(user_value)){
+        return;
+    }
+
+    input.value = user_value;
+    //apply_corail_design(input);
+    heuristic_logger.info("filling from heuristic " + code_heuristique);
+
+    simulate_user_change(input, user_value);
 }
 
 //define error code return for function below
