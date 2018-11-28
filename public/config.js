@@ -159,6 +159,9 @@ var endpoint_back_up = "http://localhost:1665/"
 //var endpoint_back_up = "https://corail.me:2001/"
 
 
+//Website front DB setup
+var MIN_KEY_PIVOT_WEIGHT = -100;
+var MAX_KEY_PIVOT_WEIGHT = 100;
 
 //Personalisation du js
 //A mettre dans un fichier à part si cette partie grossi

@@ -67,9 +67,9 @@ var exemple_domaine_key = `
         "mois_naissance_txt": {
 			"pivot_nom": 30,
 			"pivot_prenom": 0,
-			"pivot_age": 0,
-            "pivot_date_naissance": 50,
-            "pivot_jour_naissance": 70,
+			"pivot_age": 70,
+            "pivot_date_naissance": 70,
+            "pivot_jour_naissance": 100,
             "pivot_mois_naissance": 100,
             "pivot_annee_naissance": 0,
 			"pivot_referent": "mois_naissance"
@@ -121,44 +121,47 @@ class WebsiteDb{
         //this.logger.log("User values loaded from back: \n" + user_pivot_value);
     }
 
-    //This is needed because user_pivot_value object from back
-    //Does not include current_user
-    set_current_user(email){
-        this.current_user = email;
-    }
-
     /*
         Define primitive method for manipulating data
         ---------------------------------------------
     */
 
-    //Check if pivot exist for current object
-    has_value_for_pivot(pivot_name){
-        //Need ECMA 6 js
-        return Object.keys(this.user_pivot_value).includes(pivot_name);
-    }
 
-    get_values_as_object(pivot_name){
-        if( !this.has_value_for_pivot(pivot_name)){
-            return null;
-        }
-        return this.user_pivot_value[pivot_name];
-    }
+    get_max_weight(website_domain, key){
+        var weight_pivot = this.website_key[website_domain][key];
+        if (weight_pivot == undefined)
+            return false;
 
-    get_values_as_string(pivot_name, nb_indent){
-        var values_object = this.get_values_as_object(pivot_name);
-        if( values_object != null){
-            if( nb_indent != undefined){
-                return JSON.stringify(values_object, null, nb_indent);
+        //var max = MIN_KEY_PIVOT_WEIGHT;
+        var max = -100;
+        var pivot = null;
+
+        for(var i in weight_pivot){
+            if( weight_pivot[i] > max){
+                max = weight_pivot[i];
+                pivot = i;
             }
-            return JSON.stringify(values_object);
         }
-        return null;
+
+        //Check if same max weight is found for another pivot
+        //If that so, then max pivot is null
+        for(var i in weight_pivot){
+            if( weight_pivot[i] == max && i != pivot){
+                pivot = null;
+            }
+        }
+        return {
+            pivot: pivot,
+            weight: max
+        }
     }
 }
 
 var test_website_key = new WebsiteDb(exemple_domaine_key);
-//console.log(test_website_key.website_key["www.cdiscount.com"]);
+console.log(test_website_key.get_max_weight("www.cdiscount.com", "prenom_txt"));
+console.log(test_website_key.get_max_weight("www.cdiscount.com", "jour_naissance_txt"));
+console.log(test_website_key.get_max_weight("www.cdiscount.com", "mois_naissance_txt"));
+
 
 
 
