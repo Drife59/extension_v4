@@ -163,6 +163,9 @@ var endpoint_back_up = "http://localhost:1665/"
 var MIN_KEY_PIVOT_WEIGHT = -100;
 var MAX_KEY_PIVOT_WEIGHT = 100;
 
+//if > to the var below, a key is considered associated to pivot (website db)
+var VALIDATED_ASSOCIATION_WEIGHT = 45;
+
 //Personalisation du js
 //A mettre dans un fichier à part si cette partie grossi
 
