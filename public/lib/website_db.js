@@ -30,7 +30,7 @@ Object js to save data is as below:
 }
 */
 
-var exemple_domaine_key = `
+var exemple_domain_key = `
 {
     "www.cdiscount.com": {
 		"nom_fam_txt": {
@@ -64,24 +64,6 @@ var exemple_domaine_key = `
             "month_of_birth": 100,
             "year_of_birth": 0,
 			"pivot_referent": "mois_naissance"
-        }
-    },
-    "www.rueducommerce.com": {
-		"nom_fam_txt": {
-			"family_name": 100,
-			"first_name": 30,
-            "day_of_birth": -100,
-            "month_of_birth": -100,
-            "year_of_birth": -100,
-			"pivot_referent": "nom"
-        },
-        "prenom_txt": {
-			"family_name": 60,
-			"first_name": 100,
-            "day_of_birth": -100,
-            "month_of_birth": -100,
-            "year_of_birth": -100,
-			"pivot_referent": "prenom"
         }
     }
 }
@@ -143,8 +125,8 @@ function string_to_float(string_number){
 }
 
 class WebsiteDb{
-    constructor(domaine_key_text){
-        this.website_key = JSON.parse(domaine_key_text);
+    constructor(domain_key_text){
+        this.website_key = JSON.parse(domain_key_text);
 
         //Turn all string in int for weight
         for(var i in this.website_key ){
@@ -198,11 +180,11 @@ class WebsiteDb{
     }
 
     //get corresponding pivot for a key if exist and if association score if high enough
-    get_pivot(domaine, key){
-        if( !this.has_key(domaine, key)){
-            console.warn("Key " + key + " for domain " + domaine + " does not exist.");
+    get_pivot(domain, key){
+        if( !this.has_key(domain, key)){
+            console.warn("Key " + key + " for domain " + domain + " does not exist.");
         }
-        var pivot_weight = this.get_max_weight(domaine, key);
+        var pivot_weight = this.get_max_weight(domain, key);
 
         console.log(JSON.stringify(pivot_weight));
 
@@ -213,26 +195,26 @@ class WebsiteDb{
         return pivot_weight["pivot"];
     }
 
-    has_domain(domaine){
-        return this.website_key.hasOwnProperty(domaine);
+    has_domain(domain){
+        return this.website_key.hasOwnProperty(domain);
     }
 
-    has_key(domaine, key){
-        if(!this.website_key.hasOwnProperty(domaine)){
+    has_key(domain, key){
+        if(!this.website_key.hasOwnProperty(domain)){
             return false;
         }
-        return this.website_key[domaine].hasOwnProperty(key);
+        return this.website_key[domain].hasOwnProperty(key);
     }
 
     //Create a new key for domain, with boostraping value
     //If key already exist, forbid action
-    create_key(domaine, key, heuristic_ref){
-        if(!this.has_domain(domaine)){
+    create_key(domain, key, heuristic_ref){
+        if(!this.has_domain(domain)){
             console.warn("Create key: domain does not exist");
             return false;
         }
 
-        if(this.has_key(domaine, key)){
+        if(this.has_key(domain, key)){
             console.warn("Cannot create key: key already exist for domain");
             return false;
         }
@@ -255,7 +237,7 @@ class WebsiteDb{
             }
         }
         console.log("new key content : " + JSON.stringify(new_key_content, 4));
-        this.website_key[domaine][key] = new_key_content;
+        this.website_key[domain][key] = new_key_content;
         return true;
     }
 
@@ -322,7 +304,7 @@ var test_pivot_weight = {
     "family_name": "2"
 }
 
-var test_website_key = new WebsiteDb(exemple_domaine_key);
+var test_website_key = new WebsiteDb(exemple_domain_key);
 //console.log(test_website_key.get_max_weight("www.cdiscount.com", "prenom_txt"));
 //console.log(test_website_key.website_key["www.cdiscount.com"]["prenom_txt"]);
 test_website_key.apply_pivot_on_key("www.cdiscount.com", "prenom_txt", test_pivot_weight);
