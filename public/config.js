@@ -72,6 +72,14 @@ var CODE_FULL_BIRTHDATE = "full_birthdate";
 //This code in is in db, does not correspond to "pivot name" field
 var CODE_RESEARCH = "research";
 
+var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME,
+                    CODE_POSTALCODE, CODE_CITY, CODE_MAIN_FULL_ADDRESS,
+                    CODE_CELLPHONE, CODE_HOMEPHONE,
+                    CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH, CODE_FULL_BIRTHDATE,
+                    CODE_COMPANY,
+                    CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR
+    ]
+
 
 //Define ponderation for each list of keywords
 var heuristic_ponderation = new Object();
@@ -165,6 +173,11 @@ var MAX_KEY_PIVOT_WEIGHT = 100;
 
 //if > to the var below, a key is considered associated to pivot (website db)
 var VALIDATED_ASSOCIATION_WEIGHT = 45;
+
+//Weight set when creating pivot with heuristic
+var HEURISTIC_BASE_WEIGHT = 45;
+
+var CODE_PIVOT_REFERENT = "pivot_referent";
 
 //Personalisation du js
 //A mettre dans un fichier à part si cette partie grossi

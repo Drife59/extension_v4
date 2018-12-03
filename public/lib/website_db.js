@@ -6,7 +6,6 @@ Année: 2018
 website_db.js
 
 Define classes which are website db for front app.
-CAREFUL: this library create user user value and update it.
 It NEVER create pivot or manage it.
 */
 
@@ -97,7 +96,45 @@ var MAX_KEY_PIVOT_WEIGHT = 100;
 //if > to the var below, a key is considered associated to pivot 
 var VALIDATED_ASSOCIATION_WEIGHT = 45;
 
+//Weight set when creating pivot with heuristic
+var HEURISTIC_BASE_WEIGHT = 45;
+
 var CODE_PIVOT_REFERENT = "pivot_referent";
+
+//This is the code we use to identify type of field
+//firstname, lastname, postalcode, city, tel
+//Correspond to field "name" in Pivots table
+var CODE_FIRSTNAME = "first_name";
+var CODE_LASTNAME  = "family_name";
+var CODE_POSTALCODE = "postal_code";
+var CODE_CITY = "home_city";
+var CODE_CELLPHONE = "cellphone_number";
+var CODE_MAIN_EMAIL = "main_email";
+var CODE_MAIN_FULL_ADDRESS = "main_full_address";
+var CODE_DAY_BIRTH = "day_of_birth";
+var CODE_MONTH_BIRTH = "month_of_birth";
+var CODE_YEAR_BIRTH = "year_of_birth";
+
+//V3.3 Heuristic
+var CODE_COMPANY = "company";
+var CODE_HOMEPHONE = "homephone";
+var CODE_CVV_STRING = "cvv";
+var CODE_CARDEXPIRYMONTH = "cardexpirymonth";
+var CODE_CARDEXPIRYYEAR = "cardexpiryyear";
+
+//V4.0 Heuristic
+var CODE_FULL_BIRTHDATE = "full_birthdate";
+
+//This code in is in db, does not correspond to "pivot name" field
+var CODE_RESEARCH = "research";
+
+var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME,
+                    CODE_POSTALCODE, CODE_CITY, CODE_MAIN_FULL_ADDRESS,
+                    CODE_CELLPHONE, CODE_HOMEPHONE,
+                    CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH, CODE_FULL_BIRTHDATE,
+                    CODE_COMPANY,
+                    CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR
+    ]
 
 //Function below just for test, to be deleted later
 //Return number from string as float
@@ -160,6 +197,52 @@ class WebsiteDb{
         }
     }
 
+    has_domain(domaine){
+        return this.website_key.hasOwnProperty(domaine);
+    }
+
+    has_key(domaine, key){
+        if(!this.website_key.hasOwnProperty(domaine)){
+            return false;
+        }
+        return this.website_key[domaine].hasOwnProperty(key);
+    }
+
+    //Create a new key for domain, with boostraping value
+    //If key already exist, forbid action
+    create_key(domaine, key, heuristic_ref){
+        if(!this.has_domain(domaine)){
+            console.warn("Create key: domain does not exist");
+            return false;
+        }
+
+        if(this.has_key(domaine, key)){
+            console.warn("Cannot create key: key already exist for domain");
+            return false;
+        }
+
+        var new_key_content = {};
+        var pivot = null; 
+        for(var i in  liste_pivots){
+            pivot = liste_pivots[i]; 
+            //if no heuristic found, set all weight to 0
+            if(heuristic_ref == null || heuristic_ref == "undefined"){
+                new_key_content[pivot] = 0;
+            }
+            //Else set all weight to the one for heuristic detected
+            else{
+                if(pivot == heuristic_ref){
+                    new_key_content[pivot] = HEURISTIC_BASE_WEIGHT;
+                }else{
+                    new_key_content[pivot] = -HEURISTIC_BASE_WEIGHT;
+                }
+            }
+        }
+        console.log("new key content : " + JSON.stringify(new_key_content, 4));
+        this.website_key[domaine][key] = new_key_content;
+        return true;
+    }
+
     /* Calculate new weight when apply a pivot found from user
      * input: objet representing pivots found for the user value associated 
      * with their weight:
@@ -196,7 +279,7 @@ class WebsiteDb{
             if(new_weight > MAX_KEY_PIVOT_WEIGHT){
                 new_weight = MAX_KEY_PIVOT_WEIGHT;
             }
-            console.log("New weight = " + new_weight);
+            //console.log("New weight = " + new_weight);
             weights_website[pivot_user] = new_weight;
 
             //Decrease others pivots, if not present for user value
@@ -224,11 +307,15 @@ var test_pivot_weight = {
 }
 
 var test_website_key = new WebsiteDb(exemple_domaine_key);
-console.log(test_website_key.get_max_weight("www.cdiscount.com", "prenom_txt"));
-console.log(test_website_key.website_key["www.cdiscount.com"]["prenom_txt"]);
+//console.log(test_website_key.get_max_weight("www.cdiscount.com", "prenom_txt"));
+//console.log(test_website_key.website_key["www.cdiscount.com"]["prenom_txt"]);
 test_website_key.apply_pivot_on_key("www.cdiscount.com", "prenom_txt", test_pivot_weight);
 console.log(test_website_key.get_max_weight("www.cdiscount.com", "prenom_txt"));
 console.log(test_website_key.website_key["www.cdiscount.com"]["prenom_txt"]);
+
+test_website_key.create_key("www.cdiscount.com", "nom_fam_tx", "family_name");
+test_website_key.create_key("www.cdiscount.com", "nom_fam_tx", "family_name");
+test_website_key.create_key("www.cdiscount.com", "toto_txt");
 
 
 
