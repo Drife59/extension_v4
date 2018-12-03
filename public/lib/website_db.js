@@ -37,7 +37,7 @@ var exemple_domaine_key = `
 		"nom_fam_txt": {
 			"family_name": 100,
 			"first_name": 30,
-            "day_of_birth": -100,
+            "day_of_birth": 0,
             "month_of_birth": -100,
             "year_of_birth": -100,
 			"pivot_referent": "nom"
@@ -45,7 +45,7 @@ var exemple_domaine_key = `
         "prenom_txt": {
 			"family_name": 60,
 			"first_name": 100,
-            "day_of_birth": -100,
+            "day_of_birth": 0,
             "month_of_birth": -100,
             "year_of_birth": -100,
 			"pivot_referent": "prenom"
@@ -112,7 +112,6 @@ class WebsiteDb{
         //Turn all string in int for weight
         for(var i in this.website_key ){
             for(var j in this.website_key[i] ){
-                //console.log(this.website_key[i][j]);
                 for(var k in this.website_key[i][j] ){
                     if( k == CODE_PIVOT_REFERENT ){
                         continue;
@@ -174,8 +173,6 @@ class WebsiteDb{
 
         //Ensure weight are float
         for(var i in pivot_weight){
-            console.log("i : " + i);
-
             pivot_weight[i] = string_to_float(pivot_weight[i]);
         }
 
@@ -185,7 +182,6 @@ class WebsiteDb{
         for(var pivot_user in pivot_weight){
 
             var old_weight = weights_website[pivot_user];
-            console.log("old weight = " + old_weight);
 
             //coeff represent multiplicatof for ajusting key pivot weight
             // 5 = want to validate association, 2 = want to increase association
@@ -201,19 +197,21 @@ class WebsiteDb{
                 new_weight = MAX_KEY_PIVOT_WEIGHT;
             }
             console.log("New weight = " + new_weight);
-            weights_website[pivot_weight[pivot_user]] = new_weight;
+            weights_website[pivot_user] = new_weight;
 
             //Decrease others pivots, if not present for user value
-            for(var j in weights_website){
-                if( j == CODE_PIVOT_REFERENT ){
+            for(var pivot_website in weights_website){
+                if( pivot_website == CODE_PIVOT_REFERENT ){
                     continue;
                 }
-                if(Object.keys(pivot_weight).includes(pivot_user))
+                if(Object.keys(pivot_weight).includes(pivot_website)){
+                    console.log("Don't modify " + pivot_website + " :  continue");
                     continue;
-                weights_website[pivot_user] = weights_website[pivot_user] - coeff * pivot_weight[pivot_user];
+                }
+                weights_website[pivot_website] = weights_website[pivot_website] - coeff * pivot_weight[pivot_user];
 
-                if( weights_website[pivot_user] < MIN_KEY_PIVOT_WEIGHT )
-                    weights_website[pivot_user] = MIN_KEY_PIVOT_WEIGHT;
+                if( weights_website[pivot_website] < MIN_KEY_PIVOT_WEIGHT )
+                    weights_website[pivot_website] = MIN_KEY_PIVOT_WEIGHT;
             }
         }
         this.website_key[domain][key] = weights_website;
