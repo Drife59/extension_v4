@@ -173,8 +173,8 @@ class WebsiteDb{
         if (weight_pivot == undefined)
             return false;
 
-        //var max = MIN_KEY_PIVOT_WEIGHT;
-        var max = -100;
+        var max = MIN_KEY_PIVOT_WEIGHT;
+        //var max = -100;
         var pivot = null;
 
         for(var i in weight_pivot){
@@ -195,6 +195,22 @@ class WebsiteDb{
             pivot: pivot,
             weight: max
         }
+    }
+
+    //get corresponding pivot for a key if exist and if association score if high enough
+    get_pivot(domaine, key){
+        if( !this.has_key(domaine, key)){
+            console.warn("Key " + key + " for domain " + domaine + " does not exist.");
+        }
+        var pivot_weight = this.get_max_weight(domaine, key);
+
+        console.log(JSON.stringify(pivot_weight));
+
+        //Weight is not enough
+        if(pivot_weight["weight"] < VALIDATED_ASSOCIATION_WEIGHT){
+            return null;
+        }
+        return pivot_weight["pivot"];
     }
 
     has_domain(domaine){
@@ -313,9 +329,12 @@ test_website_key.apply_pivot_on_key("www.cdiscount.com", "prenom_txt", test_pivo
 console.log(test_website_key.get_max_weight("www.cdiscount.com", "prenom_txt"));
 console.log(test_website_key.website_key["www.cdiscount.com"]["prenom_txt"]);
 
-test_website_key.create_key("www.cdiscount.com", "nom_fam_tx", "family_name");
-test_website_key.create_key("www.cdiscount.com", "nom_fam_tx", "family_name");
-test_website_key.create_key("www.cdiscount.com", "toto_txt");
+test_website_key.create_key("www.cdiscount.com", "toto_txt", CODE_CVV_STRING);
+
+console.log("toto_txt pivot ref: " + test_website_key.get_pivot("www.cdiscount.com", "toto_txt"));
+console.log("toto_txt pivot ref: " + test_website_key.get_pivot("www.cdiscount.com", "prenom_txt"));
+console.log("toto_txt pivot ref: " + test_website_key.get_pivot("www.cdiscount.com", "nom_fam_txt"));
+
 
 
 
