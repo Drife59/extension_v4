@@ -60,8 +60,6 @@ function fill_field(input, pivots_domaines){
         return;
     }
 
-    
-
     //First algoritm, load value from user if pivot is known and field is not already filled
     if (cle_dom in pivots_domaines){
         var pivot_trouve = pivots_domaines[cle_dom];
@@ -79,32 +77,7 @@ function fill_field(input, pivots_domaines){
                 " for user, but not activated, so no restitution.");
         }
     }
-    //Second algoritm, there is value (from website) but no domain pivot
-    //but no pivot associated. Try to load pivot from user and create it in domain
 
-    //Second algoritm is for now desactivated. It create issue in DBmark_heuristic_used
-    // Not ready for V2 version. Not ready at all for future multivaluation
-
-    /*
-    else if (input.value != "" && input.value != "undefined"){
-        OnLoadLogger.debug("Algo Load / Second algo: found value <" + input.value + 
-            "> but no pivot in domain. Trying to associate pivot in domain.");
-        var pivot_user = search_value_in_json(input.value, pivots_user);
-        mark_heuristic_used(input, cle_dom);
-
-        if(pivot_user != false && pivot_user != "false"){
-            OnLoadLogger.log("Algo Load / Second algo: user pivot user known, adding it in domain");            
-            var xhttp_dom_create = xhttp_add_pivot_domaine(cle_dom, pivot_user);
-
-            xhttp_dom_create.onreadystatechange = function () {
-                if (xhttp_dom_create.readyState == 4 && xhttp_dom_create.status == 200) {
-                    OnLoadLogger.info("Algo Load / Second algo: associate " + pivot_user + 
-                    " into domain from user value " + input.value + ".");
-                }
-            }
-        }
-    }
-    */
     //Third algoritm, try filling using heuristics based on field
     else{
         fill_using_heuristic_v2(input, cle_dom);
