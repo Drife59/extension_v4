@@ -298,7 +298,6 @@ class WebsiteDb {
             if (new_weight > MAX_KEY_PIVOT_WEIGHT) {
                 new_weight = MAX_KEY_PIVOT_WEIGHT;
             }
-            //console.log("New weight = " + new_weight);
             weights_website[pivot_user] = new_weight;
 
             //Decrease others pivots, if not present for user value

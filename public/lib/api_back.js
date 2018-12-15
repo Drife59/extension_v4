@@ -1,7 +1,7 @@
 /*
 Projet Corail
 Auteur: Benjamin GRASSART
-Année: 2017
+Année: 2018
 
 api_back.js
 
@@ -15,9 +15,6 @@ Retourne les objets xttp permettant de faire les requêtes souhaitées sur le ba
 var prefix_url_domaine = "website/domaine_a_remplacer"; 
 
 var url_create_domaine = endpoint_back_up + prefix_url_domaine
-
-//Récupération des clés du domaine, la valeur associée étant les pivots
-var url_get_cles_domaine_v1 = endpoint_back_up + prefix_url_domaine + "/pivots_v1";
 
 //Récupération d'une cle domaine en V2
 var url_get_cle_domaine_v2 = endpoint_back_up + prefix_url_domaine + "/key/key_to_replace" ;
@@ -48,17 +45,6 @@ function xhttp_get_domaine(domaine){
 function xhttp_create_domaine(domaine){
     var xhttp_back_api = new XMLHttpRequest();
     xhttp_back_api.open("POST", url_create_domaine.replace("domaine_a_remplacer", domaine), true);
-	xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp_back_api.send();
-    return xhttp_back_api;
-}
-
-// #GET Retourne un objet http request pour récupérer les clés / pivot du domaine actuel
-//Mode compatibilité back-end v1
-function xhttp_get_cles_domaine_v1(){
-    var xhttp_back_api = new XMLHttpRequest();
-    url_get_cles_domaine_v1 = url_get_cles_domaine_v1.replace("domaine_a_remplacer", window.location.host, true);
-    xhttp_back_api.open("GET", url_get_cles_domaine_v1);
 	xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp_back_api.send();
     return xhttp_back_api;
@@ -201,24 +187,3 @@ Objet xhttp des admins
 //---------
 
 var prefix_url_admin = "admin"
-//Méthode de demande de remplacement pivot
-var url_create_merge = endpoint_back_up + prefix_url_admin + 
-                        "/merge/pivot_origine/pivot_remplacement";
-
-// #POST Envoie une demande de merge
-function xhttp_create_merge(pivot_origine, pivot_remplacement,
-                                        email, valeur, domaine, cle_req){
-    var xhttp_back_api = new XMLHttpRequest();
-    var url_final = url_create_merge.replace("pivot_origine", pivot_origine)
-                               .replace("pivot_remplacement", pivot_remplacement);
-    xhttp_back_api.open("POST", url_final, true);
-    xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-    xhttp_back_api.send(JSON.stringify({
-        email: email,
-        domaine: domaine,
-        cle_req: cle_req,
-        valeur: valeur
-    }));
-    return xhttp_back_api;
-}
