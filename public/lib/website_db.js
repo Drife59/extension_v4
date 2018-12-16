@@ -335,6 +335,8 @@ var test_website_key = new WebsiteDb(exemple_domain_key);
 //-----------------------
 
 //New website DB empty
+
+/*
 test_website_key = new WebsiteDb("{}");
 
 const http = require('http');
@@ -367,3 +369,4 @@ http.get('http://localhost:1665/website/www.cdiscount.com/keys', (resp) => {
         })
     });
 });
+*/
