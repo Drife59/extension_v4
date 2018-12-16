@@ -52,7 +52,8 @@ function mark_heuristic_used(input, cle_dom) {
 function fill_field(input, domain) {
     var cle_dom = construit_domaine_cle(input);
 
-    if (!is_empty(input)) {
+    //Careful ! a select is always not empty    
+    if (!is_empty(input) && input.tagName != "SELECT") {
         OnLoadLogger.info("Field associated with Key domain + " + cle_dom +
             " is already filled from website. Don't fill it.");
         //If field is already filled by original website, avoid corresponding heuristic
@@ -108,7 +109,7 @@ function fill_fields(email) {
     }
 
     //parcours tous les selects trouvés et essaye de les remplir
-    /*for (var i = 0; i < selects.length; i++) {
-        fill_field(selects[i], pivots_domaines);
-    }*/
+    for (var i = 0; i < selects.length; i++) {
+        fill_field(selects[i], domain);
+    }
 }

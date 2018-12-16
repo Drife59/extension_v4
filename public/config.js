@@ -34,7 +34,7 @@ var separateur_cle = "_";
 // --------------
 
 var enable_heuristic_log = true;
-var enable_front_db_log = false;
+var enable_front_db_log = true;
 var enable_load_log = false;
 var enable_change_log = false;
 

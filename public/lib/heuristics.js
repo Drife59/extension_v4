@@ -325,7 +325,7 @@ function set_value_create_key(input, cle_dom, user_value, code_heuristique){
 
     //We associate this pivot with the corresponding weight
     key_obj[code_heuristique] = HEURISTIC_BASE_WEIGHT;
-    console.log("Key obj we are going to send: " + JSON.stringify(key_obj, null, 4));
+    //console.log("Key obj we are going to send: " + JSON.stringify(key_obj, null, 4));
 
     //First part, adding new Key
     var xhttp_dom_create = xhttp_add_key_domain(key_obj);
@@ -343,7 +343,8 @@ function set_value_create_key(input, cle_dom, user_value, code_heuristique){
     //Second part, filling field is user value not empty
 
     //If user value is empty, don't restitue it
-    if(is_empty(user_value)){
+    if(user_value == undefined || user_value == "undefined" || user_value == ""){
+        console.warn("User value is empty ! ");
         return;
     }
 
@@ -367,7 +368,7 @@ var heurisitic_code_error_list = [CODE_NO_MATCHING_HEURISTIC,
 function get_heuristic_to_use(input, cle_dom, weight_heuristic, absolute_top_weigth){
     //Case 1: no heuristic could be matched
     if(absolute_top_weigth == 0){
-        heuristic_logger.info("Could not find an heuristic for this field");
+        heuristic_logger.info("Could not find an heuristic for field " + construit_domaine_cle(input));
         return CODE_NO_MATCHING_HEURISTIC;
     }
 
@@ -410,7 +411,6 @@ function fill_using_heuristic_v2(input, cle_dom){
     heuristic_logger.log("Weight calculated for: " + construit_domaine_cle(input) + ": " + JSON.stringify(weight_heuristic));
 
     var absolute_top_weigth = find_absolute_top_weigth(weight_heuristic);
-
     var corresponding_heuristic = get_heuristic_to_use(input, cle_dom, weight_heuristic, absolute_top_weigth);
 
     var user_value = user_front_db.value_restitution(corresponding_heuristic)
