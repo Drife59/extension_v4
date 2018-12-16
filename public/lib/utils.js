@@ -156,7 +156,7 @@ All weight are set to zero and should be updated in main code.*/
 function createEmptyKeyRequestObject(code_key){
         var object_result = {};
         object_result["cle"] = code_key;
-        object_result["pivot_ref"] = null;
+        object_result["pivot_reference"] = null;
         object_result["first_name"] = 0;
         object_result["family_name"] = 0;
         object_result["postal_code"] = 0;
