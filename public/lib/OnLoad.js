@@ -36,13 +36,13 @@ function simulate_user_change(input, user_value) {
 
 //Mark heuristic as used if a field is filled
 //by first or second algoritm (beforce dedicated heuristic algoritm)
-function mark_heuristic_used(input, cle_dom) {
+function mark_heuristic_used(input, key_domain) {
     var weight_heuristic = set_weight_heuristic(input);
     var absolute_top_weigth = find_absolute_top_weigth(weight_heuristic);
-    var corresponding_heuristic = get_heuristic_to_use(input, cle_dom, weight_heuristic, absolute_top_weigth);
+    var corresponding_heuristic = get_heuristic_to_use(input, key_domain, weight_heuristic, absolute_top_weigth);
 
     if (heurisitic_code_error_list.includes(corresponding_heuristic) == false) {
-        OnLoadLogger.log("Algo load : mark " + cle_dom + " as already filled.");
+        OnLoadLogger.log("Algo load : mark " + key_domain + " as already filled.");
         heuristic_activated[corresponding_heuristic] = true;
     }
 }
@@ -50,41 +50,38 @@ function mark_heuristic_used(input, cle_dom) {
 //Rempli un champ sur la page web si connu du domaine 
 //et de l'utilisateur.
 function fill_field(input, domain) {
-    var cle_dom = construit_domaine_cle(input);
+    var key_domain = construit_domaine_cle(input);
 
     //Careful ! a select is always not empty    
     if (!is_empty(input) && input.tagName != "SELECT") {
-        OnLoadLogger.info("Field associated with Key domain + " + cle_dom +
+        OnLoadLogger.info("Field associated with Key domain + " + key_domain +
             " is already filled from website. Don't fill it.");
         //If field is already filled by original website, avoid corresponding heuristic
-        mark_heuristic_used(input, cle_dom);
+        mark_heuristic_used(input, key_domain);
         return;
     }
 
     //First algoritm, load value from user if pivot is known and field is not already filled
-    /*
-    if (cle_dom in website_front_db[domain]) {
-        console.log("cle_dom: " + cle_dom);
 
-        var pivot_trouve = pivots_domaines[cle_dom];
-        OnLoadLogger.info("Algo Load / first algo: Key domain" + cle_dom + " associated with pivot " + pivot_trouve);
+    if(website_front_db.has_key(domain, key_domain)){
 
-        var user_value = user_front_db.value_restitution(pivot_trouve)
-
+        var pivot_reference = website_front_db.get_pivot(domain, key_domain);
+        var user_value = user_front_db.value_restitution(pivot_reference)
+        
         //Found a suitable value to fill
         if (user_value != null && user_value != ' ' && user_value != '') {
-            OnLoadLogger.log("Pivot " + pivot_trouve + ": loading value <" + user_value + "> from user profile.");
+            OnLoadLogger.log("Loading value <" + user_value + "> from user for pivot: " + pivot_reference);
             simulate_user_change(input, user_value);
-            mark_heuristic_used(input, cle_dom);
-        } else if (user_value == ' ') {
-            OnLoadLogger.info("Algo Load / first algo: found pivot " + pivot_trouve +
-                " for user, but not activated, so no restitution.");
+            mark_heuristic_used(input, key_domain);
+        }else{
+            OnLoadLogger.log("User does not have a value for pivot: " + pivot_reference);
         }
-    }*/
+    }
 
+    //Cannot find key in website
     //Third algoritm, try filling using heuristics based on field
     else {
-        fill_using_heuristic_v2(input, cle_dom);
+        fill_using_heuristic_v2(input, key_domain);
     }
 }
 
