@@ -22,7 +22,7 @@ var url_get_cle_domaine_v2 = endpoint_back_up + prefix_url_domaine + "/key/key_t
 var url_get_keys_v5 = endpoint_back_up + prefix_url_domaine + "/keys";
 
 //Méthode POST = création, Méthode PUT = MAJ
-var url_set_pivot_domaine = endpoint_back_up + prefix_url_domaine + "/pivot";
+var url_add_key_domaine = endpoint_back_up + prefix_url_domaine + "/key";
 
 
 /*
@@ -75,19 +75,38 @@ function xhttp_get_keys_v5(domain){
     return xhttp_back_api;
 }
 
-// #POST Retourne un objet xhttp pour ajouter un nouveau pivot sur le domaine
-function xhttp_add_pivot_domaine(cle, pivot){
+// #POST Retourne un objet xhttp pour ajouter une nouvelle clée sur le domaine
+/*
+Key obj is like:
+{ 
+    "cle": <name key website>,
+    "pivot_reference": <pivot ref found>
+    first_name: 
+    family_name: 
+    postal_code: 
+    home_city:
+    cellphone_number: 
+    main_email: 
+    main_full_address:
+    day_of_birth:
+    month_of_birth:
+    year_of_birth:
+    company:
+    homephone:
+    cvv:
+    cardexpirymonth:
+    cardexpiryyear:
+    full_birthdate: 
+}
+*/
+function xhttp_add_key_domain(key_obj){
     var xhttp_back_api = new XMLHttpRequest();
-    var url_final = url_set_pivot_domaine.replace("domaine_a_remplacer", window.location.host, true);
+    var url_final = url_add_key_domaine.replace("domaine_a_remplacer", window.location.host, true);
     xhttp_back_api.open("POST", url_final);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     
-    if( pivot == "undefined"){
-        //Création d'un pivot aléatoire
-        xhttp_back_api.send(JSON.stringify({"Cle": cle}));
-    }else{
-        xhttp_back_api.send(JSON.stringify({"Cle": cle, "Pivot": pivot}));
-    }
+    //V5: send a complex key object request containing all data
+    xhttp_back_api.send(JSON.stringify(key_obj));
     return xhttp_back_api;
 }
 

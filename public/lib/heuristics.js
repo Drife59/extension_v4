@@ -327,15 +327,15 @@ function set_value_create_dom_pivot(input, cle_dom, user_value, code_heuristique
     key_obj[code_heuristique] = HEURISTIC_BASE_WEIGHT;
     console.log("Key obj we are going to send: " + JSON.stringify(key_obj, null, 4));
 
-    //First part, creating new pivot
-    /*var xhttp_dom_create = xhttp_add_pivot_domaine(cle_dom, code_heuristique);
+    //First part, adding new Key
+    var xhttp_dom_create = xhttp_add_key_domain(key_obj);
 
     xhttp_dom_create.onreadystatechange = function () {
         if (xhttp_dom_create.readyState == 4 && xhttp_dom_create.status == 200) {
-            heuristic_logger.info("Create pivot " + code_heuristique + 
-                " on domain side using heuristic " + code_heuristique);
+            heuristic_logger.info("Create key " + cle_dom + 
+                " on domain with matching heuristic " + code_heuristique);
         }
-    }*/
+    }
 
     //Set a flag to indicate this heuristic has been used
     heuristic_activated[code_heuristique] = true;
