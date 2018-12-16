@@ -149,3 +149,30 @@ function genericFilter(elem, string_type_elem) {
 function labelFilter(elem){
     return genericFilter(elem, 'label');
 }
+
+/*Return a squeletton for requesting api back on keys.
+Only code key is provided, to identify key.
+All weight are set to zero and should be updated in main code.*/
+function createEmptyKeyRequestObject(code_key){
+        var object_result = {};
+        object_result["cle"] = code_key;
+        object_result["pivot_ref"] = null;
+        object_result["first_name"] = 0;
+        object_result["family_name"] = 0;
+        object_result["postal_code"] = 0;
+        object_result["home_city"] = 0;
+        object_result["cellphone_number"] = 0;
+        object_result["main_email"] = 0;
+        object_result["main_full_address"] = 0;
+        object_result["day_of_birth"] = 0;
+        object_result["month_of_birth"] = 0;
+        object_result["year_of_birth"] = 0;
+        object_result["company"] = 0;
+        object_result["homephone"] = 0;
+        object_result["cvv"] = 0;
+        object_result["cardexpirymonth"] = 0;
+        object_result["cardexpiryyear"] = 0;
+        object_result["full_birthdate"] = 0;
+
+        return object_result;
+    }
