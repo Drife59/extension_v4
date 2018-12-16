@@ -222,7 +222,6 @@ class WebsiteDb {
             var code_key = keys_json[index_key]["code"];
             result[code_key] = result_key;
         }
-        //console.log("Result final:" + JSON.stringify(result, null, 4));
         console.info("Successfully inserted keys from domain " + domain);
         this.website_key[domain] = result;
     }

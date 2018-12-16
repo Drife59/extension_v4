@@ -90,6 +90,13 @@ function fill_fields(email){
 
     OnLoadLogger.log("Algo load: loading input field...");
 
+    console.log("Content in website db: " + JSON.stringify(website_front_db.website_key, null, 4));
+
+
+
+    //Old code to refactor
+
+    /*
     var xhttp_domaine = xhttp_get_cles_domaine_v1();
     //argggggh putain c'est callback hell ici. Putain de langage
     xhttp_domaine.onreadystatechange = function () {
@@ -112,5 +119,5 @@ function fill_fields(email){
                 fill_field(selects[i], pivots_domaines);
             }
         }
-    }
+    }*/
 }
