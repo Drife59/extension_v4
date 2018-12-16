@@ -183,6 +183,7 @@ class WebsiteDb {
     get_pivot(domain, key) {
         if (!this.has_key(domain, key)) {
             console.warn("Key " + key + " for domain " + domain + " does not exist.");
+            return null;
         }
         var pivot_weight = this.get_max_weight(domain, key);
 
