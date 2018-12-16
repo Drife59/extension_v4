@@ -316,15 +316,26 @@ function find_heuristics_corresponding_to_weigth(weight_heuristic, weigth){
 
 //Set the field in html page and create pivot in domain
 function set_value_create_dom_pivot(input, cle_dom, user_value, code_heuristique){
+
+    console.info("heuristic V5: going to create the key: " + cle_dom + " associated with pivot: " + code_heuristique);
+
+    var key_obj = createEmptyKeyRequestObject(cle_dom);
+    //code_heuristique is the corresponding pivot we found
+    key_obj["pivot_reference"] = code_heuristique;
+
+    //We associate this pivot with the corresponding weight
+    key_obj[code_heuristique] = HEURISTIC_BASE_WEIGHT;
+    console.log("Key obj we are going to send: " + JSON.stringify(key_obj, null, 4));
+
     //First part, creating new pivot
-    var xhttp_dom_create = xhttp_add_pivot_domaine(cle_dom, code_heuristique);
+    /*var xhttp_dom_create = xhttp_add_pivot_domaine(cle_dom, code_heuristique);
 
     xhttp_dom_create.onreadystatechange = function () {
         if (xhttp_dom_create.readyState == 4 && xhttp_dom_create.status == 200) {
             heuristic_logger.info("Create pivot " + code_heuristique + 
                 " on domain side using heuristic " + code_heuristique);
         }
-    }
+    }*/
 
     //Set a flag to indicate this heuristic has been used
     heuristic_activated[code_heuristique] = true;
