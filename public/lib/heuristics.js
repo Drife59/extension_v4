@@ -315,7 +315,7 @@ function find_heuristics_corresponding_to_weigth(weight_heuristic, weigth){
 }
 
 //Set the field in html page and create pivot in domain
-function set_value_create_dom_pivot(input, cle_dom, user_value, code_heuristique){
+function set_value_create_key(input, cle_dom, user_value, code_heuristique){
 
     console.info("heuristic V5: going to create the key: " + cle_dom + " associated with pivot: " + code_heuristique);
 
@@ -417,6 +417,6 @@ function fill_using_heuristic_v2(input, cle_dom){
 
     //Found a suitable heuristic
     if( heurisitic_code_error_list.includes(corresponding_heuristic) == false){
-        set_value_create_dom_pivot(input, cle_dom, user_value, corresponding_heuristic);
+        set_value_create_key(input, cle_dom, user_value, corresponding_heuristic);
     }  
 }
