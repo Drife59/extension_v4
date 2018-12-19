@@ -93,9 +93,6 @@ function evolution_value_restitution(nb_restitution, name_field){
 //console.log(user_value_pivot_test.get_values_as_string("last_name", 4));
 //user_value_pivot_test.change_value_pivot_trouve_domaine("last_name", "Grassart");
 
-//console.log(user_value_pivot_test.get_pivots_to_merge_from_value("Benjamin"));
-//console.log(user_value_pivot_test.get_pivots_to_merge_from_value("benjamin.grassart@gmail.com"));
-
 //user_value_pivot_test.change_value_pivot_trouve_domaine("first_name", "Maxence");
 
 

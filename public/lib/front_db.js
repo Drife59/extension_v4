@@ -112,22 +112,6 @@ class UserPivotValues{
         return highest_value;
     }
 
-    //Return pivot if value is highest value for this pivot
-    get_pivots_to_merge_from_value(value, pivot_to_exclude){
-        var results = [];
-        for(var i in this.user_pivot_value ){
-            if( i == pivot_to_exclude){
-                continue;
-            }
-
-            var highest_value = this.get_value_highest_weigth(i);
-            if( highest_value == value){
-                results.push(i);
-            }
-        }
-        return results;
-    }
-
     //Create an object value for a text value
     //This is async because we need to wait for server return
     async create_user_value(pivot_name, value){
@@ -209,18 +193,6 @@ class UserPivotValues{
         }
     }
 
-    //Need this.current_user to be set
-    create_merges(key_domain, pivot_dom_name, new_value){
-        var pivots_to_merge = this.get_pivots_to_merge_from_value(new_value, pivot_dom_name);
-        this.logger.log("Merge request " + pivot_dom_name + " on pivot(s): " + pivots_to_merge);
-        
-        for( var i=0 ; i<pivots_to_merge.length ; i++){
-            //Finally, call for merge creation
-            var xhttp_merge = xhttp_create_merge(pivots_to_merge[i], pivot_dom_name,
-            this.current_user, new_value, window.location.host, key_domain);
-        }
-    }
-
     /*
         Define high-level method for operationnal process
         -------------------------------------------------
@@ -294,10 +266,8 @@ class UserPivotValues{
             this.logger.log("Front DB: User has pivot " + pivot_dom_name + ". " + 
                         "After updating values, pivot: \n" + this.get_values_as_string(pivot_dom_name));
 
-            //If highest weigth value has changed, apply merge on new pivot
             if( old_highest_value != new_highest_value){
                 this.logger.log("Found " + pivot_dom_name + " for user. Value with highest weight has changed.");
-                this.create_merges(key_domain, pivot_dom_name, new_value);
             }
         }
         //Create new pivot and add value
@@ -306,9 +276,7 @@ class UserPivotValues{
             var new_object = await this.create_user_value(pivot_dom_name, new_value);
             this.logger.log("Nouvel objet user value: " + new_object);
             
-            //If pivot is new, it has to be merged with others
             this.logger.log("Cannot find pivot " + pivot_dom_name + " for user.");
-            this.create_merges(key_domain, pivot_dom_name, new_value);
         }
     }
 
@@ -317,9 +285,7 @@ class UserPivotValues{
         //A random pivot has been created, it cannot exist
         //Create new pivot and add value
         this.user_pivot_value[pivot_dom_name] = [];
-        var new_object = await this.create_user_value(pivot_dom_name, new_value);
-        //This pivot is new, it has to be merge with others
-        this.create_merges(key_domain, pivot_dom_name, new_value);
+        await this.create_user_value(pivot_dom_name, new_value);
     }
 }
 
