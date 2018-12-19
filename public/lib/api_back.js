@@ -16,9 +16,6 @@ var prefix_url_domaine = "website/domaine_a_remplacer";
 
 var url_create_domaine = endpoint_back_up + prefix_url_domaine
 
-//Récupération d'une cle domaine en V2
-var url_get_cle_domaine_v2 = endpoint_back_up + prefix_url_domaine + "/key/key_to_replace" ;
-
 var url_get_keys_v5 = endpoint_back_up + prefix_url_domaine + "/keys";
 
 //Méthode POST = création, Méthode PUT = MAJ
@@ -52,19 +49,7 @@ function xhttp_create_domaine(domaine){
     return xhttp_back_api;
 }
 
-// #GET Retourne un objet http request pour récupérer un objet comportant clé et pivot en v2
-function xhttp_get_cle_domaine_v2(key){
-    var xhttp_back_api = new XMLHttpRequest();
-    var url_final = url_get_cle_domaine_v2.replace("domaine_a_remplacer", window.location.host, true);
-    url_final = url_final.replace("key_to_replace", key, true);
-    console.debug("Final url: " + url_final);
-    xhttp_back_api.open("GET", url_final);
-	xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp_back_api.send();
-    return xhttp_back_api;
-}
-
-// #GET Retourne un objet http request pour récupérer un objet comportant clé et pivot en v2
+// #GET Retourne un objet http request pour récupérer les clés d'un domaine
 function xhttp_get_keys_v5(domain){
     var xhttp_back_api = new XMLHttpRequest();
     var url_final = url_get_keys_v5.replace("domaine_a_remplacer", window.location.host, true);
