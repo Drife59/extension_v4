@@ -65,7 +65,7 @@ function fill_field(input, domain) {
 
     if(website_front_db.has_key(domain, key_domain)){
 
-        var pivot_reference = website_front_db.get_pivot(domain, key_domain);
+        var pivot_reference = website_front_db.get_referent_pivot(domain, key_domain);
         var user_value = user_front_db.value_restitution(pivot_reference)
         
         //Found a suitable value to fill

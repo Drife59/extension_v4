@@ -183,8 +183,8 @@ class WebsiteDb {
         }
     }
 
-    //get corresponding pivot for a key if exist and if association score if high enough
-    get_pivot(domain, key) {
+    //get corresponding referent pivot for a key if exist and if association score if high enough
+    get_referent_pivot(domain, key) {
         if (!this.has_key(domain, key)) {
             console.warn("Key " + key + " for domain " + domain + " does not exist.");
             return null;
