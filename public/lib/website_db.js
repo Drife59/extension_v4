@@ -72,6 +72,8 @@ var exemple_domain_key = `
 //Config just for dev, to be deleted later
 
 //Website front DB setup
+
+/*
 var MIN_KEY_PIVOT_WEIGHT = -100;
 var MAX_KEY_PIVOT_WEIGHT = 100;
 
@@ -109,6 +111,8 @@ var CODE_FULL_BIRTHDATE = "full_birthdate";
 
 //This code in is in db, does not correspond to "pivot name" field
 var CODE_RESEARCH = "research";
+*/
+
 
 var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME,
     CODE_POSTALCODE, CODE_CITY, CODE_MAIN_FULL_ADDRESS,
