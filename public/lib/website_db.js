@@ -34,12 +34,12 @@ var exemple_domain_key = `
 {
     "www.cdiscount.com": {
 		"nom_fam_txt": {
-			"family_name": 100,
+			"family_name": 70,
 			"first_name": 30,
             "day_of_birth": 0,
             "month_of_birth": -100,
             "year_of_birth": -100,
-			"pivot_referent": "nom"
+			"pivot_referent": null
         },
         "prenom_txt": {
 			"family_name": 60,
@@ -52,7 +52,7 @@ var exemple_domain_key = `
         "jour_naissance_txt": {
 			"family_name": 30,
 			"first_name": 0,
-            "day_of_birth": 100,
+            "day_of_birth": 70,
             "month_of_birth": 70,
             "year_of_birth": 0,
 			"pivot_referent": "jour_naissance"
@@ -72,8 +72,6 @@ var exemple_domain_key = `
 //Config just for dev, to be deleted later
 
 //Website front DB setup
-
-/*
 var MIN_KEY_PIVOT_WEIGHT = -100;
 var MAX_KEY_PIVOT_WEIGHT = 100;
 
@@ -111,7 +109,7 @@ var CODE_FULL_BIRTHDATE = "full_birthdate";
 
 //This code in is in db, does not correspond to "pivot name" field
 var CODE_RESEARCH = "research";
-*/
+
 
 
 var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME,
@@ -191,13 +189,23 @@ class WebsiteDb {
         }
         var pivot_weight = this.get_max_weight(domain, key);
 
-        console.log(JSON.stringify(pivot_weight));
+        //console.log(JSON.stringify(pivot_weight));
 
         //Weight is not enough
         if (pivot_weight["weight"] < VALIDATED_ASSOCIATION_WEIGHT) {
             return null;
         }
         return pivot_weight["pivot"];
+    }
+
+    //Compute and set in front db the referent pivot in dedicated field
+    compute_and_set_referent_pivot(domain, key){
+        this.website_key[domain][key]["pivot_referent"] = this.get_referent_pivot(domain, key);
+    }
+
+    //Set pivot referent for a key. Don't compute anything
+    set_referent_pivot(domain, key, pivot){
+        this.website_key[domain][key]["pivot_referent"] = pivot;
     }
 
     has_domain(domain) {
@@ -310,7 +318,7 @@ class WebsiteDb {
                     continue;
                 }
                 if (Object.keys(pivot_weight).includes(pivot_website)) {
-                    console.log("Don't modify " + pivot_website + " :  continue");
+                    //console.log("Don't modify " + pivot_website + " :  continue");
                     continue;
                 }
                 weights_website[pivot_website] = weights_website[pivot_website] - coeff * pivot_weight[pivot_user];
@@ -319,7 +327,10 @@ class WebsiteDb {
                     weights_website[pivot_website] = MIN_KEY_PIVOT_WEIGHT;
             }
         }
+        //Finally update weight
         this.website_key[domain][key] = weights_website;
+        //For the key, calculate again reference pivot
+        this.compute_and_set_referent_pivot(domain, key);
     }
 }
 
@@ -333,7 +344,40 @@ var test_website_key = new WebsiteDb(exemple_domain_key);
 //console.log(test_website_key.website_key["www.cdiscount.com"]["prenom_txt"]);
 //test_website_key.apply_pivot_on_key("www.cdiscount.com", "prenom_txt", test_pivot_weight);
 //console.log(test_website_key.get_max_weight("www.cdiscount.com", "prenom_txt"));
-//console.log(test_website_key.website_key["www.cdiscount.com"]["prenom_txt"]);
+
+//Check on referent pivot calculation
+console.log(test_website_key.get_referent_pivot("www.cdiscount.com", "nom_fam_txt"));
+console.log(test_website_key.get_referent_pivot("www.cdiscount.com", "prenom_txt"));
+console.log(test_website_key.get_referent_pivot("www.cdiscount.com", "jour_naissance_txt"));
+
+//For now, nom_fam_txt has a pivot referent null
+console.log("Before set referent pivot, nom_fam_txt: \n");
+console.log(test_website_key.website_key["www.cdiscount.com"]["nom_fam_txt"]);
+
+test_website_key.compute_and_set_referent_pivot("www.cdiscount.com", "nom_fam_txt");
+
+//Expecting having pivot_referent as nom_fam_txt
+console.log("After set referent pivot, nom_fam_txt: \n");
+console.log(test_website_key.website_key["www.cdiscount.com"]["nom_fam_txt"]);
+
+//Set back family name pivot reference as null
+test_website_key.website_key["www.cdiscount.com"]["nom_fam_txt"]["pivot_referent"] = null;
+
+test_pivot_weight = {
+    "first_name": "1",
+    "family_name": "2"
+}
+//expecting again pivot reference as null
+console.log("\nSet back pivot referent as null");
+console.log(test_website_key.website_key["www.cdiscount.com"]["nom_fam_txt"]);
+test_website_key.apply_pivot_on_key("www.cdiscount.com", "nom_fam_txt", test_pivot_weight);
+
+console.log("\nExecuting apply_pivot_on_key on nom_fam_txt");
+console.log(test_website_key.website_key["www.cdiscount.com"]["nom_fam_txt"]);
+
+
+
+//Check with full fonctionnality as call API
 
 
 //Test call API real life
