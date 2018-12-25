@@ -69,8 +69,15 @@ var exemple_domain_key = `
 }
 `
 
-//Config just for dev, to be deleted later
+//----------
+//config dev
+//----------
 
+//Config just for dev, to be commented later
+//This config is needed for tests as we don't want to import config file here
+//Careful, this as a copy paste from config file
+
+/*
 //Website front DB setup
 var MIN_KEY_PIVOT_WEIGHT = -100;
 var MAX_KEY_PIVOT_WEIGHT = 100;
@@ -110,7 +117,11 @@ var CODE_FULL_BIRTHDATE = "full_birthdate";
 //This code in is in db, does not correspond to "pivot name" field
 var CODE_RESEARCH = "research";
 
+*/
 
+// -----------------
+// End of config dev
+// -----------------
 
 var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME,
     CODE_POSTALCODE, CODE_CITY, CODE_MAIN_FULL_ADDRESS,
@@ -188,8 +199,6 @@ class WebsiteDb {
             return null;
         }
         var pivot_weight = this.get_max_weight(domain, key);
-
-        //console.log(JSON.stringify(pivot_weight));
 
         //Weight is not enough
         if (pivot_weight["weight"] < VALIDATED_ASSOCIATION_WEIGHT) {
@@ -318,7 +327,6 @@ class WebsiteDb {
                     continue;
                 }
                 if (Object.keys(pivot_weight).includes(pivot_website)) {
-                    //console.log("Don't modify " + pivot_website + " :  continue");
                     continue;
                 }
                 weights_website[pivot_website] = weights_website[pivot_website] - coeff * pivot_weight[pivot_user];
