@@ -133,9 +133,9 @@ var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME,
 
 //Function below just for test, to be deleted later
 //Return number from string as float
-function string_to_float(string_number) {
+/*function string_to_float(string_number) {
     return parseFloat(string_number.replace(",", "."));
-}
+}*/
 
 class WebsiteDb {
     constructor(domain_key_text) {
