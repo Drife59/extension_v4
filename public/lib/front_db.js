@@ -298,17 +298,16 @@ class UserPivotValues {
     */
     get_pivot_weight_from_values(value_researched) {
         var result = {};
-        console.log("Looking for value: " + value_researched);
+        console.log("[Get_pivot_weight_from_values]: Looking for user value: " + value_researched);
         for (var pivot in this.user_pivot_value) {
             for (var user_value_index = 0; user_value_index < this.user_pivot_value[pivot].length; user_value_index++) {
                 var line_user_value = this.user_pivot_value[pivot][user_value_index];
                 if (line_user_value["value_text"] == value_researched) {
-                    console.log("Pivot " + pivot + " found with weight: " + line_user_value[CODE_USER_VALUE_WEIGTH]);
                     result[pivot] = line_user_value[CODE_USER_VALUE_WEIGTH];
                 }
             }
         }
-        console.log("Final result: " + JSON.stringify(result, null, 4));
+        console.log("Pivot weight found: " + JSON.stringify(result, null, 4));
         return result;
     }
 }
