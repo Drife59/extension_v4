@@ -128,7 +128,11 @@ function apply_corail_design(input){
 
 //Return number from string as float
 function string_to_float(string_number){
-	return parseFloat(string_number.replace(",", "."));
+	if (typeof string_number === 'string' || string_number instanceof String){
+		return parseFloat(string_number.replace(",", "."));
+	}
+	//not a string, return it as it is
+	return string_number;
 }
 
 //Get all siblings of an elt
