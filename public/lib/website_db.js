@@ -354,6 +354,9 @@ var test_website_key = new WebsiteDb(exemple_domain_key);
 //test_website_key.apply_pivot_on_key("www.cdiscount.com", "prenom_txt", test_pivot_weight);
 //console.log(test_website_key.get_max_weight("www.cdiscount.com", "prenom_txt"));
 
+
+/*
+
 //Check on referent pivot calculation
 console.log(test_website_key.get_referent_pivot("www.cdiscount.com", "nom_fam_txt"));
 console.log(test_website_key.get_referent_pivot("www.cdiscount.com", "prenom_txt"));
@@ -384,7 +387,7 @@ test_website_key.apply_pivot_on_key("www.cdiscount.com", "nom_fam_txt", test_piv
 console.log("\nExecuting apply_pivot_on_key on nom_fam_txt");
 console.log(test_website_key.website_key["www.cdiscount.com"]["nom_fam_txt"]);
 
-
+*/
 
 //Check with full fonctionnality as call API
 
