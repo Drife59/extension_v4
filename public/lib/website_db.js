@@ -278,7 +278,7 @@ class WebsiteDb {
                 }
             }
         }
-        console.log("new key content : " + JSON.stringify(new_key_content, 4));
+        console.log("[create_key] New key was created with content : " + JSON.stringify(new_key_content, 4));
         this.website_key[domain][key] = new_key_content;
         return true;
     }
@@ -339,6 +339,7 @@ class WebsiteDb {
         this.website_key[domain][key] = weights_website;
         //For the key, calculate again reference pivot
         this.compute_and_set_referent_pivot(domain, key);
+        console.log("[apply_pivot_on_key] New key content " + JSON.stringify(this.website_key[domain][key]));
     }
 }
 
