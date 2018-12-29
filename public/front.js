@@ -157,11 +157,15 @@ function load_website_db_from_back() {
 
     var xhttp_website_db = xhttp_get_keys_v5(domain);
 
+    //website_front_db must exists in all cases
+    if( typeof website_front_db === "undefined")
+        website_front_db = new WebsiteDb("{}");
+
+
     xhttp_website_db.onreadystatechange = function () {
         //website exists
         if (xhttp_website_db.readyState == 4 && xhttp_website_db.status == 200) {
             //TODO: make this more persistent with localStorage
-            website_front_db = new WebsiteDb("{}");
             website_front_db.add_domain_from_back(domain, xhttp_website_db.responseText)
         }
         else if (xhttp_website_db.readyState == 4 && xhttp_website_db.status != 200) {
