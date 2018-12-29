@@ -329,7 +329,10 @@ class WebsiteDb {
                 if (Object.keys(pivot_weight).includes(pivot_website)) {
                     continue;
                 }
-                weights_website[pivot_website] = weights_website[pivot_website] - coeff * pivot_weight[pivot_user];
+                //Minus exact adding for increase pivot
+                //weights_website[pivot_website] = weights_website[pivot_website] - coeff * pivot_weight[pivot_user];
+                //Minus 25 as in spec
+                weights_website[pivot_website] = weights_website[pivot_website] - 25;
 
                 if (weights_website[pivot_website] < MIN_KEY_PIVOT_WEIGHT)
                     weights_website[pivot_website] = MIN_KEY_PIVOT_WEIGHT;
