@@ -103,12 +103,12 @@ function init_domaine() {
             if(window.location.host != data.domain){
                 console.warn("Domain has changed. Seeding corresponding keys. Updating domain");
                 chrome.storage.sync.set({"domain": window.location.host});
-                this.create_domain(domain);
+                this.create_domain(data.domain);
             }
         } else {
             console.log("domain does not exist, setting it in storage and ram");
             chrome.storage.sync.set({"domain": window.location.host});
-            this.create_domain(domain);
+            this.create_domain(window.location.host);
         }
     });
 }
