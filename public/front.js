@@ -75,17 +75,16 @@ function bind_selects() {
     }
 }
 
-//Cré un domaine en base si il n'existe pas déjà
-function init_domaine() {
-    var xhttp_dom1 = xhttp_get_domaine(window.location.host);
+function create_domain(domain){
+    var xhttp_dom1 = xhttp_get_domaine(domain);
 
     xhttp_dom1.onreadystatechange = function () {
         if (xhttp_dom1.readyState == 4 && xhttp_dom1.status == 200)
-            console.info("Le domaine existe déjà !");
+            console.info("[create domain]: Domain already exist !");
         else if (xhttp_dom1.readyState == 4 && xhttp_dom1.status == 404) {
             if (enable_front_log)
-                console.info("Le domaine n'existe pas, demande de création");
-            var xhttp_dom2 = xhttp_create_domaine(window.location.host);
+                console.info("[create domain]: Domain " + domain + " was created");
+            var xhttp_dom2 = xhttp_create_domaine(domain);
             xhttp_dom2.onreadystatechange = function () {
                 if (xhttp_dom2.readyState == 4) {
                     if (enable_front_log)
@@ -94,6 +93,24 @@ function init_domaine() {
             }
         }
     }
+}
+
+//Crée un domaine en base si il n'existe pas déjà
+function init_domaine() {
+    chrome.storage.sync.get("domain", function (data) {
+        if (typeof data.domain !== 'undefined') {
+            console.warn("domain exist: " + data.domain);
+            if(window.location.host != data.domain){
+                console.warn("Domain has changed. Seeding corresponding keys. Updating domain");
+                chrome.storage.sync.set({"domain": window.location.host});
+                this.create_domain(domain);
+            }
+        } else {
+            console.log("domain does not exist, setting it in storage and ram");
+            chrome.storage.sync.set({"domain": window.location.host});
+            this.create_domain(domain);
+        }
+    });
 }
 
 
@@ -171,6 +188,7 @@ function load_website_db_from_back() {
         else if (xhttp_website_db.readyState == 4 && xhttp_website_db.status != 200) {
             if (enable_front_log)
                 console.error("Could not load website keys: " + domain);
+                
         }
     }
 }
