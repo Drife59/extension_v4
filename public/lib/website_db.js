@@ -280,6 +280,34 @@ class WebsiteDb {
         }
         console.log("[create_key] New key was created with content : " + JSON.stringify(new_key_content, 4));
         this.website_key[domain][key] = new_key_content;
+
+
+        //Make request against back
+        //-------------------------
+
+        var key_obj = createEmptyKeyRequestObject(key);
+
+        if( heuristic_ref !== undefined){
+            //code_heuristique is the corresponding pivot we found
+            key_obj["pivot_reference"] = heuristic_ref;
+            //We associate this pivot with the corresponding weight
+            key_obj[code_heuristique] = HEURISTIC_BASE_WEIGHT;
+        }
+        //Creating key without knowing the referent pivot
+        else{
+            key_obj["pivot_reference"] = null;
+        }
+            
+        console.log("Key obj we are going to send: " + JSON.stringify(key_obj, null, 4));
+
+        var xhttp_dom_create = xhttp_add_key_domain(key_obj);
+
+        xhttp_dom_create.onreadystatechange = function () {
+            if (xhttp_dom_create.readyState == 4 && xhttp_dom_create.status == 200) {
+                console.info("Create key " + key + 
+                    " on domain with matching heuristic " + heuristic_ref);
+            }
+        }
         return true;
     }
 
@@ -376,8 +404,14 @@ class WebsiteDb {
         var key_request = JSON.parse(JSON.stringify(this.website_key[domain][key]));
         key_request["cle"] = key;
 
-        console.log("[apply_pivot_on_key]: Updating back-end with object: " + JSON.stringify(key_request));
-        xhttp_put_key_domain(key_request);
+        //We need to wait a bit for the key update, because it could have just be created
+        //The server need some time to be able to fully create it and retrieve it
+        setTimeout(function(){ 
+            console.log("[apply_pivot_on_key]: Updating back-end with object: " + JSON.stringify(key_request));
+            xhttp_put_key_domain(key_request);
+        },1000);
+        //console.log("[apply_pivot_on_key]: Updating back-end with object: " + JSON.stringify(key_request));
+        //xhttp_put_key_domain(key_request);
     }
 
     //Display the weight associated with key, rounded
