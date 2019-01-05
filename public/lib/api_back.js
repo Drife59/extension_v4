@@ -20,6 +20,7 @@ var url_get_keys_v5 = endpoint_back_up + prefix_url_domaine + "/keys";
 
 //Méthode POST = création, Méthode PUT = MAJ
 var url_add_key_domaine = endpoint_back_up + prefix_url_domaine + "/key";
+var url_put_key_domaine = url_add_key_domaine;
 
 
 /*
@@ -88,6 +89,17 @@ function xhttp_add_key_domain(key_obj){
     var xhttp_back_api = new XMLHttpRequest();
     var url_final = url_add_key_domaine.replace("domaine_a_remplacer", window.location.host, true);
     xhttp_back_api.open("POST", url_final);
+    xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    
+    //V5: send a complex key object request containing all data
+    xhttp_back_api.send(JSON.stringify(key_obj));
+    return xhttp_back_api;
+}
+
+function xhttp_put_key_domain(key_obj){
+    var xhttp_back_api = new XMLHttpRequest();
+    var url_final = url_put_key_domaine.replace("domaine_a_remplacer", window.location.host, true);
+    xhttp_back_api.open("PUT", url_final);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     
     //V5: send a complex key object request containing all data

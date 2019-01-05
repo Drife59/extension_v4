@@ -314,7 +314,7 @@ class WebsiteDb {
             }
 
             //Increase pivot found
-            var new_weight = old_weight + coeff * pivot_weight[pivot_user];
+            var new_weight = Math.round(old_weight + coeff * pivot_weight[pivot_user]);
 
             if (new_weight > MAX_KEY_PIVOT_WEIGHT) {
                 new_weight = MAX_KEY_PIVOT_WEIGHT;
@@ -343,6 +343,17 @@ class WebsiteDb {
         //For the key, calculate again reference pivot
         this.compute_and_set_referent_pivot(domain, key);
         console.log("[apply_pivot_on_key] New key content " + this.display_key_weight(domain, key));
+
+
+        //Update Back part
+        //----------------
+
+        //Clone key to update
+        var key_request = JSON.parse(JSON.stringify(this.website_key[domain][key]));
+        key_request["cle"] = key;
+
+        console.log("[apply_pivot_on_key]: Updating back-end with object: " + JSON.stringify(key_request));
+        xhttp_put_key_domain(key_request);
     }
 
     //Display the weight associated with key, rounded
