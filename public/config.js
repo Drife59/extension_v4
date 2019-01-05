@@ -179,6 +179,8 @@ var HEURISTIC_BASE_WEIGHT = 45;
 
 var CODE_PIVOT_REFERENT = "pivot_referent";
 
+var WEIGHT_MINIMUM_RESTITUTION = 60;
+
 //Personalisation du js
 //A mettre dans un fichier à part si cette partie grossi
 

@@ -299,9 +299,11 @@ class WebsiteDb {
             pivot_weight[i] = string_to_float(pivot_weight[i]);
         }
 
-        //list all pivots found from user value
-        var pivots_user = Object.keys(pivot_weight);
+        if( Object.keys(pivot_weight).length > 0){
+            console.info("Pivot weight found for user value. Executing \"classical\" algoritm");
+        }
 
+        //If pivot weight (from user) is not empty, apply classical algoritm
         for (var pivot_user in pivot_weight) {
 
             var old_weight = weights_website[pivot_user];
@@ -338,6 +340,28 @@ class WebsiteDb {
                     weights_website[pivot_website] = MIN_KEY_PIVOT_WEIGHT;
             }
         }
+
+        //If pivot weight (from user) is empty, set all weight as minus 5 if weight < restitution weight (60 as today)
+        if( Object.keys(pivot_weight).length === 0){
+            console.info("No pivot weight found for user value. Executing \"minus 5\" algoritm");
+
+            //Decrease others pivots, if not present for user value
+            for (var pivot_website in weights_website) {
+                if (pivot_website == CODE_PIVOT_REFERENT) {
+                    continue;
+                }
+                if (Object.keys(pivot_weight).includes(pivot_website)) {
+                    continue;
+                }
+                if( weights_website[pivot_website] < WEIGHT_MINIMUM_RESTITUTION){
+                    weights_website[pivot_website] = weights_website[pivot_website] - 5;
+                }
+
+                if (weights_website[pivot_website] < MIN_KEY_PIVOT_WEIGHT)
+                    weights_website[pivot_website] = MIN_KEY_PIVOT_WEIGHT;
+            }
+        }
+
         //Finally update weight
         this.website_key[domain][key] = weights_website;
         //For the key, calculate again reference pivot
