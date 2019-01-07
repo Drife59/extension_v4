@@ -286,14 +286,6 @@ class UserPivotValues {
         }
     }
 
-    //Apply a change for input when pivot does not exist in domain
-    async change_value_pivot_non_trouve_domaine(key_domain, pivot_dom_name, new_value) {
-        //A random pivot has been created, it cannot exist
-        //Create new pivot and add value
-        this.user_pivot_value[pivot_dom_name] = [];
-        await this.create_user_value(pivot_dom_name, new_value);
-    }
-
     /*Implement a method to return pivot found for user value
       associated with weight.
       Result form:
