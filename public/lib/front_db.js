@@ -171,7 +171,7 @@ class UserPivotValues {
 
     //calculate new weigth for value associated with pivot
     //add value if not found
-    async update_value_for_pivot(pivot_name, value) {
+    async update_value_for_pivot(pivot_name, value, current_pivot_weight) {
         if (!this.has_value_for_pivot(pivot_name)) {
             this.logger.error("FrontDB / update_value_for_pivot: " + pivot_name + " cannot be found");
             return false;
@@ -188,8 +188,13 @@ class UserPivotValues {
             }
         }
 
-        if (!value_found) {
+        if (!value_found && current_pivot_weight >= WEIGHT_MINIMUM_RESTITUTION) {
+            console.info("[update_value_for_pivot] Current key pivot weight " + current_pivot_weight + 
+                " is > " + WEIGHT_MINIMUM_RESTITUTION + ", adding new value for pivot");
             await this.add_value_for_pivot(pivot_name, value);
+        }else if(!value_found && current_pivot_weight < WEIGHT_MINIMUM_RESTITUTION){
+            console.info("[update_value_for_pivot] Current key pivot weight " + current_pivot_weight + 
+            " is < " + WEIGHT_MINIMUM_RESTITUTION + ", cannot add new value for pivot");
         }
     }
 
@@ -251,7 +256,7 @@ class UserPivotValues {
 
 
     //Apply a change for input when pivot exist in domain
-    async change_value_pivot_trouve_domaine(key_domain, pivot_dom_name, new_value) {
+    async change_value_pivot_trouve_domaine(key_domain, pivot_dom_name, new_value, current_pivot_weight) {
 
         //User has already this pivot, check if highest value has changed
         if (this.has_value_for_pivot(pivot_dom_name)) {
@@ -260,7 +265,7 @@ class UserPivotValues {
             this.logger.log("Values associated: " + this.get_values_as_string(pivot_dom_name));
 
             var old_highest_value = this.get_value_highest_weigth(pivot_dom_name);
-            await this.update_value_for_pivot(pivot_dom_name, new_value);
+            await this.update_value_for_pivot(pivot_dom_name, new_value, current_pivot_weight);
             var new_highest_value = this.get_value_highest_weigth(pivot_dom_name);
 
             this.logger.log("Front DB: User has pivot " + pivot_dom_name + ". " +
@@ -273,9 +278,10 @@ class UserPivotValues {
         //Create new pivot and add value
         else {
             this.user_pivot_value[pivot_dom_name] = [];
-            var new_object = await this.create_user_value(pivot_dom_name, new_value);
-            this.logger.log("Nouvel objet user value: " + new_object);
-
+            if( current_pivot_weight >= WEIGHT_MINIMUM_RESTITUTION ){
+                var new_object = await this.create_user_value(pivot_dom_name, new_value);
+                this.logger.log("[change_value_pivot_trouve_domaine] creating object user value: " + new_object);
+            }
             this.logger.log("Cannot find pivot " + pivot_dom_name + " for user.");
         }
     }
