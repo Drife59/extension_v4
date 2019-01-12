@@ -128,14 +128,17 @@ class UserPivotValues {
     }
 
     //update weigth and delete user value if weigth is too low
-    decrease_and_delete_user_value(pivot_name, id_weight_update, weigth_to_add) {
+    decrease_and_delete_user_value(pivot_name, id_weight_update, weigth_to_add, user_value_id_exclude) {
         //For the sake of clarity
         var user_values = this.user_pivot_value[pivot_name];
 
         //Will contain only element with weigth big enough (workaround to del elt)
         var new_user_value_list = [];
         for (var i = 0; i < user_values.length; i++) {
-            user_values[i][CODE_USER_VALUE_WEIGTH] = user_values[i][CODE_USER_VALUE_WEIGTH] * coeff_decrease_user_value;
+            //We can exclude a value from decreasing 
+            if(user_values[i][CODE_USER_VALUE_ID] != user_value_id_exclude){
+                user_values[i][CODE_USER_VALUE_WEIGTH] = user_values[i][CODE_USER_VALUE_WEIGTH] * coeff_decrease_user_value;
+            }
 
             if (user_values[i][CODE_USER_VALUE_ID] == id_weight_update) {
                 user_values[i][CODE_USER_VALUE_WEIGTH] = user_values[i][CODE_USER_VALUE_WEIGTH] + weigth_to_add;
@@ -164,8 +167,9 @@ class UserPivotValues {
         var new_object = await this.create_user_value(pivot_name, value);
 
         this.logger.log("Adding: " + JSON.stringify(new_object, null, 4));
-        this.decrease_and_delete_user_value(pivot_name, 0, 0);
-        this.user_pivot_value[pivot_name].push(new_object);
+        //Don't decrease this new value, sending fourth parameter
+        this.decrease_and_delete_user_value(pivot_name, 0, 0, new_object[CODE_USER_VALUE_ID]);
+        //this.user_pivot_value[pivot_name].push(new_object);
         return true;
     }
 
@@ -173,7 +177,7 @@ class UserPivotValues {
     //add value if not found
     async update_value_for_pivot(pivot_name, value, current_pivot_weight) {
         if (!this.has_value_for_pivot(pivot_name)) {
-            this.logger.error("FrontDB / update_value_for_pivot: " + pivot_name + " cannot be found");
+            console.error("FrontDB / update_value_for_pivot: " + pivot_name + " cannot be found");
             return false;
         }
 
@@ -183,7 +187,7 @@ class UserPivotValues {
         for (var i = 0; i < values.length; i++) {
             if (values[i][CODE_USER_VALUE_TEXT] == value) {
                 //Don't update weigth here, decrease_and_delete_user_value will do :)
-                this.decrease_and_delete_user_value(pivot_name, values[i][CODE_USER_VALUE_ID], WEIGTH_ADD_FOR_CHANGE);
+                this.decrease_and_delete_user_value(pivot_name, values[i][CODE_USER_VALUE_ID], WEIGTH_ADD_FOR_CHANGE, -1);
                 value_found = true;
             }
         }
@@ -249,7 +253,7 @@ class UserPivotValues {
             }
         }
 
-        this.decrease_and_delete_user_value(pivot_dom_name, user_value_resti[CODE_USER_VALUE_ID], WEIGTH_ADD_FOR_RESTITUTION);
+        this.decrease_and_delete_user_value(pivot_dom_name, user_value_resti[CODE_USER_VALUE_ID], WEIGTH_ADD_FOR_RESTITUTION, -1);
 
         return user_value_resti[CODE_USER_VALUE_TEXT];
     }
