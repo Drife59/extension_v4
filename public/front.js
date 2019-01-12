@@ -103,7 +103,7 @@ function init_domaine() {
             if(window.location.host != data.domain){
                 console.warn("Domain has changed. Seeding corresponding keys. Updating domain");
                 chrome.storage.sync.set({"domain": window.location.host});
-                create_domain(data.domain);
+                create_domain(window.location.host);
             }
         } else {
             console.log("domain does not exist, setting it in storage and ram");
