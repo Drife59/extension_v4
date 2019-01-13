@@ -381,9 +381,13 @@ class WebsiteDb {
                 if (Object.keys(pivot_weight).includes(pivot_website)) {
                     continue;
                 }
-                if( weights_website[pivot_website] < WEIGHT_MINIMUM_RESTITUTION){
+                //@Julien
+                //Il faut que -5 puisse s'appliquer jusqu'à 100...parce que sinon, cela veut dire qu'un score ne peut jamais baisser une fois qu'il est >60 
+                //(sauf si la valeur est présente dans un autre pivot, ce qui n'est pas forcement le cas)...et cela peut être dangereux pour l'apprentissage.
+                // So deleting condition
+                //if( weights_website[pivot_website] < WEIGHT_MINIMUM_RESTITUTION){
                     weights_website[pivot_website] = weights_website[pivot_website] - 5;
-                }
+                //}
 
                 if (weights_website[pivot_website] < MIN_KEY_PIVOT_WEIGHT)
                     weights_website[pivot_website] = MIN_KEY_PIVOT_WEIGHT;
