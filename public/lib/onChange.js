@@ -68,31 +68,26 @@ function changeAlgo(evt){
 				* }
 			*/
 			var pivot_weight = user_front_db.get_pivot_weight_from_values(valeur_utilisateur);
+			var pivots_with_values = user_front_db.get_pivot_with_values();
 
 			//Key exist and there is a referent pivot
 			if(key_object && website_front_db.get_referent_pivot(domain, key_domain) != null){
 				console.info("Key and pivot referent found: " + key_domain + ": " + pivot_referent);
-
-				//For the sake of clarity, creating temp var
-				var weight_pivot_max = website_front_db.get_max_weight(domain, key_domain);
-				console.log("Maximum pivot: " + weight_pivot_max["pivot"]);
-				console.log("Maximum weight: " + weight_pivot_max["weight"]);
-
-				user_front_db.change_value_pivot_trouve_domaine(key_domain, pivot_referent, valeur_utilisateur, weight_pivot_max["weight"]);		
-				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight);
+				user_front_db.change_value_pivot_trouve_domaine(key_domain, pivot_referent, valeur_utilisateur);		
+				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
 			}
 			//Key exist but no pivot referent
 			else if(key_object){
 				console.log("No pivot referent for key domain " + key_domain);
 				//get pivot and weight associated with user value
-				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight);
+				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
 			}
-			//Key does not exist at all, don't create user value
+			//Key does not exist at all
 			else{
 				console.log("No key at all for domain key: " + key_domain);
 				//heuristic weight is undefined
-				website_front_db.create_key(domain, key_domain);
-				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight);
+				website_front_db.create_key(domain, key_domain)
+				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
 
 				//Don't add user value for now
 				//user_front_db.change_value_pivot_non_trouve_domaine(key_domain, new_pivot, valeur_utilisateur);

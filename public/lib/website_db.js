@@ -319,7 +319,7 @@ class WebsiteDb {
      *      "prenom": "4.5"
      * }
      */
-    apply_pivot_on_key(domain, key, pivot_weight) {
+    apply_pivot_on_key(domain, key, pivot_weight, pivots_with_values) {
         var weights_website = this.website_key[domain][key];
 
         //Ensure weight are float
@@ -383,11 +383,13 @@ class WebsiteDb {
                 }
                 //@Julien
                 //Il faut que -5 puisse s'appliquer jusqu'à 100...parce que sinon, cela veut dire qu'un score ne peut jamais baisser une fois qu'il est >60 
-                //(sauf si la valeur est présente dans un autre pivot, ce qui n'est pas forcement le cas)...et cela peut être dangereux pour l'apprentissage.
-                // So deleting condition
-                //if( weights_website[pivot_website] < WEIGHT_MINIMUM_RESTITUTION){
-                    weights_website[pivot_website] = weights_website[pivot_website] - 5;
-                //}
+                //(sauf si la valeur est présente dans un autre pivot, ce qui n'est pas forcement le cas)...et cela peut être dangereux pour l'apprentissage                // So deleting condition
+                
+                //Don't minus 5 if pivots has values for user
+                if (pivots_with_values.includes(pivot_website)) {
+                    continue;
+                }
+                weights_website[pivot_website] = weights_website[pivot_website] - 5;
 
                 if (weights_website[pivot_website] < MIN_KEY_PIVOT_WEIGHT)
                     weights_website[pivot_website] = MIN_KEY_PIVOT_WEIGHT;

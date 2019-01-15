@@ -309,7 +309,21 @@ class UserPivotValues {
                 }
             }
         }
-        console.log("Pivot weight found: " + JSON.stringify(result, null, 4));
+        console.log("[Get_pivot_weight_from_values]:Pivot weight found: " + JSON.stringify(result, null, 4));
+        return result;
+    }
+
+    //Return all pivots with a values associated, whatever it is
+    get_pivot_with_values(){
+        var result = [];
+        for (var pivot in this.user_pivot_value) {
+            var pivot_list_values = this.user_pivot_value[pivot];
+            //Return pivot if not empty
+            if (pivot_list_values.length > 0) {
+                result.push(pivot);
+            }
+        }
+        console.log("[get_pivot_with_values]: Pivot found with values: " + JSON.stringify(result, null, 4));
         return result;
     }
 }
