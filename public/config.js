@@ -69,15 +69,33 @@ var CODE_CARDEXPIRYYEAR = "cardexpiryyear";
 //V4.0 Heuristic
 var CODE_FULL_BIRTHDATE = "full_birthdate";
 
+//V5.0 Heuristic
+
+//Only street and name street
+var CODE_ADDRESS = "address";
+//lastname + firstname
+var CODE_FULL_NAME = "full_name";
+var CODE_PASSPORT_NUMBER = "passport_number";
+var CODE_IDENTITY_CARD = "identity_card";
+var CODE_SOCIAL_NUMBER = "social_number";
+//Plaque immat
+var CODE_DRIVING_LICENCE = "driving_licence";
+var CODE_LICENCE_PLATE = "licence_plate";
+var CODE_COUNTRY = "country";
+var CODE_IBAN = "iban";
+
+
 //This code in is in db, does not correspond to "pivot name" field
 var CODE_RESEARCH = "research";
 
-var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME,
-                    CODE_POSTALCODE, CODE_CITY, CODE_MAIN_FULL_ADDRESS,
+var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME, CODE_FULL_NAME,
+                    CODE_POSTALCODE, CODE_CITY, CODE_MAIN_FULL_ADDRESS, CODE_ADDRESS, CODE_COUNTRY,
                     CODE_CELLPHONE, CODE_HOMEPHONE,
                     CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH, CODE_FULL_BIRTHDATE,
                     CODE_COMPANY,
-                    CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR
+                    CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR, CODE_IBAN,
+                    CODE_PASSPORT_NUMBER, CODE_IDENTITY_CARD, CODE_SOCIAL_NUMBER, 
+                    CODE_DRIVING_LICENCE, CODE_LICENCE_PLATE, 
     ]
 
 
@@ -104,6 +122,19 @@ heuristic_ponderation[CODE_CARDEXPIRYYEAR] = 1;
 //V4.0 heuristique
 heuristic_ponderation[CODE_FULL_BIRTHDATE] = 1;
 
+//V5.0 heuristique 
+heuristic_ponderation[CODE_ADDRESS] = 1;
+heuristic_ponderation[CODE_FULL_NAME] = 1;
+heuristic_ponderation[CODE_PASSPORT_NUMBER] = 1;
+heuristic_ponderation[CODE_IDENTITY_CARD] = 1;
+heuristic_ponderation[CODE_SOCIAL_NUMBER] = 1;
+heuristic_ponderation[CODE_DRIVING_LICENCE] = 1;
+heuristic_ponderation[CODE_LICENCE_PLATE] = 1;
+heuristic_ponderation[CODE_COUNTRY] = 1;
+heuristic_ponderation[CODE_IBAN] = 1;
+
+
+
 heuristic_ponderation[CODE_RESEARCH] = 1;
 
 // Define keywords per heuristic we will look for
@@ -122,7 +153,7 @@ var phone_string = ["phone", "telephone", "mobile","portable", "telefon", "telpo
 //- ATTENTION, il y a souvent ADDRESS dans le tel ! (ou adr ou addr) (exception de la règle de 2) ?
 var email_string = ["email","courriel", "login","mail"];
 //- ATTENTION, il y a souvent ADDRESS dans le mail ! (ou adr ou addr) (exception de la règle de 2) ?
-var address_string = ["address", "adresse", "adress", "voie", "street", "addr", "adr", "strasse"];
+var full_address_string = ["address", "adresse", "adress", "voie", "street", "addr", "adr", "strasse"];
 //- Il va falloir être intelligent pour différencier full_adress & address_number + address_voie + adresse_etc.
 //Look for a single birthmonth field
 var monthbirth_string = ["monthbirth", "monthbirth", "month_of_birth", "moisnaissance", "dnmois", "moisbday", "birthdaymonth","dob-month", "dob_month", 
@@ -147,6 +178,18 @@ var cardexpirydateyear_string = ["card-details-expiry-date-year", "card_expdate_
 
 // New heuristique from V4.0
 var full_birthdate = ["date de naissance", "date_naissance", "date-naissance"]
+
+// New heuristique from V5.0
+var full_name_string = ["full_name"];
+var address_string = [];
+var passport_number_string = ["passport"];
+var identity_card_string = [];
+var social_number_string = [];
+var driving_licence_string = ["driving_licence"];
+var licence_plate_string = [];
+var country_string = ["country"];
+var iban_string = ["iban"];
+
 
 var INFINITE_WEIGTH = 1000;
 //Define nb occurence to force field type

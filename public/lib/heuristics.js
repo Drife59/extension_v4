@@ -159,7 +159,7 @@ function get_occurence_main_email_field(field){
 
 function get_occurence_main_full_address_field(field){
 	check_not_select(field,0);
-	return nb_keyword_in_field(field, address_string, heuristic_ponderation[CODE_MAIN_FULL_ADDRESS]);
+	return nb_keyword_in_field(field, full_address_string, heuristic_ponderation[CODE_MAIN_FULL_ADDRESS]);
 }
 
 function get_occurence_daybirth(field){
@@ -199,6 +199,40 @@ function get_occurence_cardexpirydateyear(field){
 function get_occurence_full_birthdate(field){
 	return nb_keyword_in_field(field, full_birthdate, heuristic_ponderation[CODE_FULL_BIRTHDATE]);
 }
+
+//V5.0 Heuristic
+function get_occurence_full_name(field){
+	return nb_keyword_in_field(field, full_name_string, heuristic_ponderation[CODE_FULL_NAME]);
+}
+
+function get_occurence_address_string(field){
+	return nb_keyword_in_field(field, address_string, heuristic_ponderation[CODE_FULL_NAME]);
+}
+
+function get_occurence_full_name(field){
+	return nb_keyword_in_field(field, full_name_string, heuristic_ponderation[CODE_ADDRESS]);
+}
+
+// New heuristique from V5.0
+//var full_name_string = ["full_name"];
+var address_string = [];
+var passport_number_string = ["passport"];
+var identity_card_string = [];
+var social_number_string = [];
+var driving_licence_string = ["driving_licence"];
+var licence_plate_string = [];
+var country_string = ["country"];
+var iban_string = ["iban"];
+
+heuristic_ponderation[CODE_FULL_NAME] = 1;
+heuristic_ponderation[CODE_PASSPORT_NUMBER] = 1;
+heuristic_ponderation[CODE_IDENTITY_CARD] = 1;
+heuristic_ponderation[CODE_SOCIAL_NUMBER] = 1;
+heuristic_ponderation[CODE_DRIVING_LICENCE] = 1;
+heuristic_ponderation[CODE_LICENCE_PLATE] = 1;
+heuristic_ponderation[CODE_COUNTRY] = 1;
+heuristic_ponderation[CODE_IBAN]
+
 
 //Define code heuristic / function matching
 //This NEED to be updated when creating a new heuristic
