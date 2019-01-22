@@ -201,37 +201,44 @@ function get_occurence_full_birthdate(field){
 }
 
 //V5.0 Heuristic
+function get_occurence_address_string(field){
+	return nb_keyword_in_field(field, address_string, heuristic_ponderation[CODE_ADDRESS]);
+}
+
 function get_occurence_full_name(field){
 	return nb_keyword_in_field(field, full_name_string, heuristic_ponderation[CODE_FULL_NAME]);
 }
 
-function get_occurence_address_string(field){
-	return nb_keyword_in_field(field, address_string, heuristic_ponderation[CODE_FULL_NAME]);
+function get_occurence_passport_number(field){
+	return nb_keyword_in_field(field, passport_number_string, heuristic_ponderation[CODE_PASSPORT_NUMBER]);
 }
 
-function get_occurence_full_name(field){
-	return nb_keyword_in_field(field, full_name_string, heuristic_ponderation[CODE_ADDRESS]);
+function get_occurence_identity_card(field){
+	return nb_keyword_in_field(field, identity_card_string, heuristic_ponderation[CODE_IDENTITY_CARD]);
+}
+
+function get_occurence_social_number(field){
+	return nb_keyword_in_field(field, social_number_string, heuristic_ponderation[CODE_SOCIAL_NUMBER]);
+}
+
+function get_occurence_driving_licence(field){
+	return nb_keyword_in_field(field, licence_plate_string, heuristic_ponderation[CODE_LICENCE_PLATE]);
+}
+
+function get_occurence_licence_plate(field){
+	return nb_keyword_in_field(field, driving_licence_string, heuristic_ponderation[CODE_DRIVING_LICENCE]);
+}
+
+function get_occurence_country_string(field){
+	return nb_keyword_in_field(field, country_string, heuristic_ponderation[CODE_COUNTRY]);
+}
+
+function get_occurence_iban(field){
+	return nb_keyword_in_field(field, iban_string, heuristic_ponderation[CODE_IBAN]);
 }
 
 // New heuristique from V5.0
 //var full_name_string = ["full_name"];
-var address_string = [];
-var passport_number_string = ["passport"];
-var identity_card_string = [];
-var social_number_string = [];
-var driving_licence_string = ["driving_licence"];
-var licence_plate_string = [];
-var country_string = ["country"];
-var iban_string = ["iban"];
-
-heuristic_ponderation[CODE_FULL_NAME] = 1;
-heuristic_ponderation[CODE_PASSPORT_NUMBER] = 1;
-heuristic_ponderation[CODE_IDENTITY_CARD] = 1;
-heuristic_ponderation[CODE_SOCIAL_NUMBER] = 1;
-heuristic_ponderation[CODE_DRIVING_LICENCE] = 1;
-heuristic_ponderation[CODE_LICENCE_PLATE] = 1;
-heuristic_ponderation[CODE_COUNTRY] = 1;
-heuristic_ponderation[CODE_IBAN]
 
 
 //Define code heuristic / function matching
@@ -258,6 +265,17 @@ heuristic_code_function_match[CODE_CARDEXPIRYYEAR] = get_occurence_cardexpirydat
 
 //V4.0 heuristic
 heuristic_code_function_match[CODE_FULL_BIRTHDATE] = get_occurence_full_birthdate;
+
+//V5.0 heuristic
+heuristic_code_function_match[CODE_ADDRESS] = get_occurence_address_string;
+heuristic_code_function_match[CODE_FULL_NAME] = get_occurence_full_name;
+heuristic_code_function_match[CODE_PASSPORT_NUMBER] = get_occurence_passport_number;
+heuristic_code_function_match[CODE_IDENTITY_CARD] = get_occurence_identity_card;
+heuristic_code_function_match[CODE_SOCIAL_NUMBER] = get_occurence_social_number;
+heuristic_code_function_match[CODE_DRIVING_LICENCE] = get_occurence_driving_licence;
+heuristic_code_function_match[CODE_LICENCE_PLATE] = get_occurence_licence_plate;
+heuristic_code_function_match[CODE_COUNTRY] = get_occurence_country_string;
+heuristic_code_function_match[CODE_IBAN] = get_occurence_iban;
 
 
 //Loop on all heuristic available and find/set weight
