@@ -1,4 +1,4 @@
-//var front_db = require('./front_db.js');
+//var front_db = require('./user_db.js');
 var config = require('../config.js');
 
 /*

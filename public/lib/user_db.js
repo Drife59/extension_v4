@@ -3,7 +3,7 @@ Projet Corail
 Auteur: Benjamin GRASSART
 Année: 2018
 
-front_db.js
+user_db.js
 
 Define classes which are objet db for front app.
 CAREFUL: this librairy create user user value and update it.
