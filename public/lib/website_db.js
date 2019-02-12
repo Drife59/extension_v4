@@ -400,7 +400,7 @@ class WebsiteDb {
         this.website_key[domain][key] = weights_website;
         //For the key, calculate again reference pivot
         this.compute_and_set_referent_pivot(domain, key);
-        console.log("[apply_pivot_on_key] New key content " + this.display_key_weight(domain, key));
+        console.log("[apply_pivot_on_key] After update, key content is " + this.display_key_weight(domain, key));
 
 
         //Update Back part
@@ -413,11 +413,9 @@ class WebsiteDb {
         //We need to wait a bit for the key update, because it could have just be created
         //The server need some time to be able to fully create it and retrieve it
         setTimeout(function(){ 
-            console.log("[apply_pivot_on_key]: Updating back-end with object: " + JSON.stringify(key_request));
+            console.log("[apply_pivot_on_key]: Updating back-end with object key.");
             xhttp_put_key_domain(key_request);
         },1000);
-        //console.log("[apply_pivot_on_key]: Updating back-end with object: " + JSON.stringify(key_request));
-        //xhttp_put_key_domain(key_request);
     }
 
     //Display the weight associated with key, rounded

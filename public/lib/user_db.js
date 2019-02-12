@@ -272,8 +272,7 @@ class UserPivotValues {
             await this.update_value_for_pivot(pivot_dom_name, new_value, current_pivot_weight);
             var new_highest_value = this.get_value_highest_weigth(pivot_dom_name);
 
-            this.logger.log("Front DB: User has pivot " + pivot_dom_name + ". " +
-                "After updating values, pivot: \n" + this.get_values_as_string(pivot_dom_name));
+            this.logger.log("[User db][change_value_pivot_trouve_domaine]: pivot-values updated: \n" + this.get_values_as_string(pivot_dom_name));
 
             if (old_highest_value != new_highest_value) {
                 this.logger.log("Found " + pivot_dom_name + " for user. Value with highest weight has changed.");
@@ -323,7 +322,6 @@ class UserPivotValues {
                 result.push(pivot);
             }
         }
-        console.log("[get_pivot_with_values]: Pivot found with values: " + JSON.stringify(result, null, 4));
         return result;
     }
 }

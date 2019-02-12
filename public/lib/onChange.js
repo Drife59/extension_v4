@@ -57,7 +57,7 @@ function changeAlgo(evt){
 			var key_object     = website_front_db.has_key(domain, key_domain);
 			var pivot_referent = website_front_db.get_referent_pivot(domain, key_domain);
 
-			console.log("Key object = " + JSON.stringify(key_object, null, 4));
+            console.info("Processing domain key: " + key_domain);
 			console.log("pivot referent = " + pivot_referent);
 
 			//In all the three cases below, we update key pivot weight, using an objecf from user front db
@@ -72,19 +72,19 @@ function changeAlgo(evt){
 
 			//Key exist and there is a referent pivot
 			if(key_object && website_front_db.get_referent_pivot(domain, key_domain) != null){
-				console.info("Key and pivot referent found: " + key_domain + ": " + pivot_referent);
+				console.info("Pivot referent found: " + pivot_referent);
 				user_front_db.change_value_pivot_trouve_domaine(key_domain, pivot_referent, valeur_utilisateur);		
 				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
 			}
 			//Key exist but no pivot referent
 			else if(key_object){
-				console.log("No pivot referent for key domain " + key_domain);
+				console.log("No pivot referent found");
 				//get pivot and weight associated with user value
 				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
 			}
 			//Key does not exist at all
 			else{
-				console.log("No key at all for domain key: " + key_domain);
+				console.log("No key at all for domain key, adding it.");
 				//heuristic weight is undefined
 				website_front_db.create_key(domain, key_domain)
 				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
