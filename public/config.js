@@ -13,12 +13,6 @@ Ce module est à importer en premier dans le manifest.json.
 // General configuration
 // ---------------------
 
-//Scrappe la page web et affiche les infos sur les champs trouvés
-analyse_page_web = false;
-
-//Bind l'écoute des champs clients pour exécution des algo
-bind_client = true;
-
 //Type de champ input à traiter par le logiciel
 var type_to_include = ["text", "email", "tel",
                        "date", "time", "datetime", "number", "color", "url"];
@@ -34,12 +28,6 @@ var separateur_cle = "_";
 // --------------
 
 var display_full_technical_log = false;
-
-var enable_heuristic_log = true;
-var enable_front_db_log = true;
-var enable_load_log = false;
-var enable_change_log = false;
-
 
 // ------------------------------
 // Config for heuristic algoritms
