@@ -94,7 +94,7 @@ function nb_keyword_in_field(field, words, indice_ponderation){
 
             //update score with label found
             if( labelFinal !== undefined && labelFinal.toLowerCase().indexOf(words[i]) != -1){
-                console.info("Adding coeff because of keyword: " + words[i] + " for label: " + labelFinal);
+                //console.info("Adding coeff because of keyword: " + words[i] + " for label: " + labelFinal);
                 nb_occurences = nb_occurences + 1*indice_ponderation;
             }
         }
@@ -324,7 +324,6 @@ function check_top_weight(weight_heuristic, code_hrtc,  old_code_biggest_weigth,
     if(weight_heuristic[code_hrtc] > value_biggest_weight && 
         weight_heuristic[code_hrtc] < max_weigth_tolookfor){
         code_biggest_weight = code_hrtc
-        console.log("Set new biggest weigth value: " + weight_heuristic[code_hrtc] + " corresponding to " + code_biggest_weight);
         return code_biggest_weight;
     }
     return old_code_biggest_weigth;
@@ -360,7 +359,7 @@ function find_heuristics_corresponding_to_weigth(weight_heuristic, weigth){
             results.push(code_hrtc);
         }
     }
-    console.log("Heuristic code corresponding to weigth " + weigth + " are : " + JSON.stringify(results));
+    console.info("Heuristic code corresponding to weigth " + weigth + " are : " + JSON.stringify(results));
     return results;
 }
 
@@ -382,7 +381,7 @@ function set_value_create_key(input, cle_dom, user_value, code_heuristique){
 
     xhttp_dom_create.onreadystatechange = function () {
         if (xhttp_dom_create.readyState == 4 && xhttp_dom_create.status == 200) {
-            console.info("Create key " + cle_dom + 
+            console.log("Create key " + cle_dom + 
                 " on domain with matching heuristic " + code_heuristique);
         }
     }
