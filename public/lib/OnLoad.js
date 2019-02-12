@@ -9,13 +9,12 @@ Défini les algoritmes lors de l'évènement onLoad,
 Pour précharger les valeurs.
 */
 
-var OnLoadLogger = new Logger(CODE_LOAD);
 
 //Simulate that the user did really modify the field himself
 //If not used when should be, issue occur, like wrong design,
 //or impossibility to validate form
 function simulate_user_change(input, user_value) {
-    OnLoadLogger.log("Algo load: simulate user change on field: " + construit_domaine_cle(input));
+    console.log("Algo load: simulate user change on field: " + construit_domaine_cle(input));
     //Simulate click and focus on the field. Usefull for some form
     var event = new Event('click');
     input.dispatchEvent(event);
@@ -42,7 +41,7 @@ function mark_heuristic_used(input, key_domain) {
     var corresponding_heuristic = get_heuristic_to_use(input, key_domain, weight_heuristic, absolute_top_weigth);
 
     if (heurisitic_code_error_list.includes(corresponding_heuristic) == false) {
-        OnLoadLogger.log("Algo load : mark " + key_domain + " as already filled.");
+        console.log("Algo load : mark " + key_domain + " as already filled.");
         heuristic_activated[corresponding_heuristic] = true;
     }
 }
@@ -54,7 +53,7 @@ function fill_field(input, domain) {
 
     //Careful ! a select is always not empty    
     if (!is_empty(input) && input.tagName != "SELECT") {
-        OnLoadLogger.info("Field associated with Key domain + " + key_domain +
+        console.info("Field associated with Key domain + " + key_domain +
             " is already filled from website. Don't fill it.");
         //If field is already filled by original website, avoid corresponding heuristic
         mark_heuristic_used(input, key_domain);
@@ -70,11 +69,11 @@ function fill_field(input, domain) {
         
         //Found a suitable value to fill
         if (user_value != null && user_value != ' ' && user_value != '') {
-            OnLoadLogger.log("Loading value <" + user_value + "> from user for pivot: " + pivot_reference);
+            console.log("Loading value <" + user_value + "> from user for pivot: " + pivot_reference);
             simulate_user_change(input, user_value);
             mark_heuristic_used(input, key_domain);
         }else{
-            OnLoadLogger.log("User does not have a value for pivot: " + pivot_reference);
+            console.log("User does not have a value for pivot: " + pivot_reference);
         }
     }
 
@@ -89,8 +88,9 @@ function fill_fields(email) {
     //New loading, we should reset heuristic utilisation
     heuristic_activated = {}
 
-    OnLoadLogger.log("Algo load: loading input field...");
-    console.log("Content in website db: " + JSON.stringify(website_front_db.website_key, null, 4));
+    console.log("Algo load: loading input field...");
+    //console.log("Content in website db: " + JSON.stringify(website_front_db.website_key, null, 4));
+    console.log(website_front_db.get_all_key_minimal_display());
 
     var domain = window.location.host;
 

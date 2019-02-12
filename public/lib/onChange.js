@@ -10,14 +10,12 @@ c'est à dire qu'on détecte que l'utilisateur a mis à jour une valeur.
 Cf config manifest.json
 */
 
-var OnChangeLogger = new Logger(CODE_CHANGE);
-
 
 
 //Main algo for event change detected on input field
 function changeAlgo(evt){
 	var champ = evt.target
-	OnChangeLogger.log("Algo change: field " + champ.tagName + " modified: " + HtmlEltToString(champ));
+	console.log("Algo change: field " + champ.tagName + " modified: " + HtmlEltToString(champ));
 	var key_domain = construit_domaine_cle(champ);
 	var valeur_utilisateur = champ.value.capitalize();
 
@@ -27,19 +25,19 @@ function changeAlgo(evt){
 	}
 
 	if( !is_valid_field(champ)){
-		OnChangeLogger.log("Algo change: cannot identify properly field " + champ.id);
+		console.log("Algo change: cannot identify properly field " + champ.id);
 		return;
 	}
 
 	//Don't process empty field
 	if( is_empty(champ)){
-		OnChangeLogger.log("Algo change: field is empty, no process.");
+		console.log("Algo change: field is empty, no process.");
 		return;
 	}
 
 	//Don't process paiement card
 	if( check_card(valeur_utilisateur)){
-		OnChangeLogger.log("Algo change: no process executed for card number " + valeur_utilisateur);
+		console.log("Algo change: no process executed for card number " + valeur_utilisateur);
 		return;
 	}
 
@@ -93,7 +91,7 @@ function changeAlgo(evt){
 				//user_front_db.change_value_pivot_non_trouve_domaine(key_domain, new_pivot, valeur_utilisateur);
 			}
 		}else{
-			OnChangeLogger.error("Algo change: Critical cannot find current user. Please log in.");
+			console.error("Algo change: Critical cannot find current user. Please log in.");
 		}
 	});
 }

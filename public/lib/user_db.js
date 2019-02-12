@@ -52,7 +52,6 @@ class UserPivotValues {
             }
         }
 
-        console = new Logger(CODE_FRONT_DB);
         console.log("User values loaded from back: \n" + user_pivot_value);
     }
 
