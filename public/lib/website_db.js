@@ -152,9 +152,6 @@ class WebsiteDb {
                 }
             }
         }
-
-        //this.logger = new Logger(CODE_FRONT_DB);
-        //this.logger.log("User values loaded from back: \n" + user_pivot_value);
     }
 
     /*
@@ -328,7 +325,8 @@ class WebsiteDb {
         }
 
         if( Object.keys(pivot_weight).length > 0){
-            console.info("Pivot weight found for user value. Executing \"classical\" algoritm");
+            console.info("Matching between pivot value and entered value");
+            console.log("Pivot weight found for user value. Executing \"classical\" algoritm");
         }
 
         //If pivot weight (from user) is not empty, apply classical algoritm

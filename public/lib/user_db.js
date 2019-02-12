@@ -52,8 +52,8 @@ class UserPivotValues {
             }
         }
 
-        this.logger = new Logger(CODE_FRONT_DB);
-        this.logger.log("User values loaded from back: \n" + user_pivot_value);
+        console = new Logger(CODE_FRONT_DB);
+        console.log("User values loaded from back: \n" + user_pivot_value);
     }
 
     //This is needed because user_pivot_value object from back
@@ -121,7 +121,7 @@ class UserPivotValues {
         new_object[CODE_USER_VALUE_ID] = json_response["userValueId"];
         new_object[CODE_USER_VALUE_TEXT] = value;
         new_object[CODE_USER_VALUE_WEIGTH] = WEIGTH_DEFAULT_CREATION;
-        this.logger.log("create_user_value: creating: " + JSON.stringify(new_object, null, 4));
+        console.log("create_user_value: creating: " + JSON.stringify(new_object, null, 4));
         this.user_pivot_value[pivot_name].push(new_object);
 
         return new_object;
@@ -166,7 +166,7 @@ class UserPivotValues {
 
         var new_object = await this.create_user_value(pivot_name, value);
 
-        this.logger.log("Adding: " + JSON.stringify(new_object, null, 4));
+        console.log("Adding: " + JSON.stringify(new_object, null, 4));
         //Don't decrease this new value, sending fourth parameter
         this.decrease_and_delete_user_value(pivot_name, 0, 0, new_object[CODE_USER_VALUE_ID]);
         //this.user_pivot_value[pivot_name].push(new_object);
@@ -265,17 +265,17 @@ class UserPivotValues {
         //User has already this pivot, check if highest value has changed
         if (this.has_value_for_pivot(pivot_dom_name)) {
 
-            this.logger.log("Found pivot " + pivot_dom_name + "for user.");
-            this.logger.log("Values associated: " + this.get_values_as_string(pivot_dom_name));
+            console.log("Found pivot " + pivot_dom_name + "for user.");
+            console.log("Values associated: " + this.get_values_as_string(pivot_dom_name));
 
             var old_highest_value = this.get_value_highest_weigth(pivot_dom_name);
             await this.update_value_for_pivot(pivot_dom_name, new_value, current_pivot_weight);
             var new_highest_value = this.get_value_highest_weigth(pivot_dom_name);
 
-            this.logger.log("[User db][change_value_pivot_trouve_domaine]: pivot-values updated: \n" + this.get_values_as_string(pivot_dom_name));
+            console.log("[User db][change_value_pivot_trouve_domaine]: pivot-values updated: \n" + this.get_values_as_string(pivot_dom_name));
 
             if (old_highest_value != new_highest_value) {
-                this.logger.log("Found " + pivot_dom_name + " for user. Value with highest weight has changed.");
+                console.log("Found " + pivot_dom_name + " for user. Value with highest weight has changed.");
             }
         }
         //Create new pivot and add value
@@ -283,9 +283,9 @@ class UserPivotValues {
             this.user_pivot_value[pivot_dom_name] = [];
             if( current_pivot_weight >= WEIGHT_MINIMUM_RESTITUTION ){
                 var new_object = await this.create_user_value(pivot_dom_name, new_value);
-                this.logger.log("[change_value_pivot_trouve_domaine] creating object user value: " + new_object);
+                console.log("[change_value_pivot_trouve_domaine] creating object user value: " + new_object);
             }
-            this.logger.log("Cannot find pivot " + pivot_dom_name + " for user.");
+            console.log("Cannot find pivot " + pivot_dom_name + " for user.");
         }
     }
 
