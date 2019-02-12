@@ -89,7 +89,11 @@ function fill_fields(email) {
     heuristic_activated = {}
 
     console.log("Algo load: loading input field...");
-    //console.log("Content in website db: " + JSON.stringify(website_front_db.website_key, null, 4));
+
+    //technical log is very verbose, must be explicit required for display
+    if(display_full_technical_log){
+        console.log("Content in website db: " + JSON.stringify(website_front_db.website_key, null, 4));
+    }
     console.log(website_front_db.get_all_key_minimal_display());
 
     var domain = window.location.host;

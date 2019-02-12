@@ -33,6 +33,8 @@ var separateur_cle = "_";
 // Log parameters
 // --------------
 
+var display_full_technical_log = false;
+
 var enable_heuristic_log = true;
 var enable_front_db_log = true;
 var enable_load_log = false;
@@ -226,6 +228,8 @@ var WEIGHT_MINIMUM_RESTITUTION = 60;
 
 //Weight minimum to display pivot-weight in log for a key 
 var KEY_WEIGHT_MINIMAL_DISPLAY = 1;
+
+
 
 //Personalisation du js
 //A mettre dans un fichier à part si cette partie grossi
