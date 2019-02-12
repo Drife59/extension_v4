@@ -224,6 +224,9 @@ var CODE_PIVOT_REFERENT = "pivot_referent";
 
 var WEIGHT_MINIMUM_RESTITUTION = 60;
 
+//Weight minimum to display pivot-weight in log for a key 
+var KEY_WEIGHT_MINIMAL_DISPLAY = 1;
+
 //Personalisation du js
 //A mettre dans un fichier à part si cette partie grossi
 

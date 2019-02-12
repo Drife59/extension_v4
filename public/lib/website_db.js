@@ -154,6 +154,28 @@ class WebsiteDb {
         }
     }
 
+    //Get a string to display for a key, 
+    get_notable_weight(key_content){
+        var res_obj = {}
+        for (var pivot in key_content) {
+            if (pivot == CODE_PIVOT_REFERENT || key_content[pivot] > 0) {
+                res_obj[pivot] = key_content[pivot];
+            }
+        }
+        return res_obj;
+    }
+
+    get_all_key_minimal_display(){
+        var result = {};
+        for (var i in this.website_key) {
+            console.log("website: " + i);
+            for (var key_domain in this.website_key[i]){
+                result[key_domain] = this.get_notable_weight(this.website_key[i][key_domain]);
+            }
+        }
+        return JSON.stringify(result, null, 4);
+    }
+
     /*
         Define primitive method for manipulating data
         ---------------------------------------------
