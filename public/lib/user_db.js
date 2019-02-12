@@ -6,7 +6,7 @@ Année: 2018
 user_db.js
 
 Define classes which are objet db for front app.
-CAREFUL: this librairy create user user value and update it.
+CAREFUL: this library create user user value and update it.
 It NEVER create pivot or manage it.
 */
 
@@ -52,13 +52,29 @@ class UserPivotValues {
             }
         }
 
-        console.log("User values loaded from back: \n" + user_pivot_value);
+        if(display_full_technical_log){
+            console.log("User values loaded from back: \n" + user_pivot_value);
+        }
     }
 
     //This is needed because user_pivot_value object from back
     //Does not include current_user
     set_current_user(email) {
         this.current_user = email;
+    }
+
+    //Generate a string easy to read
+    get_minimal_display(){
+        var display_obj = {};
+        for (var pivot in this.user_pivot_value) {
+            display_obj[pivot] = [];
+            for (var j = 0; j < this.user_pivot_value[pivot].length; j++) {
+                var elt_str = this.user_pivot_value[pivot][j][CODE_USER_VALUE_TEXT] + ":" + 
+                    this.user_pivot_value[pivot][j][CODE_USER_VALUE_WEIGTH];  
+                display_obj[pivot].push(elt_str)
+            }
+        }
+        return JSON.stringify(display_obj,null,4);
     }
 
     /*
@@ -168,7 +184,6 @@ class UserPivotValues {
         console.log("Adding: " + JSON.stringify(new_object, null, 4));
         //Don't decrease this new value, sending fourth parameter
         this.decrease_and_delete_user_value(pivot_name, 0, 0, new_object[CODE_USER_VALUE_ID]);
-        //this.user_pivot_value[pivot_name].push(new_object);
         return true;
     }
 

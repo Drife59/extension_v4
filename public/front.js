@@ -151,6 +151,7 @@ function load_user_db_from_back() {
                     //user_front_db is load for each page each time. Not very effective...
                     user_front_db = new UserPivotValues(xhttp_front_db.responseText);
                     user_front_db.set_current_user(current_user);
+                    console.info("Loaded user values from back: " + user_front_db.get_minimal_display());
                 }
                 else if (xhttp_front_db.readyState == 4 && xhttp_front_db.status != 200) {
                     if (enable_front_log)
