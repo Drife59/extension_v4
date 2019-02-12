@@ -25,7 +25,6 @@
     ],
     "js": [
       "config.js",
-      "lib/log.js",
       "lib/api_back.js",
       "lib/utils.js",
       "lib/heuristics.js",
