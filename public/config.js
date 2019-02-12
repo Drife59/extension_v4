@@ -123,7 +123,7 @@ heuristic_ponderation[CODE_CARDEXPIRYYEAR] = 1;
 heuristic_ponderation[CODE_FULL_BIRTHDATE] = 1;
 
 //V5.0 heuristique 
-heuristic_ponderation[CODE_ADDRESS] = 1;
+heuristic_ponderation[CODE_ADDRESS] = 0.49;
 heuristic_ponderation[CODE_FULL_NAME] = 1;
 heuristic_ponderation[CODE_PASSPORT_NUMBER] = 1;
 heuristic_ponderation[CODE_IDENTITY_CARD] = 1;
@@ -153,7 +153,7 @@ var phone_string = ["phone", "telephone", "mobile","portable", "telefon", "telpo
 //- ATTENTION, il y a souvent ADDRESS dans le tel ! (ou adr ou addr) (exception de la règle de 2) ?
 var email_string = ["email","courriel", "login","mail"];
 //- ATTENTION, il y a souvent ADDRESS dans le mail ! (ou adr ou addr) (exception de la règle de 2) ?
-var full_address_string = ["address", "adresse", "adress", "voie", "street", "addr", "adr", "strasse"];
+var full_address_string = [];
 //- Il va falloir être intelligent pour différencier full_adress & address_number + address_voie + adresse_etc.
 //Look for a single birthmonth field
 var monthbirth_string = ["monthbirth", "monthbirth", "month_of_birth", "moisnaissance", "dnmois", "moisbday", "birthdaymonth","dob-month", "dob_month", 
@@ -181,7 +181,7 @@ var full_birthdate = ["date de naissance", "date_naissance", "date-naissance"]
 
 // New heuristique from V5.0
 var full_name_string = ["full_name"];
-var address_string = [];
+var address_string = ["address", "adresse", "adress", "voie", "street", "addr", "adr", "strasse"];
 var passport_number_string = ["passport"];
 var identity_card_string = [];
 var social_number_string = [];
