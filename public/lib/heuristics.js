@@ -13,7 +13,8 @@ Define heuristics, used for a new website to guess type of field.
 var all_heuristics = [CODE_FIRSTNAME, CODE_LASTNAME, CODE_POSTALCODE, CODE_CITY, CODE_CELLPHONE,
     CODE_MAIN_EMAIL, CODE_MAIN_FULL_ADDRESS, CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH,
     //V3.3 code 
-    CODE_COMPANY, CODE_HOMEPHONE, CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR,
+    //CODE_COMPANY, CODE_HOMEPHONE, CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR,
+    CODE_COMPANY, CODE_HOMEPHONE,
     //V4.0 code
     CODE_FULL_BIRTHDATE];
 
@@ -181,6 +182,7 @@ function get_occurence_homephone(field){
 	return nb_keyword_in_field(field, homephone_string, heuristic_ponderation[CODE_HOMEPHONE]);
 }
 
+/*
 function get_occurence_cvv(field){
 	return nb_keyword_in_field(field, cvv_string, heuristic_ponderation[CODE_CVV_STRING]);
 }
@@ -191,7 +193,7 @@ function get_occurence_cardexpirydateyear(field){
 
 function get_occurence_cardexpirydateyear(field){
 	return nb_keyword_in_field(field, cardexpirydateyear_string, heuristic_ponderation[CODE_CARDEXPIRYYEAR]);
-}
+}*/
 
 //V4.0 Heuristic
 function get_occurence_full_birthdate(field){
@@ -257,9 +259,10 @@ heuristic_code_function_match[CODE_YEAR_BIRTH] = get_occurence_yearbirth;
 //V3.3 heuristic
 heuristic_code_function_match[CODE_COMPANY] = get_occurence_company;
 heuristic_code_function_match[CODE_HOMEPHONE] = get_occurence_homephone;
-heuristic_code_function_match[CODE_CVV_STRING] = get_occurence_cvv;
+/*heuristic_code_function_match[CODE_CVV_STRING] = get_occurence_cvv;
 heuristic_code_function_match[CODE_CARDEXPIRYMONTH] = get_occurence_cardexpirydateyear;
 heuristic_code_function_match[CODE_CARDEXPIRYYEAR] = get_occurence_cardexpirydateyear;
+*/ 
 
 //V4.0 heuristic
 heuristic_code_function_match[CODE_FULL_BIRTHDATE] = get_occurence_full_birthdate;

@@ -52,9 +52,9 @@ var CODE_YEAR_BIRTH = "year_of_birth";
 //V3.3 Heuristic
 var CODE_COMPANY = "company";
 var CODE_HOMEPHONE = "homephone";
-var CODE_CVV_STRING = "cvv";
-var CODE_CARDEXPIRYMONTH = "cardexpirymonth";
-var CODE_CARDEXPIRYYEAR = "cardexpiryyear";
+//var CODE_CVV_STRING = "cvv";
+//var CODE_CARDEXPIRYMONTH = "cardexpirymonth";
+//var CODE_CARDEXPIRYYEAR = "cardexpiryyear";
 
 //V4.0 Heuristic
 var CODE_FULL_BIRTHDATE = "full_birthdate";
@@ -83,7 +83,8 @@ var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME, CODE_FULL_NA
                     CODE_CELLPHONE, CODE_HOMEPHONE,
                     CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH, CODE_FULL_BIRTHDATE,
                     CODE_COMPANY,
-                    CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR, CODE_IBAN,
+                    //CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR, CODE_IBAN,
+                    CODE_IBAN,
                     CODE_PASSPORT_NUMBER, CODE_IDENTITY_CARD, CODE_SOCIAL_NUMBER, 
                     CODE_DRIVING_LICENCE, CODE_LICENCE_PLATE, 
     ]
@@ -105,9 +106,9 @@ heuristic_ponderation[CODE_YEAR_BIRTH] = 1;
 //V3.3 heuristique
 heuristic_ponderation[CODE_COMPANY] = 1;
 heuristic_ponderation[CODE_HOMEPHONE] = 1;
-heuristic_ponderation[CODE_CVV_STRING] = 1;
-heuristic_ponderation[CODE_CARDEXPIRYMONTH] = 1;
-heuristic_ponderation[CODE_CARDEXPIRYYEAR] = 1;
+//heuristic_ponderation[CODE_CVV_STRING] = 1;
+//heuristic_ponderation[CODE_CARDEXPIRYMONTH] = 1;
+//heuristic_ponderation[CODE_CARDEXPIRYYEAR] = 1;
 
 //V4.0 heuristique
 heuristic_ponderation[CODE_FULL_BIRTHDATE] = 1;
@@ -162,9 +163,14 @@ var yearbirth_string = ["yearbirth", "yearbirth", "year_of_birth", "anneenaissan
 //New heuristics from V3.3
 var company_string = ["company", "enterprise"];
 var homephone_string = ["telephonefixe", "telephone_fixe", "homephone","home_phone"];
-var cvv_string = ["cvv", "card-details-security-number","cardsecuritynumber", "securitycode_card"];
+
+//For now, desactivate all card related stuff
+/*var cvv_string = ["cvv", "card-details-security-number","cardsecuritynumber", "securitycode_card"];
 var cardexpirydatemonth_string = ["card-details-expiry-date-month", "card_expdate_month", "monthidcardenddate", "cardexpirydatemonth", "cardexpdatemonth", "cardformdatemonth"];
 var cardexpirydateyear_string = ["card-details-expiry-date-year", "card_expdate_year", "yearidcardenddate", "cardexpirydateyear", "cardexpdateyear", "cardformdateyear"];
+*/
+
+
 
 // New heuristique from V4.0
 var full_birthdate = ["date de naissance", "date_naissance", "date-naissance"]
