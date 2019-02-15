@@ -50,7 +50,8 @@ export class Signup extends Component {
             return false;
         }
 
-        var url = "http://localhost:1665/user/" + email + "/" + password;
+        var url = config.endpoint_back_up + "/user/" + email + "/" + password;
+
         fetch(
             url, 
             {

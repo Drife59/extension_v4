@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { FooterPrevNext } from './FooterPrevNext';
 
+import { config } from './config';
+
 export class Signin extends Component {
 
     constructor(props){
@@ -32,7 +34,7 @@ export class Signin extends Component {
         //this is needed because we lose context in "fetch" callback
         var signin_component = this;
 
-        var url = "http://localhost:1665/user/" + email + "/" + password;
+        var url = config.endpoint_back_up + "/user/" + email + "/" + password;
         fetch(
             url, 
             {
