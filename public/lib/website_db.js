@@ -406,7 +406,7 @@ class WebsiteDb {
                 //(sauf si la valeur est présente dans un autre pivot, ce qui n'est pas forcement le cas)...et cela peut être dangereux pour l'apprentissage                // So deleting condition
                 
                 //Don't minus 5 if pivots has values for user
-                if (pivots_with_values.includes(pivot_website)) {
+                if (!pivots_with_values.includes(pivot_website)) {
                     continue;
                 }
                 weights_website[pivot_website] = weights_website[pivot_website] - 5;
