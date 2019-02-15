@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { FooterPrevNext } from './FooterPrevNext';
 import { validateEmail } from './utils';
 
+import { config } from './config';
+
+
 export class Signup extends Component {
 
     constructor(props){
