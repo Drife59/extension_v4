@@ -197,13 +197,13 @@ var NB_OCCURENCES_FORCE_TYPE = 100;
 
 
 //Serveur C# dev local
-var endpoint_back_up = "http://localhost:1665/"
+var endpoint_back = "http://localhost:1665/"
 
 //Serveur C# prod V4
-//var endpoint_back_up = "https://corail.me:4001/"
+//var endpoint_back = "https://corail.me:4001/"
 
 //Serveur C# integ V4
-//var endpoint_back_up = "https://corail.me:2001/"
+//var endpoint_back = "https://corail.me:2001/"
 
 
 //Website front DB setup

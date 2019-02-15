@@ -34,7 +34,7 @@ export class Signin extends Component {
         //this is needed because we lose context in "fetch" callback
         var signin_component = this;
 
-        var url = config.endpoint_back_up + "/user/" + email + "/" + password;
+        var url = config.endpoint_back + "/user/" + email + "/" + password;
         fetch(
             url, 
             {

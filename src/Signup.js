@@ -50,7 +50,7 @@ export class Signup extends Component {
             return false;
         }
 
-        var url = config.endpoint_back_up + "/user/" + email + "/" + password;
+        var url = config.endpoint_back + "/user/" + email + "/" + password;
 
         fetch(
             url, 
