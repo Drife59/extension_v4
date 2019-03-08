@@ -228,12 +228,12 @@ class WebsiteDb {
 
     //Compute and set in front db the referent pivot in dedicated field
     compute_and_set_referent_pivot(domain, key){
-        this.website_key[domain][key]["pivot_referent"] = this.get_referent_pivot(domain, key);
+        this.website_key[domain][key][CODE_PIVOT_REFERENT] = this.get_referent_pivot(domain, key);
     }
 
     //Set pivot referent for a key. Don't compute anything
     set_referent_pivot(domain, key, pivot){
-        this.website_key[domain][key]["pivot_referent"] = pivot;
+        this.website_key[domain][key][CODE_PIVOT_REFERENT] = pivot;
     }
 
     has_domain(domain) {
@@ -444,7 +444,7 @@ class WebsiteDb {
         var weights = JSON.parse(JSON.stringify(this.website_key[domain][key]));
 
         for(var weight in weights){
-            if(weight == "pivot_referent")
+            if(weight == CODE_PIVOT_REFERENT)
                 continue;
             weights[weight] = weights[weight].toFixed(2);
         }

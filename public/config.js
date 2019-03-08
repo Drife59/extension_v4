@@ -216,7 +216,7 @@ var VALIDATED_ASSOCIATION_WEIGHT = 45;
 //Weight set when creating pivot with heuristic
 var HEURISTIC_BASE_WEIGHT = 45;
 
-var CODE_PIVOT_REFERENT = "pivot_referent";
+var CODE_PIVOT_REFERENT = "pivot_reference";
 
 var WEIGHT_MINIMUM_RESTITUTION = 60;
 
