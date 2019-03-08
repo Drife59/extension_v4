@@ -154,6 +154,10 @@ class WebsiteDb {
         }
     }
 
+    get_weight_pivot(domain, key, pivot){
+        return this.website_key[domain][key][pivot];
+    }
+
     //Get a string to display for a key, 
     get_notable_weight(key_content){
         var res_obj = {}
