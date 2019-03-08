@@ -71,7 +71,9 @@ function changeAlgo(evt){
 			//Key exist and there is a referent pivot
 			if(key_object && website_front_db.get_referent_pivot(domain, key_domain) != null){
 				console.info("Pivot referent found: " + pivot_referent);
-				user_front_db.change_value_pivot_trouve_domaine(key_domain, pivot_referent, valeur_utilisateur);		
+				var weight_pivot_referent = website_front_db.get_weight_pivot(domain, key_domain,pivot_referent);
+				console.log("Weight for pivot referent: " + weight_pivot_referent);
+				user_front_db.change_value_pivot_trouve_domaine(key_domain, pivot_referent, valeur_utilisateur, weight_pivot_referent);		
 				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
 			}
 			//Key exist but no pivot referent
