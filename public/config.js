@@ -218,6 +218,8 @@ var HEURISTIC_BASE_WEIGHT = 45;
 
 var CODE_PIVOT_REFERENT = "pivot_reference";
 
+//CAUTION: when starting a new deployment, this need to be = HEURISTIC_BASE_WEIGHT
+//If not, system is stuck and no user values can be created
 var WEIGHT_MINIMUM_RESTITUTION = 60;
 
 //Weight minimum to display pivot-weight in log for a key 
