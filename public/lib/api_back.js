@@ -119,7 +119,7 @@ var prefix_url_user  = "user/user_a_remplacer";
 var prefix_url_value = "value/value_to_replace";
 
 var url_create_value_v3     = endpoint_back + prefix_url_user + "/pivot/pivot_to_replace/value/value_text";
-var url_get_object_front_db = endpoint_back + prefix_url_user + "/pivots_v3";
+var url_get_object_front_db = endpoint_back + prefix_url_user + "/uservalue_profilless";
 var url_update_weigth       = endpoint_back + prefix_url_value + "/weight/weight_to_replace";
 var url_value               = endpoint_back + prefix_url_value;
 
