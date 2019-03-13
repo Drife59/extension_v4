@@ -1,7 +1,7 @@
 /*
 Projet Corail
 Auteur: Benjamin GRASSART
-Année: 2018
+Année: 2019
 
 api_back.js
 
@@ -108,9 +108,9 @@ function xhttp_put_key_domain(key_obj){
 }
 
 /*
-############################
-Objet xhttp des utilisateurs
-############################
+########################
+Objet xhttp des user V5
+########################
 */
 
 //config API User
@@ -118,7 +118,7 @@ Objet xhttp des utilisateurs
 var prefix_url_user  = "user/user_a_remplacer";
 var prefix_url_value = "value/value_to_replace";
 
-var url_create_value_v3     = endpoint_back + prefix_url_user + "/pivot/pivot_to_replace/value/value_text";
+var url_create_value_v5     = endpoint_back + prefix_url_user + "/pivot/pivot_to_replace/value/value_text";
 var url_get_object_front_db = endpoint_back + prefix_url_user + "/uservalue_profilless";
 var url_update_weigth       = endpoint_back + prefix_url_value + "/weight/weight_to_replace";
 var url_value               = endpoint_back + prefix_url_value;
@@ -142,7 +142,7 @@ Sample to create an async function
 
 // #POST Synchronously create a user value and associate it with pivot
 async function fetch_create_value_user(email, pivot, value){
-    var url_final = url_create_value_v3.replace("user_a_remplacer", email)
+    var url_final = url_create_value_v5.replace("user_a_remplacer", email)
                                        .replace("pivot_to_replace", pivot)
                                        .replace("value_text", value);
     const rawResponse = await fetch(url_final, {
@@ -156,19 +156,6 @@ async function fetch_create_value_user(email, pivot, value){
     return content;
 }
 
-// #POST Asynchronously create a user value and associate it with pivot
-function xhttp_create_value_user(email, pivot, value){
-    var xhttp_back_api = new XMLHttpRequest();
-    var url_final = url_create_value_v3.replace("user_a_remplacer", email)
-                                 .replace("pivot_to_replace", pivot)
-                                 .replace("value_text", value);
-
-    console.log("Final url: " + url_final);
-    xhttp_back_api.open("POST", url_final, true);
-    xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp_back_api.send();
-    return xhttp_back_api;
-}
 
 // #GET Get json to initialize front db
 function xhttp_get_object_front_db(email){
@@ -200,6 +187,85 @@ function xhttp_delete_value(value_id){
     var url_final = url_value.replace("value_to_replace", value_id);
 
     xhttp_back_api.open("DELETE", url_final, true);
+    xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.send();
+    return xhttp_back_api;
+}
+
+/*
+####################
+Objet xhttp user V6
+####################
+*/
+
+var url_all_profil = endpoint_back + "user/{email}/profils";
+var url_profil = endpoint_back + "user/{email}/profil/{profilId}";
+var url_create_profil = endpoint_back + "user/{email}/profil/{profilName}";
+var url_create_value_v6 = endpoint_back + "user/{email}/pivot/{pivot_name}/value/{value_text}?profil_id={profil_id_text}";
+var url_all_values = endpoint_back + "user/{email}/values_with_profil";
+
+
+//Profil API
+//----------
+
+function xhttp_get_profils(email){
+    var xhttp_back_api = new XMLHttpRequest();
+    var url_final = url_all_profil.replace("{email}", email);
+
+    xhttp_back_api.open("GET", url_final, true);
+    xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.send();
+    return xhttp_back_api;
+}
+
+function xhttp_create_profil(email, profil_name){
+    var xhttp_back_api = new XMLHttpRequest();
+    var url_final = url_create_profil.replace("{email}", email)
+                                     .replace("{profilName}", profil_name);
+
+    xhttp_back_api.open("POST", url_final, true);
+    xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.send();
+    return xhttp_back_api;
+}
+
+function xhttp_delete_profil(email, profil_id){
+    var xhttp_back_api = new XMLHttpRequest();
+    var url_final = url_profil.replace("{email}", email)
+                                  .replace("{profilId}", profil_id);
+
+    xhttp_back_api.open("DELETE", url_final, true);
+    xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.send();
+    return xhttp_back_api;
+}
+
+
+
+//User value API
+//--------------
+
+function xhttp_create_value_user_with_profil(email, pivot_name, value, profil_id){
+    var xhttp_back_api = new XMLHttpRequest();
+    var url_final = url_create_value_v6.replace("{email}", email)
+                                 .replace("{pivot_name}", pivot_name)
+                                 .replace("{value_text}", value)
+                                 .replace("{profil_id_text}", profil_id);
+
+    console.log("Final url: " + url_final);
+    xhttp_back_api.open("POST", url_final, true);
+    xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.send();
+    return xhttp_back_api;
+}
+
+//Return all values in a flat form
+function xhttp_all_values_with_profil(email){
+    var xhttp_back_api = new XMLHttpRequest();
+    var url_final = url_all_values.replace("{email}", email);
+
+    console.log("Final url: " + url_final);
+    xhttp_back_api.open("GET", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp_back_api.send();
     return xhttp_back_api;
