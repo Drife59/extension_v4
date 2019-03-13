@@ -294,12 +294,15 @@ class UserPivotValues {
         }
         //Create new pivot and add value
         else {
+            console.log("No pivot " + pivot_dom_name + " for user in user front db.");
             this.user_pivot_value[pivot_dom_name] = [];
             if( current_pivot_weight >= WEIGHT_MINIMUM_RESTITUTION ){
                 var new_object = await this.create_user_value(pivot_dom_name, new_value);
-                console.log("[change_value_pivot_trouve_domaine] creating object user value: " + new_object);
+                console.log("[change_value_pivot_trouve_domaine] creating object user value: " + JSON.stringify(new_object, 4, null));
+            }else{
+                console.log("[change_value_pivot_trouve_domaine] User value was not created due to weak pivot weight:  "
+                    + current_pivot_weight + " < " + WEIGHT_MINIMUM_RESTITUTION);
             }
-            console.log("Cannot find pivot " + pivot_dom_name + " for user.");
         }
     }
 
