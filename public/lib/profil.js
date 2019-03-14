@@ -14,6 +14,7 @@ Define object to manage user profil
 var url_all_profil = endpoint_back + "user/{email}/profils";
 var url_profil = endpoint_back + "user/{email}/profil/{profilId}";
 var url_create_profil = endpoint_back + "user/{email}/profil/{profilName}";
+var url_update_weight = endpoint_back + "user/{email}/profil/{profilId}/weight/{weight}";
 var url_create_value_v6 = endpoint_back + "user/{email}/pivot/{pivot_name}/value/{value_text}?profil_id={profil_id_text}";
 var url_all_values = endpoint_back + "user/{email}/values_with_profil";
 
@@ -52,6 +53,20 @@ class UserProfil {
         xhttp_back_api.send();
         return xhttp_back_api;
     }
+
+    xhttp_update_weight(email, profil_id, new_weight){
+        var xhttp_back_api = new XMLHttpRequest();
+        var url_final = url_update_weight.replace("{email}", email)
+                                         .replace("{profilId}", profil_id)
+                                         .replace("{weight}", new_weight);
+    
+        xhttp_back_api.open("PUT", url_final, true);
+        xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp_back_api.send();
+        return xhttp_back_api;
+    }
+
+
     
     xhttp_delete_profil(email, profil_id){
         var xhttp_back_api = new XMLHttpRequest();
@@ -166,6 +181,7 @@ class UserProfil {
                 console.warn("[load_profils]: loading profil values for " + this.current_user + " failed.");
             }
         }
+
     }
     
 }
