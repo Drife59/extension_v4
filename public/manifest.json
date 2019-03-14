@@ -28,6 +28,7 @@
       "lib/api_back.js",
       "lib/utils.js",
       "lib/heuristics.js",
+      "lib/profil.js",
       "lib/user_db.js",
       "lib/website_db.js",
       "lib/onChange.js",
