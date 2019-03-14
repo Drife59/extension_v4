@@ -111,7 +111,7 @@ class UserProfil {
             var new_object_profil = {}
 
             new_object_profil["profilName"] = current_profil["profilName"];
-            new_object_profil["profilRF"] = "notimplemented";
+            new_object_profil["weight"] = current_profil["weight"];
 
             this.profil_values[current_profil["profilId"]] = new_object_profil;
         }
@@ -166,5 +166,6 @@ class UserProfil {
                 console.warn("[load_profils]: loading profil values for " + this.current_user + " failed.");
             }
         }
-    }  
+    }
+    
 }
