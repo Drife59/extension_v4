@@ -53,7 +53,7 @@ class UserPivotValues {
         }
 
         if(display_full_technical_log){
-            console.log("User values loaded from back: \n" + user_pivot_value);
+            console.debug("User values loaded from back: \n" + user_pivot_value);
         }
     }
 
@@ -136,7 +136,7 @@ class UserPivotValues {
         new_object[CODE_USER_VALUE_ID] = json_response["userValueId"];
         new_object[CODE_USER_VALUE_TEXT] = value;
         new_object[CODE_USER_VALUE_WEIGTH] = WEIGTH_DEFAULT_CREATION;
-        console.log("create_user_value: creating: " + JSON.stringify(new_object, null, 4));
+        console.info("create_user_value: creating: " + JSON.stringify(new_object, null, 4));
         this.user_pivot_value[pivot_name].push(new_object);
 
         return new_object;
@@ -181,7 +181,7 @@ class UserPivotValues {
 
         var new_object = await this.create_user_value(pivot_name, value);
 
-        console.log("Adding: " + JSON.stringify(new_object, null, 4));
+        console.info("Adding: " + JSON.stringify(new_object, null, 4));
         //Don't decrease this new value, sending fourth parameter
         this.decrease_and_delete_user_value(pivot_name, 0, 0, new_object[CODE_USER_VALUE_ID]);
         return true;
@@ -279,28 +279,28 @@ class UserPivotValues {
         //User has already this pivot, check if highest value has changed
         if (this.has_value_for_pivot(pivot_dom_name)) {
 
-            console.log("Found pivot " + pivot_dom_name + "for user.");
-            console.log("Values associated: " + this.get_values_as_string(pivot_dom_name));
+            console.debug("Found pivot " + pivot_dom_name + "for user.");
+            console.debug("Values associated: " + this.get_values_as_string(pivot_dom_name));
 
             var old_highest_value = this.get_value_highest_weigth(pivot_dom_name);
             await this.update_value_for_pivot(pivot_dom_name, new_value, current_pivot_weight);
             var new_highest_value = this.get_value_highest_weigth(pivot_dom_name);
 
-            console.log("[User db][change_value_pivot_trouve_domaine]: pivot-values updated: \n" + this.get_values_as_string(pivot_dom_name));
+            console.info("[User db][change_value_pivot_trouve_domaine]: pivot-values updated: \n" + this.get_values_as_string(pivot_dom_name));
 
             if (old_highest_value != new_highest_value) {
-                console.log("Found " + pivot_dom_name + " for user. Value with highest weight has changed.");
+                console.debug("Found " + pivot_dom_name + " for user. Value with highest weight has changed.");
             }
         }
         //Create new pivot and add value
         else {
-            console.log("No pivot " + pivot_dom_name + " for user in user front db.");
+            console.info("No pivot " + pivot_dom_name + " for user in user front db.");
             this.user_pivot_value[pivot_dom_name] = [];
             if( current_pivot_weight >= WEIGHT_MINIMUM_RESTITUTION ){
                 var new_object = await this.create_user_value(pivot_dom_name, new_value);
-                console.log("[change_value_pivot_trouve_domaine] creating object user value: " + JSON.stringify(new_object, 4, null));
+                console.info("[change_value_pivot_trouve_domaine] creating object user value: " + JSON.stringify(new_object, 4, null));
             }else{
-                console.log("[change_value_pivot_trouve_domaine] User value was not created due to weak pivot weight:  "
+                console.info("[change_value_pivot_trouve_domaine] User value was not created due to weak pivot weight:  "
                     + current_pivot_weight + " < " + WEIGHT_MINIMUM_RESTITUTION);
             }
         }
@@ -316,7 +316,7 @@ class UserPivotValues {
     */
     get_pivot_weight_from_values(value_researched) {
         var result = {};
-        console.log("[Get_pivot_weight_from_values]: Looking for user value: " + value_researched);
+        console.debug("[Get_pivot_weight_from_values]: Looking for user value: " + value_researched);
         for (var pivot in this.user_pivot_value) {
             for (var user_value_index = 0; user_value_index < this.user_pivot_value[pivot].length; user_value_index++) {
                 var line_user_value = this.user_pivot_value[pivot][user_value_index];
@@ -325,7 +325,7 @@ class UserPivotValues {
                 }
             }
         }
-        console.log("[Get_pivot_weight_from_values]:Pivot weight found: " + JSON.stringify(result, null, 4));
+        console.debug("[Get_pivot_weight_from_values]:Pivot weight found: " + JSON.stringify(result, null, 4));
         return result;
     }
 

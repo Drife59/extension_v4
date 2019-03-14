@@ -88,7 +88,7 @@ function create_domain(domain){
             xhttp_dom2.onreadystatechange = function () {
                 if (xhttp_dom2.readyState == 4) {
                     if (enable_front_log)
-                        console.log(xhttp_dom2.responseText);
+                        console.debug(xhttp_dom2.responseText);
                 }
             }
         }
@@ -106,7 +106,7 @@ function init_domaine() {
                 create_domain(window.location.host);
             }
         } else {
-            console.log("domain does not exist, setting it in storage and ram");
+            console.debug("domain does not exist, setting it in storage and ram");
             chrome.storage.sync.set({"domain": window.location.host});
             create_domain(window.location.host);
         }
@@ -141,8 +141,9 @@ function load_user_db_from_back() {
             //For the sake of clarity
             var current_user = data.current_user;
             if (enable_front_log)
-                console.log("Found current user " + current_user + " for loading user values from back");
+                console.debug("Found current user " + current_user + " for loading user values from back");
 
+            
             var xhttp_front_db = xhttp_get_object_front_db(current_user);
 
             xhttp_front_db.onreadystatechange = function () {
@@ -167,11 +168,11 @@ function load_user_db_from_back() {
 
 //Load current website keys into website DB
 function load_website_db_from_back() {
-    console.log("loading websites keys from back");
+    console.debug("loading websites keys from back");
     //Just for the sake of clarity
     var domain = window.location.host;
     if (enable_front_log)
-        console.log("Loading values for website " + domain);
+        console.debug("Loading values for website " + domain);
 
     var xhttp_website_db = xhttp_get_keys_v5(domain);
 
@@ -198,7 +199,7 @@ function load_website_db_from_back() {
 function lancement_app(type_evt) {
     init_domaine();
     if (enable_front_log)
-        console.log("Loading values from back...");
+        console.debug("Loading values from back...");
     //TODO: make this more rare
     load_user_db_from_back();
     load_website_db_from_back();

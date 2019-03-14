@@ -89,7 +89,7 @@ class UserProfil {
                                      .replace("{value_text}", value)
                                      .replace("{profil_id_text}", profil_id);
     
-        console.log("Final url: " + url_final);
+        console.debug("Final url: " + url_final);
         xhttp_back_api.open("POST", url_final, true);
         xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhttp_back_api.send();
@@ -101,7 +101,7 @@ class UserProfil {
         var xhttp_back_api = new XMLHttpRequest();
         var url_final = url_all_values.replace("{email}", email);
     
-        console.log("Final url: " + url_final);
+        console.debug("Final url: " + url_final);
         xhttp_back_api.open("GET", url_final, true);
         xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhttp_back_api.send();

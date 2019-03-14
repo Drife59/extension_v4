@@ -311,7 +311,7 @@ function get_weigth_doublon(weight_heuristic){
             weight_found[nb_occurence_for_heuristic_code] = true;
         }
     }
-    console.log("Result of all nb occurences in doublon: " + Object.keys(heuristic_weigth_doublon));
+    console.debug("Result of all nb occurences in doublon: " + Object.keys(heuristic_weigth_doublon));
     return heuristic_weigth_doublon;
 }
 
@@ -347,7 +347,7 @@ function find_absolute_top_weigth(weight_heuristic){
             value_biggest_weight = weight_heuristic[code_biggest_weight]
         }
     }
-    console.log("The biggest absolute weigth (used or not) for this field is: " + value_biggest_weight);
+    console.debug("The biggest absolute weigth (used or not) for this field is: " + value_biggest_weight);
     return value_biggest_weight;
 }
 
@@ -384,7 +384,7 @@ function set_value_create_key(input, cle_dom, user_value, code_heuristique){
 
     xhttp_dom_create.onreadystatechange = function () {
         if (xhttp_dom_create.readyState == 4 && xhttp_dom_create.status == 200) {
-            console.log("Create key " + cle_dom + 
+            console.info("Create key " + cle_dom + 
                 " on domain with matching heuristic " + code_heuristique);
         }
     }
@@ -460,7 +460,7 @@ function fill_using_heuristic_v2(input, cle_dom){
     var weight_heuristic = set_weight_heuristic(input);
     //var heuristic_weigth_doublon = get_weigth_doublon();
 
-    console.log("Weight calculated for: " + construit_domaine_cle(input) + ": " + JSON.stringify(weight_heuristic));
+    console.info("Weight calculated for: " + construit_domaine_cle(input) + ": " + JSON.stringify(weight_heuristic));
 
     var absolute_top_weigth = find_absolute_top_weigth(weight_heuristic);
     var corresponding_heuristic = get_heuristic_to_use(input, cle_dom, weight_heuristic, absolute_top_weigth);

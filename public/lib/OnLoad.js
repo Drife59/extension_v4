@@ -14,7 +14,7 @@ Pour précharger les valeurs.
 //If not used when should be, issue occur, like wrong design,
 //or impossibility to validate form
 function simulate_user_change(input, user_value) {
-    console.log("Algo load: simulate user change on field: " + construit_domaine_cle(input));
+    console.debug("Algo load: simulate user change on field: " + construit_domaine_cle(input));
     //Simulate click and focus on the field. Usefull for some form
     var event = new Event('click');
     input.dispatchEvent(event);
@@ -41,7 +41,7 @@ function mark_heuristic_used(input, key_domain) {
     var corresponding_heuristic = get_heuristic_to_use(input, key_domain, weight_heuristic, absolute_top_weigth);
 
     if (heurisitic_code_error_list.includes(corresponding_heuristic) == false) {
-        console.log("Algo load : mark " + key_domain + " as already filled.");
+        console.debug("Algo load : mark " + key_domain + " as already filled.");
         heuristic_activated[corresponding_heuristic] = true;
     }
 }
@@ -69,11 +69,11 @@ function fill_field(input, domain) {
         
         //Found a suitable value to fill
         if (user_value != null && user_value != ' ' && user_value != '') {
-            console.log("Loading value <" + user_value + "> from user for pivot: " + pivot_reference);
+            console.debug("Loading value <" + user_value + "> from user for pivot: " + pivot_reference);
             simulate_user_change(input, user_value);
             mark_heuristic_used(input, key_domain);
         }else{
-            console.log("User does not have a value for pivot: " + pivot_reference);
+            console.debug("User does not have a value for pivot: " + pivot_reference);
         }
     }
 
@@ -88,13 +88,13 @@ function fill_fields(email) {
     //New loading, we should reset heuristic utilisation
     heuristic_activated = {}
 
-    console.log("Algo load: loading input field...");
+    console.info("Algo load: loading input field...");
 
     //technical log is very verbose, must be explicit required for display
     if(display_full_technical_log){
-        console.log("Content in website db: " + JSON.stringify(website_front_db.website_key, null, 4));
+        console.debug("Content in website db: " + JSON.stringify(website_front_db.website_key, null, 4));
     }
-    console.log(website_front_db.get_all_key_minimal_display());
+    console.info(website_front_db.get_all_key_minimal_display());
 
     var domain = window.location.host;
 

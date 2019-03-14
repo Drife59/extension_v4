@@ -172,7 +172,7 @@ class WebsiteDb {
     get_all_key_minimal_display(){
         var result = {};
         for (var i in this.website_key) {
-            console.log("website: " + i);
+            console.debug("website: " + i);
             for (var key_domain in this.website_key[i]){
                 result[key_domain] = this.get_notable_weight(this.website_key[i][key_domain]);
             }
@@ -301,7 +301,7 @@ class WebsiteDb {
                 }
             }
         }
-        console.log("[create_key] New key was created with content : " + JSON.stringify(new_key_content, 4));
+        console.debug("[create_key] New key was created with content : " + JSON.stringify(new_key_content, 4));
         this.website_key[domain][key] = new_key_content;
 
 
@@ -321,7 +321,7 @@ class WebsiteDb {
             key_obj["pivot_reference"] = null;
         }
             
-        console.log("Key obj we are going to send: " + JSON.stringify(key_obj, null, 4));
+        console.debug("Key obj we are going to send: " + JSON.stringify(key_obj, null, 4));
 
         var xhttp_dom_create = xhttp_add_key_domain(key_obj);
 
@@ -352,7 +352,7 @@ class WebsiteDb {
 
         if( Object.keys(pivot_weight).length > 0){
             console.info("Matching between pivot value and entered value");
-            console.log("Pivot weight found for user value. Executing \"classical\" algoritm");
+            console.debug("Pivot weight found for user value. Executing \"classical\" algoritm");
         }
 
         //If pivot weight (from user) is not empty, apply classical algoritm
@@ -424,7 +424,7 @@ class WebsiteDb {
         this.website_key[domain][key] = weights_website;
         //For the key, calculate again reference pivot
         this.compute_and_set_referent_pivot(domain, key);
-        console.log("[apply_pivot_on_key] After update, key content is " + this.display_key_weight(domain, key));
+        console.info("[apply_pivot_on_key] After update, key content is " + this.display_key_weight(domain, key));
 
 
         //Update Back part
@@ -437,7 +437,7 @@ class WebsiteDb {
         //We need to wait a bit for the key update, because it could have just be created
         //The server need some time to be able to fully create it and retrieve it
         setTimeout(function(){ 
-            console.log("[apply_pivot_on_key]: Updating back-end with object key.");
+            console.debug("[apply_pivot_on_key]: Updating back-end with object key.");
             xhttp_put_key_domain(key_request);
         },1000);
     }

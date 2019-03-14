@@ -15,7 +15,7 @@ Cf config manifest.json
 //Main algo for event change detected on input field
 function changeAlgo(evt){
 	var champ = evt.target
-	console.log("Algo change: field " + champ.tagName + " modified: " + HtmlEltToString(champ));
+	console.info("Algo change: field " + champ.tagName + " modified: " + HtmlEltToString(champ));
 	var key_domain = construit_domaine_cle(champ);
 	var valeur_utilisateur = champ.value.capitalize();
 
@@ -25,19 +25,19 @@ function changeAlgo(evt){
 	}
 
 	if( !is_valid_field(champ)){
-		console.log("Algo change: cannot identify properly field " + champ.id);
+		console.debug("Algo change: cannot identify properly field " + champ.id);
 		return;
 	}
 
 	//Don't process empty field
 	if( is_empty(champ)){
-		console.log("Algo change: field is empty, no process.");
+		console.debug("Algo change: field is empty, no process.");
 		return;
 	}
 
 	//Don't process paiement card
 	if( check_card(valeur_utilisateur)){
-		console.log("Algo change: no process executed for card number " + valeur_utilisateur);
+		console.debug("Algo change: no process executed for card number " + valeur_utilisateur);
 		return;
 	}
 
@@ -56,7 +56,7 @@ function changeAlgo(evt){
 			var pivot_referent = website_front_db.get_referent_pivot(domain, key_domain);
 
             console.info("Processing domain key: " + key_domain);
-			console.log("pivot referent = " + pivot_referent);
+			console.debug("pivot referent = " + pivot_referent);
 
 			//In all the three cases below, we update key pivot weight, using an objecf from user front db
 			/* pivot_weight is like below, representing pivot weight, for corresponding user value 
@@ -72,19 +72,19 @@ function changeAlgo(evt){
 			if(key_object && website_front_db.get_referent_pivot(domain, key_domain) != null){
 				console.info("Pivot referent found: " + pivot_referent);
 				var weight_pivot_referent = website_front_db.get_weight_pivot(domain, key_domain,pivot_referent);
-				console.log("Weight for pivot referent: " + weight_pivot_referent);
+				console.debug("Weight for pivot referent: " + weight_pivot_referent);
 				user_front_db.change_value_pivot_trouve_domaine(key_domain, pivot_referent, valeur_utilisateur, weight_pivot_referent);		
 				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
 			}
 			//Key exist but no pivot referent
 			else if(key_object){
-				console.log("No pivot referent found");
+				console.debug("No pivot referent found");
 				//get pivot and weight associated with user value
 				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
 			}
 			//Key does not exist at all
 			else{
-				console.log("No key at all for domain key, adding it.");
+				console.debug("No key at all for domain key, adding it.");
 				//heuristic weight is undefined
 				website_front_db.create_key(domain, key_domain)
 				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
