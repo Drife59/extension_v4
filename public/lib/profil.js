@@ -15,7 +15,7 @@ var url_all_profil = endpoint_back + "user/{email}/profils";
 var url_profil = endpoint_back + "user/{email}/profil/{profilId}";
 var url_create_profil = endpoint_back + "user/{email}/profil/{profilName}";
 var url_update_weight = endpoint_back + "user/{email}/profil/{profilId}/weight/{weight}";
-var url_create_value_v6 = endpoint_back + "user/{email}/pivot/{pivot_name}/value/{value_text}?profil_id={profil_id_text}";
+var url_create_value_v6 = endpoint_back + "user/{email}/pivot/{pivot_name}/value/{value_text}?profil_id={profil_id}";
 var url_all_values = endpoint_back + "user/{email}/values_with_profil";
 
 
@@ -82,19 +82,6 @@ class UserProfil {
     // User value API
     // --------------
     
-    xhttp_create_value_user_with_profil(email, pivot_name, value, profil_id){
-        var xhttp_back_api = new XMLHttpRequest();
-        var url_final = url_create_value_v6.replace("{email}", email)
-                                     .replace("{pivot_name}", pivot_name)
-                                     .replace("{value_text}", value)
-                                     .replace("{profil_id_text}", profil_id);
-    
-        console.debug("Final url: " + url_final);
-        xhttp_back_api.open("POST", url_final, true);
-        xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp_back_api.send();
-        return xhttp_back_api;
-    }
     
     //Return all values in a flat form
     xhttp_all_values_with_profil(email){
@@ -106,6 +93,26 @@ class UserProfil {
         xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhttp_back_api.send();
         return xhttp_back_api;
+    }
+
+    //This is async because we need to create the value id from back
+    async fetch_create_profil_value_user(email, pivot, value, profil_id){
+        var url_final = url_create_value_v6.replace("{email}", email)
+                                        .replace("{pivot_name}", pivot)
+                                        .replace("{value_text}", value)
+                                        .replace("{profil_id}", profil_id);
+        
+        console.debug("Final url: " + url_final);
+
+        const rawResponse = await fetch(url_final, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        });
+        const content = await rawResponse.json();  
+        return content;
     }
 
     // ##################
@@ -181,7 +188,23 @@ class UserProfil {
                 console.warn("[load_profils]: loading profil values for " + this.current_user + " failed.");
             }
         }
+    }
+
+    async add_value_to_profil(email, pivot, value_text, profil_id){
+
+        var user_value_back = await this.fetch_create_profil_value_user(email, pivot, value_text, profil_id);
+        console.debug("user value created from back: " + JSON.stringify(user_value_back, null, 4));
+
+        var new_user_value = {};
+        new_user_value["userValueId"] = user_value_back["userValueId"];
+        new_user_value["valueText"] = value_text;
+        this.profil_values[profil_id][pivot] = new_user_value;
+
+        console.info("The following user value was added to profil " + profil_id + 
+                     " on pivot " + pivot + " : " + JSON.stringify(new_user_value, null, 4));
 
     }
+
+
     
 }
