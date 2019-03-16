@@ -21,9 +21,19 @@ var url_all_values = endpoint_back + "user/{email}/values_with_profil";
 
 
 class UserProfil {
-    constructor(email) {
+    constructor(email, profil_values) {
         this.current_user = email;
         this.profil_values = {};
+
+        if(profil_values !== undefined && profil_values !== "undefined"){
+            this.profil_values = profil_values;
+        }
+        console.debug("Created UserProfil DB with values " + JSON.stringify(this.profil_values, null, 4));
+    }
+
+    //Return a deep copy of db content
+    get_clone_profil_values(){
+        return JSON.parse(JSON.stringify(this.profil_values));
     }
 
     // ############
