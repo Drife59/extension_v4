@@ -179,4 +179,9 @@ function createEmptyKeyRequestObject(code_key){
         object_result["full_birthdate"] = 0;
 
         return object_result;
-    }
+	}
+	
+//Create a copy based on JSON functionnality
+function jsonCopy(src) {
+	return JSON.parse(JSON.stringify(src));
+}
