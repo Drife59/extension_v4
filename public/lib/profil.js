@@ -31,6 +31,38 @@ class UserProfil {
         console.debug("Created UserProfil DB with values " + JSON.stringify(this.profil_values, null, 4));
     }
 
+    // ############################
+    // TECHNICAL LOW-LEVEL FUNCTION
+    // ############################
+
+    //Save in storage current UserProfil
+    set_profil_storage(){
+        chrome.storage.sync.set({"current_user": this.current_user});
+        chrome.storage.sync.set({"profil_user_values": JSON.stringify(this.profil_values)});
+    }
+
+    //Load UserProfil object from local storage
+    get_profil_storage(){
+        chrome.storage.sync.get("profil_user_values", function (data) {
+            if (typeof data.profil_user_values !== 'undefined') {
+                this.profil_values = JSON.parse(data.profil_user_values);
+                console.info("[get_profil_storage]Loaded profil user value from cache: " + 
+                    JSON.stringify(this.profil_values, null, 4))
+            } else {
+                console.warn("[get_profil_storage] Could not load profil user value from cache");
+            }
+        });
+
+        chrome.storage.sync.get("current_user", function (data) {
+            if (typeof data.current_user !== 'undefined') {
+                this.current_user = data.current_user;
+                console.info("[get_profil_storage]Loaded current user from cache: " + data.current_user);
+            } else {
+                console.warn("[get_profil_storage] Could not load current user  from cache");
+            }
+        });
+    }
+
     //Return a deep copy of db content
     get_clone_profil_values(){
         return JSON.parse(JSON.stringify(this.profil_values));
@@ -213,8 +245,5 @@ class UserProfil {
         console.info("The following user value was added to profil " + profil_id + 
                      " on pivot " + pivot + " : " + JSON.stringify(new_user_value, null, 4));
 
-    }
-
-
-    
+    }    
 }
