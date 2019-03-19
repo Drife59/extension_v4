@@ -78,8 +78,6 @@ function bind_selects() {
 function clear_inputs() {
     var inputs_clear = {};
 
-    console.log("Windows: " + window.document.body.innerHTML);
-
     //Load inputs
     for (var i = 0; i < type_to_include.length; i++) {
         inputs_clear[type_to_include[i]] = window.document.body.querySelectorAll("input[type=" +
@@ -98,7 +96,9 @@ function clear_inputs() {
 
 
         for (j = 0; j < all_inputs_for_type.length; j++) {
-            console.log("input final: " + Object.keys(inputs_type[j]));
+            console.log("input final: " + all_inputs_for_type[j].value);
+            all_inputs_for_type[j].value = "";
+
             //inputs_type[j].addEventListener('change', changeAlgo, false);
         }
     }
@@ -188,6 +188,12 @@ function load_user_db_from_back() {
 
                 //console.info("Content du clone: " + JSON.stringify(profil_clone, null, 4));
             },7000);
+
+            setTimeout(function(){
+                clear_inputs();
+                console.info("Input was cleared");
+                //console.info("Content du clone: " + JSON.stringify(profil_clone, null, 4));
+            },10000);
 
 
 
