@@ -1,7 +1,7 @@
 /*
 Projet Corail
 Auteur: Benjamin GRASSART
-Année: 2018
+Année: 2019
 
 front.js
 
@@ -24,7 +24,7 @@ var app_launched = false;
 //Temps d'attente en ms avant remplissage des champs lors du chargement de page
 //Attention: un temps d'attente trop court risque de faire échouer le lancement
 //de l'app, pour cause de variable globale non-connue
-var timeout_parsing = 1000;
+var timeout_parsing = 1500;
 
 /*
 Variables communes aux 2 fonctionnalitées
@@ -72,6 +72,35 @@ function bind_selects() {
             if (enable_front_log)
                 console.info("Elément select modifié: " + HtmlEltToString(evt.target));
         };
+    }
+}
+
+function clear_inputs() {
+    var inputs_clear = {};
+
+    console.log("Windows: " + window.document.body.innerHTML);
+
+    //Load inputs
+    for (var i = 0; i < type_to_include.length; i++) {
+        inputs_clear[type_to_include[i]] = window.document.body.querySelectorAll("input[type=" +
+            type_to_include[i] + "]");
+    }
+
+    console.log("inputs clear:" + Object.keys(inputs_clear));
+
+    for (var i = 0; i < type_to_include.length; i++) {
+        console.log("type à balayer: " + type_to_include[i]); 
+
+        var all_inputs_for_type = inputs_clear[type_to_include[i]];
+
+        console.log("inputs_type " + Object.keys(all_inputs_for_type));
+        console.log("inputs_type length" + all_inputs_for_type.length);
+
+
+        for (j = 0; j < all_inputs_for_type.length; j++) {
+            console.log("input final: " + Object.keys(inputs_type[j]));
+            //inputs_type[j].addEventListener('change', changeAlgo, false);
+        }
     }
 }
 
@@ -143,7 +172,25 @@ function load_user_db_from_back() {
             if (enable_front_log)
                 console.debug("Found current user " + current_user + " for loading user values from back");
 
-            
+            //Loading profile DB
+            var profil_db = new UserProfil(current_user);
+            profil_db.load_profils_from_back(current_user);
+
+            setTimeout(function(){
+                profil_db.set_profil_storage();
+            },4000);
+
+
+            setTimeout(function(){
+
+                var profil_clone = new UserProfil();
+                profil_clone.get_profil_storage();
+
+                //console.info("Content du clone: " + JSON.stringify(profil_clone, null, 4));
+            },7000);
+
+
+
             var xhttp_front_db = xhttp_get_object_front_db(current_user);
 
             xhttp_front_db.onreadystatechange = function () {
