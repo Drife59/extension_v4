@@ -1,10 +1,8 @@
 /*
 Projet Corail
 Auteur: Benjamin GRASSART
-Année: 2017
-
+Année: 2019
 utils.js
-
 
 Défini des fonctions utilitaires transversales.
 Ce fichier est à importer avant toute fonctionnalitée.
@@ -124,6 +122,11 @@ function apply_corail_design(input){
     if( input.offsetWidth > 100){
         input.className = input.className + " corail_image";
     }
+}
+
+function remove_corail_design(input){
+    input.className = input.className.replace("corail_bg", " ");
+    input.className = input.className.replace("corail_image", " ");
 }
 
 //Return number from string as float
