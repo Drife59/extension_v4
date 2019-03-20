@@ -26,23 +26,15 @@ var app_launched = false;
 //de l'app, pour cause de variable globale non-connue
 var timeout_parsing = 1500;
 
-/*
-Variables communes aux 2 fonctionnalitées
-*/
-//Comporte tous les champs inputs pertinents à traiter
-//Objet avec pour chaque variable le type d'input dont la valeur est la
-//liste des inputs détectés
+
 var inputs = new Object();
 var selects = [];
-//On instancie une seule fois l'objet pour faire des appel API
-var xhttp = new XMLHttpRequest();
 
 //Add this variable in file directly.
 //If not, bug when using it
 var enable_front_log = false;
 
-//Fonction nécessaire aux 2 fonctionnalitées
-//Parse la page et récupère tous les champs pertinents (selon config)
+//Parse page and get all input and select field
 function init_fields() {
     //Initialisation des champs input
     for (var i = 0; i < type_to_include.length; i++) {
@@ -53,7 +45,7 @@ function init_fields() {
     selects = document.body.querySelectorAll("select");
 }
 
-//Bind tous les éléments inputs aux algos
+//Bind all input to change algo
 function bind_inputs() {
     for (var i = 0; i < type_to_include.length; i++) {
         var inputs_type = inputs[type_to_include[i]];
@@ -64,7 +56,7 @@ function bind_inputs() {
     }
 }
 
-//Bind tous les éléments selects aux algos
+//Bind all select to change algo
 function bind_selects() {
     for (var i = 0; i < selects.length; i++) {
         selects[i].addEventListener('change', changeAlgo, false);
@@ -75,6 +67,7 @@ function bind_selects() {
     }
 }
 
+//Set all input to empty value and no corail design
 function clear_inputs() {
     var inputs_clear = {};
 
@@ -117,7 +110,7 @@ function create_domain(domain){
     }
 }
 
-//Crée un domaine en base si il n'existe pas déjà
+//Create a new domain in back if not already exist
 function init_domaine() {
     chrome.storage.sync.get("domain", function (data) {
         if (typeof data.domain !== 'undefined') {
@@ -169,24 +162,8 @@ function load_user_db_from_back() {
             var profil_db = new UserProfil(current_user);
             profil_db.load_profils_from_back(current_user);
 
-            setTimeout(function(){
-                profil_db.set_profil_storage();
-            },4000);
 
-
-            setTimeout(function(){
-
-                var profil_clone = new UserProfil();
-                profil_clone.get_profil_storage();
-
-            },7000);
-
-            setTimeout(function(){
-                clear_inputs();
-                console.info("Input were cleared");
-            },10000);
-
-
+            //V5 Loading, user value for multiple profil
 
             var xhttp_front_db = xhttp_get_object_front_db(current_user);
 
@@ -239,7 +216,7 @@ function load_website_db_from_back() {
     }
 }
 
-//Lance l'app, cad le parsing et binding des champs
+//Start app: parsing and binding fields
 function lancement_app(type_evt) {
     init_domaine();
     if (enable_front_log)
