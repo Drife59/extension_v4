@@ -87,19 +87,12 @@ function clear_inputs() {
     console.log("inputs clear:" + Object.keys(inputs_clear));
 
     for (var i = 0; i < type_to_include.length; i++) {
-        console.log("type à balayer: " + type_to_include[i]); 
-
         var all_inputs_for_type = inputs_clear[type_to_include[i]];
 
-        console.log("inputs_type " + Object.keys(all_inputs_for_type));
-        console.log("inputs_type length" + all_inputs_for_type.length);
-
-
         for (j = 0; j < all_inputs_for_type.length; j++) {
-            console.log("input final: " + all_inputs_for_type[j].value);
+            console.debug("Name input final to clear: " + all_inputs_for_type[j].name + " / " + all_inputs_for_type[j].value);
             all_inputs_for_type[j].value = "";
-
-            //inputs_type[j].addEventListener('change', changeAlgo, false);
+            remove_corail_design(all_inputs_for_type[j]);
         }
     }
 }
@@ -186,13 +179,11 @@ function load_user_db_from_back() {
                 var profil_clone = new UserProfil();
                 profil_clone.get_profil_storage();
 
-                //console.info("Content du clone: " + JSON.stringify(profil_clone, null, 4));
             },7000);
 
             setTimeout(function(){
                 clear_inputs();
-                console.info("Input was cleared");
-                //console.info("Content du clone: " + JSON.stringify(profil_clone, null, 4));
+                console.info("Input were cleared");
             },10000);
 
 
