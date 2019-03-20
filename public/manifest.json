@@ -33,8 +33,10 @@
       "lib/website_db.js",
       "lib/onChange.js",
       "lib/OnLoad.js",
-      "front.js"],
-    "css" : ["styles_visited_pages.css"]
+      "front.js",
+      "static/js/content.js",
+      "static/js/app.js"],
+    "css": ["styles_visited_pages.css","/static/css/app.css", "/static/css/content.css"]
   }
   ]
 }
