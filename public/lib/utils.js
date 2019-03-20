@@ -78,3 +78,9 @@ function createEmptyKeyRequestObject(code_key){
 function jsonCopy(src) {
 	return JSON.parse(JSON.stringify(src));
 }
+
+
+//Personnalize String object to add a function to capitalize String
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
+}

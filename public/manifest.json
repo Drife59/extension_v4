@@ -26,6 +26,7 @@
     "js": [
       "lib/globalvar.js",
       "config.js",
+      "heuristic_config.js",
       "lib/input.js",
       "lib/back_management.js",
       "lib/api_back.js",
