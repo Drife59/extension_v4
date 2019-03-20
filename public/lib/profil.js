@@ -20,6 +20,43 @@ var url_all_values = endpoint_back + "user/{email}/values_with_profil";
 
 
 
+/*
+The content of an object Profil would be as the following:
+{
+    "3": {
+        "profilName": "default",
+        "weight": 1
+    },
+    "4": {
+        "profilName": "default2",
+        "weight": 669.987,
+        "first_name": {
+            "userValueId": 20,
+            "valueText": "tsointsoin"
+        },
+        "family_name": {
+            "userValueId": 16,
+            "valueText": "grassart"
+        },
+        "homephone": {
+            "userValueId": 26,
+            "valueText": "0320921500"
+        }
+    },
+    "6": {
+        "profilName": "toto",
+        "weight": 1,
+        "family_name": {
+            "userValueId": 17,
+            "valueText": "nom_toto"
+        },
+        "first_name": {
+            "userValueId": 18,
+            "valueText": "prenom_toto"
+        }
+    }
+}
+*/ 
 class UserProfil {
     constructor(email, profil_values) {
         this.current_user = email;
@@ -66,6 +103,14 @@ class UserProfil {
     //Return a deep copy of db content
     get_clone_profil_values(){
         return JSON.parse(JSON.stringify(this.profil_values));
+    }
+
+    //decrease all profil weight by the coefficient in conf
+    //Don't update back here, will update it once for all when quitting navigator
+    decrease_profil_weight(){
+        for(var profil_key in this.profil_values){
+            this.profil_values[profil_key]["weight"] = profil_coeff_decrease * this.profil_values[profil_key]["weight"];
+        }
     }
 
     // ############

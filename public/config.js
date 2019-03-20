@@ -71,3 +71,12 @@ var WEIGHT_MINIMUM_RESTITUTION = 60;
 
 //Weight minimum to display pivot-weight in log for a key 
 var KEY_WEIGHT_MINIMAL_DISPLAY = 1;
+
+// --------------------
+// Profil configuration
+// --------------------
+
+var profil_coeff_decrease = 0.95
+
+//We can this value to weight if profil is chosen
+var profil_chosen_add_weight = 1;

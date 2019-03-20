@@ -56,9 +56,8 @@ function load_user_db_from_back() {
                 console.debug("Found current user " + current_user + " for loading user values from back");
 
             //Loading profile DB
-            var profil_db = new UserProfil(current_user);
+            profil_db = new UserProfil(current_user);
             profil_db.load_profils_from_back(current_user);
-
 
             //V5 Loading, user value for multiple profil
 

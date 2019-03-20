@@ -16,3 +16,5 @@ var timeout_parsing = 1500;
 
 var inputs = new Object();
 var selects = [];
+
+var profil_db = null;
