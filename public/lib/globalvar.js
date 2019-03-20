@@ -17,4 +17,6 @@ var timeout_parsing = 1500;
 var inputs = new Object();
 var selects = [];
 
+//These 3 variables below will be properly initialized in the application lifecycle later on
 var profil_db = null;
+var user_front_db = null;
