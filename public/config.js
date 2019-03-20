@@ -28,6 +28,7 @@ var separateur_cle = "_";
 // --------------
 
 var display_full_technical_log = false;
+var enable_front_log = false;
 
 // ------------------------------
 // Config for heuristic algoritms
