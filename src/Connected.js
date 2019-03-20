@@ -1,3 +1,5 @@
+/*global chrome*/
+
 import React, { Component } from 'react';
 
 import { FooterContact } from './FooterContact';
@@ -9,11 +11,20 @@ export class Connected extends Component {
         this.clearField = this.clearField.bind(this);
     }
 
+    //Implement reset field, possibly filled by Corail
+    //Call a "Legacy" function, in external web page context
     clearField(e){
-        window.console.info("clear field");
+        console.info("clear field");
 
-        //alert(JSON.stringify(window.inputs, null, 4));
-        window.clear_inputs();
+        //Huuuuu this is quite ugly. Don't know how to improve it
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.executeScript(tabs[0].id, {
+                code: "clear_inputs();"
+            }, 
+            function(response) {
+            
+            });
+        });
     }
 
     render() {
