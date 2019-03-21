@@ -113,6 +113,18 @@ class UserProfil {
         }
     }
 
+    //Profil has been chosen, increase his 
+    increase_profil_weight(profil_id){
+        this.profil_values[profil_id]["weight"] = this.profil_values[profil_id]["weight"] + profil_chosen_add_weight;
+    }
+
+    //Update all weight in back
+    update_all_weight_in_back(){
+        for(var profil_id in this.profil_values){
+            this.xhttp_update_weight(this.current_user, profil_id, this.profil_values[profil_id]["weight"]);
+        }
+    }
+
     // ############
     // RAW API CALL
     // ############
@@ -146,7 +158,7 @@ class UserProfil {
         var url_final = url_update_weight.replace("{email}", email)
                                          .replace("{profilId}", profil_id)
                                          .replace("{weight}", new_weight);
-    
+
         xhttp_back_api.open("PUT", url_final, true);
         xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhttp_back_api.send();
