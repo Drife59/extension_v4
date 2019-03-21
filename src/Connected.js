@@ -9,6 +9,7 @@ export class Connected extends Component {
     constructor(props){
         super(props);
         this.clearField = this.clearField.bind(this);
+        this.fillFieldV5 = this.fillFieldV5.bind(this);
     }
 
     //Implement reset field, possibly filled by Corail
@@ -27,6 +28,18 @@ export class Connected extends Component {
         });
     }
 
+    fillFieldV5(e){
+        console.info("fill fields V5");
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.executeScript(tabs[0].id, {
+                code: "fill_fields_v5();"
+            }, 
+            function(response) {
+            
+            });
+        });
+    }
+
     render() {
         return(
             <section>
@@ -34,7 +47,8 @@ export class Connected extends Component {
                     <div id="voice">
                         <img alt="img_connected" id="img_connected" src="images/need_you.png" />
                     </div>
-                    <button onClick={this.clearField}> clear </button>    
+                    <button onClick={this.clearField}> Clear </button>
+                    <button onClick={this.fillFieldV5}> Fill V5 </button>      
                     <p> Hey {this.props.getUser()}, we need you ! </p>
                 </div>
                 <FooterContact />

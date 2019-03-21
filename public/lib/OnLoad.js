@@ -84,7 +84,7 @@ function fill_field(input, domain) {
     }
 }
 
-function fill_fields(email) {
+function fill_fields_v5() {
     //New loading, we should reset heuristic utilisation
     heuristic_activated = {}
 
