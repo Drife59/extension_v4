@@ -28,7 +28,7 @@ function lancement_app(type_evt) {
         console.info("Lancement de l'App...");
     app_launched = true;
     setTimeout(function () {
-        bind_user_action();
+        init_fields();
     }, timeout_parsing);
 }
 

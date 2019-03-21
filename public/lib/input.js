@@ -9,7 +9,7 @@ Define all methods needed to manipulate input field/
 */
 
 //Parse page and get all input and select field
-function init_fields() {
+function load_fields() {
     //Initialisation des champs input
     for (var i = 0; i < type_to_include.length; i++) {
         inputs[type_to_include[i]] = document.body.querySelectorAll("input[type=" +
@@ -64,19 +64,11 @@ function clear_inputs() {
     }
 }
 
-//Bind l'évènement onBlur sur les champs détectés
-function bind_user_action() {
-    init_fields();
+//Parse page and bind event on field
+function init_fields() {
+    load_fields();
     bind_inputs();
     bind_selects();
-    chrome.storage.sync.get("current_user", function (data) {
-        if (Object.keys(data).length !== 0) {
-            fill_fields(data.current_user);
-        } else {
-            if (enable_front_log)
-                console.error("current user introuvable pour le remplissage des champs.")
-        }
-    });
 }
 
 //Renvoit une chaine intelligible pour un element html extrait
