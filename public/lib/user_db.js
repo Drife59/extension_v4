@@ -42,8 +42,34 @@ Object js to save data is as below:
 
 
 class UserPivotValues {
-    constructor(user_pivot_value) {
-        this.user_pivot_value = JSON.parse(user_pivot_value);
+    constructor(user_pivot_value_raw_back) {
+
+        //First part of the constructor, build object from raw string returned from back 
+        var response_json = JSON.parse(user_pivot_value_raw_back);
+
+        var pivot_value_profilless = {};
+        //build raw object as it was received from the back as json.
+        //Now back send raw request result, we move the complexity here
+        for(var index_user_value in response_json){
+            var current_user_value = response_json[index_user_value];
+            var current_pivot = current_user_value["pivot"]["name"];
+            
+            //Create pivot on the fly if does not exist
+            if(! (current_pivot in pivot_value_profilless) ){
+                pivot_value_profilless[current_pivot] = [];
+            }
+
+            var new_value_obj = {};
+            new_value_obj[CODE_USER_VALUE_ID] = current_user_value["userValueId"];
+            new_value_obj[CODE_USER_VALUE_TEXT] = current_user_value["value"];
+            new_value_obj[CODE_USER_VALUE_WEIGTH] = current_user_value["weight"];
+
+            pivot_value_profilless[current_pivot].push(new_value_obj);
+        }
+
+        console.debug("[UserPivotValues] inserting raw object in UserPivotValues: " + JSON.stringify(pivot_value_profilless, null, 4));
+
+        this.user_pivot_value = pivot_value_profilless;
 
         //Turn all string in float for weigth
         for (var i in this.user_pivot_value) {
