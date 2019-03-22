@@ -302,5 +302,16 @@ class UserProfil {
         console.info("The following user value was added to profil " + profil_id + 
                      " on pivot " + pivot + " : " + JSON.stringify(new_user_value, null, 4));
 
-    }    
+    }
+    
+    get_value_for_pivot(profil_id, pivot_name){
+        console.log("try to get value from profil id " + profil_id + " on pivot: " + pivot_name);
+        var profil = this.profil_values[profil_id];
+        if( pivot_name in profil){
+            return profil[pivot_name]["valueText"];
+        }
+
+        console.info("[get_value_for_pivot]: Could not find value in profil " + profil_id + " for pivot " + pivot_name);
+        return false;
+    }
 }
