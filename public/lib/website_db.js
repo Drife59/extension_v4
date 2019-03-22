@@ -280,7 +280,7 @@ class WebsiteDb {
         }
 
         if (this.has_key(domain, key)) {
-            console.warn("Cannot create key: key already exist for domain");
+            console.debug("Cannot create key: key already exist for domain");
             return false;
         }
 
@@ -314,7 +314,7 @@ class WebsiteDb {
             //code_heuristique is the corresponding pivot we found
             key_obj["pivot_reference"] = heuristic_ref;
             //We associate this pivot with the corresponding weight
-            key_obj[code_heuristique] = HEURISTIC_BASE_WEIGHT;
+            key_obj[heuristic_ref] = HEURISTIC_BASE_WEIGHT;
         }
         //Creating key without knowing the referent pivot
         else{
