@@ -32,7 +32,7 @@ function create_domain(domain){
 function init_domaine() {
     chrome.storage.sync.get("domain", function (data) {
         if (typeof data.domain !== 'undefined') {
-            console.warn("domain exist: " + data.domain);
+            console.info("Current domain in cache: " + data.domain);
             if(window.location.host != data.domain){
                 console.warn("Domain has changed. Seeding corresponding keys. Updating domain");
                 chrome.storage.sync.set({"domain": window.location.host});
