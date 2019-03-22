@@ -366,10 +366,10 @@ function find_heuristics_corresponding_to_weigth(weight_heuristic, weigth){
     return results;
 }
 
-//Set the field in html page and create pivot in domain
-function set_value_create_key(input, cle_dom, user_value, code_heuristique){
+//create key in domain
+function create_key(input, cle_dom, code_heuristique){
 
-    console.info("heuristic V5: going to create the key: " + cle_dom + " associated with pivot: " + code_heuristique);
+    console.info("[create_key] Creating key: " + cle_dom + " associated with pivot: " + code_heuristique);
 
     var key_obj = createEmptyKeyRequestObject(cle_dom);
     //code_heuristique is the corresponding pivot we found
@@ -377,9 +377,8 @@ function set_value_create_key(input, cle_dom, user_value, code_heuristique){
 
     //We associate this pivot with the corresponding weight
     key_obj[code_heuristique] = HEURISTIC_BASE_WEIGHT;
-    //console.log("Key obj we are going to send: " + JSON.stringify(key_obj, null, 4));
 
-    //First part, adding new Key
+    //Adding new key in back
     var xhttp_dom_create = xhttp_add_key_domain(key_obj);
 
     xhttp_dom_create.onreadystatechange = function () {
@@ -391,20 +390,6 @@ function set_value_create_key(input, cle_dom, user_value, code_heuristique){
 
     //Set a flag to indicate this heuristic has been used
     heuristic_activated[code_heuristique] = true;
-
-    //Second part, filling field is user value not empty
-
-    //If user value is empty, don't restitue it
-    if(user_value == undefined || user_value == "undefined" || user_value == ""){
-        console.warn("User value is empty ! ");
-        return;
-    }
-
-    input.value = user_value;
-    //apply_corail_design(input);
-    console.info("filling from heuristic " + code_heuristique);
-
-    simulate_user_change(input, user_value);
 }
 
 //define error code return for function below
@@ -433,7 +418,7 @@ function get_heuristic_to_use(input, cle_dom, weight_heuristic, absolute_top_wei
             console.info("Unique heuristic matching. Set for input " + construit_domaine_cle(input) + " heuristic " + matched_code_heur);
             return matched_code_heur;
         }else{
-            console.info("Unique heuristic matching, but it is already used. Field not filled.");
+            console.info("Unique heuristic matching, but it is already used.");
             return CODE_HEURISTIC_ALREADY_USED;
         }
     }
@@ -455,20 +440,53 @@ function get_heuristic_to_use(input, cle_dom, weight_heuristic, absolute_top_wei
 
 //This is to be used if the association in website cannot be found
 //v2 algoritms, weight on heuristic application, without priority
-function fill_using_heuristic_v2(input, cle_dom){
+function run_heuristic_v6(domain, input, key_domain){
     //Object which allow us to save the weight we found on each heuristics
     var weight_heuristic = set_weight_heuristic(input);
-    //var heuristic_weigth_doublon = get_weigth_doublon();
 
     console.info("Weight calculated for: " + construit_domaine_cle(input) + ": " + JSON.stringify(weight_heuristic));
 
     var absolute_top_weigth = find_absolute_top_weigth(weight_heuristic);
-    var corresponding_heuristic = get_heuristic_to_use(input, cle_dom, weight_heuristic, absolute_top_weigth);
-
-    var user_value = user_front_db.value_restitution(corresponding_heuristic)
+    var corresponding_heuristic = get_heuristic_to_use(input, key_domain, weight_heuristic, absolute_top_weigth);
 
     //Found a suitable heuristic
     if( heurisitic_code_error_list.includes(corresponding_heuristic) == false){
-        set_value_create_key(input, cle_dom, user_value, corresponding_heuristic);
+        website_front_db.create_key(domain, key_domain, corresponding_heuristic)
+
+        //From old create key method.
+        //don't forget this if key has been created. To ke keeped ?
+
+        //Set a flag to indicate this heuristic has been used
+        heuristic_activated[corresponding_heuristic] = true;
     }  
+}
+
+//Fetch all fields in page, create key - pivot where possible 
+function fetch_all_field(){
+
+    //Create var only once, will be initialised a lot in loop
+    var key_domain = null;
+
+    var domain = window.location.host;
+
+    //Input
+    for (var i = 0; i < type_to_include.length; i++) {
+        var inputs_type = inputs[type_to_include[i]];
+
+        for (j = 0; j < inputs_type.length; j++) {
+            if (!is_search_field(inputs_type[j])) {
+                key_domain = construit_domaine_cle(inputs_type[j]);
+                if(!website_front_db.has_key(domain, key_domain)){
+                    console.info("Running heuristic for domain " + domain + " key: " + key_domain);
+                    run_heuristic_v6(domain, inputs_type[j], key_domain);
+                }
+            }
+        }
+    }
+
+    //Select
+    for (var i = 0; i < selects.length; i++) {
+        key_domain = construit_domaine_cle(selects[i]);
+        run_heuristic_v6(domain, selects[i], key_domain);
+    }
 }

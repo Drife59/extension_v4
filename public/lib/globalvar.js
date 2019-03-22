@@ -20,3 +20,4 @@ var selects = [];
 //These 3 variables below will be properly initialized in the application lifecycle later on
 var profil_db = null;
 var user_front_db = null;
+var  website_front_db = null;

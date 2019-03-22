@@ -82,7 +82,7 @@ function fill_field_v5(input, domain) {
     //Cannot find key in website
     //Third algoritm, try filling using heuristics based on field
     else {
-        fill_using_heuristic_v2(input, key_domain);
+        run_heuristic_v6(input, key_domain);
     }
 }
 
@@ -139,7 +139,11 @@ function fill_field_v6(input, domain, profil_id) {
     if(website_front_db.has_key(domain, key_domain)){
 
         var pivot_reference = website_front_db.get_referent_pivot(domain, key_domain);
-
+        if( pivot_reference == null ){
+            console.debug("No pivot reference for key: " + key_domain);
+            return;
+        }
+        
         //First try to fill with profil
         var user_value = profil_db.get_value_for_pivot(profil_id, pivot_reference);
 
@@ -157,12 +161,6 @@ function fill_field_v6(input, domain, profil_id) {
             console.debug("User does not have a value for pivot: " + pivot_reference);
         }
     }
-
-    //Cannot find key in website: try filling using heuristics based on field
-    //NOTE(BG): this use V5 filling, with is an issue
-    else {
-        fill_using_heuristic_v2(input, key_domain);
-    }
 }
 
 function fill_fields_v6(profil_id) {
@@ -175,7 +173,7 @@ function fill_fields_v6(profil_id) {
     if(display_full_technical_log){
         console.debug("[fill_fields_v6]: Raw content in V5 website db: " + JSON.stringify(website_front_db.website_key, null, 4));
     }
-    console.info("[fill_fields_v6] V5 uservalue profilless Db content: " + website_front_db.get_all_key_minimal_display());
+    console.info("[fill_fields_v6] Website Db content: " + website_front_db.get_all_key_minimal_display());
 
     var domain = window.location.host;
 
