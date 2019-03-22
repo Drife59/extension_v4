@@ -30,20 +30,7 @@ function create_domain(domain){
 
 //Create a new domain in back if not already exist
 function init_domaine() {
-    chrome.storage.sync.get("domain", function (data) {
-        if (typeof data.domain !== 'undefined') {
-            console.info("Current domain in cache: " + data.domain);
-            if(window.location.host != data.domain){
-                console.warn("Domain has changed. Seeding corresponding keys. Updating domain");
-                chrome.storage.sync.set({"domain": window.location.host});
-                create_domain(window.location.host);
-            }
-        } else {
-            console.debug("domain does not exist, setting it in storage and ram");
-            chrome.storage.sync.set({"domain": window.location.host});
-            create_domain(window.location.host);
-        }
-    });
+    create_domain(window.location.host);
 }
 
 
@@ -69,7 +56,7 @@ function load_user_db_from_back() {
                     //user_front_db is load for each page each time. Not very effective...
                     user_front_db = new UserPivotValues(xhttp_front_db.responseText);
                     user_front_db.set_current_user(current_user);
-                    console.info("Loaded user values from back: " + user_front_db.get_minimal_display());
+                    console.info("Loaded user values V5 profilless from back: " + user_front_db.get_minimal_display());
                 }
                 else if (xhttp_front_db.readyState == 4 && xhttp_front_db.status != 200) {
                     if (enable_front_log)
@@ -94,7 +81,7 @@ function load_website_db_from_back() {
     var xhttp_website_db = xhttp_get_keys_v5(domain);
 
     //website_front_db must exists in all cases
-    if( typeof website_front_db === "undefined")
+    if( website_front_db == null )
         website_front_db = new WebsiteDb("{}");
 
 
@@ -103,6 +90,7 @@ function load_website_db_from_back() {
         if (xhttp_website_db.readyState == 4 && xhttp_website_db.status == 200) {
             //TODO: make this more persistent with localStorage
             website_front_db.add_domain_from_back(domain, xhttp_website_db.responseText)
+            console.info("[load_website_db_from_back] Website db content = " + website_front_db.get_all_key_minimal_display());
         }
         else if (xhttp_website_db.readyState == 4 && xhttp_website_db.status != 200) {
             if (enable_front_log)
