@@ -154,6 +154,24 @@ class WebsiteDb {
         }
     }
 
+    //Save in storage current website db
+    set_websitedb_storage(){
+        chrome.storage.sync.set({"website_key": JSON.stringify(this.website_key)});
+    }
+
+    //Load website db object from local storage
+    get_websitedb_storage(){
+        chrome.storage.sync.get("website_key", function (data) {
+            if (typeof data.website_key !== 'undefined') {
+                this.website_key = JSON.parse(data.website_key);
+                console.debug("[get_websitedb_storage]Loaded raw profil user value from cache: " + 
+                    JSON.stringify(this.website_key, null, 4))
+            } else {
+                console.warn("[get_websitedb_storage] Could not load profil user value from cache");
+            }
+        });
+    }
+
     get_weight_pivot(domain, key, pivot){
         return this.website_key[domain][key][pivot];
     }
