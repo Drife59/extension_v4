@@ -477,8 +477,14 @@ function fetch_all_field(){
             if (!is_search_field(inputs_type[j])) {
                 key_domain = construit_domaine_cle(inputs_type[j]);
                 if(!website_front_db.has_key(domain, key_domain)){
-                    console.info("Running heuristic for domain " + domain + " key: " + key_domain);
+                    console.info("Running heuristic for domain " + domain + " key(input): " + key_domain);
                     run_heuristic_v6(domain, inputs_type[j], key_domain);
+                }
+
+                //If not heuristic could be found properly, create empty key
+                if(!website_front_db.has_key(domain, key_domain)){
+                    console.info("Creating empty key for " + domain + " key (input): " + key_domain);
+                    website_front_db.create_key(domain, key_domain);
                 }
             }
         }
@@ -487,6 +493,16 @@ function fetch_all_field(){
     //Select
     for (var i = 0; i < selects.length; i++) {
         key_domain = construit_domaine_cle(selects[i]);
-        run_heuristic_v6(domain, selects[i], key_domain);
+
+        if(!website_front_db.has_key(domain, key_domain)){
+            console.info("Running heuristic for domain " + domain + " key (select): " + key_domain);
+            run_heuristic_v6(domain, selects[i], key_domain);
+        }
+
+        //If not heuristic could be found properly, create empty key
+        if(!website_front_db.has_key(domain, key_domain)){
+            console.info("Creating empty key for " + domain + " key (select): " + key_domain);
+            website_front_db.create_key(domain, key_domain);
+        }
     }
 }
