@@ -89,6 +89,33 @@ class UserPivotValues {
         this.current_user = email;
     }
 
+    set_user_db_storage(){
+        chrome.storage.sync.set({"current_user": this.current_user});
+        chrome.storage.sync.set({"user_pivot_value": JSON.stringify(this.user_pivot_value)});
+    }
+
+    //Load UserProfil object from local storage
+    get_userdb_storage(){
+        chrome.storage.sync.get("user_pivot_value", function (data) {
+            if (typeof data.user_pivot_value !== 'undefined') {
+                this.profil_values = JSON.parse(data.user_pivot_value);
+                console.info("[get_userdb_storage]Loaded profil user value from cache: " + 
+                    JSON.stringify(this.profil_values, null, 4))
+            } else {
+                console.warn("[get_userdb_storage] Could not load profil user value from cache");
+            }
+        });
+
+        chrome.storage.sync.get("current_user", function (data) {
+            if (typeof data.current_user !== 'undefined') {
+                this.current_user = data.current_user;
+                console.info("[get_userdb_storage]Loaded current user from cache: " + data.current_user);
+            } else {
+                console.warn("[get_userdb_storage] Could not load current user  from cache");
+            }
+        });
+    }
+
     //Generate a string easy to read
     get_minimal_display(){
         var display_obj = {};
