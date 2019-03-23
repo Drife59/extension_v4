@@ -1,3 +1,5 @@
+/*global chrome*/
+
 import React, { Component } from 'react';
 
 import { FooterPrevNext } from './FooterPrevNext';
@@ -50,7 +52,23 @@ export class Signin extends Component {
             console.log("status: " + response.status + " type: " + typeof(response.status) )
             if (response.status === 200) {
                 signin_component.props.setConnectedContent();
-                signin_component.props.setUser(email);             
+                signin_component.props.setUser(email);
+                
+                //Initialising legacy code
+                var user = signin_component.props.getUser();
+
+                //Build code to initialise all front db
+                var str_code = "load_user_db_from_back(\"" + user + "\", true);" + 
+                               "load_profils_from_back(\"" + user + "\", true);" +
+                               "load_website_db_from_back(true);";
+                chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                    chrome.tabs.executeScript(tabs[0].id, {
+                        code: str_code
+                    }, 
+                    function(response) {
+                    
+                    });
+                });
             }else if (response.status === 404){
                 msg_wrong_email.style.display = 'block';
             }else if (response.status === 403){

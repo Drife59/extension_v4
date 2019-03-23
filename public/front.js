@@ -18,16 +18,30 @@ var app_launched = false;
 //Start app: parsing and binding fields
 function lancement_app(type_evt) {
     init_domaine();
-    if (enable_front_log)
-        console.debug("Loading values from back...");
-    //TODO: make this more rare
-    load_user_db_from_back();
-    load_website_db_from_back();
+
+    //Load all front db
+    
+    //profil object need email of current user
+    chrome.storage.sync.get("current_user", function (data) {
+        if (typeof data.current_user !== 'undefined') {
+            load_profils_from_cache(data.current_user);
+            console.info("[get_userdb_storage]Loaded current user from cache: " + data.current_user);
+
+            //If the user is here, then the front db should also be here
+            load_user_db_from_cache();
+            load_website_db_from_cache();
+        }
+        else{
+            console.warn("Cannot find user, please log in.");
+        }
+    });
+    
 
     if (enable_front_log)
         console.info("Lancement de l'App...");
     app_launched = true;
     setTimeout(function () {
+        console.info("Parsing fields...")
         init_fields();
     }, timeout_parsing);
 }
