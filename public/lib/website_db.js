@@ -157,6 +157,7 @@ class WebsiteDb {
     //Save in storage current website db
     set_websitedb_storage(){
         chrome.storage.sync.set({"website_key": JSON.stringify(this.website_key)});
+        console.info("[set_websitedb_storage] website db was saved in storage.");
     }
 
     //Load website db object from local storage

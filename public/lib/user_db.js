@@ -92,6 +92,7 @@ class UserPivotValues {
     set_user_db_storage(){
         chrome.storage.sync.set({"current_user": this.current_user});
         chrome.storage.sync.set({"user_pivot_value": JSON.stringify(this.user_pivot_value)});
+        console.info("[set_user_db_storage]: Saved user value profilless in storage.");
     }
 
     //Load UserProfil object from local storage
