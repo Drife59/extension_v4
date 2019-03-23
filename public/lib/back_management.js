@@ -62,6 +62,13 @@ function load_user_db_from_back(email, save_in_cache) {
     }
 }
 
+function load_user_db_from_cache(){
+    //Need to have an empty JSON object to create the object
+    user_front_db = new UserPivotValues("{}");
+    user_front_db.get_userdb_storage();
+    console.info("[load_user_db_from_cache] Loaded user db (profilless) from cache");
+}
+
 //Load current website keys into website DB
 function load_website_db_from_back(save_in_cache) {
     console.debug("loading websites keys from back");
@@ -94,6 +101,12 @@ function load_website_db_from_back(save_in_cache) {
                 
         }
     }
+}
+
+function load_website_db_from_cache(){
+    website_front_db = new WebsiteDb("{}");
+    website_front_db.get_websitedb_storage();
+    console.info("[load_website_db_from_cache] Loaded website db from cache");
 }
 
 function load_profils_from_back(email, save_in_cache){
@@ -135,4 +148,10 @@ function load_profils_from_back(email, save_in_cache){
             console.warn("[load_profils]: loading profil values for " + email + " failed.");
         }
     }
+}
+
+function load_profils_from_cache(email){
+    profil_db = new UserProfil(email);
+    profil_db.get_profil_storage();
+    console.info("[load_profils_from_cache] Loaded profil from cache");
 }
