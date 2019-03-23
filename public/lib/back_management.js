@@ -36,44 +36,30 @@ function init_domaine() {
 
 /*The 3 function below load the 3 front db and optionnaly save it in google storage*/
 
-function load_user_db_from_back(save_in_cache) {
-    chrome.storage.sync.get("current_user", function (data) {
-        if (Object.keys(data).length !== 0) {
-            //For the sake of clarity
-            var current_user = data.current_user;
-            if (enable_front_log)
-                console.debug("Found current user " + current_user + " for loading user values from back");
+function load_user_db_from_back(email, save_in_cache) {
+    
+    if (enable_front_log)
+        console.debug("Found current user " + email + " for loading user values from back");
 
-            //Loading profile DB
-            profil_db = new UserProfil(current_user);
-            profil_db.load_profils_from_back(current_user);
+    var xhttp_front_db = xhttp_get_object_front_db(email);
 
-            //V5 Loading, user value for multiple profil
+    xhttp_front_db.onreadystatechange = function () {
+        //Could find user values for this user
+        if (xhttp_front_db.readyState == 4 && xhttp_front_db.status == 200) {
+            //user_front_db is load for each page each time. Not very effective...
+            user_front_db = new UserPivotValues(xhttp_front_db.responseText);
+            user_front_db.set_current_user(email);
+            console.info("Loaded user values V5 profilless from back: " + user_front_db.get_minimal_display());
 
-            var xhttp_front_db = xhttp_get_object_front_db(current_user);
-
-            xhttp_front_db.onreadystatechange = function () {
-                //Could find user values for this user
-                if (xhttp_front_db.readyState == 4 && xhttp_front_db.status == 200) {
-                    //user_front_db is load for each page each time. Not very effective...
-                    user_front_db = new UserPivotValues(xhttp_front_db.responseText);
-                    user_front_db.set_current_user(current_user);
-                    console.info("Loaded user values V5 profilless from back: " + user_front_db.get_minimal_display());
-
-                    if(save_in_cache == true){
-                        user_front_db.set_websitedb_storage();
-                    }
-                }
-                else if (xhttp_front_db.readyState == 4 && xhttp_front_db.status != 200) {
-                    if (enable_front_log)
-                        console.error("Could not find user values for: " + current_user);
-                }
+            if(save_in_cache == true){
+                user_front_db.set_user_db_storage();
             }
-        } else {
-            if (enable_front_log)
-                console.error("Cannot find current user for user value db loading.");
         }
-    });
+        else if (xhttp_front_db.readyState == 4 && xhttp_front_db.status != 200) {
+            if (enable_front_log)
+                console.error("Could not find user values for: " + email);
+        }
+    }
 }
 
 //Load current website keys into website DB
