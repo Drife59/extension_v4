@@ -1,3 +1,5 @@
+/*global chrome*/
+
 import React, { Component } from 'react';
 
 export class Header extends Component {
@@ -8,6 +10,8 @@ export class Header extends Component {
     }
 
     handleLogout(e){
+        chrome.storage.sync.clear();
+        console.debug("Cleared all cache.");
         this.props.logout();
     }
 
