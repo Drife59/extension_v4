@@ -3,7 +3,7 @@ Projet Corail
 Auteur: Benjamin GRASSART
 Année: 2019
 
-globalvar.js
+back_management.js
 
 Define high level method to deal with back-end
 */
@@ -34,7 +34,9 @@ function init_domaine() {
 }
 
 
-function load_user_db_from_back() {
+/*The 3 function below load the 3 front db and optionnaly save it in google storage*/
+
+function load_user_db_from_back(save_in_cache) {
     chrome.storage.sync.get("current_user", function (data) {
         if (Object.keys(data).length !== 0) {
             //For the sake of clarity
@@ -57,6 +59,10 @@ function load_user_db_from_back() {
                     user_front_db = new UserPivotValues(xhttp_front_db.responseText);
                     user_front_db.set_current_user(current_user);
                     console.info("Loaded user values V5 profilless from back: " + user_front_db.get_minimal_display());
+
+                    if(save_in_cache == true){
+                        user_front_db.set_websitedb_storage();
+                    }
                 }
                 else if (xhttp_front_db.readyState == 4 && xhttp_front_db.status != 200) {
                     if (enable_front_log)
@@ -71,7 +77,7 @@ function load_user_db_from_back() {
 }
 
 //Load current website keys into website DB
-function load_website_db_from_back() {
+function load_website_db_from_back(save_in_cache) {
     console.debug("loading websites keys from back");
     //Just for the sake of clarity
     var domain = window.location.host;
@@ -91,11 +97,56 @@ function load_website_db_from_back() {
             //TODO: make this more persistent with localStorage
             website_front_db.add_domain_from_back(domain, xhttp_website_db.responseText)
             console.info("[load_website_db_from_back] Website db content = " + website_front_db.get_all_key_minimal_display());
+
+            if(save_in_cache == true){
+                website_front_db.set_websitedb_storage();
+            }
         }
         else if (xhttp_website_db.readyState == 4 && xhttp_website_db.status != 200) {
             if (enable_front_log)
                 console.error("Could not load website keys: " + domain);
                 
+        }
+    }
+}
+
+function load_profils_from_back(email, save_in_cache){
+    profil_db = new UserProfil(email);
+    var xhttp_get_profil = profil_db.xhttp_get_profils(email);
+    var xhttp_get_values = profil_db.xhttp_all_values_with_profil(email);
+
+    var json_profil = null;
+    var json_values = null;
+
+    xhttp_get_profil.onreadystatechange = function () {
+        if (xhttp_get_profil.readyState == 4 && xhttp_get_profil.status == 200) {
+            json_profil = JSON.parse(xhttp_get_profil.response);
+
+            if (xhttp_get_values.readyState == 4 && xhttp_get_values.status == 200) {
+                console.info("[load_profils]: profils and values were loaded from back, starting building profil DB");
+                profil_db.build_profil_from_json(json_profil, json_values);
+                if(save_in_cache == true){
+                    profil_db.set_profil_storage();
+                }
+            }
+        }else if(xhttp_get_profil.readyState == 4 && xhttp_get_profil.status != 200){
+            console.warn("[load_profils]: loading profils for " + email + " failed.");
+        }
+    }
+
+    xhttp_get_values.onreadystatechange = function () {
+        if (xhttp_get_values.readyState == 4 && xhttp_get_values.status == 200) {
+            json_values = JSON.parse(xhttp_get_values.response);
+
+            if (xhttp_get_profil.readyState == 4 && xhttp_get_profil.status == 200) {
+                console.info("[load_profils]: profils and values were loaded from back, starting building profil DB");
+                profil_db.build_profil_from_json(json_profil, json_values);
+                if(save_in_cache == true){
+                    profil_db.set_profil_storage();
+                }
+            }
+        }else if(xhttp_get_values.readyState == 4 && xhttp_get_values.status != 200){
+            console.warn("[load_profils]: loading profil values for " + email + " failed.");
         }
     }
 }

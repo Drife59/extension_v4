@@ -76,6 +76,7 @@ class UserProfil {
     set_profil_storage(){
         chrome.storage.sync.set({"current_user": this.current_user});
         chrome.storage.sync.set({"profil_user_values": JSON.stringify(this.profil_values)});
+        console.info("Set profil user db in google storage");
     }
 
     //Load UserProfil object from local storage
@@ -251,42 +252,6 @@ class UserProfil {
         }
 
         console.info("User profil has been initiated with following content: " + JSON.stringify(this.profil_values, null,4));
-    }
-    
-    load_profils_from_back(){
-        var xhttp_get_profil = this.xhttp_get_profils(this.current_user);
-        var xhttp_get_values = this.xhttp_all_values_with_profil(this.current_user);
-
-        var json_profil = null;
-        var json_values = null;
-
-        var current_obj = this;
-
-        xhttp_get_profil.onreadystatechange = function () {
-            if (xhttp_get_profil.readyState == 4 && xhttp_get_profil.status == 200) {
-                json_profil = JSON.parse(xhttp_get_profil.response);
-
-                if (xhttp_get_values.readyState == 4 && xhttp_get_values.status == 200) {
-                    console.info("[load_profils]: profils and values were loaded from back, starting building profil DB");
-                    current_obj.build_profil_from_json(json_profil, json_values);
-                }
-            }else if(xhttp_get_profil.readyState == 4 && xhttp_get_profil.status != 200){
-                console.warn("[load_profils]: loading profils for " + this.current_user + " failed.");
-            }
-        }
-
-        xhttp_get_values.onreadystatechange = function () {
-            if (xhttp_get_values.readyState == 4 && xhttp_get_values.status == 200) {
-                json_values = JSON.parse(xhttp_get_values.response);
-
-                if (xhttp_get_profil.readyState == 4 && xhttp_get_profil.status == 200) {
-                    console.info("[load_profils]: profils and values were loaded from back, starting building profil DB");
-                    current_obj.build_profil_from_json(json_profil, json_values);
-                }
-            }else if(xhttp_get_values.readyState == 4 && xhttp_get_values.status != 200){
-                console.warn("[load_profils]: loading profil values for " + this.current_user + " failed.");
-            }
-        }
     }
 
     async add_value_to_profil(email, pivot, value_text, profil_id){
