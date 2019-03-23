@@ -162,11 +162,13 @@ class WebsiteDb {
 
     //Load website db object from local storage
     get_websitedb_storage(){
+        //To handle the change of context
+        var current_obj = this;
         chrome.storage.sync.get("website_key", function (data) {
             if (typeof data.website_key !== 'undefined') {
-                this.website_key = JSON.parse(data.website_key);
-                console.debug("[get_websitedb_storage]Loaded raw profil user value from cache: " + 
-                    JSON.stringify(this.website_key, null, 4))
+                current_obj.website_key = JSON.parse(data.website_key);
+                console.info("[get_websitedb_storage]Loaded Website db from cache: " + 
+                current_obj.get_all_key_minimal_display());
             } else {
                 console.warn("[get_websitedb_storage] Could not load profil user value from cache");
             }
