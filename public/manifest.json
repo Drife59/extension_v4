@@ -35,6 +35,7 @@
       "front_db/profil.js",
       "front_db/user_db.js",
       "front_db/website_db.js",
+      "lib/graphical_profil.js",
       "lib/onChange.js",
       "lib/fill_field.js",
       "front.js"],
