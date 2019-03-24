@@ -272,7 +272,7 @@ class UserProfil {
     }
     
     get_value_for_pivot(profil_id, pivot_name){
-        console.log("try to get value from profil id " + profil_id + " on pivot: " + pivot_name);
+        console.debug("try to get value from profil id " + profil_id + " on pivot: " + pivot_name);
         var profil = this.profil_values[profil_id];
         if( pivot_name in profil){
             return profil[pivot_name]["valueText"];
@@ -283,7 +283,7 @@ class UserProfil {
     }
 
     //Return a string to display a profil for input list
-    get_display_string(profil_id){
+    get_display_value_string(profil_id){
 
         //email is mandatory
         var display_str = this.get_value_for_pivot(profil_id, "main_email");
