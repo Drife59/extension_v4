@@ -289,12 +289,12 @@ class UserProfil {
         var display_str = this.get_value_for_pivot(profil_id, "main_email");
 
         //Try to add family name and first if available
-        var family_name = get_value_for_pivot(profil_id, "family_name");
+        var family_name = this.get_value_for_pivot(profil_id, "family_name");
         if( family_name != null){
             display_str += (" " + family_name);  
         }
 
-        var first_name = get_value_for_pivot(profil_id, "first_name");
+        var first_name = this.get_value_for_pivot(profil_id, "first_name");
         if( family_name != null){
             display_str += (" " + first_name);  
         }
