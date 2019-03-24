@@ -29,7 +29,7 @@ function lancement_app(type_evt) {
 
             //If the user is here, then the front db should also be here
             load_user_db_from_cache();
-            load_website_db_from_cache();
+            load_website_db_from_back(true);
         }
         else{
             console.warn("Cannot find user, please log in.");
