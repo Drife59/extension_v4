@@ -42,6 +42,7 @@ function bind_selects() {
 }
 
 //Set all input to empty value and no corail design
+//Does not act on field not filled by corail
 function clear_inputs() {
     var inputs_clear = {};
 
@@ -58,8 +59,12 @@ function clear_inputs() {
 
         for (j = 0; j < all_inputs_for_type.length; j++) {
             console.debug("Name input final to clear: " + all_inputs_for_type[j].name + " / " + all_inputs_for_type[j].value);
-            all_inputs_for_type[j].value = "";
-            remove_corail_design(all_inputs_for_type[j]);
+
+            //Only clear field if was filled by corail
+            if(all_inputs_for_type[j].classList.contains("corail_bg")  ){
+                all_inputs_for_type[j].value = "";
+                remove_corail_design(all_inputs_for_type[j]);
+            }
         }
     }
 }
