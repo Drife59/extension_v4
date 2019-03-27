@@ -10,6 +10,9 @@ Define graphical function for profil.
 
 */
 
+var pointer_on_list = false;
+var pointer_on_input = false;
+
 //https://www.kirupa.com/html5/get_element_position_using_javascript.htm
 //Return absolute position of en element
 function getPosition(el) {
@@ -66,6 +69,7 @@ function init_event_list() {
 
 				//Display list as block, resize and position it
 				list_profil.style.display = "block";
+				pointer_on_input = true;
 
 				//Same size as the field
 				var str_style = "width:" + evt.target.offsetWidth + "px;";
@@ -77,6 +81,20 @@ function init_event_list() {
 				list_profil.setAttribute("style", str_style);
 				console.debug("List position was set to absolute: " + list_profil.style.left + " / " + list_profil.style.top);
 			};
+
+			//Hide list if leaving field and pointer is not on list
+			inputs_type[j].onmouseout = function (evt) {
+				pointer_on_input = false;
+
+				//We need to wait a bit to allow value pointer_on_list to change
+				setTimeout(function () {
+					//If not fetching list, hide it
+					if (pointer_on_list == false && pointer_on_input == false) {
+						list_profil.style.display = "none";
+					}
+				}, 50);
+				
+			}
 		}
 	}
 	bindListenner();
@@ -103,7 +121,7 @@ function buildProfilList() {
 	//Build dynamic list from profil front db
 	for (var id_profil in profil_db.profil_values) {
 		console.log("current id profil: " + id_profil);
-		
+
 		var opt = document.createElement('a');
 		opt.innerHTML = profil_db.get_display_value_string(id_profil);
 		opt.setAttribute("profil_id", id_profil);
@@ -117,7 +135,15 @@ function buildProfilList() {
 	html_list.onmouseleave = function (evt) {
 		console.log("leave list");
 		html_list.style.display = "none";
+
+		//Iinform all that the list is not fetched anymore
+		pointer_on_list = false;
 		clear_inputs();
+	}
+
+	html_list.onmouseenter = function (evt) {
+		//Inform all that the list is now fetched
+		pointer_on_list = true;
 	}
 
 	return html_list;
@@ -125,15 +151,16 @@ function buildProfilList() {
 
 
 //This cannot be done in main loop of buildProfilList
-function bindListenner(){
+function bindListenner() {
 	var all_options = document.body.querySelectorAll("a[profil_id]");
 
-	for(var i=0 ; i< all_options.length ; i++){
+	for (var i = 0; i < all_options.length; i++) {
 		all_options[i].onmouseover = function (evt) {
 			console.log("Préaffichage du profil " + evt.target.getAttribute("profil_id"));
+			clear_inputs();
 			fill_fields_v6(evt.target.getAttribute("profil_id"));
 		}
-	
+
 		all_options[i].onclick = function (evt) {
 			console.log("choix du profil " + evt.target.getAttribute("profil_id") + " : " + evt.target.innerHTML);
 		}
