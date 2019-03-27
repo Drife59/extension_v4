@@ -79,6 +79,7 @@ function init_event_list() {
 			};
 		}
 	}
+	bindListenner();
 }
 
 
@@ -91,29 +92,26 @@ Use global var profil_db
     <a href="#">Link 1</a>
     <a href="#">Link 2</a>
     <a href="#">Link 3</a>
-  </div>
+</div>
 */
 function buildProfilList() {
 	var html_list = document.createElement('div');
 	html_list.id = id_list;
 	html_list.className = "dropdown-content";
 
+
 	//Build dynamic list from profil front db
 	for (var id_profil in profil_db.profil_values) {
+		console.log("current id profil: " + id_profil);
+		
+		var opt = document.createElement('a');
+		opt.innerHTML = profil_db.get_display_value_string(id_profil);
+		opt.setAttribute("profil_id", id_profil);
+		opt.href = "#";
 
-	}
-	var opt = document.createElement('a');
-	opt.innerHTML = profil_db.get_display_value_string(4);
-	opt.setAttribute("profil_id", 4);
-	opt.href = "#";
+		html_list.appendChild(opt);
 
-	opt.onmouseover = function (evt) {
-		console.log("Préaffichage du profil " + 4 + " : opt.value");
-		fill_fields_v6(4);
-	}
-
-	opt.onclick = function (evt) {
-		console.log("choix du profil " + 4 + " : " + opt.innerHTML);
+		//Cannot set listenner here, id_profil will stay in RAM and be the one nfor the last profil
 	}
 
 	html_list.onmouseleave = function (evt) {
@@ -122,7 +120,22 @@ function buildProfilList() {
 		clear_inputs();
 	}
 
-	html_list.appendChild(opt);
-
 	return html_list;
+}
+
+
+//This cannot be done in main loop of buildProfilList
+function bindListenner(){
+	var all_options = document.body.querySelectorAll("a[profil_id]");
+
+	for(var i=0 ; i< all_options.length ; i++){
+		all_options[i].onmouseover = function (evt) {
+			console.log("Préaffichage du profil " + evt.target.getAttribute("profil_id"));
+			fill_fields_v6(evt.target.getAttribute("profil_id"));
+		}
+	
+		all_options[i].onclick = function (evt) {
+			console.log("choix du profil " + evt.target.getAttribute("profil_id") + " : " + evt.target.innerHTML);
+		}
+	}
 }
