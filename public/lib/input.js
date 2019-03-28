@@ -67,6 +67,15 @@ function clear_inputs() {
     }
 }
 
+function clear_selects() {
+    for (var i = 0; i < selects.length; i++) {
+        var select = selects[i];
+        //Set defaut first value on select
+        select.selectedIndex = 0;
+        remove_corail_design(select);
+    }
+}
+
 //Parse page and bind event on field, then try to create key
 function init_fields() {
     load_fields();

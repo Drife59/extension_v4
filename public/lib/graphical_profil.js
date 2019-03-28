@@ -137,6 +137,7 @@ function buildProfilList() {
 		//Iinform all that the list is not fetched anymore
 		pointer_on_list = false;
 		clear_inputs();
+		clear_selects();
 	}
 
 	html_list.onmouseenter = function (evt) {
@@ -155,6 +156,7 @@ function bindListenner() {
 	for (var i = 0; i < all_options.length; i++) {
 		all_options[i].onmouseover = function (evt) {
 			clear_inputs();
+			clear_selects();
 			fill_fields_v6(evt.target.getAttribute("profil_id"));
 		}
 
