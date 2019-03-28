@@ -10,42 +10,7 @@ c'est à dire qu'on détecte que l'utilisateur a mis à jour une valeur.
 Cf config manifest.json
 */
 
-
-
-//Main algo for event change detected on input field
-function changeAlgo(evt){
-	var champ = evt.target
-	console.info("Algo change: field " + champ.tagName + " modified: " + HtmlEltToString(champ));
-	var key_domain = construit_domaine_cle(champ);
-	var valeur_utilisateur = champ.value.capitalize();
-
-	//Don't normalize email or password field
-	if(champ.type == "email" || check_email(valeur_utilisateur) || champ.type == "password"){
-		valeur_utilisateur = champ.value.toLowerCase();
-	}
-
-	if( !is_valid_field(champ)){
-		console.debug("Algo change: cannot identify properly field " + champ.id);
-		return;
-	}
-
-	//Don't process empty field
-	if( is_empty(champ)){
-		console.debug("Algo change: field is empty, no process.");
-		return;
-	}
-
-	//Don't process paiement card
-	if( check_card(valeur_utilisateur)){
-		console.debug("Algo change: no process executed for card number " + valeur_utilisateur);
-		return;
-	}
-
-	//Don't process search field
-	if( is_search_field(champ)){
-		return;
-	}
-
+function ChangeProfilless(key_domain, user_value){
 	//Get current user and launch algo
 	chrome.storage.sync.get("current_user", function(data) {
 		if( Object.keys(data).length !== 0){
@@ -65,7 +30,7 @@ function changeAlgo(evt){
 				*      "prenom": "4.5"
 				* }
 			*/
-			var pivot_weight = user_front_db.get_pivot_weight_from_values(valeur_utilisateur);
+			var pivot_weight = user_front_db.get_pivot_weight_from_values(user_value);
 			var pivots_with_values = user_front_db.get_pivot_with_values();
 
 			//Key exist and there is a referent pivot
@@ -73,7 +38,7 @@ function changeAlgo(evt){
 				console.info("Pivot referent found: " + pivot_referent);
 				var weight_pivot_referent = website_front_db.get_weight_pivot(domain, key_domain,pivot_referent);
 				console.debug("Weight for pivot referent: " + weight_pivot_referent);
-				user_front_db.change_value_pivot_trouve_domaine(key_domain, pivot_referent, valeur_utilisateur, weight_pivot_referent);		
+				user_front_db.change_value_pivot_trouve_domaine(key_domain, pivot_referent, user_value, weight_pivot_referent);		
 				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
 			}
 			//Key exist but no pivot referent
@@ -90,10 +55,54 @@ function changeAlgo(evt){
 				website_front_db.apply_pivot_on_key(domain, key_domain, pivot_weight, pivots_with_values);
 
 				//Don't add user value for now
-				//user_front_db.change_value_pivot_non_trouve_domaine(key_domain, new_pivot, valeur_utilisateur);
+				//user_front_db.change_value_pivot_non_trouve_domaine(key_domain, new_pivot, user_value);
 			}
 		}else{
 			console.error("Algo change: Critical cannot find current user. Please log in.");
 		}
 	});
+}
+
+
+
+//Main algo for event change detected on input field
+function changeAlgo(evt){
+	var input = evt.target
+	console.info("Algo change: field " + input.tagName + " modified: " + HtmlEltToString(input));
+	var key_domain = construit_domaine_cle(input);
+	var user_value = input.value.capitalize();
+
+	//Don't normalize email or password field
+	if(input.type == "email" || check_email(user_value) || input.type == "password"){
+		user_value = input.value.toLowerCase();
+	}
+
+	if( !is_valid_field(input)){
+		console.debug("Algo change: cannot identify properly field " + input.id);
+		return;
+	}
+
+	//Don't process empty field
+	if( is_empty(input)){
+		console.debug("Algo change: field is empty, no process.");
+		return;
+	}
+
+	//Don't process paiement card
+	if( check_card(user_value)){
+		console.debug("Algo change: no process executed for card number " + user_value);
+		return;
+	}
+
+	//Don't process search field
+	if( is_search_field(input)){
+		return;
+	}
+	/*
+	Note(BG): to be seen with Ju. When do we use profilless change algo ? Profil change algo ?
+	if( input.hasAttribute(CODE_FILLED_BY_PROFILLESS)){
+		ChangeProfilless(key_domain, user_value);
+	}
+	*/
+	ChangeProfilless(key_domain, user_value);
 }
