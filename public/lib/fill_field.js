@@ -125,11 +125,9 @@ function fill_field_v6(input, domain, profil_id) {
     var key_domain = construit_domaine_cle(input);
 
     //Careful ! a select is always not empty    
-    if (!is_empty(input) && input.tagName != "SELECT") {
+    if (!is_empty(input) && input.tagName != "SELECT" && !override_field_with_value) {
         console.info("Field associated with Key domain + " + key_domain +
             " is already filled from website. Don't fill it.");
-        //If field is already filled by original website, avoid corresponding heuristic
-        mark_heuristic_used(input, key_domain);
         return;
     }
 
@@ -156,7 +154,6 @@ function fill_field_v6(input, domain, profil_id) {
         if (user_value != null && user_value != ' ' && user_value != '') {
             console.debug("Loading value <" + user_value + "> from user for pivot: " + pivot_reference);
             simulate_user_change(input, user_value);
-            mark_heuristic_used(input, key_domain);
         }else{
             console.debug("User does not have a value for pivot: " + pivot_reference);
         }
