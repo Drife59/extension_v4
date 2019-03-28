@@ -40,7 +40,7 @@ function mark_heuristic_used(input, key_domain) {
     var corresponding_heuristic = get_heuristic_to_use(input, key_domain, weight_heuristic, absolute_top_weigth);
 
     if (heurisitic_code_error_list.includes(corresponding_heuristic) == false) {
-        console.debug("Algo load : mark " + key_domain + " as already filled.");
+        console.debug("Mark " + key_domain + " as already filled.");
         heuristic_activated[corresponding_heuristic] = true;
     }
 }
@@ -145,14 +145,25 @@ function fill_field_v6(input, domain, profil_id) {
         //First try to fill with profil
         var user_value = profil_db.get_value_for_pivot(profil_id, pivot_reference);
 
+        if(user_value != false){
+            if (user_value != null && user_value != ' ' && user_value != '') {
+                //We need to "mark" this field as filled by profil, for algo onChange
+                input.setAttribute("filledByProfil", profil_id);
+                console.debug("Filling input : " + key_domain + " using profil " + profil_id + " with value: " + user_value);
+            }
+        }
+
         //Value is not found in profil, try to get it from profilles value
         if(user_value == false){
             user_value = user_front_db.value_restitution(pivot_reference);
+            if (user_value != null && user_value != ' ' && user_value != '') {
+                input.setAttribute("filledByProfilless", true);
+                console.debug("Filling input : " + key_domain + " using profilless  value: " + user_value);
+            }
         }
         
         //Found a suitable value to fill
         if (user_value != null && user_value != ' ' && user_value != '') {
-            console.debug("Loading value <" + user_value + "> from user for pivot: " + pivot_reference);
             simulate_user_change(input, user_value);
         }else{
             console.debug("User does not have a value for pivot: " + pivot_reference);
