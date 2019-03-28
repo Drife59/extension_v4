@@ -52,8 +52,6 @@ function clear_inputs() {
             type_to_include[i] + "]");
     }
 
-    console.log("inputs clear:" + Object.keys(inputs_clear));
-
     for (var i = 0; i < type_to_include.length; i++) {
         var all_inputs_for_type = inputs_clear[type_to_include[i]];
 

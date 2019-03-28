@@ -65,7 +65,6 @@ function init_event_list() {
 			inputs_type[j].onmouseover = function (evt) {
 
 				var position_current_input1 = getPosition(evt.target);
-				console.debug("Position of the current input (1). x: " + position_current_input1.x + " y: " + position_current_input1.y);
 
 				//Display list as block, resize and position it
 				list_profil.style.display = "block";
@@ -133,7 +132,6 @@ function buildProfilList() {
 	}
 
 	html_list.onmouseleave = function (evt) {
-		console.log("leave list");
 		html_list.style.display = "none";
 
 		//Iinform all that the list is not fetched anymore
@@ -156,7 +154,6 @@ function bindListenner() {
 
 	for (var i = 0; i < all_options.length; i++) {
 		all_options[i].onmouseover = function (evt) {
-			console.log("Préaffichage du profil " + evt.target.getAttribute("profil_id"));
 			clear_inputs();
 			fill_fields_v6(evt.target.getAttribute("profil_id"));
 		}
