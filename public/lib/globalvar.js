@@ -21,3 +21,6 @@ var selects = [];
 var profil_db = null;
 var user_front_db = null;
 var  website_front_db = null;
+
+//Indicate if a profil was chosen to fill a form
+var profil_id_chosen = null;

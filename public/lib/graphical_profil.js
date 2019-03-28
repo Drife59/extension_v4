@@ -136,13 +136,23 @@ function buildProfilList() {
 
 		//Iinform all that the list is not fetched anymore
 		pointer_on_list = false;
-		clear_inputs();
-		clear_selects();
+
+		//A profil has been selected, don't clear field
+		if( profil_id_chosen == null){
+			clear_inputs();
+			clear_selects();
+		}
 	}
 
 	html_list.onmouseenter = function (evt) {
 		//Inform all that the list is now fetched
 		pointer_on_list = true;
+	}
+
+	html_list.onclick = function (evt) {
+		//Inform all that the list is now fetched
+		pointer_on_list = false;
+		html_list.style.display = "none";
 	}
 
 	return html_list;
@@ -162,6 +172,9 @@ function bindListenner() {
 
 		all_options[i].onclick = function (evt) {
 			console.log("choix du profil " + evt.target.getAttribute("profil_id") + " : " + evt.target.innerHTML);
+			fill_fields_v6(evt.target.getAttribute("profil_id"));
+			profil_id_chosen = evt.target.getAttribute("profil_id");
+
 		}
 	}
 }
