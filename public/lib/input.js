@@ -62,8 +62,8 @@ function clear_inputs() {
             if(all_inputs_for_type[j].classList.contains("corail_bg")  ){
                 all_inputs_for_type[j].value = "";
                 remove_corail_design(all_inputs_for_type[j]);
-                all_inputs_for_type[j].removeAttribute("filledByProfilless");
-                all_inputs_for_type[j].removeAttribute("filledByProfil");
+                all_inputs_for_type[j].removeAttribute(CODE_FILLED_BY_PROFILLESS);
+                all_inputs_for_type[j].removeAttribute(CODE_FILLED_BY_PROFIL);
             }
         }
     }
@@ -76,8 +76,8 @@ function clear_selects() {
         select.selectedIndex = 0;
         remove_corail_design(select);
         //Remove any attribute indicating it has been filled
-        select.removeAttribute("filledByProfilless");
-        select.removeAttribute("filledByProfil");
+        select.removeAttribute(CODE_FILLED_BY_PROFILLESS);
+        select.removeAttribute(CODE_FILLED_BY_PROFIL);
     }
 }
 

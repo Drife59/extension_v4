@@ -148,7 +148,7 @@ function fill_field_v6(input, domain, profil_id) {
         if(user_value != false){
             if (user_value != null && user_value != ' ' && user_value != '') {
                 //We need to "mark" this field as filled by profil, for algo onChange
-                input.setAttribute("filledByProfil", profil_id);
+                input.setAttribute(CODE_FILLED_BY_PROFIL, profil_id);
                 console.debug("Filling input : " + key_domain + " using profil " + profil_id + " with value: " + user_value);
             }
         }
@@ -157,7 +157,7 @@ function fill_field_v6(input, domain, profil_id) {
         if(user_value == false){
             user_value = user_front_db.value_restitution(pivot_reference);
             if (user_value != null && user_value != ' ' && user_value != '') {
-                input.setAttribute("filledByProfilless", true);
+                input.setAttribute(CODE_FILLED_BY_PROFILLESS, true);
                 console.debug("Filling input : " + key_domain + " using profilless  value: " + user_value);
             }
         }

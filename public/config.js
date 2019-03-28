@@ -19,16 +19,19 @@ var type_to_include = ["text", "email", "tel",
 
 //Temps d'attente en ms avant remplissage des champs lors du chargement de page
 //Note(BG): ne marche pas ici, doit être chargé au niveau du fichier entry point front.js
-var timeout_parsing = 1000;
+var timeout_parsing = 500;
 
 var separateur_cle = "_";
+
+//When filling, if the field already has a value then override it (or not)
+var override_field_with_value = true;
 
 // --------------
 // Log parameters
 // --------------
 
 var display_full_technical_log = false;
-var enable_front_log = false;
+var enable_front_log = true;
 
 // ----------------------------
 // Config accès API (endpoints)
@@ -80,3 +83,10 @@ var profil_coeff_decrease = 0.95
 
 //We can this value to weight if profil is chosen
 var profil_chosen_add_weight = 1;
+
+//Name of the id for list of profil to be injected, in graphical html
+var id_list = "list_profil";
+
+var CODE_FILLED_BY_PROFIL = "filledByProfil";
+var CODE_FILLED_BY_PROFILLESS = "filledByProfilless";
+
