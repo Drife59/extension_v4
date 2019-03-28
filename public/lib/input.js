@@ -67,11 +67,12 @@ function clear_inputs() {
     }
 }
 
-//Parse page and bind event on field
+//Parse page and bind event on field, then try to create key
 function init_fields() {
     load_fields();
     bind_inputs();
     bind_selects();
+    fetch_all_field();
 }
 
 //Renvoit une chaine intelligible pour un element html extrait
