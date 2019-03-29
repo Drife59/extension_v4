@@ -72,6 +72,10 @@ class UserProfil {
     // TECHNICAL LOW-LEVEL FUNCTION
     // ############################
 
+    get_number_of_profil(){
+        return Object.keys(this.profil_values).length;
+    }
+
     //Save in storage current UserProfil
     set_profil_storage(){
         chrome.storage.sync.set({"current_user": this.current_user});
