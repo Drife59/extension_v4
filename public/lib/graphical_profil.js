@@ -170,11 +170,12 @@ function bindListenner() {
 			fill_fields_v6(evt.target.getAttribute("profil_id"));
 		}
 
+		//Bind event to choose a profil
 		all_options[i].onclick = function (evt) {
-			console.log("choix du profil " + evt.target.getAttribute("profil_id") + " : " + evt.target.innerHTML);
 			fill_fields_v6(evt.target.getAttribute("profil_id"));
 			profil_id_chosen = evt.target.getAttribute("profil_id");
-
+			profil_db.increase_profil_weight(profil_id_chosen);
+			console.debug("Profil chosen: " + JSON.stringify(profil_db.profil_values[profil_id_chosen], null, 4));
 		}
 	}
 }
