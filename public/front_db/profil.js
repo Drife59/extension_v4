@@ -304,4 +304,40 @@ class UserProfil {
         }
         return display_str;
     }
+
+    //Return profil that should be displayed in the list for final user
+    get_profil_for_list(){
+        //If less or equal than number allowed, return all profil
+        if( this.get_number_of_profil() <= nb_maximum_profil_restitution){
+            return this.profil_values;
+        }
+
+        //else, return profil with maximum weight
+        var min_weight = 100;
+        var min_id_profil = null;
+
+        var result = this.get_clone_profil_values();
+
+        while(Object.keys(result).length > nb_maximum_profil_restitution){
+            
+            //Find min weight profil in all list
+            for (var id_profil in result) {
+                var current_profil = this.profil_values[id_profil];
+                console.log("current id profil: " + id_profil);
+                
+                if( current_profil["weight"] <= min_weight){
+                    min_weight = current_profil["weight"];
+                    min_id_profil = id_profil
+                }
+            }
+
+            //Delete weakest profil
+            delete result[min_id_profil];
+            min_weight = 100;
+
+            console.debug("After delete, lentgh = " + Object.keys(result).length);
+        }
+        return result;
+        
+    }
 }
