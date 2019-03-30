@@ -174,6 +174,7 @@ function bindListenner() {
 			fill_fields_v6(evt.target.getAttribute("profil_id"));
 			profil_id_chosen = evt.target.getAttribute("profil_id");
 			profil_db.increase_profil_weight(profil_id_chosen);
+			profil_db.decrease_delete_profil();
 			console.debug("Profil chosen: " + JSON.stringify(profil_db.profil_values[profil_id_chosen], null, 4));
 		}
 	}

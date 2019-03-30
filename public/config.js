@@ -83,6 +83,8 @@ var nb_maximum_profil_restitution = 3;
 
 var profil_coeff_decrease = 0.95
 
+var minimum_weight_profil = 0.5;
+
 //We can this value to weight if profil is chosen
 var profil_chosen_add_weight = 1;
 

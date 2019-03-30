@@ -114,9 +114,19 @@ class UserProfil {
 
     //decrease all profil weight by the coefficient in conf
     //Don't update back here, will update it once for all when quitting navigator
-    decrease_profil_weight(){
+    decrease_delete_profil(){
         for(var profil_key in this.profil_values){
-            this.profil_values[profil_key]["weight"] = profil_coeff_decrease * this.profil_values[profil_key]["weight"];
+            var new_weight = profil_coeff_decrease * this.profil_values[profil_key]["weight"];
+
+            //If profil is too weak, delete it
+            if(new_weight < minimum_weight_profil){
+                delete this.profil_values[profil_key];
+                this.xhttp_delete_profil(this.current_user, profil_key)
+                console.debug("[decrease_delete_profil]: Deleted profil " + profil_key + " which has weight too low: " + new_weight);
+                continue;
+            }
+            this.profil_values[profil_key]["weight"] = new_weight;
+            this.set_profil_storage();
         }
     }
 
