@@ -31,6 +31,15 @@ function lancement_app(type_evt) {
             load_user_db_from_cache();
             load_website_db_from_back(true);
 
+            setTimeout(function () {
+                console.info("Parsing fields...")
+                init_fields();
+            }, timeout_parsing);
+        
+            setTimeout(function () {
+                console.info("Initializing events...")
+                init_event_list();
+            }, (timeout_parsing + 500));
             
         }
         else{
@@ -38,19 +47,7 @@ function lancement_app(type_evt) {
         }
     });
     
-
-    if (enable_front_log)
-        console.info("Lancement de l'App...");
     app_launched = true;
-    setTimeout(function () {
-        console.info("Parsing fields...")
-        init_fields();
-    }, timeout_parsing);
-
-    setTimeout(function () {
-        console.info("Initializing events...")
-        init_event_list();
-    }, (timeout_parsing + 500));
 }
 
 

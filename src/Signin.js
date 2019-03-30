@@ -60,7 +60,11 @@ export class Signin extends Component {
                 //Build code to initialise all front db
                 var str_code = "load_user_db_from_back(\"" + user + "\", true);" + 
                                "load_profils_from_back(\"" + user + "\", true);" +
-                               "load_website_db_from_back(true);";
+                               "load_website_db_from_back(true);" + 
+                               "init_fields();";
+
+                str_code += 'setTimeout(function () { init_event_list(); }, (timeout_parsing + 500))';
+                
                 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     chrome.tabs.executeScript(tabs[0].id, {
                         code: str_code
