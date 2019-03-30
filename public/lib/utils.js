@@ -84,3 +84,16 @@ function jsonCopy(src) {
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
 }
+
+//Mark heuristic as used if a field is filled
+//by first or second algoritm (beforce dedicated heuristic algoritm)
+function mark_heuristic_used(input, key_domain) {
+    var weight_heuristic = set_weight_heuristic(input);
+    var absolute_top_weigth = find_absolute_top_weigth(weight_heuristic);
+    var corresponding_heuristic = get_heuristic_to_use(input, key_domain, weight_heuristic, absolute_top_weigth);
+
+    if (heurisitic_code_error_list.includes(corresponding_heuristic) == false) {
+        console.debug("Mark " + key_domain + " as already filled.");
+        heuristic_activated[corresponding_heuristic] = true;
+    }
+}

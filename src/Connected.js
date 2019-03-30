@@ -9,7 +9,6 @@ export class Connected extends Component {
     constructor(props){
         super(props);
         this.clearField = this.clearField.bind(this);
-        this.fillFieldV5 = this.fillFieldV5.bind(this);
         this.fillFieldV6 = this.fillFieldV6.bind(this);
     }
 
@@ -29,17 +28,6 @@ export class Connected extends Component {
         });
     }
 
-    fillFieldV5(e){
-        console.info("fill fields V5");
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.executeScript(tabs[0].id, {
-                code: "fill_fields_v5();"
-            }, 
-            function(response) {
-            
-            });
-        });
-    }
 
     fillFieldV6(e){
         console.info("fill fields V6 with profil id 4");
@@ -61,7 +49,6 @@ export class Connected extends Component {
                         <img alt="img_connected" id="img_connected" src="images/need_you.png" />
                     </div>
                     <button onClick={this.clearField}> Clear </button>
-                    <button onClick={this.fillFieldV5}> Fill V5 </button>
                     <button onClick={this.fillFieldV6}> Fill V6 </button>      
                     <p> Hey {this.props.getUser()}, we need you ! </p>
                 </div>
