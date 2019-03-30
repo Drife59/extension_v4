@@ -323,7 +323,6 @@ class UserProfil {
             //Find min weight profil in all list
             for (var id_profil in result) {
                 var current_profil = this.profil_values[id_profil];
-                console.log("current id profil: " + id_profil);
                 
                 if( current_profil["weight"] <= min_weight){
                     min_weight = current_profil["weight"];
@@ -334,8 +333,6 @@ class UserProfil {
             //Delete weakest profil
             delete result[min_id_profil];
             min_weight = 100;
-
-            console.debug("After delete, lentgh = " + Object.keys(result).length);
         }
         return result;
         

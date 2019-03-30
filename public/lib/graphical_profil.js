@@ -119,7 +119,6 @@ function buildProfilList() {
 
 	//Build dynamic list from profil front db
 	for (var id_profil in profil_db.get_profil_for_list()) {
-		console.log("current id profil: " + id_profil);
 
 		var opt = document.createElement('a');
 		opt.innerHTML = profil_db.get_display_value_string(id_profil);

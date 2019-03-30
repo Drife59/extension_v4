@@ -56,7 +56,6 @@ function clear_inputs() {
         var all_inputs_for_type = inputs_clear[type_to_include[i]];
 
         for (j = 0; j < all_inputs_for_type.length; j++) {
-            console.debug("Name input final to clear: " + all_inputs_for_type[j].name + " / " + all_inputs_for_type[j].value);
 
             //Only clear field if was filled by corail
             if(all_inputs_for_type[j].classList.contains("corail_bg")  ){
