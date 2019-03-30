@@ -79,6 +79,8 @@ var KEY_WEIGHT_MINIMAL_DISPLAY = 1;
 // Profil configuration
 // --------------------
 
+var nb_maximum_profil_restitution = 3;
+
 var profil_coeff_decrease = 0.95
 
 //We can this value to weight if profil is chosen
