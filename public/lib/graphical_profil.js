@@ -49,6 +49,9 @@ function init_event_list() {
 	//to have the profil list properly positionned.
 	//Profil list will have a position absolute, calculated from input position
 	var list_profil = buildProfilList();
+	//Wait to display the list that it is ready
+	list_profil.style.display = "none";
+
 	window.document.body.appendChild(list_profil)
 
 	for (var i = 0; i < type_to_include.length; i++) {
@@ -68,7 +71,7 @@ function init_event_list() {
 				continue;
 			} 
 
-			//On hover, create and bind the list
+			//On hover, bind and display the list
 			inputs_type[j].onmouseover = function (evt) {
 
 				var position_current_input1 = getPosition(evt.target);
