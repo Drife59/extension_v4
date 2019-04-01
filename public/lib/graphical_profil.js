@@ -41,6 +41,23 @@ function getPosition(el) {
 	};
 }
 
+function display_list(list_profil, target){
+	var position_current_input1 = getPosition(target);
+
+	//Display list as block, resize and position it
+	list_profil.style.display = "block";
+	pointer_on_input = true;
+
+	//Same size as the field
+	var str_style = "width:" + target.offsetWidth + "px;";
+	str_style += "left: " + position_current_input1.x + "px;";
+	//Vertical position: original input position + vertical size input + vertical scroll
+	str_style += "top: " + (position_current_input1.y + target.offsetHeight + window.scrollY) + "px;";
+	str_style += "position: absolute;";
+
+	list_profil.setAttribute("style", str_style);
+	console.debug("List position was set to absolute: " + list_profil.style.left + " / " + list_profil.style.top);
+}
 
 //Define event to create lists on input to display profil
 function init_event_list() {
@@ -73,22 +90,7 @@ function init_event_list() {
 
 			//On hover, bind and display the list
 			inputs_type[j].onmouseover = function (evt) {
-
-				var position_current_input1 = getPosition(evt.target);
-
-				//Display list as block, resize and position it
-				list_profil.style.display = "block";
-				pointer_on_input = true;
-
-				//Same size as the field
-				var str_style = "width:" + evt.target.offsetWidth + "px;";
-				str_style += "left: " + position_current_input1.x + "px;";
-				//Vertical position: original input position + vertical size input + vertical scroll
-				str_style += "top: " + (position_current_input1.y + evt.target.offsetHeight + window.scrollY) + "px;";
-				str_style += "position: absolute;";
-
-				list_profil.setAttribute("style", str_style);
-				console.debug("List position was set to absolute: " + list_profil.style.left + " / " + list_profil.style.top);
+				display_list(list_profil, evt.target);
 			};
 
 			//Hide list if leaving field and pointer is not on list
