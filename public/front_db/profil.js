@@ -214,9 +214,10 @@ class UserProfil {
 
     //This is async because we need to create the value id from back
     async fetch_create_profil_value_user(email, pivot, value, profil_id){
+        //Don't forget to capitalize user value
         var url_final = url_create_value_v6.replace("{email}", email)
                                         .replace("{pivot_name}", pivot)
-                                        .replace("{value_text}", value)
+                                        .replace("{value_text}", value.capitalize())
                                         .replace("{profil_id}", profil_id);
         
         console.debug("Final url: " + url_final);
@@ -261,7 +262,7 @@ class UserProfil {
 
             var value_object = {};
             value_object["userValueId"] = current_value["userValueId"];
-            value_object["valueText"] = current_value["value"];
+            value_object["valueText"] = current_value["value"].capitalize();
 
             var profil_id_value = current_value["profil"]["profilId"];
             var pivot_user_value = current_value["pivot"]["name"];
