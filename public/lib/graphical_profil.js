@@ -61,6 +61,13 @@ function init_event_list() {
 				continue;
 			}
 
+			var key_domain = construit_domaine_cle(inputs_type[j]);
+
+			//Don't display profil list if field cannot be filled
+			if( website_front_db.get_referent_pivot(window.location.host, key_domain) == null){
+				continue;
+			} 
+
 			//On hover, create and bind the list
 			inputs_type[j].onmouseover = function (evt) {
 
