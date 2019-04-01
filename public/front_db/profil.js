@@ -296,6 +296,34 @@ class UserProfil {
         return false;
     }
 
+    //Return an object with the value associated to pivot if found in profil
+    //In other word, retrieve pivot from value
+    look_for_value(profil_id, value){
+        var profil_to_look = this.profil_values[profil_id];
+
+        /*
+        {
+            value1: pivot1,
+            ...
+            valuen: pivotn
+        }
+        */
+        var res = {};
+
+        for(var pivot in profil_to_look){
+            //Be careful, there are others var than pivot in profil object
+            //Make sure we are hitting a pivot
+            if(liste_pivots.includes(pivot)){
+                //Found the value we are looking for ! 
+                if(profil_to_look[pivot]["valueText"] == value){
+                    res[value] = pivot;
+                };
+            }
+        }
+        console.log("res: " + JSON.stringify(res, null, 4));
+        return res;
+    }
+
     //Return a string to display a profil for input list
     get_display_value_string(profil_id){
 
