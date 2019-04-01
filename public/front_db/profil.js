@@ -121,8 +121,9 @@ class UserProfil {
             //If profil is too weak, delete it
             if(new_weight < minimum_weight_profil){
                 delete this.profil_values[profil_key];
-                this.xhttp_delete_profil(this.current_user, profil_key)
+                this.xhttp_delete_profil(this.current_user, profil_key);
                 console.debug("[decrease_delete_profil]: Deleted profil " + profil_key + " which has weight too low: " + new_weight);
+                this.set_profil_storage();
                 continue;
             }
             this.profil_values[profil_key]["weight"] = new_weight;
