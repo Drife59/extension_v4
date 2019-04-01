@@ -42,6 +42,7 @@ note(BG): ho uiiiiiiiii the future :) */
     font-style: times;
     background-color: #fbfbfb;
     font-size: 14px;
+    min-width: 150px;
 }
 
 #list_profil a:hover {
