@@ -172,9 +172,7 @@ function buildProfilList() {
 		setTimeout(function () {
 			//If not fetching list, hide it
 			if (pointer_on_input == false) {
-				console.info("input mouse out hidding list");
 				list_profil.style.display = "none";
-				console.warn("leaving list, hidding it");
 			}
 		}, 50);
 
