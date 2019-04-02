@@ -14,9 +14,13 @@ Define dedicated algoritm to fill fields.
 //or impossibility to validate form
 function simulate_user_change(input, user_value) {
     console.debug("Algo load: simulate user change on field: " + construit_domaine_cle(input));
+    
+    //Note(BG): the simulate click was commented as it fucks up the V6 profil system
+    //We monitor click and hover for V6 profil
+    
     //Simulate click and focus on the field. Usefull for some form
-    var event = new Event('click');
-    input.dispatchEvent(event);
+    //var event = new Event('click');
+    //input.dispatchEvent(event);
 
     event = new Event('focus');
     input.dispatchEvent(event);
