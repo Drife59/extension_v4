@@ -111,18 +111,19 @@ function init_event_list() {
 
 			//At the first navigation, on hover bind and display the list
 			inputs_type[j].addEventListener("mouseover", display_list);
+			inputs_type[j].onmouseover = function(){
+				pointer_on_input = true;
+			}
 		
 
 			//Hide list if leaving field and pointer is not on list
-			inputs_type[j].onmouseout = function (evt) {
+			inputs_type[j].onmouseout = function () {
 				pointer_on_input = false;
 
 				//We need to wait a bit to allow value pointer_on_list to change
 				setTimeout(function () {
-					console.warn("pointer in input: " + pointer_on_input);
 					//If not fetching list, hide it
 					if (pointer_on_list == false && pointer_on_input == false) {
-						console.info("hidding list");
 						list_profil.style.display = "none";
 					}
 				}, 50);
@@ -161,13 +162,23 @@ function buildProfilList() {
 
 		html_list.appendChild(opt);
 
-		//Cannot set listenner here, id_profil will stay in RAM and be the one nfor the last profil
+		//Cannot set listenner here, id_profil will stay in RAM and be the one for the last profil
 	}
 
 	html_list.onmouseleave = function (evt) {
-		html_list.style.display = "none";
 
-		//Iinform all that the list is not fetched anymore
+		//We need to wait a bit, if pointer is back in input
+		//So the var pointer_on_input has time to be true :)
+		setTimeout(function () {
+			//If not fetching list, hide it
+			if (pointer_on_input == false) {
+				console.info("input mouse out hidding list");
+				list_profil.style.display = "none";
+				console.warn("leaving list, hidding it");
+			}
+		}, 50);
+
+		//Inform all that the list is not fetched anymore
 		pointer_on_list = false;
 
 		//A profil has been selected, don't clear field
