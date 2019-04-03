@@ -48,6 +48,44 @@ function getPosition(el) {
 	};
 }
 
+//Build a dynamic content for the profil list, 
+//to be consistent with the type of input
+//For example, display address if field is with pivot main_full_address
+function build_display_list(input){
+	var key_domain = construit_domaine_cle(input);
+	var pivot_referent = website_front_db.get_referent_pivot(window.location.host, key_domain);
+	
+	console.log("pivot de reference trouve: " + pivot_referent);
+
+
+	//We have the pivot we shoud show on display 
+	//Now let's modify each option accordingly
+	var options = list_profil.childNodes;
+
+	for (var i = 0; i < options.length; i++) {
+
+		profil_id = options[i].getAttribute("profil_id");
+
+		console.warn("treating profil: " + profil_id);
+
+		var pertinent_value = profil_db.get_value_for_pivot(profil_id, pivot_referent);
+		
+		//Could not find value in profil. Look in profilless value
+		if(pertinent_value == false){
+			if(user_front_db.has_value_for_pivot(pivot_referent)){
+				pertinent_value = user_front_db.get_value_highest_weigth(pivot_referent);
+			}
+			else{
+				pertinent_value = null;
+			}
+		}
+
+		if(pertinent_value != null){
+			options[i].innerHTML = pertinent_value + "\n" + profil_db.get_value_for_pivot(profil_id, CODE_MAIN_EMAIL);
+		}
+	}
+}
+
 function display_list(){
 	var position_current_input1 = getPosition(this);
 
@@ -62,6 +100,8 @@ function display_list(){
 	str_style += "top: " + (position_current_input1.y + this.offsetHeight + window.scrollY) + "px;";
 	str_style += "position: absolute;";
 
+	build_display_list(this);
+
 	list_profil.setAttribute("style", str_style);
 	console.debug("List position was set to absolute: " + list_profil.style.left + " / " + list_profil.style.top);
 }
@@ -71,8 +111,21 @@ function display_list(){
 function click_for_display_list(){
 	for (var i = 0; i < type_to_include.length; i++) {
 		var inputs_type = inputs[type_to_include[i]];
+		
 
 		for (j = 0; j < inputs_type.length; j++) {
+			//Don't process search field
+			if (is_search_field(inputs_type[j])) {
+				continue;
+			}
+			
+			var key_domain = construit_domaine_cle(inputs_type[j]);
+
+			//Don't display profil list if field cannot be filled
+			if( website_front_db.get_referent_pivot(window.location.host, key_domain) == null){
+				continue;
+			}
+
 			console.warn("Removing event mouseover from input");
 			inputs_type[j].removeEventListener("mouseover", display_list, false);
 			inputs_type[j].addEventListener("click", display_list);
@@ -209,7 +262,12 @@ function bindListenner() {
 		all_options[i].onmouseover = function (evt) {
 			clear_inputs();
 			clear_selects();
-			fill_fields_v6(evt.target.getAttribute("profil_id"));
+			var profil_id = evt.target.getAttribute("profil_id");
+			if(profil_id == null){
+				profil_id = evt.target.getAttribute("profil_id");
+			}
+			console.warn("Profil id in binListenner: " + profil_id);
+			fill_fields_v6(profil_id);
 		}
 
 		//Bind event to choose a profil
