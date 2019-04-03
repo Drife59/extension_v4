@@ -24,9 +24,10 @@
       "<all_urls>"
     ],
     "js": [
+      "config/main_config.js",
+      "config/heuristic_config.js",
+      "config/pivot_config.js",
       "lib/globalvar.js",
-      "config.js",
-      "heuristic_config.js",
       "lib/input.js",
       "lib/api_back.js",
       "lib/utils.js",
