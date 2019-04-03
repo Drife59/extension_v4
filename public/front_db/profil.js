@@ -76,6 +76,10 @@ class UserProfil {
         return Object.keys(this.profil_values).length;
     }
 
+    get_id_all_profil(){
+        return Object.keys(this.profil_values);
+    }
+
     //Save in storage current UserProfil
     set_profil_storage(){
         chrome.storage.sync.set({"current_user": this.current_user});
