@@ -299,7 +299,7 @@ class WebsiteDb {
      *      "prenom": "4.5"
      * }
      */
-    apply_pivot_on_key_profilless_profilless_profilless_profilless(domain, key, pivot_weight, pivots_with_values) {
+    apply_pivot_on_key_profilless(domain, key, pivot_weight, pivots_with_values) {
         var weights_website = this.website_key[domain][key];
 
         //Ensure weight are float
