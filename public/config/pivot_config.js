@@ -51,7 +51,7 @@ var CODE_IBAN = "iban";
 //This code in is in db, does not correspond to "pivot name" field
 var CODE_RESEARCH = "research";
 
-//Define all in system
+//Define all pivots in system
 var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME, CODE_FULL_NAME,
                     CODE_POSTALCODE, CODE_CITY, CODE_MAIN_FULL_ADDRESS, CODE_ADDRESS, CODE_COUNTRY,
                     CODE_CELLPHONE, CODE_HOMEPHONE,
@@ -63,6 +63,7 @@ var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME, CODE_FULL_NA
                     CODE_DRIVING_LICENCE, CODE_LICENCE_PLATE, 
     ]
 
+//Define pivot where profilless algo shoud occur 
 var liste_pivots_profilless = [
     CODE_IBAN,
     CODE_PASSPORT_NUMBER, CODE_IDENTITY_CARD, CODE_SOCIAL_NUMBER, 
