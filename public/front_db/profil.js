@@ -406,6 +406,5 @@ class UserProfil {
             min_weight = 100;
         }
         return result;
-        
     }
 }
