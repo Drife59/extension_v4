@@ -301,20 +301,13 @@ class UserProfil {
         console.info("[get_value_for_pivot]: Could not find value in profil " + profil_id + " for pivot " + pivot_name);
         return false;
     }
+    
 
-    //Return an object with the value associated to pivot if found in profil
-    //In other word, retrieve pivot from value
-    look_for_value(profil_id, value){
+    //Return a list containing pivot found in profil for value
+    look_for_value_in_profil(profil_id, value){
         var profil_to_look = this.profil_values[profil_id];
 
-        /*
-        {
-            value1: pivot1,
-            ...
-            valuen: pivotn
-        }
-        */
-        var res = {};
+        var res = [];
 
         for(var pivot in profil_to_look){
             //Be careful, there are others var than pivot in profil object
@@ -322,13 +315,47 @@ class UserProfil {
             if(liste_pivots.includes(pivot)){
                 //Found the value we are looking for ! 
                 if(profil_to_look[pivot]["valueText"] == value){
-                    res[value] = pivot;
+                    res.push(pivot);
                 };
             }
         }
-        console.log("res: " + JSON.stringify(res, null, 4));
         return res;
     }
+
+    /*Look for value in all profil.
+    Aggregate the result and return a result as follow:
+    {
+        pivot1: <nb_occurences_value>,
+        ...
+        pivotn: <nb_occurences_value>
+    }
+    */
+    look_for_value_all_profil(value){
+        var profil_ids = this.get_id_all_profil();
+        var obj_res = {};
+
+        for(var index_profil=0 ; index_profil < profil_ids.length ; index_profil++){
+            //For the sake of clarity
+            var id_profil = profil_ids[index_profil];
+            var res = this.look_for_value_in_profil(id_profil, value);
+
+            for(var j=0 ; j<res.length ; j++){
+                //Again, just for the sake of clarity
+                var pivot = res[j];
+                if(pivot in obj_res){
+                    obj_res[pivot] = obj_res[pivot] + 1;
+                }
+                //First occurence of the pivot, creating it in object
+                else{
+                    obj_res[pivot] = 1;
+                }
+            }
+        }
+        console.debug("[look_for_value_all_profil]: Value " + value + 
+            " found following correspondance " + JSON.stringify(obj_res, null, 4));
+    }
+
+
 
     //Return a string to display a profil for input list
     get_display_value_string(profil_id){
