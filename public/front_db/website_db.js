@@ -288,7 +288,10 @@ class WebsiteDb {
         return true;
     }
 
-    /* Calculate new weight when apply a pivot found from user
+    /* Legacy code from V5.
+       Used for profilless value.
+
+       Calculate new weight when apply a pivot found from user
      * input: objet representing pivots found for the user value associated 
      * with their weight:
      * {
@@ -296,7 +299,7 @@ class WebsiteDb {
      *      "prenom": "4.5"
      * }
      */
-    apply_pivot_on_key(domain, key, pivot_weight, pivots_with_values) {
+    apply_pivot_on_key_profilless_profilless_profilless_profilless(domain, key, pivot_weight, pivots_with_values) {
         var weights_website = this.website_key[domain][key];
 
         //Ensure weight are float
@@ -378,7 +381,7 @@ class WebsiteDb {
         this.website_key[domain][key] = weights_website;
         //For the key, calculate again reference pivot
         this.compute_and_set_referent_pivot(domain, key);
-        console.info("[apply_pivot_on_key] After update, key content is " + this.display_key_weight(domain, key));
+        console.info("[apply_pivot_on_key_profilless] After update, key content is " + this.display_key_weight(domain, key));
 
 
         //Update Back part
@@ -391,7 +394,7 @@ class WebsiteDb {
         //We need to wait a bit for the key update, because it could have just be created
         //The server need some time to be able to fully create it and retrieve it
         setTimeout(function(){ 
-            console.debug("[apply_pivot_on_key]: Updating back-end with object key.");
+            console.debug("[apply_pivot_on_key_profilless]: Updating back-end with object key.");
             xhttp_put_key_domain(key_request);
         },1000);
     }
@@ -409,92 +412,3 @@ class WebsiteDb {
         return JSON.stringify(weights);
     }
 }
-
-var test_pivot_weight = {
-    "first_name": "2.5",
-    "family_name": "2"
-}
-
-var test_website_key = new WebsiteDb(exemple_domain_key);
-//console.log(test_website_key.get_max_weight("www.cdiscount.com", "prenom_txt"));
-//console.log(test_website_key.website_key["www.cdiscount.com"]["prenom_txt"]);
-//test_website_key.apply_pivot_on_key("www.cdiscount.com", "prenom_txt", test_pivot_weight);
-//console.log(test_website_key.get_max_weight("www.cdiscount.com", "prenom_txt"));
-
-
-/*
-
-//Check on referent pivot calculation
-console.log(test_website_key.get_referent_pivot("www.cdiscount.com", "nom_fam_txt"));
-console.log(test_website_key.get_referent_pivot("www.cdiscount.com", "prenom_txt"));
-console.log(test_website_key.get_referent_pivot("www.cdiscount.com", "jour_naissance_txt"));
-
-//For now, nom_fam_txt has a pivot referent null
-console.log("Before set referent pivot, nom_fam_txt: \n");
-console.log(test_website_key.website_key["www.cdiscount.com"]["nom_fam_txt"]);
-
-test_website_key.compute_and_set_referent_pivot("www.cdiscount.com", "nom_fam_txt");
-
-//Expecting having pivot_referent as nom_fam_txt
-console.log("After set referent pivot, nom_fam_txt: \n");
-console.log(test_website_key.website_key["www.cdiscount.com"]["nom_fam_txt"]);
-
-//Set back family name pivot reference as null
-test_website_key.website_key["www.cdiscount.com"]["nom_fam_txt"]["pivot_referent"] = null;
-
-test_pivot_weight = {
-    "first_name": "1",
-    "family_name": "2"
-}
-//expecting again pivot reference as null
-console.log("\nSet back pivot referent as null");
-console.log(test_website_key.website_key["www.cdiscount.com"]["nom_fam_txt"]);
-test_website_key.apply_pivot_on_key("www.cdiscount.com", "nom_fam_txt", test_pivot_weight);
-
-console.log("\nExecuting apply_pivot_on_key on nom_fam_txt");
-console.log(test_website_key.website_key["www.cdiscount.com"]["nom_fam_txt"]);
-
-*/
-
-//Check with full fonctionnality as call API
-
-
-//Test call API real life
-//-----------------------
-
-//New website DB empty
-
-/*
-test_website_key = new WebsiteDb("{}");
-
-const http = require('http');
-
-http.get('http://localhost:1665/website/www.cdiscount.com/keys', (resp) => {
-    let data = '';
-
-    // A chunk of data has been recieved.
-    resp.on('data', (chunk) => {
-        data += chunk;
-    });
-
-    // The whole response has been received. Print out the result.
-    resp.on('end', () => {
-        test_website_key.add_domain_from_back("www.cdiscount.com", data);
-
-        http.get('http://localhost:1665/website/www.abc.com/keys', (resp) => {
-            let data = '';
-
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                test_website_key.add_domain_from_back("www.abc.com", data);
-                console.log("Final content in object: " + JSON.stringify(test_website_key.website_key, null, 4));
-            });
-
-        })
-    });
-});
-*/
