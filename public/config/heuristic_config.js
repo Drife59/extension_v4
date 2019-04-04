@@ -11,60 +11,15 @@ Define specific heuristic config.
 
 //All of this need to be properly updated when addind an heuristic
 
-//This is the code we use to identify type of field
-//firstname, lastname, postalcode, city, tel
-//Correspond to field "name" in Pivots table
-var CODE_FIRSTNAME = "first_name";
-var CODE_LASTNAME  = "family_name";
-var CODE_POSTALCODE = "postal_code";
-var CODE_CITY = "home_city";
-var CODE_CELLPHONE = "cellphone_number";
-var CODE_MAIN_EMAIL = "main_email";
-var CODE_MAIN_FULL_ADDRESS = "main_full_address";
-var CODE_DAY_BIRTH = "day_of_birth";
-var CODE_MONTH_BIRTH = "month_of_birth";
-var CODE_YEAR_BIRTH = "year_of_birth";
-
-//V3.3 Heuristic
-var CODE_COMPANY = "company";
-var CODE_HOMEPHONE = "homephone";
-//var CODE_CVV_STRING = "cvv";
-//var CODE_CARDEXPIRYMONTH = "cardexpirymonth";
-//var CODE_CARDEXPIRYYEAR = "cardexpiryyear";
-
-//V4.0 Heuristic
-var CODE_FULL_BIRTHDATE = "full_birthdate";
-
-//V5.0 Heuristic
-
-//Only street and name street
-var CODE_ADDRESS = "address";
-//lastname + firstname
-var CODE_FULL_NAME = "full_name";
-var CODE_PASSPORT_NUMBER = "passport_number";
-var CODE_IDENTITY_CARD = "identity_card";
-var CODE_SOCIAL_NUMBER = "social_number";
-//Plaque immat
-var CODE_DRIVING_LICENCE = "driving_licence";
-var CODE_LICENCE_PLATE = "licence_plate";
-var CODE_COUNTRY = "country";
-var CODE_IBAN = "iban";
-
-
-//This code in is in db, does not correspond to "pivot name" field
-var CODE_RESEARCH = "research";
-
-var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME, CODE_FULL_NAME,
-                    CODE_POSTALCODE, CODE_CITY, CODE_MAIN_FULL_ADDRESS, CODE_ADDRESS, CODE_COUNTRY,
-                    CODE_CELLPHONE, CODE_HOMEPHONE,
-                    CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH, CODE_FULL_BIRTHDATE,
-                    CODE_COMPANY,
-                    //CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR, CODE_IBAN,
-                    CODE_IBAN,
-                    CODE_PASSPORT_NUMBER, CODE_IDENTITY_CARD, CODE_SOCIAL_NUMBER, 
-                    CODE_DRIVING_LICENCE, CODE_LICENCE_PLATE, 
-    ]
-
+//Define all code for available heuristics
+//This NEED to be updated when an heuristic is created
+var all_heuristics = [CODE_FIRSTNAME, CODE_LASTNAME, CODE_POSTALCODE, CODE_CITY, CODE_CELLPHONE,
+    CODE_MAIN_EMAIL, CODE_MAIN_FULL_ADDRESS, CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH,
+    //V3.3 code 
+    //CODE_COMPANY, CODE_HOMEPHONE, CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR,
+    CODE_COMPANY, CODE_HOMEPHONE,
+    //V4.0 code
+    CODE_FULL_BIRTHDATE];
 
 //Define ponderation for each list of keywords
 var heuristic_ponderation = new Object();

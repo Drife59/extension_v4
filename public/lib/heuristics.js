@@ -8,15 +8,6 @@ heuristics.js
 Define heuristics, used for a new website to guess type of field.
 */
 
-//Define all code for available heuristics
-//This NEED to be updated when an heuristic is created
-var all_heuristics = [CODE_FIRSTNAME, CODE_LASTNAME, CODE_POSTALCODE, CODE_CITY, CODE_CELLPHONE,
-    CODE_MAIN_EMAIL, CODE_MAIN_FULL_ADDRESS, CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH,
-    //V3.3 code 
-    //CODE_COMPANY, CODE_HOMEPHONE, CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR,
-    CODE_COMPANY, CODE_HOMEPHONE,
-    //V4.0 code
-    CODE_FULL_BIRTHDATE];
 
 //Save all heuristics which have already been used for restitution
 //An heuristic should only be used once
