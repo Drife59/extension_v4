@@ -40,7 +40,7 @@
       "lib/onChange.js",
       "lib/fill_field.js",
       "front.js"],
-    "css": ["styles_visited_pages.css","/static/css/app.css", "/static/css/content.css"]
+    "css": ["styles/visited_pages.css","/static/css/app.css", "/static/css/content.css"]
   }
   ]
 }
