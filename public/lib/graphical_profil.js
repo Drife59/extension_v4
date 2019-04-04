@@ -66,8 +66,6 @@ function build_display_list(input){
 
 		profil_id = options[i].getAttribute("profil_id");
 
-		console.warn("treating profil: " + profil_id);
-
 		var pertinent_value = profil_db.get_value_for_pivot(profil_id, pivot_referent);
 		
 		//Could not find value in profil. Look in profilless value
@@ -126,7 +124,6 @@ function click_for_display_list(){
 				continue;
 			}
 
-			console.warn("Removing event mouseover from input");
 			inputs_type[j].removeEventListener("mouseover", display_list, false);
 			inputs_type[j].addEventListener("click", display_list);
 		}
@@ -266,7 +263,6 @@ function bindListenner() {
 			if(profil_id == null){
 				profil_id = evt.target.getAttribute("profil_id");
 			}
-			console.warn("Profil id in binListenner: " + profil_id);
 			fill_fields_v6(profil_id);
 		}
 
