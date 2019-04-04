@@ -62,9 +62,12 @@ function fill_field_v6(input, domain, profil_id) {
             console.debug("No pivot reference for key: " + key_domain);
             return;
         }
-        
-        //First try to fill with profil
-        var user_value = profil_db.get_value_for_pivot(profil_id, pivot_reference);
+
+        var user_value = false;        
+        //First try to fill with profil, if field is a "profil field"
+        if( ! (pivot_reference in liste_pivots_profilless)){
+            user_value = profil_db.get_value_for_pivot(profil_id, pivot_reference);
+        }
 
         if(user_value != false){
             if (user_value != null && user_value != ' ' && user_value != '') {
@@ -75,6 +78,7 @@ function fill_field_v6(input, domain, profil_id) {
         }
 
         //Value is not found in profil, try to get it from profilles value
+        //Note that we try to get the value, even if it is a field which should be filled by profil
         if(user_value == false){
             user_value = user_front_db.value_restitution(pivot_reference);
             if (user_value != null && user_value != ' ' && user_value != '') {
