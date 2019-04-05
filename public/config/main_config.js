@@ -30,7 +30,7 @@ var override_field_with_value = true;
 // Log parameters
 // --------------
 
-var display_full_technical_log = false;
+var display_full_technical_log = true;
 var enable_front_log = true;
 
 // ----------------------------
@@ -93,4 +93,10 @@ var id_list = "list_profil";
 
 var CODE_FILLED_BY_PROFIL = "filledByProfil";
 var CODE_FILLED_BY_PROFILLESS = "filledByProfilless";
+
+//When filling with a profil, addind this weight to website key
+var weight_key_filling_profil = 3;
+
+//When clearing an input because it is wrong, retrieving this weight
+var weight_key_clear_input = 10;
 
