@@ -101,3 +101,6 @@ var weight_key_filling_profil = 3;
 //When clearing an input because it is wrong, retrieving this weight
 var weight_key_clear_input = 10;
 
+//The weight when sending a pivot to website key
+var weight_add_pivot = 10;
+

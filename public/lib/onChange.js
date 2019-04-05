@@ -93,21 +93,49 @@ function changeAlgo(evt){
 		return;
 	}
 
-	//
-	// First part algo: field managed by profil
-	//
-	if( input.hasAttribute(CODE_FILLED_BY_PROFIL)){
-		//TODO(Ben): code this you lazy !
 
-	}
-
-	else if( input.hasAttribute(CODE_FILLED_BY_PROFILLESS)){
+	if( input.hasAttribute(CODE_FILLED_BY_PROFILLESS)){
 		//Don't process empty field
 		if( is_empty(input)){
 			console.debug("Algo change profilless: field is empty, no process.");
 			return;
 		}
 		ChangeProfilless(key_domain, user_value);
+	}
+}
+
+function blurAlgo(evt){
+	var input = evt.target
+	console.info("Event blur: field " + input.tagName + " lost focus: " + HtmlEltToString(input));
+	var key_domain = construit_domaine_cle(input);
+	var user_value = input.value.capitalize();
+
+	//
+	// First part algo: field managed by profil
+	//
+	if( input.hasAttribute(CODE_FILLED_BY_PROFIL)){
+
+		//Field was filled by profil then cleared by user then a new value was entered
+		if( input.hasAttribute(CODE_FIELD_CLEARED_USER)){
+			var profil_used = input.getAttribute(CODE_FILLED_BY_PROFIL);
+
+			var pivots_new_value = profil_db.look_for_value_in_profil(profil_used, user_value)
+
+			//Found one or more pivot corresponding to new value in profil used
+			if(pivots_new_value.length > 0){
+				console.info("Found some pivot in current profil " + profil_used + " for value " + pivots_new_value);
+				console.info("Updating weight with following pivots found: " + JSON.stringify(pivots_new_value));
+				website_front_db.update_weight_pivot_list(window.location.host, key_domain, pivots_new_value)
+			}
+
+			//New value is not in used profil, try others profil
+			if(pivots_new_value.length == 0){
+				console.info("Cannot find pivots for value " + user_value + " in current profil.");
+				console.info("Looking into other profil");
+				pivots_new_value = profil_db.look_for_value_all_profil(profil_used);
+				console.warn("Pivot corresponding to new value all profil: " + JSON.stringify(pivots_new_value));
+			}
+		}
 	}
 }
 

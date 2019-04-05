@@ -427,7 +427,6 @@ class WebsiteDb {
 
     update_weight_clearing_field(domain, key, pivot_reference){
 
-        console.warn("Updating weight for filling with profil chosen");
         var weights_website = this.website_key[domain][key];
 
         for(var i=0 ; i<liste_pivots_profil.length ; i++){
@@ -443,7 +442,22 @@ class WebsiteDb {
                 weights_website[current_pivot] += weight_key_filling_profil;
             }
         }
+        console.info("[update_weight_clearing_field] Key updated: " + JSON.stringify(weights_website, null, 4));
         //Don't forget to save the new content in cache
+        this.set_websitedb_storage();
+    }
+
+    //With the given list, increase weight in corresponding pivot
+    //for key provided 
+    update_weight_pivot_list(domain, key, pivot_list){
+        var weights_website = this.website_key[domain][key];
+
+        for(var i=0 ; i<pivot_list.length ; i++){
+            var current_pivot = pivot_list[i];
+            console.info("Increasing pivot " + current_pivot + " by " + weight_add_pivot);
+            weights_website[current_pivot] += weight_add_pivot;
+        }
+        console.info("Key updated: " + JSON.stringify(weights_website, null, 4));
         this.set_websitedb_storage();
     }
 
