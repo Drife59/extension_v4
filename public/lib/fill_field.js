@@ -42,7 +42,7 @@ function simulate_user_change(input, user_value) {
 // V6 New filling
 // --------------
 
-function fill_field_v6(input, domain, profil_id) {
+function fill_field_v6(input, domain, profil_id, profil_validated) {
     var key_domain = construit_domaine_cle(input);
 
     //Careful ! a select is always not empty    
@@ -73,6 +73,13 @@ function fill_field_v6(input, domain, profil_id) {
             if (user_value != null && user_value != ' ' && user_value != '') {
                 //We need to "mark" this field as filled by profil, for algo onChange
                 input.setAttribute(CODE_FILLED_BY_PROFIL, profil_id);
+                
+                //A profil has been chosen for restitution, updating weight
+                //Update all weight for everyfilling
+                if(profil_validated == true){
+                    console.warn("Profil has been chosen, updating weight accordingly");
+                    website_front_db.update_weight_filling(domain, key_domain, pivot_reference);
+                }
                 console.debug("Filling input : " + key_domain + " using profil " + profil_id + " with value: " + user_value);
             }
         }
@@ -96,7 +103,7 @@ function fill_field_v6(input, domain, profil_id) {
     }
 }
 
-function fill_fields_v6(profil_id) {
+function fill_fields_v6(profil_id, profil_validated) {
     //New loading, we should reset heuristic utilisation
     heuristic_activated = {};
 
@@ -116,13 +123,13 @@ function fill_fields_v6(profil_id) {
 
         for (j = 0; j < inputs_type.length; j++) {
             if (!is_search_field(inputs_type[j])) {
-                fill_field_v6(inputs_type[j], domain, profil_id);
+                fill_field_v6(inputs_type[j], domain, profil_id, profil_validated);
             }
         }
     }
 
     //Try to fill every select
     for (var i = 0; i < selects.length; i++) {
-        fill_field_v6(selects[i], domain, profil_id);
+        fill_field_v6(selects[i], domain, profil_id, profil_validated);
     }
 }

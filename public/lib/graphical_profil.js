@@ -268,7 +268,7 @@ function bindListenner() {
 
 		//Bind event to choose a profil
 		all_options[i].onclick = function (evt) {
-			fill_fields_v6(evt.target.getAttribute("profil_id"));
+			fill_fields_v6(evt.target.getAttribute("profil_id"), true);
 			profil_id_chosen = evt.target.getAttribute("profil_id");
 			profil_db.increase_profil_weight(profil_id_chosen);
 			profil_db.decrease_delete_profil();
