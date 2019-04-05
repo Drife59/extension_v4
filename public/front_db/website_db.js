@@ -425,6 +425,28 @@ class WebsiteDb {
 
     }
 
+    update_weight_clearing_field(domain, key, pivot_reference){
+
+        console.warn("Updating weight for filling with profil chosen");
+        var weights_website = this.website_key[domain][key];
+
+        for(var i=0 ; i<liste_pivots_profil.length ; i++){
+            //For the sake of clarity and performance
+            var current_pivot = liste_pivots_profil[i];
+
+            //Decrease pivot corresponding to cleared field
+            if(current_pivot == pivot_reference){
+                weights_website[current_pivot] -= weight_key_clear_input;
+            }
+            //Increase all others pivot, cancelling previous decrease from filling
+            else{
+                weights_website[current_pivot] += weight_key_filling_profil;
+            }
+        }
+        //Don't forget to save the new content in cache
+        this.set_websitedb_storage();
+    }
+
     //Display the weight associated with key, rounded
     display_key_weight(domain, key){
         //Clone original object

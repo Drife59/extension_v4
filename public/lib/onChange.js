@@ -82,12 +82,6 @@ function changeAlgo(evt){
 		return;
 	}
 
-	//Don't process empty field
-	if( is_empty(input)){
-		console.debug("Algo change: field is empty, no process.");
-		return;
-	}
-
 	//Don't process paiement card
 	if( check_card(user_value)){
 		console.debug("Algo change: no process executed for card number " + user_value);
@@ -99,8 +93,35 @@ function changeAlgo(evt){
 		return;
 	}
 
+	//
+	// First part algo: field managed by profil
+	//
+	if( input.hasAttribute(CODE_FILLED_BY_PROFIL)){
+		//TODO(Ben): code this you lazy !
+	}
 
-	if( input.hasAttribute(CODE_FILLED_BY_PROFILLESS)){
+	else if( input.hasAttribute(CODE_FILLED_BY_PROFILLESS)){
+		//Don't process empty field
+		if( is_empty(input)){
+			console.debug("Algo change profilless: field is empty, no process.");
+			return;
+		}
 		ChangeProfilless(key_domain, user_value);
+	}
+}
+
+//Algo corresponding to "input" event
+//Input event occurs everytime a user modify value on field
+function inputAlgo(evt){
+	var input = evt.target
+	var key_domain = construit_domaine_cle(input);
+
+	if( input.hasAttribute(CODE_FILLED_BY_PROFIL)){
+		//Field has been cleared
+		if( is_empty(input)){
+			console.warn("Algo change profil: field has been cleared, decreasing pivot reference.");
+			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
+			website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference);
+		}
 	}
 }
