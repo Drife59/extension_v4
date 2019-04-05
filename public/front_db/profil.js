@@ -353,6 +353,7 @@ class UserProfil {
         }
         console.debug("[look_for_value_all_profil]: Value " + value + 
             " found following correspondance " + JSON.stringify(obj_res, null, 4));
+        return obj_res;
     }
 
 
