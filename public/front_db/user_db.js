@@ -79,7 +79,7 @@ class UserPivotValues {
         }
 
         if(display_full_technical_log){
-            console.debug("User values loaded from back: \n" + user_pivot_value);
+            console.debug("User values loaded from back: \n" + this.user_pivot_value);
         }
     }
 
