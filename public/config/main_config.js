@@ -93,6 +93,7 @@ var id_list = "list_profil";
 
 var CODE_FILLED_BY_PROFIL = "filledByProfil";
 var CODE_FILLED_BY_PROFILLESS = "filledByProfilless";
+var CODE_FIELD_CLEARED_USER = "cleared_user";
 
 //When filling with a profil, addind this weight to website key
 var weight_key_filling_profil = 3;

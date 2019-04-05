@@ -98,6 +98,7 @@ function changeAlgo(evt){
 	//
 	if( input.hasAttribute(CODE_FILLED_BY_PROFIL)){
 		//TODO(Ben): code this you lazy !
+
 	}
 
 	else if( input.hasAttribute(CODE_FILLED_BY_PROFILLESS)){
@@ -122,6 +123,7 @@ function inputAlgo(evt){
 			console.warn("Algo change profil: field has been cleared, decreasing pivot reference.");
 			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
 			website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference);
+			input.setAttribute(CODE_FIELD_CLEARED_USER, "true");
 		}
 	}
 }
