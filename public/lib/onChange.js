@@ -132,8 +132,8 @@ function blurAlgo(evt){
 			if(pivots_new_value.length == 0){
 				console.info("Cannot find pivots for value " + user_value + " in current profil.");
 				console.info("Looking into other profil");
-				pivots_new_value = profil_db.look_for_value_all_profil(profil_used);
-				console.warn("Pivot corresponding to new value all profil: " + JSON.stringify(pivots_new_value));
+				var pivots_coeff = profil_db.look_for_value_all_profil(user_value);
+				website_front_db.update_weight_coeff_pivot(window.location.host, key_domain, pivots_coeff);
 			}
 		}
 	}

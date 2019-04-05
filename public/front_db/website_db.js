@@ -447,8 +447,9 @@ class WebsiteDb {
         this.set_websitedb_storage();
     }
 
-    //With the given list, increase weight in corresponding pivot
-    //for key provided 
+    //With the given list, increase weight in corresponding pivots
+    //for key provided.
+    //Take a list of pivot to increase.
     update_weight_pivot_list(domain, key, pivot_list){
         var weights_website = this.website_key[domain][key];
 
@@ -461,8 +462,30 @@ class WebsiteDb {
         this.set_websitedb_storage();
     }
 
+    /*Increase the weight corresponding to the coeff given for every pivot
+    Object taken as input is as following.
+    {
+        pivot1: <coeff>,
+        ...
+        pivotn: <coeff>
+    }
+    */
+    update_weight_coeff_pivot(domain, key, pivot_coeff){
+        var weights_website = this.website_key[domain][key];
+
+        console.info("Applying following coeff to update weight");
+        console.info(JSON.stringify(pivot_coeff, null, 4));
+
+        for(var pivot in pivot_coeff ){
+            console.info("Increasing pivot " + key + " by " + (weight_add_pivot*pivot_coeff[pivot]));
+            weights_website[pivot] += (pivot_coeff[pivot] * weight_add_pivot);
+        }
+        console.info("Key updated: " + JSON.stringify(weights_website, null, 4));
+        this.set_websitedb_storage();
+    }
+
     //Display the weight associated with key, rounded
-    display_key_weight(domain, key){
+    display_key_weight(domain, key, pivot_coeff){
         //Clone original object
         var weights = JSON.parse(JSON.stringify(this.website_key[domain][key]));
 
