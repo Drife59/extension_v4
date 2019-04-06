@@ -102,5 +102,8 @@ var weight_key_filling_profil = 3;
 var weight_key_clear_input = 10;
 
 //The weight when sending a pivot to website key
-var weight_add_pivot = 10;
+var weight_profil_filled_pivot_known = 10;
+
+//The weight to use when user fill manually a field which have a referent pivot
+var weight_manual_filling_pivot_known = 5;
 

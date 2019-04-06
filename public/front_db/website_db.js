@@ -456,8 +456,8 @@ class WebsiteDb {
 
         for(var i=0 ; i<pivot_list.length ; i++){
             var current_pivot = pivot_list[i];
-            console.info("Increasing pivot " + current_pivot + " by " + weight_add_pivot);
-            weights_website[current_pivot] += weight_add_pivot;
+            console.info("Increasing pivot " + current_pivot + " by " + weight_profil_filled_pivot_known);
+            weights_website[current_pivot] += weight_profil_filled_pivot_known;
         }
         this.compute_and_set_referent_pivot(domain, key);
         console.info("Key updated: " + JSON.stringify(weights_website, null, 4));
