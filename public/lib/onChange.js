@@ -121,19 +121,33 @@ function blurAlgo(evt){
 
 			var pivots_new_value = profil_db.look_for_value_in_profil(profil_used, user_value)
 
-			//Found one or more pivot corresponding to new value in profil used
+			//First possibility: one or more pivot corresponding to new value in profil used
 			if(pivots_new_value.length > 0){
 				console.info("Found some pivot in current profil " + profil_used + " for value " + pivots_new_value);
 				console.info("Updating weight with following pivots found: " + JSON.stringify(pivots_new_value));
-				website_front_db.update_weight_pivot_list(window.location.host, key_domain, pivots_new_value)
+				website_front_db.update_weight_pivot_list(window.location.host, key_domain, pivots_new_value);
+				return;
 			}
 
-			//New value is not in used profil, try others profil
-			if(pivots_new_value.length == 0){
-				console.info("Cannot find pivots for value " + user_value + " in current profil.");
-				console.info("Looking into other profil");
-				var pivots_coeff = profil_db.look_for_value_all_profil(user_value);
+			//Second possibility: on or more pivot found in other profil
+			console.info("Cannot find pivots for value " + user_value + " in current profil.");
+			console.info("Looking into other profil");
+			var pivots_coeff = profil_db.look_for_value_all_profil(user_value);
+			if(Object.keys(pivots_coeff).length > 0){
 				website_front_db.update_weight_coeff_pivot(window.location.host, key_domain, pivots_coeff);
+				console.info("Analysing if a new profil needs to be created");
+				return;
+			}
+
+			//Third possibility: no pivot corresponding at all, unknown value
+			console.info("Value is unknown in all user profil");
+			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
+			if(pivot_reference != null){
+				console.info("Pivot " + pivot_reference + " is still valid for input");
+				console.info("Analysing if a new profil needs to be created");
+			}
+			else{
+				console.info("Pivot referent not valid anymore, end of process");
 			}
 		}
 	}
