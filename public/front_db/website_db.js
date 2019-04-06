@@ -442,6 +442,7 @@ class WebsiteDb {
                 weights_website[current_pivot] += weight_key_filling_profil;
             }
         }
+        this.compute_and_set_referent_pivot(domain, key);
         console.info("[update_weight_clearing_field] Key updated: " + JSON.stringify(weights_website, null, 4));
         //Don't forget to save the new content in cache
         this.set_websitedb_storage();
@@ -458,6 +459,7 @@ class WebsiteDb {
             console.info("Increasing pivot " + current_pivot + " by " + weight_add_pivot);
             weights_website[current_pivot] += weight_add_pivot;
         }
+        this.compute_and_set_referent_pivot(domain, key);
         console.info("Key updated: " + JSON.stringify(weights_website, null, 4));
         this.set_websitedb_storage();
     }
@@ -480,6 +482,7 @@ class WebsiteDb {
             console.info("Increasing pivot " + key + " by " + (weight_add_pivot*pivot_coeff[pivot]));
             weights_website[pivot] += (pivot_coeff[pivot] * weight_add_pivot);
         }
+        this.compute_and_set_referent_pivot(domain, key);
         console.info("Key updated: " + JSON.stringify(weights_website, null, 4));
         this.set_websitedb_storage();
     }
