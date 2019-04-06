@@ -63,7 +63,46 @@ function ChangeProfilless(key_domain, user_value){
 	});
 }
 
+/*
+  ---------------------
+  V6 algo on user input
+  ---------------------
+*/
 
+function analyse_user_input_field_with_pivot(input, user_value, key_domain){
+	var profil_used = input.getAttribute(CODE_FILLED_BY_PROFIL);
+
+	var pivots_new_value = profil_db.look_for_value_in_profil(profil_used, user_value)
+
+	//First possibility: one or more pivot corresponding to new value in profil used
+	if(pivots_new_value.length > 0){
+		console.info("Found some pivot in current profil " + profil_used + " for value " + pivots_new_value);
+		console.info("Updating weight with following pivots found: " + JSON.stringify(pivots_new_value));
+		website_front_db.update_weight_pivot_list(window.location.host, key_domain, pivots_new_value);
+		return;
+	}
+
+	//Second possibility: on or more pivot found in other profil
+	console.info("Cannot find pivots for value " + user_value + " in current profil.");
+	console.info("Looking into other profil");
+	var pivots_coeff = profil_db.look_for_value_all_profil(user_value);
+	if(Object.keys(pivots_coeff).length > 0){
+		website_front_db.update_weight_coeff_pivot(window.location.host, key_domain, pivots_coeff);
+		console.info("Analysing if a new profil needs to be created");
+		return;
+	}
+
+	//Third possibility: no pivot corresponding at all, unknown value
+	console.info("Value is unknown in all user profil");
+	var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
+	if(pivot_reference != null){
+		console.info("Pivot " + pivot_reference + " is still valid for input");
+		console.info("Analysing if a new profil needs to be created");
+	}
+	else{
+		console.info("Pivot referent not valid anymore, end of process");
+	}
+}
 
 //Main algo for event change detected on input field
 function changeAlgo(evt){
@@ -93,7 +132,17 @@ function changeAlgo(evt){
 		return;
 	}
 
+	//We want to execute "analyse_user_input_field_with_pivot" only once
+	//The function is also executed on "blur" event, if field has been cleared
+	//So we need to execute it only if field has not been cleared
+	//This correspond to the case of a "partial" modification of a value
 
+	if( input.hasAttribute(CODE_FILLED_BY_PROFIL) && 
+	   !(input.hasAttribute(CODE_FIELD_CLEARED_USER))){
+		analyse_user_input_field_with_pivot(input, user_value, key_domain);
+	}
+
+	//V5 Process
 	if( input.hasAttribute(CODE_FILLED_BY_PROFILLESS)){
 		//Don't process empty field
 		if( is_empty(input)){
@@ -111,44 +160,12 @@ function blurAlgo(evt){
 	var user_value = input.value.capitalize();
 
 	//
-	// First part algo: field managed by profil
+	// Field managed by profil
 	//
 	if( input.hasAttribute(CODE_FILLED_BY_PROFIL)){
-
 		//Field was filled by profil then cleared by user then a new value was entered
 		if( input.hasAttribute(CODE_FIELD_CLEARED_USER)){
-			var profil_used = input.getAttribute(CODE_FILLED_BY_PROFIL);
-
-			var pivots_new_value = profil_db.look_for_value_in_profil(profil_used, user_value)
-
-			//First possibility: one or more pivot corresponding to new value in profil used
-			if(pivots_new_value.length > 0){
-				console.info("Found some pivot in current profil " + profil_used + " for value " + pivots_new_value);
-				console.info("Updating weight with following pivots found: " + JSON.stringify(pivots_new_value));
-				website_front_db.update_weight_pivot_list(window.location.host, key_domain, pivots_new_value);
-				return;
-			}
-
-			//Second possibility: on or more pivot found in other profil
-			console.info("Cannot find pivots for value " + user_value + " in current profil.");
-			console.info("Looking into other profil");
-			var pivots_coeff = profil_db.look_for_value_all_profil(user_value);
-			if(Object.keys(pivots_coeff).length > 0){
-				website_front_db.update_weight_coeff_pivot(window.location.host, key_domain, pivots_coeff);
-				console.info("Analysing if a new profil needs to be created");
-				return;
-			}
-
-			//Third possibility: no pivot corresponding at all, unknown value
-			console.info("Value is unknown in all user profil");
-			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
-			if(pivot_reference != null){
-				console.info("Pivot " + pivot_reference + " is still valid for input");
-				console.info("Analysing if a new profil needs to be created");
-			}
-			else{
-				console.info("Pivot referent not valid anymore, end of process");
-			}
+			analyse_user_input_field_with_pivot(input, user_value, key_domain);
 		}
 	}
 }
