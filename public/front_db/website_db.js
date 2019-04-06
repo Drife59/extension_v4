@@ -472,15 +472,15 @@ class WebsiteDb {
         pivotn: <coeff>
     }
     */
-    update_weight_coeff_pivot(domain, key, pivot_coeff){
+    update_weight_coeff_pivot(domain, key, pivot_coeff, weight_to_add){
         var weights_website = this.website_key[domain][key];
 
         console.info("Applying following coeff to update weight");
         console.info(JSON.stringify(pivot_coeff, null, 4));
 
         for(var pivot in pivot_coeff ){
-            console.info("Increasing pivot " + key + " by " + (weight_add_pivot*pivot_coeff[pivot]));
-            weights_website[pivot] += (pivot_coeff[pivot] * weight_add_pivot);
+            console.info("Increasing pivot " + key + " by " + (weight_to_add*pivot_coeff[pivot]));
+            weights_website[pivot] += (pivot_coeff[pivot] * weight_to_add);
         }
         this.compute_and_set_referent_pivot(domain, key);
         console.info("Key updated: " + JSON.stringify(weights_website, null, 4));
