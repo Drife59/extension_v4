@@ -170,6 +170,9 @@ function changeAlgo(evt) {
 					pivots_coeff, weight_profil_filled_pivot_known);
 				console.info("Analysing if a new profil needs to be created");
 				return;
+			}else{
+				console.info("Cannot find value in profil, executing onChange profilless");
+				ChangeProfilless(key_domain, user_value);
 			}
 		}
 	}
