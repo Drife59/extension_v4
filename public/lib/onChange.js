@@ -87,7 +87,8 @@ function analyse_user_input_field_with_pivot(input, user_value, key_domain){
 	console.info("Looking into other profil");
 	var pivots_coeff = profil_db.look_for_value_all_profil(user_value);
 	if(Object.keys(pivots_coeff).length > 0){
-		website_front_db.update_weight_coeff_pivot(window.location.host, key_domain, pivots_coeff);
+		website_front_db.update_weight_coeff_pivot(window.location.host, key_domain, 
+			pivots_coeff, weight_profil_filled_pivot_known);
 		console.info("Analysing if a new profil needs to be created");
 		return;
 	}
@@ -140,6 +141,29 @@ function changeAlgo(evt){
 	if( input.hasAttribute(CODE_FILLED_BY_PROFIL) && 
 	   !(input.hasAttribute(CODE_FIELD_CLEARED_USER))){
 		analyse_user_input_field_with_pivot(input, user_value, key_domain);
+	}
+
+	//This part correspond to a manual filling 
+	if(!input.hasAttribute(CODE_FILLED_BY_PROFIL)){
+		var referent_pivot = website_front_db.get_referent_pivot(window.location.host, key_domain);
+		
+		//Manual filling, but on an input with a referent pivot 
+		if(referent_pivot != null){
+			console.info("Manual filling on field with referent pivot: " + referent_pivot);
+
+			var pivots_coeff = profil_db.look_for_value_all_profil(user_value);
+			if(Object.keys(pivots_coeff).length > 0){
+				website_front_db.update_weight_coeff_pivot(window.location.host, key_domain, 
+					pivots_coeff, weight_manual_filling_pivot_known);
+				console.info("Analysing if a new profil needs to be created");
+				return;
+			}
+
+		}
+		//Anonymous field, with no pivot associated for now
+		else{
+			console.info("Manual filling on a anonymous field.");
+		}
 	}
 
 	//V5 Process
