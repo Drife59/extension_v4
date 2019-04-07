@@ -266,10 +266,15 @@ class UserProfil {
 
             var value_object = {};
             value_object["userValueId"] = current_value["userValueId"];
-            value_object["valueText"] = current_value["value"].capitalize();
+            value_object["valueText"] = current_value["value"];
 
             var profil_id_value = current_value["profil"]["profilId"];
             var pivot_user_value = current_value["pivot"]["name"];
+
+            //Don't capitalize email
+            if(pivot_user_value != CODE_MAIN_EMAIL){
+                value_object["valueText"] = current_value["value"].capitalize();
+            }
             this.profil_values[profil_id_value][pivot_user_value] = value_object;
         }
 
