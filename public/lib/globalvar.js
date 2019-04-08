@@ -24,3 +24,5 @@ var  website_front_db = null;
 
 //Indicate if a profil was chosen to fill a form
 var profil_id_chosen = null;
+
+var current_user = null;

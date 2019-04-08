@@ -24,8 +24,13 @@ function lancement_app(type_evt) {
     //profil object need email of current user
     chrome.storage.sync.get("current_user", function (data) {
         if (typeof data.current_user !== 'undefined') {
+
+            //set global var current user for all app
+            console.info("[lancement_app]Loaded current user from cache: " + data.current_user);
+            current_user = data.current_user;
+            
+
             load_profils_from_cache(data.current_user);
-            console.info("[get_userdb_storage]Loaded current user from cache: " + data.current_user);
 
             //If the user is here, then the front db should also be here
             load_user_db_from_cache();
