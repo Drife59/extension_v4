@@ -29,18 +29,22 @@ function lancement_app(type_evt) {
 
             //If the user is here, then the front db should also be here
             load_user_db_from_cache();
-            load_website_db_from_back(true);
 
+            console.info("Parsing fields...")
+            init_fields();
+
+            //In order to load website db from back and execute heuristic,
+            //we need to wait parsing field is finished
             setTimeout(function () {
-                console.info("Parsing fields...")
-                init_fields();
+                console.info("Loading website db from back, creating key and executing heuristics");
+                load_website_db_from_back(true, fetch_all_field);
             }, timeout_parsing);
-        
+
+            //In order to initialize events, we need all keys to be created in front
             setTimeout(function () {
                 console.info("Initializing events...")
                 init_event_list();
-            }, (timeout_parsing + 500));
-            
+            }, timeout_key_creation);
         }
         else{
             console.warn("Cannot find user, please log in.");

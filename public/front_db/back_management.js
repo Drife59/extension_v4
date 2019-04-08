@@ -70,7 +70,7 @@ function load_user_db_from_cache(){
 }
 
 //Load current website keys into website DB
-function load_website_db_from_back(save_in_cache) {
+function load_website_db_from_back(save_in_cache, callback) {
     console.debug("loading websites keys from back");
     //Just for the sake of clarity
     var domain = window.location.host;
@@ -87,9 +87,13 @@ function load_website_db_from_back(save_in_cache) {
     xhttp_website_db.onreadystatechange = function () {
         //website exists
         if (xhttp_website_db.readyState == 4 && xhttp_website_db.status == 200) {
-            //TODO: make this more persistent with localStorage
-            website_front_db.add_domain_from_back(domain, xhttp_website_db.responseText)
+
+            website_front_db.add_domain_from_back(domain, xhttp_website_db.responseText);
             console.info("[load_website_db_from_back] Website db content = " + website_front_db.get_all_key_minimal_display());
+
+            if(callback != undefined){
+                callback();
+            }
 
             if(save_in_cache == true){
                 website_front_db.set_websitedb_storage();

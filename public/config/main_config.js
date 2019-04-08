@@ -17,9 +17,12 @@ Ce module est à importer en premier dans le manifest.json.
 var type_to_include = ["text", "email", "tel",
                        "date", "time", "datetime", "number", "color", "url"];
 
-//Temps d'attente en ms avant remplissage des champs lors du chargement de page
-//Note(BG): ne marche pas ici, doit être chargé au niveau du fichier entry point front.js
-var timeout_parsing = 500;
+
+//Time to wait for the parsing field to be finished
+var timeout_parsing = 250;
+
+//Time to wait for the keys to be created
+var timeout_key_creation = timeout_parsing + 2000;
 
 var separateur_cle = "_";
 

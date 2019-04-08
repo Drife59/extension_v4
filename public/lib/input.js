@@ -87,7 +87,7 @@ function init_fields() {
     load_fields();
     bind_inputs();
     bind_selects();
-    fetch_all_field();
+    //fetch_all_field();
 }
 
 //Renvoit une chaine intelligible pour un element html extrait
@@ -166,6 +166,7 @@ function is_empty(field){
 
 
 //Fetch all fields in page, create key - pivot where possible, else empty key
+//This function need the domain to exist in website_front_db
 function fetch_all_field(){
 
     //Create var only once, will be initialised a lot in loop
