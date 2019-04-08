@@ -229,7 +229,7 @@ class WebsiteDb {
     //If key already exist, forbid action
     create_key(domain, key, heuristic_ref) {
         if (!this.has_domain(domain)) {
-            console.warn("Create key: domain does not exist");
+            console.warn("Create key: domain " + domain + " does not exist in front db");
             return false;
         }
 
