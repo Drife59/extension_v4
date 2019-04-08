@@ -153,12 +153,17 @@ function changeAlgo(evt) {
 
 			var pivots_coeff = profil_db.look_for_value_all_profil(user_value);
 			if (Object.keys(pivots_coeff).length > 0) {
+				
 				website_front_db.update_weight_coeff_pivot(window.location.host, key_domain,
 					pivots_coeff, weight_manual_filling_pivot_known);
-				console.info("Analysing if a new profil needs to be created");
-				return;
 			}
 
+			//A profil has been chosen before. So we need to add this new value to the profil
+			if(profil_id_chosen != null){
+				console.info("Profil " + profil_id_chosen + " has been chosen before.");
+				console.info("Adding value " + user_value + " to it");
+				profil_db.add_value_to_profil(current_user, referent_pivot, user_value, profil_id_chosen)
+			}
 		}
 		//Anonymous field, with no pivot associated for now
 		else {
@@ -166,9 +171,9 @@ function changeAlgo(evt) {
 
 			var pivots_coeff = profil_db.look_for_value_all_profil(user_value);
 			if (Object.keys(pivots_coeff).length > 0) {
+				console.info("Found pivot corresponding to value in profil");
 				website_front_db.update_weight_coeff_pivot(window.location.host, key_domain,
 					pivots_coeff, weight_profil_filled_pivot_known);
-				console.info("Analysing if a new profil needs to be created");
 				return;
 			}else{
 				console.info("Cannot find value in profil, executing onChange profilless");
