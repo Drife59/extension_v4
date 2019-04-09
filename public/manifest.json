@@ -37,7 +37,7 @@
       "front_db/user_db.js",
       "front_db/website_db.js",
       "lib/graphical_profil.js",
-      "lib/onChange.js",
+      "lib/user_event.js",
       "lib/fill_field.js",
       "front.js"],
     "css": ["styles/visited_pages.css","/static/css/app.css", "/static/css/content.css"]
