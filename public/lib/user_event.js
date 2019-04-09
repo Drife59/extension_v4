@@ -69,6 +69,33 @@ function ChangeProfilless(key_domain, user_value) {
   ---------------------
 */
 
+function check_profil_creation(profil_used, key_domain, user_value){
+	console.info("Analysing if a new profil needs to be created");
+
+	var referent_pivot = website_front_db.get_referent_pivot(window.location.host, key_domain);
+
+	//This should not hapenned, but if profil is missing this value, just add it
+	if(profil_db.get_value_for_pivot(profil_used, referent_pivot) == false){
+		console.info("Pivot " + referent_pivot + " has no value in profil, adding it");
+		profil_db.add_value_to_profil(current_user, referent_pivot, user_value, profil_used);
+	}
+
+	//Create a clone of the profil used by user
+	var clone_profil = JSON.parse(JSON.stringify(profil_db.profil_values[profil_used]));
+	clone_profil[referent_pivot]["valueText"] = user_value;
+
+	console.info("Clone content: " + JSON.stringify(clone_profil, null, 4));
+	
+	//TODO continue
+	if(profil_db.check_profil_existence(clone_profil) == true){
+		console.info("Profil already exist, don't create it again");
+	}
+	else{
+		console.info("Profil does not exist, creating it");
+	}
+
+}
+
 function analyse_user_input_field_with_pivot(input, user_value, key_domain) {
 	var profil_used = input.getAttribute(CODE_FILLED_BY_PROFIL);
 
@@ -89,7 +116,9 @@ function analyse_user_input_field_with_pivot(input, user_value, key_domain) {
 	if (Object.keys(pivots_coeff).length > 0) {
 		website_front_db.update_weight_coeff_pivot(window.location.host, key_domain,
 			pivots_coeff, weight_profil_filled_pivot_known);
-		console.info("Analysing if a new profil needs to be created");
+
+		//As the new value if not present in selected profil, we need to check for profil creation
+		check_profil_creation(profil_used, key_domain, user_value);
 		return;
 	}
 
@@ -98,7 +127,7 @@ function analyse_user_input_field_with_pivot(input, user_value, key_domain) {
 	var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
 	if (pivot_reference != null) {
 		console.info("Pivot " + pivot_reference + " is still valid for input");
-		console.info("Analysing if a new profil needs to be created");
+		check_profil_creation(profil_used, key_domain, user_value);
 	}
 	else {
 		console.info("Pivot referent not valid anymore, end of process");

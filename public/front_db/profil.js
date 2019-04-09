@@ -413,4 +413,56 @@ class UserProfil {
         }
         return result;
     }
+
+    /*
+    Check if profil given in parameter does not already exist in db.
+
+    {
+        "profilName": "default2",
+        "weight": 669.987,
+        "first_name": {
+            "userValueId": 20,
+            "valueText": "tsointsoin"
+        },
+        "family_name": {
+            "userValueId": 16,
+            "valueText": "grassart"
+        },
+        "homephone": {
+            "userValueId": 26,
+            "valueText": "0320921500"
+        }
+    }
+
+    */
+
+    check_profil_existence(profil_to_check){
+
+        for (var id_profil in this.profil_values) {
+            var current_profil = this.profil_values[id_profil];
+            
+            //Not the same user value number, not the same profil
+            if(Object.keys(profil_to_check).length != Object.keys(current_profil).length){
+                continue;
+            }
+
+            var found_difference = false;
+            for(var i in Object.keys(profil_to_check)){
+                var pivot = Object.keys(profil_to_check)[i];
+
+                if(liste_pivots.includes(pivot)){
+                    if(profil_to_check[pivot]["valueText"] != current_profil[pivot]["valueText"]){
+                        found_difference = true;
+                        break;
+                    }
+                }
+            }
+            //Find a profil with no difference than the one to check
+            if(found_difference == false){
+                return true;
+            }
+        }
+        //Found no profil exactly the same
+        return false;
+    }
 }
