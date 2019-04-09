@@ -77,7 +77,7 @@ function fill_field_v6(input, domain, profil_id, profil_validated) {
                 //A profil has been chosen for restitution, updating weight
                 //Update all weight for everyfilling
                 if(profil_validated == true){
-                    console.info("Profil has been chosen, updating weight accordingly");
+                    console.debug("Profil has been chosen, updating weight accordingly");
                     website_front_db.update_weight_filling(domain, key_domain, pivot_reference);
                 }
                 console.debug("Filling input : " + key_domain + " using profil " + profil_id + " with value: " + user_value);
