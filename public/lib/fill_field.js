@@ -25,9 +25,6 @@ function simulate_user_change(input, user_value) {
     event = new Event('focus');
     input.dispatchEvent(event);
 
-    input.value = user_value;
-    apply_corail_design(input);
-
     //Simulate changing value and quitting form field
     event = new Event('input');
     input.dispatchEvent(event);
@@ -42,7 +39,7 @@ function simulate_user_change(input, user_value) {
 // V6 New filling
 // --------------
 
-function fill_field_v6(input, domain, profil_id, profil_validated) {
+function fill_field_v6(input, domain, profil_id, profil_validated, fake_user_change) {
     var key_domain = construit_domaine_cle(input);
 
     //Careful ! a select is always not empty    
@@ -96,14 +93,18 @@ function fill_field_v6(input, domain, profil_id, profil_validated) {
         
         //Found a suitable value to fill
         if (user_value != null && user_value != ' ' && user_value != '') {
-            simulate_user_change(input, user_value);
+            input.value = user_value;
+            apply_corail_design(input);
+            if(fake_user_change == true){
+                simulate_user_change(input, user_value);
+            }
         }else{
             console.debug("User does not have a value for pivot: " + pivot_reference);
         }
     }
 }
 
-function fill_fields_v6(profil_id, profil_validated) {
+function fill_fields_v6(profil_id, profil_validated, fake_user_change) {
     //New loading, we should reset heuristic utilisation
     heuristic_activated = {};
 
@@ -123,13 +124,13 @@ function fill_fields_v6(profil_id, profil_validated) {
 
         for (j = 0; j < inputs_type.length; j++) {
             if (!is_search_field(inputs_type[j])) {
-                fill_field_v6(inputs_type[j], domain, profil_id, profil_validated);
+                fill_field_v6(inputs_type[j], domain, profil_id, profil_validated, fake_user_change);
             }
         }
     }
 
     //Try to fill every select
     for (var i = 0; i < selects.length; i++) {
-        fill_field_v6(selects[i], domain, profil_id, profil_validated);
+        fill_field_v6(selects[i], domain, profil_id, profil_validated, fake_user_change);
     }
 }

@@ -195,14 +195,13 @@ function changeAlgo(evt) {
 
 function blurAlgo(evt) {
 	var input = evt.target
-	console.info("Event blur: field " + input.tagName + " lost focus: " + HtmlEltToString(input));
-	var key_domain = construit_domaine_cle(input);
-	var user_value = input.value.capitalize();
 
-	//
-	// Field managed by profil
-	//
+	//Process only if a profil has been selected 
 	if (input.hasAttribute(CODE_FILLED_BY_PROFIL)) {
+		console.info("Event blur: field " + input.tagName + " lost focus: " + HtmlEltToString(input));
+		var key_domain = construit_domaine_cle(input);
+		var user_value = input.value.capitalize();
+
 		//Field was filled by profil then cleared by user then a new value was entered
 		if (input.hasAttribute(CODE_FIELD_CLEARED_USER)) {
 			analyse_user_input_field_with_pivot(input, user_value, key_domain);
