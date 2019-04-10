@@ -74,17 +74,16 @@ window.addEventListener('hashchange', function () {
         lancement_app("Hashchange");
 });
 
-window.addEventListener('unload', function () {
-    if (enable_front_log)
-        console.info("window.unload event");
-    if (!app_launched)
-        lancement_app("UnLoad");
-});
-
 window.addEventListener('load', function () {
     init_domaine();
     if (enable_front_log)
         console.info("window.load event");
     if (!app_launched)
         lancement_app("Load");
+});
+
+window.addEventListener('unload', function () {
+    console.info("window.unload event");
+    var pivot_value_page = create_pivot_value_from_page();
+    console.info("Pivot-value from previous page: " + JSON.stringify(pivot_value_page, null,4));
 });

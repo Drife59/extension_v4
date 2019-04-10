@@ -211,3 +211,45 @@ function fetch_all_field(){
         }
     }
 }
+
+/*
+Return an object identifing in current page the pivot - value
+it could identify, returning an object as below: 
+{
+    pivot1: value,
+    pivot2: value,
+    ...
+    pivotn: value
+}
+*/
+function create_pivot_value_from_page(){
+    var pivot_value_page = {};
+    var key_domain = null; 
+
+    //Input field
+    for (var i = 0; i < type_to_include.length; i++) {
+        var inputs_type = inputs[type_to_include[i]];
+
+        for (j = 0; j < inputs_type.length; j++) {
+            key_domain = construit_domaine_cle(inputs_type[j]);
+            pivot_referent = website_front_db.get_referent_pivot(window.location.host, key_domain);
+            
+            //Pivot is know for this field, need to add it
+            if (pivot_referent != null && !(is_empty(inputs_type[j])) ){
+                pivot_value_page[pivot_referent] = inputs_type[j].value;
+            }
+        }
+    }
+
+    //Select field
+    for (var i = 0; i < selects.length; i++) {
+        key_domain = construit_domaine_cle(selects[i]);
+        pivot_referent = website_front_db.get_referent_pivot(window.location.host, key_domain);
+            
+        //Pivot is know for this field, need to add it
+        if (pivot_referent != null){
+            pivot_value_page[pivot_referent] = selects[i].value;
+        }
+    }
+    return pivot_value_page;
+}
