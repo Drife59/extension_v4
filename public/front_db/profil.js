@@ -465,4 +465,69 @@ class UserProfil {
         //Found no profil exactly the same
         return false;
     }
+
+    //Create a profil in front and back 
+    create_profil_from_fake(profil){
+        var profil_name = "profil-" + guid();
+
+        //First, create a profil 
+        //xhttp_create_profil(email, profil_name);
+
+
+        /*for(var i in Object.keys(profil_to_check)){
+            var pivot = Object.keys(profil_to_check)[i];
+
+            if(liste_pivots.includes(pivot)){
+                if(profil_to_check[pivot]["valueText"] != current_profil[pivot]["valueText"]){
+                    found_difference = true;
+                    break;
+                }
+            }
+        }*/
+
+
+    }
+}
+
+/*Create a fake profil from page.
+input object: 
+{
+    pivot1: value,
+    pivot2: value,
+    ...
+    pivotn: value
+}
+
+return a unique profil, like the following:
+{
+    "profilName": "profil from page",
+    "weight": 1,
+    "first_name": {
+        "userValueId": 0,
+        "valueText": "Julien"
+    },
+    "family_name": {
+        "userValueId": 0,
+        "valueText": "Derville"
+    },
+    "postal_code": {
+        "userValueId": 0,
+        "valueText": "59000"
+    }
+}
+*/
+function create_profil_from_page(pivot_value_page){
+    var fake_profil = {}
+    fake_profil["profilName"] = "profil from page";
+    fake_profil["weight"] = 1;
+
+    for(var pivot in pivot_value_page){
+        var obj_user_value = {};
+        obj_user_value["userValueId"] = 0;
+        obj_user_value["valueText"] = pivot_value_page[pivot];
+        fake_profil[pivot] = obj_user_value;
+    }
+
+    console.info("Fake profil from page: " + JSON.stringify(fake_profil, null, 4));
+    return fake_profil;
 }
