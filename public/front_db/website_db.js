@@ -423,6 +423,9 @@ class WebsiteDb {
         //Don't forget to save the new content in cache
         this.set_websitedb_storage();
 
+        var key_request = JSON.parse(JSON.stringify(weights_website));
+        key_request["cle"] = key;
+        xhttp_put_key_domain(key_request);
     }
 
     update_weight_clearing_field(domain, key, pivot_reference){
@@ -446,6 +449,10 @@ class WebsiteDb {
         console.info("[update_weight_clearing_field] Key updated: " + JSON.stringify(weights_website, null, 4));
         //Don't forget to save the new content in cache
         this.set_websitedb_storage();
+
+        var key_request = JSON.parse(JSON.stringify(weights_website));
+        key_request["cle"] = key;
+        xhttp_put_key_domain(key_request);
     }
 
     //With the given list, increase weight in corresponding pivots
@@ -462,6 +469,10 @@ class WebsiteDb {
         this.compute_and_set_referent_pivot(domain, key);
         console.info("Key updated: " + JSON.stringify(weights_website, null, 4));
         this.set_websitedb_storage();
+
+        var key_request = JSON.parse(JSON.stringify(weights_website));
+        key_request["cle"] = key;
+        xhttp_put_key_domain(key_request);
     }
 
     /*Increase the weight corresponding to the coeff given for every pivot
@@ -485,6 +496,24 @@ class WebsiteDb {
         this.compute_and_set_referent_pivot(domain, key);
         console.info("Key updated: " + JSON.stringify(weights_website, null, 4));
         this.set_websitedb_storage();
+
+        var key_request = JSON.parse(JSON.stringify(weights_website));
+        key_request["cle"] = key;
+        xhttp_put_key_domain(key_request);
+    }
+
+    //Synchronise with back-end all keys (and their weight) from domain
+    synchro_back(domain){
+        var domain_keys = this.website_key[domain];
+
+        console.info("Synchronising domain " + domain + " with back-end");
+        for(var key in domain_keys){
+            console.info("Sending following key " + key + " to back-end: " + JSON.stringify(domain_keys[key]));
+            //Clone key to update
+            var key_request = JSON.parse(JSON.stringify(domain_keys[key]));
+            key_request["cle"] = key;
+            xhttp_put_key_domain(key_request);
+        }
     }
 
     //Display the weight associated with key, rounded
