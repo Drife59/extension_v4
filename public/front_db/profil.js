@@ -507,11 +507,11 @@ class UserProfil {
 
     //If a fake temp profil has been created in front, this function
     //create it in back and save real profil id and user value id in front  
+    //profil with id "0" is the special profil temp to be created
     create_profil_from_temp_profil(){
 
         //Abort if no temporary profil needs to be created
         if(!this.profil_values.hasOwnProperty("0")){
-            console.warn("There is no temporary profil to create in back");
             return false;
         }
 
