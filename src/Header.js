@@ -10,8 +10,23 @@ export class Header extends Component {
     }
 
     handleLogout(e){
-        chrome.storage.sync.clear();
-        console.debug("Cleared all cache.");
+        
+        //Save the weight modification on profil user
+        //These modification has been save in cache previously
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.executeScript(tabs[0].id, {
+                code: "profil_db.update_all_weight_in_back();"
+            }, 
+            function(response) {
+            
+            });
+        });
+
+        //Don't clear storage too fast, we want to send profil weight to back-end
+        setTimeout(function () {
+            chrome.storage.sync.clear();
+            console.debug("Cleared all cache.");
+        }, 100);
         this.props.logout();
     }
 
