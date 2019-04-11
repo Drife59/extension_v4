@@ -77,4 +77,7 @@ var liste_pivots_profilless = [
     CODE_DRIVING_LICENCE, CODE_LICENCE_PLATE, 
 ]
 
+//Define the minimum set of pivot a profil need to have
+var liste_pivot_minimum_profil = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME];
+
 

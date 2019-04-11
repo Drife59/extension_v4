@@ -93,14 +93,21 @@ window.addEventListener('unload', function () {
     var pivot_value_page = create_pivot_value_from_page();
     console.info("Pivot-value from previous page: " + JSON.stringify(pivot_value_page, null,4));
 
-    var profil_page = create_profil_from_page(pivot_value_page);  
+    var minimum_profil = profil_db.has_minimum_attribute(pivot_value_page);
 
-    //The profil build from the page does not exist. Creating it.
-    if(profil_db.check_profil_existence(profil_page) == false){
-        //Last but not least, before execution fil is finished, 
-        //add the new fake profil in front and save it in cache
-        profil_db.add_fake_profil_front_only(profil_page);
+    //form content is suitable to create a profil
+    if(minimum_profil == true){
+    
+        var profil_page = create_profil_from_page(pivot_value_page);
+        //The profil build from the page does not exist. Creating it.
+        if(profil_db.check_profil_existence(profil_page) == false){
+            //Last but not least, before execution fil is finished, 
+            //add the new fake profil in front and save it in cache
+            profil_db.add_fake_profil_front_only(profil_page);
+        }else{
+            console.info("The profil analysed from previous form already exists");
+        }
     }else{
-        console.info("The profil analysed from previous form already exists");
+        console.info("profil from form does not meet the minimum requirement");
     }
 });

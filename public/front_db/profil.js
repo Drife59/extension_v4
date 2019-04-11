@@ -480,6 +480,23 @@ class UserProfil {
         return false;
     }
 
+    //Check if the profil sent as parameter is eligible to creation 
+    has_minimum_attribute(profil_test){
+        if(Object.keys(profil_test).length < 4){
+            return false;
+        }
+
+        //Check each required key is present in pivot
+        for(var i in liste_pivot_minimum_profil){
+            var pivot = liste_pivot_minimum_profil[i];
+            if( !(pivot in profil_test) ){
+                console.info("[has_minimum_attribute] Missing pivot " + pivot + " cannot create profil");
+                return false;
+            }
+        }
+        return true;
+    }
+
     //Add only in front a fake profil, which need to be created 
     //in back later on.
     add_fake_profil_front_only(profil){
