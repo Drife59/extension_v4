@@ -118,7 +118,7 @@ function analyse_user_input_field_with_pivot(input, user_value, key_domain) {
 			pivots_coeff, weight_profil_filled_pivot_known);
 
 		//As the new value if not present in selected profil, we need to check for profil creation
-		check_profil_creation(profil_used, key_domain, user_value);
+		//check_profil_creation(profil_used, key_domain, user_value);
 		return;
 	}
 
@@ -127,7 +127,7 @@ function analyse_user_input_field_with_pivot(input, user_value, key_domain) {
 	var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
 	if (pivot_reference != null) {
 		console.info("Pivot " + pivot_reference + " is still valid for input");
-		check_profil_creation(profil_used, key_domain, user_value);
+		//check_profil_creation(profil_used, key_domain, user_value);
 	}
 	else {
 		console.info("Pivot referent not valid anymore, end of process");
