@@ -28,7 +28,6 @@ function lancement_app(type_evt) {
             //set global var current user for all app
             console.info("[lancement_app]Loaded current user from cache: " + data.current_user);
             current_user = data.current_user;
-            
 
             load_profils_from_cache(data.current_user);
 
@@ -43,6 +42,9 @@ function lancement_app(type_evt) {
             setTimeout(function () {
                 console.info("Loading website db from back, creating key and executing heuristics");
                 load_website_db_from_back(true, fetch_all_field);
+
+                //If there is a temporary profil in cache, we need to create it in back
+                profil_db.create_profil_from_temp_profil();
             }, timeout_parsing);
 
             //In order to initialize events, we need all keys to be created in front
@@ -80,10 +82,25 @@ window.addEventListener('load', function () {
         console.info("window.load event");
     if (!app_launched)
         lancement_app("Load");
+
+
 });
 
+
+/*Note(BG): Be careful, it is impossible to predict how much execution time you have in unload event*/
 window.addEventListener('unload', function () {
     console.info("window.unload event");
     var pivot_value_page = create_pivot_value_from_page();
     console.info("Pivot-value from previous page: " + JSON.stringify(pivot_value_page, null,4));
+
+    var profil_page = create_profil_from_page(pivot_value_page);  
+
+    //The profil build from the page does not exist. Creating it.
+    if(profil_db.check_profil_existence(profil_page) == false){
+        //Last but not least, before execution fil is finished, 
+        //add the new fake profil in front and save it in cache
+        profil_db.add_fake_profil_front_only(profil_page);
+    }else{
+        console.info("The profil analysed from previous form already exists");
+    }
 });

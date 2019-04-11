@@ -175,6 +175,20 @@ class UserProfil {
         return xhttp_back_api;
     }
 
+    xhttp_create_profil_value_user(email, pivot, value, profil_id){
+        var xhttp_back_api = new XMLHttpRequest();
+        //Don't forget to capitalize user value
+        var url_final = url_create_value_v6.replace("{email}", email)
+                                        .replace("{pivot_name}", pivot)
+                                        .replace("{value_text}", value.capitalize())
+                                        .replace("{profil_id}", profil_id);
+        xhttp_back_api.open("POST", url_final, true);
+        xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp_back_api.send();
+        return xhttp_back_api;
+    }
+        
+
     xhttp_update_weight(email, profil_id, new_weight){
         var xhttp_back_api = new XMLHttpRequest();
         var url_final = url_update_weight.replace("{email}", email)
@@ -466,26 +480,79 @@ class UserProfil {
         return false;
     }
 
-    //Create a profil in front and back 
-    create_profil_from_fake(profil){
+    //Add only in front a fake profil, which need to be created 
+    //in back later on.
+    add_fake_profil_front_only(profil){
+        console.info("Saving fake profil in front");
+        this.profil_values["0"] = profil;
+        this.set_profil_storage();
+    }
+
+    //If a fake temp profil has been created in front, this function
+    //create it in back and save real profil id and user value id in front  
+    create_profil_from_temp_profil(){
+
+        //Abort if no temporary profil needs to be created
+        if(!this.profil_values.hasOwnProperty("0")){
+            console.warn("There is no temporary profil to create in back");
+            return false;
+        }
+
         var profil_name = "profil-" + guid();
+        var profil = this.profil_values["0"];
+
+        console.info("[create_profil_from_temp_profil] Request profil back creation with name : " + profil_name);
+
+        //This reference will be lost in xhttp object context
+        var current_obj = this;
 
         //First, create a profil 
-        //xhttp_create_profil(email, profil_name);
+        var xhttp = this.xhttp_create_profil(current_user, profil_name);
 
+        //Profil has been created in back
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var data = xhttp.responseText;
 
-        /*for(var i in Object.keys(profil_to_check)){
-            var pivot = Object.keys(profil_to_check)[i];
+                var json_data = JSON.parse(data)
+                var new_profil_id = json_data["profilId"];
+                console.info("new profil id: " + new_profil_id);
 
-            if(liste_pivots.includes(pivot)){
-                if(profil_to_check[pivot]["valueText"] != current_profil[pivot]["valueText"]){
-                    found_difference = true;
-                    break;
+                var new_profil = jsonCopy(profil) ;
+                new_profil["profilName"] = profil_name;
+                new_profil["weight"] = json_data["weight"];
+
+                var xhttp_user_value = {};
+
+                //For each pivot, create value in back
+                for(var pivot in new_profil){
+                    if(liste_pivots.includes(pivot)){
+                        xhttp_user_value[pivot] = current_obj.xhttp_create_profil_value_user(current_user, pivot, new_profil[pivot]["valueText"], new_profil_id);
+                    }
                 }
+
+                /*Note(BG): As I don't know in advance the different pivot to process, I had to do the requests with a composite
+                object "xhttp_user_value" (as a map).
+                I did not found a solution to listen to the result of the request by binding "onreadystatechange" listenner,
+                because I need a loop and the loop is going to erase the pivot each time till the end of the loop, 
+                meaning I will only listen to the last pivot.
+                The workaround I found is below, to wait a bit and then do a loop on the result directly
+                when I'm sure it's done. I guess there is a better way to do this...
+                */
+
+                //Hopefully, 5 seconds later all requests should be done
+                setTimeout(function () {
+                    for(var pivot in new_profil){
+                        if(liste_pivots.includes(pivot)){
+                            var response_json = JSON.parse(xhttp_user_value[pivot].responseText);
+                            new_profil[pivot]["userValueId"] = response_json["userValueId"];
+                        }
+                    }
+                    console.info("The temporary profil has been created in back and saved in front: " + JSON.stringify(new_profil, null, 4));
+                    console.info("Profil id " + new_profil_id + " is now a regular profil");
+                }, 5000);
             }
-        }*/
-
-
+        }
     }
 }
 
@@ -515,6 +582,10 @@ return a unique profil, like the following:
         "valueText": "59000"
     }
 }
+
+This profil is special, as it does not exist in back.
+We "mark" it so it can later on be created in back, with proper id.
+For now, all ids are faked.
 */
 function create_profil_from_page(pivot_value_page){
     var fake_profil = {}
