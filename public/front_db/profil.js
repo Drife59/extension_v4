@@ -533,7 +533,6 @@ class UserProfil {
 
                 var json_data = JSON.parse(data)
                 var new_profil_id = json_data["profilId"];
-                console.info("new profil id: " + new_profil_id);
 
                 var new_profil = jsonCopy(profil) ;
                 new_profil["profilName"] = profil_name;
@@ -567,6 +566,9 @@ class UserProfil {
                     }
                     console.info("The temporary profil has been created in back and saved in front: " + JSON.stringify(new_profil, null, 4));
                     console.info("Profil id " + new_profil_id + " is now a regular profil");
+                    current_obj.profil_values[new_profil_id] = new_profil;
+                    delete current_obj.profil_values["0"];
+                    current_obj.set_profil_storage();
                 }, 5000);
             }
         }
