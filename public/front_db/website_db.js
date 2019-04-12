@@ -90,7 +90,6 @@ class WebsiteDb {
     //Save in storage current website db
     set_websitedb_storage(){
         chrome.storage.sync.set({"website_key": JSON.stringify(this.website_key)});
-        console.info("[set_websitedb_storage] website db was saved in storage.");
     }
 
     //Load website db object from local storage
@@ -461,9 +460,10 @@ class WebsiteDb {
     update_weight_pivot_list(domain, key, pivot_list){
         var weights_website = this.website_key[domain][key];
 
+        console.info("Updating weight with following pivots: " + JSON.stringify(pivot_list));
+
         for(var i=0 ; i<pivot_list.length ; i++){
             var current_pivot = pivot_list[i];
-            console.info("Increasing pivot " + current_pivot + " by " + weight_profil_filled_pivot_known);
             weights_website[current_pivot] += weight_profil_filled_pivot_known;
         }
         this.compute_and_set_referent_pivot(domain, key);
@@ -490,7 +490,6 @@ class WebsiteDb {
         console.info(JSON.stringify(pivot_coeff, null, 4));
 
         for(var pivot in pivot_coeff ){
-            console.info("Increasing pivot " + key + " by " + (weight_to_add*pivot_coeff[pivot]));
             weights_website[pivot] += (pivot_coeff[pivot] * weight_to_add);
         }
         this.compute_and_set_referent_pivot(domain, key);
