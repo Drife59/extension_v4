@@ -16,7 +16,8 @@ var app_launched = false;
 
 
 //Start app: parsing and binding fields
-function lancement_app(type_evt) {
+function lancement_app() {
+    app_launched = true;
     init_domaine();
 
     //Load all front db
@@ -57,23 +58,11 @@ function lancement_app(type_evt) {
             console.warn("Cannot find user, please log in.");
         }
     });
-    
-    app_launched = true;
 }
 
 
-window.addEventListener('pageshow', function () {
-    if (enable_front_log)
-        console.info("window.pageshow event");
-    if (!app_launched)
-        lancement_app("Pageshow");
-});
-
+//When the url change
 window.addEventListener('hashchange', function () {
-    if (enable_front_log)
-        console.info("window.hashchange event");
-    if (!app_launched)
-        lancement_app("Hashchange");
 });
 
 window.addEventListener('load', function () {
