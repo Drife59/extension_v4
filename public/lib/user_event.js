@@ -83,7 +83,6 @@ function analyse_user_input_field_with_pivot(input, user_value, key_domain) {
 	//First possibility: one or more pivot corresponding to new value in profil used
 	if (pivots_new_value.length > 0) {
 		console.info("Found some pivot in current profil " + profil_used + " for value " + pivots_new_value);
-		console.info("Updating weight with following pivots found: " + JSON.stringify(pivots_new_value));
 		website_front_db.update_weight_pivot_list(window.location.host, key_domain, pivots_new_value);
 		return;
 	}
