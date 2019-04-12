@@ -404,7 +404,7 @@ class WebsiteDb {
     //----------------------
 
     update_weight_filling(domain, key, pivot_reference){
-        console.info("Updating weight for filling with profil chosen");
+        console.info("[update_weight_filling] Updating weight for key " + key + " with pivot reference: " + pivot_reference);
         var weights_website = this.website_key[domain][key];
 
         for(var i=0 ; i<liste_pivots_profil.length ; i++){

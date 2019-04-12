@@ -227,7 +227,6 @@ function blurAlgo(evt) {
 
 	//Process only if a profil has been selected 
 	if (input.hasAttribute(CODE_FILLED_BY_PROFIL)) {
-		console.info("Event blur: field " + input.tagName + " lost focus: " + HtmlEltToString(input));
 		var key_domain = construit_domaine_cle(input);
 		var user_value = input.value.capitalize();
 
@@ -247,7 +246,7 @@ function inputAlgo(evt) {
 	if (input.hasAttribute(CODE_FILLED_BY_PROFIL)) {
 		//Field has been cleared
 		if (is_empty(input)) {
-			console.warn("Algo change profil: field has been cleared, decreasing pivot reference.");
+			console.info("Algo change profil: field has been cleared, decreasing pivot reference.");
 			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
 			website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference);
 			input.setAttribute(CODE_FIELD_CLEARED_USER, "true");
