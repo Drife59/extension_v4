@@ -413,10 +413,14 @@ class WebsiteDb {
             //increase weight of pivot reference
             if(current_pivot == pivot_reference){
                 weights_website[current_pivot] += weight_key_filling_profil;
+                if (weights_website[current_pivot] > MAX_KEY_PIVOT_WEIGHT)
+                    weights_website[current_pivot] = MAX_KEY_PIVOT_WEIGHT;
             }
             //Decrease all other pivot weight
             else{
                 weights_website[current_pivot] -= weight_key_filling_profil;
+                if (weights_website[current_pivot] < MIN_KEY_PIVOT_WEIGHT)
+                    weights_website[current_pivot] = MIN_KEY_PIVOT_WEIGHT;
             }
         }
         //Don't forget to save the new content in cache
@@ -438,10 +442,14 @@ class WebsiteDb {
             //Decrease pivot corresponding to cleared field
             if(current_pivot == pivot_reference){
                 weights_website[current_pivot] -= weight_key_clear_input;
+                if (weights_website[current_pivot] < MIN_KEY_PIVOT_WEIGHT)
+                    weights_website[current_pivot] = MIN_KEY_PIVOT_WEIGHT;
             }
             //Increase all others pivot, cancelling previous decrease from filling
             else{
                 weights_website[current_pivot] += weight_key_filling_profil;
+                if (weights_website[current_pivot] > MAX_KEY_PIVOT_WEIGHT)
+                    weights_website[current_pivot] = MAX_KEY_PIVOT_WEIGHT;
             }
         }
         this.compute_and_set_referent_pivot(domain, key);
@@ -465,6 +473,8 @@ class WebsiteDb {
         for(var i=0 ; i<pivot_list.length ; i++){
             var current_pivot = pivot_list[i];
             weights_website[current_pivot] += weight_profil_filled_pivot_known;
+            if (weights_website[current_pivot] > MAX_KEY_PIVOT_WEIGHT)
+                weights_website[current_pivot] = MAX_KEY_PIVOT_WEIGHT;
         }
         this.compute_and_set_referent_pivot(domain, key);
         console.info("Key updated: " + JSON.stringify(weights_website, null, 4));
@@ -491,6 +501,8 @@ class WebsiteDb {
 
         for(var pivot in pivot_coeff ){
             weights_website[pivot] += (pivot_coeff[pivot] * weight_to_add);
+            if (weights_website[pivot] > MAX_KEY_PIVOT_WEIGHT)
+                weights_website[pivot] = MAX_KEY_PIVOT_WEIGHT;
         }
         this.compute_and_set_referent_pivot(domain, key);
         console.info("Key updated: " + JSON.stringify(weights_website, null, 4));
