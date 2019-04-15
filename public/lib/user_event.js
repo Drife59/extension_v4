@@ -75,6 +75,8 @@ function check_profil_creation(profil_used, key_domain, user_value){
 
 }
 
+/*Analyse content of field, and update weight accordigly
+*/
 function analyse_user_input_field_with_pivot(input, user_value, key_domain) {
 	var profil_used = input.getAttribute(CODE_FILLED_BY_PROFIL);
 
@@ -140,6 +142,15 @@ function changeAlgo(evt) {
 		return;
 	}
 
+	//We are in onChange event. So, if the change has been manual,
+	//that means that user modified the value. Therefore, we need to 
+	//decrease the weight as if the field was cleared
+	if (input.hasAttribute(CODE_FILLED_BY_PROFIL)){
+			console.info("Algo change profil: field has modified by user, decreasing pivot reference.");
+			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
+			website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference);
+	}
+
 	//We want to execute "analyse_user_input_field_with_pivot" only once
 	//The function is also executed on "blur" event, if field has been cleared
 	//So we need to execute it only if field has not been cleared
@@ -200,34 +211,3 @@ function changeAlgo(evt) {
 	}
 }
 
-function blurAlgo(evt) {
-	var input = evt.target
-
-	//Process only if a profil has been selected 
-	if (input.hasAttribute(CODE_FILLED_BY_PROFIL)) {
-		var key_domain = construit_domaine_cle(input);
-		var user_value = input.value.capitalize();
-
-		//Field was filled by profil then cleared by user then a new value was entered
-		if (input.hasAttribute(CODE_FIELD_CLEARED_USER)) {
-			analyse_user_input_field_with_pivot(input, user_value, key_domain);
-		}
-	}
-}
-
-//Algo corresponding to "input" event
-//Input event occurs everytime a user modify value on field
-function inputAlgo(evt) {
-	var input = evt.target
-	var key_domain = construit_domaine_cle(input);
-
-	if (input.hasAttribute(CODE_FILLED_BY_PROFIL)) {
-		//Field has been cleared
-		if (is_empty(input)) {
-			console.info("Algo change profil: field has been cleared, decreasing pivot reference.");
-			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
-			website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference);
-			input.setAttribute(CODE_FIELD_CLEARED_USER, "true");
-		}
-	}
-}

@@ -26,8 +26,6 @@ function bind_inputs() {
 
         for (j = 0; j < inputs_type.length; j++) {
             inputs_type[j].addEventListener('change', changeAlgo, false);
-            inputs_type[j].addEventListener('input', inputAlgo, false);
-            inputs_type[j].addEventListener('blur', blurAlgo, false);
         }
     }
 }
