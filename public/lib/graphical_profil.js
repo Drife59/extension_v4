@@ -274,6 +274,8 @@ function bindListenner() {
 			profil_db.decrease_delete_profil();
 			console.debug("Profil chosen: " + JSON.stringify(profil_db.profil_values[profil_id_chosen], null, 4));
 			click_for_display_list();
+			//Don't scroll vertically to the top
+			evt.preventDefault();
 		}
 	}
 }
