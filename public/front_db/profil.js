@@ -397,6 +397,7 @@ class UserProfil {
     }
 
     //Return profil that should be displayed in the list for final user
+    //Evolution: return list of profil sorted by weight, DESC
     get_profil_for_list(){
         //If less or equal than number allowed, return all profil
         if( this.get_number_of_profil() <= nb_maximum_profil_restitution){
@@ -425,7 +426,19 @@ class UserProfil {
             delete result[min_id_profil];
             min_weight = 100;
         }
-        return result;
+
+        var result_list = [];
+        for (var id_profil in result) {
+            var new_obj = jsonCopy(this.profil_values[id_profil]);
+            new_obj["id_profil"] = id_profil;
+            result_list.push(new_obj);
+        }
+        //Sort list by weight, DESC
+        result_list.sort(function(a,b) {
+            return b.weight - a.weight;
+        });
+
+        return result_list;
     }
 
     /*

@@ -201,13 +201,15 @@ function buildProfilList() {
 	html_list.id = id_list;
 	html_list.className = "dropdown-content";
 
-
 	//Build dynamic list from profil front db
-	for (var id_profil in profil_db.get_profil_for_list()) {
+	//List is ordered by weight, DESC
+	var profil_list = profil_db.get_profil_for_list();
 
+	for (var i in profil_list) {
+		var obj_profil = profil_list[i];
 		var opt = document.createElement('a');
-		opt.innerHTML = profil_db.get_display_value_string(id_profil);
-		opt.setAttribute("profil_id", id_profil);
+		opt.innerHTML = profil_db.get_display_value_string(obj_profil["id_profil"]);
+		opt.setAttribute("profil_id", obj_profil["id_profil"]);
 		opt.href = "#";
 
 		html_list.appendChild(opt);
