@@ -399,36 +399,40 @@ class UserProfil {
     //Return profil that should be displayed in the list for final user
     //Evolution: return list of profil sorted by weight, DESC
     get_profil_for_list(){
+        var result_list = [];
+
+        var profil_to_return = null;
+
         //If less or equal than number allowed, return all profil
         if( this.get_number_of_profil() <= nb_maximum_profil_restitution){
-            return this.profil_values;
-        }
+            profil_to_return = this.get_clone_profil_values();
+        }else{
+            //else, return profil with maximum weight
+            var min_weight = 100;
+            var min_id_profil = null;
 
-        //else, return profil with maximum weight
-        var min_weight = 100;
-        var min_id_profil = null;
+            var profil_to_return = this.get_clone_profil_values();
 
-        var result = this.get_clone_profil_values();
-
-        while(Object.keys(result).length > nb_maximum_profil_restitution){
-            
-            //Find min weight profil in all list
-            for (var id_profil in result) {
-                var current_profil = this.profil_values[id_profil];
+            while(Object.keys(profil_to_return).length > nb_maximum_profil_restitution){
                 
-                if( current_profil["weight"] <= min_weight){
-                    min_weight = current_profil["weight"];
-                    min_id_profil = id_profil
+                //Find min weight profil in all list
+                for (var id_profil in profil_to_return) {
+                    var current_profil = this.profil_values[id_profil];
+                    
+                    if( current_profil["weight"] <= min_weight){
+                        min_weight = current_profil["weight"];
+                        min_id_profil = id_profil
+                    }
                 }
-            }
 
-            //Delete weakest profil
-            delete result[min_id_profil];
-            min_weight = 100;
+                //Delete weakest profil
+                delete profil_to_return[min_id_profil];
+                min_weight = 100;
+            }
         }
 
-        var result_list = [];
-        for (var id_profil in result) {
+        //Build the list of profil to return 
+        for (var id_profil in profil_to_return) {
             var new_obj = jsonCopy(this.profil_values[id_profil]);
             new_obj["id_profil"] = id_profil;
             result_list.push(new_obj);
@@ -468,11 +472,6 @@ class UserProfil {
         for (var id_profil in this.profil_values) {
             var current_profil = this.profil_values[id_profil];
             
-            //Not the same user value number, not the same profil
-            if(Object.keys(profil_to_check).length != Object.keys(current_profil).length){
-                continue;
-            }
-
             var found_difference = false;
             for(var i in Object.keys(profil_to_check)){
                 var pivot = Object.keys(profil_to_check)[i];
