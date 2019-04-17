@@ -124,6 +124,7 @@ function click_for_display_list(){
 				continue;
 			}
 
+			//Don't forget to remove these listenner in inputs.js "unbind_input"
 			inputs_type[j].removeEventListener("mouseover", display_list, false);
 			inputs_type[j].addEventListener("click", display_list);
 		}

@@ -30,16 +30,35 @@ function bind_inputs() {
     }
 }
 
+//Reverse bind input
+function unbind_inputs() {
+    for (var i = 0; i < type_to_include.length; i++) {
+        var inputs_type = inputs[type_to_include[i]];
+
+        for (j = 0; j < inputs_type.length; j++) {
+            inputs_type[j].removeEventListener('change', changeAlgo, false);
+            //Front graphical_profil "init_event_list"
+            inputs_type[j].removeEventListener("mouseover", display_list, false);
+			inputs_type[j].removeEventListener("click", display_list);
+        }
+    }
+    console.info("[unbind_inputs]: unbind all corail events from inputs");
+}
+
 //Bind all select to change algo
 function bind_selects() {
     for (var i = 0; i < selects.length; i++) {
         selects[i].addEventListener('change', changeAlgo, false);
-        selects[i].onchange = function (evt) {
-            if (enable_front_log)
-                console.info("Elément select modifié: " + HtmlEltToString(evt.target));
-        };
     }
 }
+
+//Reverse bind_selects
+function bind_selects() {
+    for (var i = 0; i < selects.length; i++) {
+        selects[i].removeEventListener('change', changeAlgo, false);
+    }
+}
+
 
 //Set all input to empty value and no corail design
 //Does not act on field not filled by corail

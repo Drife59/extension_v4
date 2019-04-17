@@ -24,8 +24,14 @@ export class Header extends Component {
 
         //Don't clear storage too fast, we want to send profil weight to back-end
         setTimeout(function () {
-            chrome.storage.sync.clear();
-            console.debug("Cleared all cache.");
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.executeScript(tabs[0].id, {
+                    code: "chrome.storage.sync.clear(); console.info(\"[Logout] Cleared all cache.\"); unbind_inputs();"
+                },
+                function(response) {
+            
+                });
+            });
         }, 100);
         this.props.logout();
     }
