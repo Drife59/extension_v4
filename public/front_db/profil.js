@@ -390,12 +390,12 @@ class UserProfil {
 
         //Try to add family name and first if available
         var family_name = this.get_value_for_pivot(profil_id, "family_name");
-        if( family_name != null){
+        if( family_name != false){
             display_str += (" " + family_name);  
         }
 
         var first_name = this.get_value_for_pivot(profil_id, "first_name");
-        if( family_name != null){
+        if( family_name != false){
             display_str += (" " + first_name);  
         }
         return display_str;
