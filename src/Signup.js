@@ -1,3 +1,5 @@
+/*global chrome*/
+
 import React, { Component } from 'react';
 
 import { FooterPrevNext } from './FooterPrevNext';
@@ -70,7 +72,24 @@ export class Signup extends Component {
             console.log("status: " + response.status + " type: " + typeof(response.status) )
             if (response.status === 200) {
                 signup_component.props.setWelcomeContent();
-                signup_component.props.setUser(email);          
+                signup_component.props.setUser(email);
+                
+                //Wait for the google cache to set user then launch app
+                //Build code to initialise all front db
+                var str_code = "init_new_user_db(\"" + email + "\");" + 
+                               "init_new_profil(\"" + email + "\");" +
+                               "load_website_db_from_back(true);" + 
+                               "init_fields();";
+                
+                chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                    chrome.tabs.executeScript(tabs[0].id, {
+                        code: str_code
+                    }, 
+                    function(response) {
+                    
+                    });
+                });
+
             }else if (response.status === 409){
                 signup_error_msg.style.display = 'block';
                 signup_component.setState({

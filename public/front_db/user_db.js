@@ -399,6 +399,13 @@ class UserPivotValues {
     }
 }
 
+//Small external function to create a new empty user front db
+function init_new_user_db(user){
+    console.info("[init_new_user_db] Creating new empty user front db (legacy V5) for user: " + user);
+    user_front_db = new UserPivotValues("{}");
+    user_front_db.set_current_user(user);
+}
+
 
 
 

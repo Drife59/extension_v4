@@ -295,7 +295,7 @@ class UserProfil {
         console.info("User profil has been initiated with following content: " + JSON.stringify(this.profil_values, null,4));
     }
 
-    async add_value_to_profil(email, pivot, value_text, profil_id){
+    async add_value_to_profil(email, pivot, value_text, profil_id, callback){
 
         var user_value_back = await this.fetch_create_profil_value_user(email, pivot, value_text, profil_id);
         console.debug("user value created from back: " + JSON.stringify(user_value_back, null, 4));
@@ -307,6 +307,11 @@ class UserProfil {
 
         console.info("The following user value was added to profil " + profil_id + 
                      " on pivot " + pivot + " : " + JSON.stringify(new_user_value, null, 4));
+
+        //Optional callback to execute after value creation
+        if(callback != undefined){
+            callback();
+        }
 
     }
     
@@ -632,4 +637,31 @@ function create_profil_from_page(pivot_value_page){
 
     console.info("Fake profil from page: " + JSON.stringify(fake_profil, null, 4));
     return fake_profil;
+}
+
+function init_new_profil(user){
+    console.info("[init_new_profil] Creating a new empty user profil DB for: " + user);
+
+    profil_db = new UserProfil(user);
+
+    var xhttp_profil = profil_db.xhttp_create_profil(user, "defaut_profil");
+
+    //Profil has been created in back
+    xhttp_profil.onreadystatechange = function () {
+        if (xhttp_profil.readyState == 4 && xhttp_profil.status == 200) {
+            var data = JSON.parse(xhttp_profil.responseText);
+
+            //We can load it in front 
+            load_profils_from_back(user, true);
+
+            //We need to wait for the back result
+            setTimeout(function () {
+                //By default, create the main email pivot / user value
+                //We need the send the ref of profil_db obj because it will be lose due to "setTimeout"
+                profil_db.add_value_to_profil(user, CODE_MAIN_EMAIL, user, data["profilId"], init_event_list);
+                console.info("[init_new_profil] Adding " + CODE_MAIN_EMAIL + " to default profil");
+            }, timeout_profil_creation);
+            
+        }
+    }
 }
