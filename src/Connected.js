@@ -8,37 +8,6 @@ export class Connected extends Component {
 
     constructor(props){
         super(props);
-        this.clearField = this.clearField.bind(this);
-        this.fillFieldV6 = this.fillFieldV6.bind(this);
-    }
-
-    //Implement reset field, possibly filled by Corail
-    //Call a "Legacy" function, in external web page context
-    clearField(e){
-        console.info("clear field");
-
-        //Huuuuu this is quite ugly. Don't know how to improve it
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.executeScript(tabs[0].id, {
-                code: "clear_inputs();"
-            }, 
-            function(response) {
-            
-            });
-        });
-    }
-
-
-    fillFieldV6(e){
-        console.info("fill fields V6 with profil id 4");
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.executeScript(tabs[0].id, {
-                code: "fill_fields_v6(4);"
-            }, 
-            function(response) {
-            
-            });
-        });
     }
 
     render() {
@@ -48,8 +17,6 @@ export class Connected extends Component {
                     <div id="voice">
                         <img alt="img_connected" id="img_connected" src="images/need_you.png" />
                     </div>
-                    <button onClick={this.clearField}> Clear </button>
-                    <button onClick={this.fillFieldV6}> Fill V6 </button>      
                     <p> Hey {this.props.getUser()}, we need you ! </p>
                 </div>
                 <FooterContact />
