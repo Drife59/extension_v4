@@ -139,8 +139,9 @@ function preprocess_input(input, user_value){
 	//Don't normalize email or password field
 	if (input.type == "email" || check_email(user_value) || input.type == "password") {
 		user_value = input.value.toLowerCase();
-		return user_value;
 	}
+	return user_value;
+
 }
 
 //Main algo for event change detected on input field
