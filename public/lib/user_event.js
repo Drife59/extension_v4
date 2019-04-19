@@ -121,6 +121,11 @@ function changeAlgo(evt) {
 	var key_domain = construit_domaine_cle(input);
 	var user_value = input.value.capitalize();
 
+	if (is_empty(input)) {
+		console.info("Change Algo: field is empty, no process.");
+		return;
+	}
+
 	//Don't normalize email or password field
 	if (input.type == "email" || check_email(user_value) || input.type == "password") {
 		user_value = input.value.toLowerCase();
