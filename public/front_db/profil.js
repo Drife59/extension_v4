@@ -532,7 +532,7 @@ class UserProfil {
     //If a fake temp profil has been created in front, this function
     //create it in back and save real profil id and user value id in front  
     //profil with id "0" is the special profil temp to be created
-    create_profil_from_temp_profil(){
+    create_profil_from_temp_profil(callback){
 
         //Abort if no temporary profil needs to be created
         if(!this.profil_values.hasOwnProperty("0")){
@@ -594,6 +594,10 @@ class UserProfil {
                     current_obj.profil_values[new_profil_id] = new_profil;
                     delete current_obj.profil_values["0"];
                     current_obj.set_profil_storage();
+
+                    if(callback){
+                        callback();
+                    }
                 }, 6000);
             }
         }

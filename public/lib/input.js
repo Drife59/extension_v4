@@ -253,7 +253,11 @@ function create_pivot_value_from_page(){
             
             //Pivot is know for this field, need to add it
             if (pivot_referent != null && !(is_empty(inputs_type[j])) ){
-                pivot_value_page[pivot_referent] = inputs_type[j].value;
+                if(pivot_referent == CODE_MAIN_EMAIL){
+                    pivot_value_page[pivot_referent] = inputs_type[j].value.toLowerCase();
+                }else{
+                    pivot_value_page[pivot_referent] = inputs_type[j].value.capitalize();
+                }
             }
         }
     }
@@ -264,8 +268,8 @@ function create_pivot_value_from_page(){
         pivot_referent = website_front_db.get_referent_pivot(window.location.host, key_domain);
             
         //Pivot is know for this field, need to add it
-        if (pivot_referent != null){
-            pivot_value_page[pivot_referent] = selects[i].value;
+        if (pivot_referent != null && !(is_empty(selects[i] ) ) ){
+            pivot_value_page[pivot_referent] = selects[i].value.capitalize();
         }
     }
     return pivot_value_page;
