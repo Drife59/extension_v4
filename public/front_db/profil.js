@@ -482,6 +482,13 @@ class UserProfil {
                 var pivot = Object.keys(profil_to_check)[i];
 
                 if(liste_pivots.includes(pivot)){
+                    //first possibility: key from profil to check is not found in current comparaison profil
+                    //so this profil is not the same, continue to check
+                    if( !(Object.keys(current_profil).includes(pivot)) ){
+                        found_difference = true;
+                        break;
+                    }
+                    
                     if(profil_to_check[pivot]["valueText"] != current_profil[pivot]["valueText"]){
                         found_difference = true;
                         break;
@@ -577,6 +584,7 @@ class UserProfil {
                 setTimeout(function () {
                     for(var pivot in new_profil){
                         if(liste_pivots.includes(pivot)){
+                            console.warn("response text for pivot: " + pivot + " : " + xhttp_user_value[pivot].responseText);
                             var response_json = JSON.parse(xhttp_user_value[pivot].responseText);
                             new_profil[pivot]["userValueId"] = response_json["userValueId"];
                         }
@@ -586,7 +594,7 @@ class UserProfil {
                     current_obj.profil_values[new_profil_id] = new_profil;
                     delete current_obj.profil_values["0"];
                     current_obj.set_profil_storage();
-                }, 5000);
+                }, 6000);
             }
         }
     }
@@ -629,6 +637,10 @@ function create_profil_from_page(pivot_value_page){
     fake_profil["weight"] = 1;
 
     for(var pivot in pivot_value_page){
+        //if the value is null, you should not collect it to create the profil...
+        if(pivot_value_page[pivot] == "" || pivot_value_page[pivot] == " " || pivot_value_page[pivot] == null){
+            continue;
+        }
         var obj_user_value = {};
         obj_user_value["userValueId"] = 0;
         obj_user_value["valueText"] = pivot_value_page[pivot];
