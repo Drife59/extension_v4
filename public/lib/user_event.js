@@ -114,6 +114,35 @@ function analyse_user_input_field_with_pivot(input, user_value, key_domain) {
 	}
 }
 
+function preprocess_input(input, user_value){
+	if (is_empty(input)) {
+		console.info("Change Algo: field is empty, no process.");
+		return false;
+	}
+
+	if (!is_valid_field(input)) {
+		console.debug("Algo change: cannot identify properly field " + input.id);
+		return false;
+	}
+
+	//Don't process paiement card
+	if (check_card(user_value)) {
+		console.debug("Algo change: no process executed for card number " + user_value);
+		return false;
+	}
+
+	//Don't process search field
+	if (is_search_field(input)) {
+		return false;
+	}
+
+	//Don't normalize email or password field
+	if (input.type == "email" || check_email(user_value) || input.type == "password") {
+		user_value = input.value.toLowerCase();
+		return user_value;
+	}
+}
+
 //Main algo for event change detected on input field
 function changeAlgo(evt) {
 	var input = evt.target
@@ -121,31 +150,13 @@ function changeAlgo(evt) {
 	var key_domain = construit_domaine_cle(input);
 	var user_value = input.value.capitalize();
 
-	if (is_empty(input)) {
-		console.info("Change Algo: field is empty, no process.");
+	//First, do some check in preprocess function
+	user_value = preprocess_input(input, user_value);
+	//Stop algo if input should not be processed
+	if(user_value == false){
 		return;
 	}
-
-	//Don't normalize email or password field
-	if (input.type == "email" || check_email(user_value) || input.type == "password") {
-		user_value = input.value.toLowerCase();
-	}
-
-	if (!is_valid_field(input)) {
-		console.debug("Algo change: cannot identify properly field " + input.id);
-		return;
-	}
-
-	//Don't process paiement card
-	if (check_card(user_value)) {
-		console.debug("Algo change: no process executed for card number " + user_value);
-		return;
-	}
-
-	//Don't process search field
-	if (is_search_field(input)) {
-		return;
-	}
+	
 
 	//We are in onChange event. So, if the change has been manual,
 	//that means that user modified the value. Therefore, we need to 
