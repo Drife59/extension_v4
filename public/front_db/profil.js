@@ -289,7 +289,13 @@ class UserProfil {
             if(pivot_user_value != CODE_MAIN_EMAIL){
                 value_object["valueText"] = current_value["value"].capitalize();
             }
-            this.profil_values[profil_id_value][pivot_user_value] = value_object;
+            if( !(this.profil_values.hasOwnProperty(profil_id_value)) ){
+                console.warn("The following user value claim to be related to profil: " + profil_id_value);
+                console.warn("However, this profil cannot be found for user");
+                console.warn("User value: " + JSON.stringify(value_object, null, 4));
+            }else{
+                this.profil_values[profil_id_value][pivot_user_value] = value_object;
+            }
         }
 
         console.info("User profil has been initiated with following content: " + JSON.stringify(this.profil_values, null,4));
