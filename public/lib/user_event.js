@@ -114,9 +114,15 @@ function analyse_user_input_field_with_pivot(input, user_value, key_domain) {
 	}
 }
 
-function preprocess_input(input, user_value){
+function preprocess_input(input, key_domain, user_value){
 	if (is_empty(input)) {
-		console.info("Change Algo: field is empty, no process.");
+		console.info("Change Algo: field is empty");
+		if (input.hasAttribute(CODE_FILLED_BY_PROFIL)){
+			console.info("Field was filled by profil before beeing cleared. Decreasing pivot reference.");
+			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
+			website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference);
+		}
+		//Then stop the process, we don't want any more update or worse, inserting blank value in db
 		return false;
 	}
 
@@ -152,7 +158,7 @@ function changeAlgo(evt) {
 	var user_value = input.value.capitalize();
 
 	//First, do some check in preprocess function
-	user_value = preprocess_input(input, user_value);
+	user_value = preprocess_input(input, key_domain, user_value);
 	//Stop algo if input should not be processed
 	if(user_value == false){
 		return;
