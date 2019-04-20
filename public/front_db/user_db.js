@@ -262,13 +262,13 @@ class UserPivotValues {
             }
         }
 
-        if (!value_found && current_pivot_weight >= WEIGHT_MINIMUM_RESTITUTION) {
+        if (!value_found && current_pivot_weight >= VALIDATED_ASSOCIATION_WEIGHT) {
             console.info("[update_value_for_pivot] Current key pivot weight " + current_pivot_weight + 
-                " is > " + WEIGHT_MINIMUM_RESTITUTION + ", adding new value for pivot");
+                " is > " + VALIDATED_ASSOCIATION_WEIGHT + ", adding new value for pivot");
             await this.add_value_for_pivot(pivot_name, value);
-        }else if(!value_found && current_pivot_weight < WEIGHT_MINIMUM_RESTITUTION){
+        }else if(!value_found && current_pivot_weight < VALIDATED_ASSOCIATION_WEIGHT){
             console.info("[update_value_for_pivot] Current key pivot weight " + current_pivot_weight + 
-            " is < " + WEIGHT_MINIMUM_RESTITUTION + ", cannot add new value for pivot");
+            " is < " + VALIDATED_ASSOCIATION_WEIGHT + ", cannot add new value for pivot");
         }
     }
 
@@ -352,12 +352,12 @@ class UserPivotValues {
         else {
             console.info("No pivot " + pivot_dom_name + " for user in user front db.");
             this.user_pivot_value[pivot_dom_name] = [];
-            if( current_pivot_weight >= WEIGHT_MINIMUM_RESTITUTION ){
+            if( current_pivot_weight >= VALIDATED_ASSOCIATION_WEIGHT ){
                 var new_object = await this.create_user_value(pivot_dom_name, new_value);
                 console.info("[change_value_pivot_trouve_domaine] creating object user value: " + JSON.stringify(new_object, 4, null));
             }else{
                 console.info("[change_value_pivot_trouve_domaine] User value was not created due to weak pivot weight:  "
-                    + current_pivot_weight + " < " + WEIGHT_MINIMUM_RESTITUTION);
+                    + current_pivot_weight + " < " + VALIDATED_ASSOCIATION_WEIGHT);
             }
         }
     }
