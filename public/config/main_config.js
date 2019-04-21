@@ -93,9 +93,11 @@ var profil_chosen_add_weight = 1;
 //Name of the id for list of profil to be injected, in graphical html
 var id_list = "list_profil";
 
+//List of the code to insert in html to retain state of field 
 var CODE_FILLED_BY_PROFIL = "filledByProfil";
 var CODE_FILLED_BY_PROFILLESS = "filledByProfilless";
 var CODE_FIELD_CLEARED_USER = "cleared_user";
+var CODE_FIELD_USER_EDIT = "user_edit"
 
 //When filling with a profil, addind this weight to website key
 var weight_key_filling_profil = 5;

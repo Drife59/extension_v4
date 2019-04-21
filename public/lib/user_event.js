@@ -234,3 +234,11 @@ function changeAlgo(evt) {
 	}
 }
 
+function keyDownAlgo(evt) {
+	var input = evt.target
+	console.info("Algo key press: field " + input.tagName + " modified by user: " + HtmlEltToString(input));
+	var key_domain = construit_domaine_cle(input);
+
+	input.setAttribute(CODE_FIELD_USER_EDIT, true);
+}
+

@@ -26,6 +26,7 @@ function bind_inputs() {
 
         for (j = 0; j < inputs_type.length; j++) {
             inputs_type[j].addEventListener('change', changeAlgo, false);
+            inputs_type[j].addEventListener('keydown', keyDownAlgo, false);
         }
     }
 }
@@ -37,6 +38,7 @@ function unbind_inputs() {
 
         for (j = 0; j < inputs_type.length; j++) {
             inputs_type[j].removeEventListener('change', changeAlgo, false);
+            inputs_type[j].removeEventListener('keydown', keyDownAlgo, false);
             //Front graphical_profil "init_event_list"
             inputs_type[j].removeEventListener("mouseover", display_list, false);
 			inputs_type[j].removeEventListener("click", display_list);
@@ -82,6 +84,7 @@ function clear_inputs() {
                 remove_corail_design(all_inputs_for_type[j]);
                 all_inputs_for_type[j].removeAttribute(CODE_FILLED_BY_PROFILLESS);
                 all_inputs_for_type[j].removeAttribute(CODE_FILLED_BY_PROFIL);
+                all_inputs_for_type[j].removeAttribute(CODE_FIELD_USER_EDIT);
             }
         }
     }
