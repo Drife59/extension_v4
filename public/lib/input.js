@@ -80,11 +80,16 @@ function clear_inputs() {
 
             //Only clear field if was filled by corail
             if(all_inputs_for_type[j].classList.contains("corail_bg")  ){
+                //Don't clear a field which has been manually edit by user
+                if(all_inputs_for_type[j].hasAttribute(CODE_FIELD_USER_EDIT)){
+                    continue;
+                }
                 all_inputs_for_type[j].value = "";
                 remove_corail_design(all_inputs_for_type[j]);
                 all_inputs_for_type[j].removeAttribute(CODE_FILLED_BY_PROFILLESS);
                 all_inputs_for_type[j].removeAttribute(CODE_FILLED_BY_PROFIL);
-                all_inputs_for_type[j].removeAttribute(CODE_FIELD_USER_EDIT);
+                //Here, don't remove CODE_FIELD_USER_EDIT, if you do the next fill field 
+                //will override user value
             }
         }
     }

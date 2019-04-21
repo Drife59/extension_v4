@@ -49,6 +49,11 @@ function fill_field_v6(input, domain, profil_id, profil_validated, fake_user_cha
         return;
     }
 
+    //Don't fill a field if it has been edit manually bu user
+    if( input.hasAttribute(CODE_FIELD_USER_EDIT)){
+        return;
+    }
+
     //Load value from user if pivot is known and field is not already filled
     //First try with profil, then with a value profilless
 
