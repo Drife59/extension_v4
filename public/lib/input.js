@@ -9,7 +9,7 @@ Define all methods needed to manipulate input field/
 */
 
 //Parse page and get all input and select field
-function load_fields() {
+function load_fields(callback) {
     inputs = new Object();
     
     //Initialisation des champs input
@@ -19,6 +19,10 @@ function load_fields() {
     }
     //Initialisation des champs selects
     selects = document.body.querySelectorAll("select");
+
+    if(callback != undefined){
+        callback();
+    }
 }
 
 //Bind all input to change algo
@@ -110,8 +114,8 @@ function clear_selects() {
 }
 
 //Parse page and bind event on field, then try to create key
-function init_fields() {
-    load_fields();
+function init_fields(callback) {
+    load_fields(callback);
     bind_inputs();
     bind_selects();
     //fetch_all_field();
@@ -199,7 +203,7 @@ function is_empty(field){
 
 //Fetch all fields in page, create key - pivot where possible, else empty key
 //This function need the domain to exist in website_front_db
-function fetch_all_field(){
+function fetch_all_field(callback){
 
     //Create var only once, will be initialised a lot in loop
     var key_domain = null;
@@ -241,6 +245,10 @@ function fetch_all_field(){
             console.info("Creating empty key for " + domain + " key (select): " + key_domain);
             website_front_db.create_key(domain, key_domain);
         }
+    }
+
+    if(callback != undefined){
+        callback();
     }
 }
 

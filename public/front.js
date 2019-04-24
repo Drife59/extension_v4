@@ -49,17 +49,17 @@ function lancement_app() {
     //we need to wait parsing field is finished
     setTimeout(function () {
         //Inputs object should exist, update website DB if necessary
-        fetch_all_field();
+        fetch_all_field(init_event_list);
 
         //If there is a temporary profil in cache, we need to create it in back
         profil_db.create_profil_from_temp_profil(init_event_list);
     }, timeout_parsing);
 
     //In order to initialize events, we need all keys to be created in front
-    setTimeout(function () {
+    /*setTimeout(function () {
         console.info("Initializing events...")
         init_event_list();
-    }, timeout_key_creation);
+    }, timeout_key_creation);*/
 }
 
 
