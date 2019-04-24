@@ -64,6 +64,11 @@ function build_display_list(input){
 
 	for (var i = 0; i < options.length; i++) {
 
+		//Don't update innerHTML for clear option 
+		if( !(options[i].hasAttribute("profil_id") ) ){
+			continue;
+		}
+
 		profil_id = options[i].getAttribute("profil_id");
 
 		var pertinent_value = profil_db.get_value_for_pivot(profil_id, pivot_referent);
@@ -218,6 +223,17 @@ function buildProfilList() {
 		//Cannot set listenner here, id_profil will stay in RAM and be the one for the last profil
 	}
 
+	//Add special option clear
+	var opt_clear = document.createElement('a');
+	opt_clear.innerHTML = "Clear";
+	opt_clear.setAttribute("id", "clear_corail");
+	opt_clear.href = "#";
+	
+	//At first, for hover, don't display clear option
+	opt_clear.style.display = "none";
+	html_list.appendChild(opt_clear);
+
+
 	html_list.onmouseleave = function (evt) {
 
 		//We need to wait a bit, if pointer is back in input
@@ -257,11 +273,13 @@ function buildProfilList() {
 //This cannot be done in main loop of buildProfilList
 function bindListenner() {
 	var all_options = document.body.querySelectorAll("a[profil_id]");
+	var opt_clear = document.body.querySelector("a#clear_corail");
 
 	for (var i = 0; i < all_options.length; i++) {
 		all_options[i].onmouseover = function (evt) {
 			clear_inputs();
 			clear_selects();
+			
 			var profil_id = evt.target.getAttribute("profil_id");
 			if(profil_id == null){
 				profil_id = evt.target.getAttribute("profil_id");
@@ -276,9 +294,30 @@ function bindListenner() {
 			profil_db.increase_profil_weight(profil_id_chosen);
 			profil_db.decrease_delete_profil();
 			console.debug("Profil chosen: " + JSON.stringify(profil_db.profil_values[profil_id_chosen], null, 4));
+
+			//now displaying clear option
+			opt_clear.style.display = "block";
 			click_for_display_list();
 			//Don't scroll vertically to the top
 			evt.preventDefault();
 		}
+
+		//Don't display any value when hover clear option
+		opt_clear.onmouseover = function (evt) {
+			clear_inputs();
+			clear_selects();
+		}
+		
+		opt_clear.onclick = function (evt) {
+			console.info("Clearing all fields, clearing profil");
+			clear_inputs();
+			clear_selects();
+			//Don't scroll vertically to the top
+			evt.preventDefault();
+
+			//All clear, now hide option 'till the next profil validation
+			opt_clear.style.display = "hidden";
+		}
+
 	}
 }
