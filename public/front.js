@@ -14,6 +14,21 @@ Entry point module when loading a webpage.
 var app_launched = false;
 
 
+//Don't wait for DOM loading for the following action
+
+//1) Preload user from cache
+chrome.storage.sync.get("current_user", function (data) {
+    if (typeof data.current_user !== 'undefined') {
+        //set global var current user for all app
+        console.info("Loaded current user from cache: " + data.current_user);
+        current_user = data.current_user;
+
+        load_profils_from_cache(data.current_user);
+
+        //If the user is here, then the front db should also be here
+        load_user_db_from_cache();
+    }
+});
 
 //Start app: parsing and binding fields
 function lancement_app() {
@@ -27,13 +42,14 @@ function lancement_app() {
         if (typeof data.current_user !== 'undefined') {
 
             //set global var current user for all app
-            console.info("[lancement_app]Loaded current user from cache: " + data.current_user);
+            /*console.info("[lancement_app]Loaded current user from cache: " + data.current_user);
             current_user = data.current_user;
 
             load_profils_from_cache(data.current_user);
 
             //If the user is here, then the front db should also be here
             load_user_db_from_cache();
+            */
 
             console.info("Parsing fields...")
             init_fields();
@@ -66,9 +82,7 @@ window.addEventListener('hashchange', function () {
 });
 
 window.addEventListener('load', function () {
-    init_domaine();
-    if (enable_front_log)
-        console.info("window.load event");
+    console.info("window.load event");
     if (!app_launched)
         lancement_app("Load");
 });
@@ -77,6 +91,12 @@ window.addEventListener('load', function () {
 /*Note(BG): Be careful, it is impossible to predict how much execution time you have in unload event*/
 window.addEventListener('unload', function () {
     console.info("window.unload event");
+
+    if(inputs == null){
+        console.warn("[Unload Event] Inputs object (containing all inputs) does not exist. Abort check for new profil");
+        return;
+    }
+
     var pivot_value_page = create_pivot_value_from_page();
     console.info("Pivot-value from previous page: " + JSON.stringify(pivot_value_page, null,4));
 
