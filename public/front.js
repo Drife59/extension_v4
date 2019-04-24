@@ -27,6 +27,8 @@ chrome.storage.sync.get("current_user", function (data) {
 
         //If the user is here, then the front db should also be here
         load_user_db_from_cache();
+    }else{
+        console.warn("Cannot find user, please log in.");
     }
 });
 
@@ -34,46 +36,25 @@ chrome.storage.sync.get("current_user", function (data) {
 function lancement_app() {
     app_launched = true;
     init_domaine();
-
-    //Load all front db
     
-    //profil object need email of current user
-    chrome.storage.sync.get("current_user", function (data) {
-        if (typeof data.current_user !== 'undefined') {
+    console.info("Parsing fields...")
+    init_fields();
 
-            //set global var current user for all app
-            /*console.info("[lancement_app]Loaded current user from cache: " + data.current_user);
-            current_user = data.current_user;
+    //In order to load website db from back and execute heuristic,
+    //we need to wait parsing field is finished
+    setTimeout(function () {
+        console.info("Loading website db from back, creating key and executing heuristics");
+        load_website_db_from_back(true, fetch_all_field);
 
-            load_profils_from_cache(data.current_user);
+        //If there is a temporary profil in cache, we need to create it in back
+        profil_db.create_profil_from_temp_profil(init_event_list);
+    }, timeout_parsing);
 
-            //If the user is here, then the front db should also be here
-            load_user_db_from_cache();
-            */
-
-            console.info("Parsing fields...")
-            init_fields();
-
-            //In order to load website db from back and execute heuristic,
-            //we need to wait parsing field is finished
-            setTimeout(function () {
-                console.info("Loading website db from back, creating key and executing heuristics");
-                load_website_db_from_back(true, fetch_all_field);
-
-                //If there is a temporary profil in cache, we need to create it in back
-                profil_db.create_profil_from_temp_profil(init_event_list);
-            }, timeout_parsing);
-
-            //In order to initialize events, we need all keys to be created in front
-            setTimeout(function () {
-                console.info("Initializing events...")
-                init_event_list();
-            }, timeout_key_creation);
-        }
-        else{
-            console.warn("Cannot find user, please log in.");
-        }
-    });
+    //In order to initialize events, we need all keys to be created in front
+    setTimeout(function () {
+        console.info("Initializing events...")
+        init_event_list();
+    }, timeout_key_creation);
 }
 
 
