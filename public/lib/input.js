@@ -129,11 +129,16 @@ function is_valid_field(html_elt){
 }
 
 function apply_corail_design(input){
-    input.className = input.className + " corail_bg";
+    var old_class_name = input.className;
 
-    //only put image at the right-end if field > 100px width
-    if( input.offsetWidth > 100){
-        input.className = input.className + " corail_image";
+    //Only apply design once
+    if(old_class_name.indexOf("corail_bg") == -1){
+        input.className = input.className + " corail_bg";
+
+        //only put image at the right-end if field > 100px width
+        if( input.offsetWidth > 100){
+            input.className = input.className + " corail_image";
+        }
     }
 }
 
