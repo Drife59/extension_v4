@@ -10,6 +10,8 @@ Define all methods needed to manipulate input field/
 
 //Parse page and get all input and select field
 function load_fields() {
+    inputs = new Object();
+    
     //Initialisation des champs input
     for (var i = 0; i < type_to_include.length; i++) {
         inputs[type_to_include[i]] = document.body.querySelectorAll("input[type=" +
