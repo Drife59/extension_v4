@@ -16,11 +16,15 @@ var app_launched = false;
 
 //Don't wait for DOM loading for the following action
 
-//1) Preload user from cache
+//1) Preload website front DB
+console.info("Loading website db from back, creating key and executing heuristics");
+load_website_db_from_back(true);
+
+//2) Preload user from cache, and it's front DB
 chrome.storage.sync.get("current_user", function (data) {
     if (typeof data.current_user !== 'undefined') {
         //set global var current user for all app
-        console.info("Loaded current user from cache: " + data.current_user);
+        console.info("[Front launch] Loaded current user from cache: " + data.current_user);
         current_user = data.current_user;
 
         load_profils_from_cache(data.current_user);
@@ -31,6 +35,7 @@ chrome.storage.sync.get("current_user", function (data) {
         console.warn("Cannot find user, please log in.");
     }
 });
+
 
 //Start app: parsing and binding fields
 function lancement_app() {
@@ -43,8 +48,8 @@ function lancement_app() {
     //In order to load website db from back and execute heuristic,
     //we need to wait parsing field is finished
     setTimeout(function () {
-        console.info("Loading website db from back, creating key and executing heuristics");
-        load_website_db_from_back(true, fetch_all_field);
+        //Inputs object should exist, update website DB if necessary
+        fetch_all_field();
 
         //If there is a temporary profil in cache, we need to create it in back
         profil_db.create_profil_from_temp_profil(init_event_list);
