@@ -88,7 +88,7 @@ class UserProfil {
     }
 
     //Load UserProfil object from local storage
-    get_profil_storage(){
+    get_profil_storage(load_back_if_empty){
         //To handle the change of context
         var current_obj = this;
         chrome.storage.sync.get("profil_user_values", function (data) {
@@ -98,6 +98,10 @@ class UserProfil {
                     JSON.stringify(current_obj.profil_values, null, 4))
             } else {
                 console.warn("[get_profil_storage] Could not load profil user value from cache");
+                if(load_back_if_empty == true){
+                    console.info("[load_profils_from_cache] Cannot find any profil in cache, try loading it from back");
+                    load_profils_from_back(this.current_user, true);
+                }
             }
         });
 

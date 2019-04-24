@@ -65,7 +65,7 @@ function load_user_db_from_back(email, save_in_cache) {
 function load_user_db_from_cache(){
     //Need to have an empty JSON object to create the object
     user_front_db = new UserPivotValues("{}");
-    user_front_db.get_userdb_storage();
+    user_front_db.get_userdb_storage(true);
     console.info("[load_user_db_from_cache] Loaded user db (profilless) from cache");
 }
 
@@ -155,7 +155,7 @@ function load_profils_from_back(email, save_in_cache){
 }
 
 function load_profils_from_cache(email){
+    console.info("[load_profils_from_cache] Loading profil from cache");
     profil_db = new UserProfil(email);
-    profil_db.get_profil_storage();
-    console.info("[load_profils_from_cache] Loaded profil from cache");
+    profil_db.get_profil_storage(true);
 }

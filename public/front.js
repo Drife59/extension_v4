@@ -71,8 +71,6 @@ window.addEventListener('load', function () {
         console.info("window.load event");
     if (!app_launched)
         lancement_app("Load");
-
-
 });
 
 
