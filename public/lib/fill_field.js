@@ -59,7 +59,7 @@ function fill_field_v6(input, domain, profil_id, profil_validated, fake_user_cha
 
     if(website_front_db.has_key(domain, key_domain)){
 
-        var pivot_reference = website_front_db.get_referent_pivot(domain, key_domain);
+        var pivot_reference = website_front_db.get_referent_pivot_restitution(domain, key_domain);
         if( pivot_reference == null ){
             console.debug("No pivot reference for key: " + key_domain);
             return;

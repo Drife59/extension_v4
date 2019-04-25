@@ -183,6 +183,21 @@ class WebsiteDb {
         return pivot_weight["pivot"];
     }
 
+    // Same as get_referent_pivot, but minimum weight for restitution
+    get_referent_pivot_restitution(domain, key) {
+        if (!this.has_key(domain, key)) {
+            console.warn("Key " + key + " for domain " + domain + " does not exist.");
+            return null;
+        }
+        var pivot_weight = this.get_max_weight(domain, key);
+
+        //Weight is not enough
+        if (pivot_weight["weight"] < WEIGHT_MINIMUM_RESTITUTION) {
+            return null;
+        }
+        return pivot_weight["pivot"];
+    }
+
     //Compute and set in front db the referent pivot in dedicated field
     compute_and_set_referent_pivot(domain, key){
         this.website_key[domain][key][CODE_PIVOT_REFERENT] = this.get_referent_pivot(domain, key);

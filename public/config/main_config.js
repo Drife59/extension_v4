@@ -67,7 +67,10 @@ var MIN_KEY_PIVOT_WEIGHT = -100;
 var MAX_KEY_PIVOT_WEIGHT = 100;
 
 //if > to the var below, a key is considered associated to pivot (website db)
-var VALIDATED_ASSOCIATION_WEIGHT = 45;
+var VALIDATED_ASSOCIATION_WEIGHT = 60;
+
+//Weight minimum for restitution, even if we are not sure if it the right pivot
+var WEIGHT_MINIMUM_RESTITUTION = 45;
 
 //Weight set when creating pivot with heuristic
 var HEURISTIC_BASE_WEIGHT = 45;

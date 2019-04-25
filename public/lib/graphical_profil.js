@@ -53,7 +53,7 @@ function getPosition(el) {
 //For example, display address if field is with pivot main_full_address
 function build_display_list(input){
 	var key_domain = construit_domaine_cle(input);
-	var pivot_referent = website_front_db.get_referent_pivot(window.location.host, key_domain);
+	var pivot_referent = website_front_db.get_referent_pivot_restitution(window.location.host, key_domain);
 	
 	console.log("pivot de reference trouve: " + pivot_referent);
 
@@ -125,7 +125,7 @@ function click_for_display_list(){
 			var key_domain = construit_domaine_cle(inputs_type[j]);
 
 			//Don't display profil list if field cannot be filled
-			if( website_front_db.get_referent_pivot(window.location.host, key_domain) == null){
+			if( website_front_db.get_referent_pivot_restitution(window.location.host, key_domain) == null){
 				continue;
 			}
 
@@ -161,7 +161,7 @@ function init_event_list() {
 			var key_domain = construit_domaine_cle(inputs_type[j]);
 
 			//Don't display profil list if field cannot be filled
-			if( website_front_db.get_referent_pivot(window.location.host, key_domain) == null){
+			if( website_front_db.get_referent_pivot_restitution(window.location.host, key_domain) == null){
 				continue;
 			} 
 
