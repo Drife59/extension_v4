@@ -16,16 +16,18 @@ var app_launched = false;
 
 //Don't wait for DOM loading for the following action
 
-//1) Preload website front DB
-console.info("Loading website db from back, creating key and executing heuristics");
-load_website_db_from_back(true);
 
-//2) Preload user from cache, and it's front DB
+
+//1) Preload user from cache, and it's front DB
 chrome.storage.sync.get("current_user", function (data) {
     if (typeof data.current_user !== 'undefined') {
         //set global var current user for all app
         console.info("[Front launch] Loaded current user from cache: " + data.current_user);
         current_user = data.current_user;
+
+        //2) Preload website front DB
+        console.info("Loading website db from back, creating key and executing heuristics");
+        load_website_db_from_back(true);
 
         load_profils_from_cache(data.current_user);
 
@@ -39,6 +41,12 @@ chrome.storage.sync.get("current_user", function (data) {
 
 //Start app: parsing and binding fields
 function lancement_app() {
+
+    if(current_user == undefined){
+        console.warn("Cannot find user, aborting software launch");
+        return;
+    }
+
     app_launched = true;
     init_domaine();
     
