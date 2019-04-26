@@ -190,9 +190,28 @@ class WebsiteDb {
             return null;
         }
         var pivot_weight = this.get_max_weight(domain, key);
+        if(pivot_weight["pivot"] != null){
+            console.debug("Pivot: " + pivot_weight["pivot"] + " is max weight pivot with score: " + pivot_weight["weight"]);
+        }
 
         //Weight is not enough
         if (pivot_weight["weight"] < WEIGHT_MINIMUM_RESTITUTION) {
+            return null;
+        }
+        return pivot_weight["pivot"];
+    }
+
+    // Same as get_referent_pivot, but with minimum weight you can accept, define in conf
+    get_referent_pivot_minimum(domain, key) {
+        if (!this.has_key(domain, key)) {
+            console.warn("Key " + key + " for domain " + domain + " does not exist.");
+            return null;
+        }
+        var pivot_weight = this.get_max_weight(domain, key);
+        console.info("Pivot: " + pivot_weight["pivot"] + " is max weight pivot with score: " + pivot_weight["weight"]);
+
+        //Weight is not enough
+        if (pivot_weight["weight"] < WEIGHT_ABSOLUT_MINIMUM) {
             return null;
         }
         return pivot_weight["pivot"];
@@ -456,17 +475,20 @@ class WebsiteDb {
 
             //Decrease pivot corresponding to cleared field
             if(current_pivot == pivot_reference){
+                console.info("decreasing pivot referent " + pivot_reference + "by: " + weight_key_clear_input);
                 weights_website[current_pivot] -= weight_key_clear_input;
                 if (weights_website[current_pivot] < MIN_KEY_PIVOT_WEIGHT)
                     weights_website[current_pivot] = MIN_KEY_PIVOT_WEIGHT;
             }
             //Increase all others pivot, cancelling previous decrease from filling
             else{
+                console.info("Increasing current pivot " + current_pivot + " by: " + weight_key_filling_profil);
                 weights_website[current_pivot] += weight_key_filling_profil;
                 if (weights_website[current_pivot] > MAX_KEY_PIVOT_WEIGHT)
                     weights_website[current_pivot] = MAX_KEY_PIVOT_WEIGHT;
             }
         }
+
         this.compute_and_set_referent_pivot(domain, key);
         console.info("[update_weight_clearing_field] Key updated: " + JSON.stringify(weights_website, null, 4));
         //Don't forget to save the new content in cache

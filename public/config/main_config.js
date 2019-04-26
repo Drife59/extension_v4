@@ -72,6 +72,10 @@ var VALIDATED_ASSOCIATION_WEIGHT = 60;
 //Weight minimum for restitution, even if we are not sure if it the right pivot
 var WEIGHT_MINIMUM_RESTITUTION = 45;
 
+//Weight minimum for trying to identificate, a pivot
+//This can can usefull, if you want a tendancie of a pivot even if the weight is low
+var WEIGHT_ABSOLUT_MINIMUM = 20;
+
 //Weight set when creating pivot with heuristic
 var HEURISTIC_BASE_WEIGHT = 45;
 

@@ -118,9 +118,15 @@ function preprocess_input(input, key_domain, user_value){
 	if (is_empty(input)) {
 		console.info("Change Algo: field is empty");
 		if (input.hasAttribute(CODE_FILLED_BY_PROFIL)){
-			console.info("Field was filled by profil before beeing cleared. Decreasing pivot reference.");
-			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
-			website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference);
+			var pivot_reference = website_front_db.get_referent_pivot_minimum(window.location.host, key_domain);
+			if(pivot_reference == null){
+				console.info("Field was cleared but no pivot reference is known anymore. Stopping process.");
+			}
+			//Found a pivot reference, and field was cleared. Decreasing current pivot 
+			else{
+				console.info("Field was filled by profil before beeing cleared. Decreasing pivot reference.");
+				website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference);
+			}
 		}
 		//Then stop the process, we don't want any more update or worse, inserting blank value in db
 		return false;
