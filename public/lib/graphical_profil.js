@@ -68,6 +68,8 @@ function build_display_list(input){
 		if( !(options[i].hasAttribute("profil_id") ) ){
 			continue;
 		}
+		//By default, display option (profil), will hide it later on needed
+		options[i].style.display = "block";
 
 		profil_id = options[i].getAttribute("profil_id");
 
@@ -78,8 +80,12 @@ function build_display_list(input){
 			if(user_front_db.has_value_for_pivot(pivot_referent)){
 				pertinent_value = user_front_db.get_value_highest_weigth(pivot_referent);
 			}
+			//Could not find value nor in profil ou profilless. Hide this profil for input
 			else{
+				console.info("Cannot find value for pivot " + pivot_referent + " in profil " + profil_id);
+				console.info("Hidding this profil for this field");
 				pertinent_value = null;
+				options[i].style.display = "none";
 			}
 		}
 
