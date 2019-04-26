@@ -72,9 +72,37 @@ note(BG): ho uiiiiiiiii the future :) */
     z-index: 1;
   }
   
-  .dropdown-content a {
+.dropdown-content a {
     color: black;
     padding: 8px 20px;
     text-decoration: none;
     display: block;
-  }
+}
+
+.dropdown-content a:hover {
+    color: black;
+    padding: 8px 20px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:visited {
+    color: black;
+    padding: 8px 20px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:active {
+    color: black;
+    padding: 8px 20px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:focus {
+    color: black;
+    padding: 8px 20px;
+    text-decoration: none;
+    display: block;
+}
