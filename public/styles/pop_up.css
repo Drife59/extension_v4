@@ -88,6 +88,13 @@
     
 }
 
+/* Ajout Ben V6 */
+
+/* Center the button "create profil" vertically */
+#connected .row {
+  padding-top: 70px;
+}
+
 /* Tout le reste c'est #copyright Ju */
 
 html, body {
