@@ -380,7 +380,7 @@ function create_key(input, cle_dom, code_heuristique){
     }
 
     //Set a flag to indicate this heuristic has been used
-    heuristic_activated[code_heuristique] = true;
+    //heuristic_activated[code_heuristique] = true;
 }
 
 //define error code return for function below
@@ -448,6 +448,6 @@ function run_heuristic_v6(domain, input, key_domain){
         //don't forget this if key has been created. To ke keeped ?
 
         //Set a flag to indicate this heuristic has been used
-        heuristic_activated[corresponding_heuristic] = true;
+        //heuristic_activated[corresponding_heuristic] = true;
     }  
 }
