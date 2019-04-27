@@ -70,6 +70,7 @@ function createEmptyKeyRequestObject(code_key){
         object_result["cardexpirymonth"] = 0;
         object_result["cardexpiryyear"] = 0;
         object_result["full_birthdate"] = 0;
+        object_result["country"] = 0;
 
         return object_result;
 	}

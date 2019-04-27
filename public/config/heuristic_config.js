@@ -19,7 +19,8 @@ var all_heuristics = [CODE_FIRSTNAME, CODE_LASTNAME, CODE_POSTALCODE, CODE_CITY,
     //CODE_COMPANY, CODE_HOMEPHONE, CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR,
     CODE_COMPANY, CODE_HOMEPHONE,
     //V4.0 code
-    CODE_FULL_BIRTHDATE];
+    CODE_FULL_BIRTHDATE,
+    CODE_COUNTRY];
 
 //Define ponderation for each list of keywords
 var heuristic_ponderation = new Object();
