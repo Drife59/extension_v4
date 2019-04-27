@@ -53,8 +53,12 @@ All weight are set to zero and should be updated in main code.*/
 function createEmptyKeyRequestObject(code_key){
         var object_result = {};
         object_result["cle"] = code_key;
+
+        for(var i=0 ; i < liste_pivots.length ; i++){
+            object_result[liste_pivots[i]] = 0;
+        }
         object_result["pivot_reference"] = null;
-        object_result["first_name"] = 0;
+        /*object_result["first_name"] = 0;
         object_result["family_name"] = 0;
         object_result["postal_code"] = 0;
         object_result["home_city"] = 0;
@@ -70,7 +74,7 @@ function createEmptyKeyRequestObject(code_key){
         object_result["cardexpirymonth"] = 0;
         object_result["cardexpiryyear"] = 0;
         object_result["full_birthdate"] = 0;
-        object_result["country"] = 0;
+        object_result["country"] = 0;*/
 
         return object_result;
 	}
