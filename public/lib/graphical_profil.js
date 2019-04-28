@@ -323,6 +323,17 @@ function bindListenner() {
 
 			//All clear, now hide option 'till the next profil validation
 			opt_clear.style.display = "hidden";
+
+			//Finally, decrease all weights for all inputs
+			var keys = [];
+			for (var i = 0; i < type_to_include.length; i++) {
+				var inputs_type = inputs[type_to_include[i]];
+		
+				for (j = 0; j < inputs_type.length; j++) {
+					keys.push(construit_domaine_cle(inputs_type[j]));
+				}
+			}
+			website_front_db.update_weight_clearing_all_fields(window.location.host, keys);
 		}
 
 	}

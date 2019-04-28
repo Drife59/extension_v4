@@ -437,7 +437,6 @@ class WebsiteDb {
     //----------------------
 
     update_weight_filling(domain, key, pivot_reference){
-        console.info("[update_weight_filling] Updating weight for key " + key + " with pivot reference: " + pivot_reference);
         var weights_website = this.website_key[domain][key];
 
         for(var i=0 ; i<liste_pivots_profil.length ; i++){
@@ -457,6 +456,9 @@ class WebsiteDb {
                     weights_website[current_pivot] = MIN_KEY_PIVOT_WEIGHT;
             }
         }
+        console.info("[update_weight_filling] Updating weight for key " + key + 
+            " with pivot reference: " + pivot_reference + " => " + weights_website[pivot_reference]);
+
         //Don't forget to save the new content in cache
         this.set_websitedb_storage();
 
@@ -475,14 +477,14 @@ class WebsiteDb {
 
             //Decrease pivot corresponding to cleared field
             if(current_pivot == pivot_reference){
-                console.info("decreasing pivot referent " + pivot_reference + "by: " + weight_key_clear_input);
+                console.info("Decreasing pivot referent " + pivot_reference + "by: " + weight_key_clear_input);
+                console.info("Will increase all others pivots by " + weight_key_filling_profil);
                 weights_website[current_pivot] -= weight_key_clear_input;
                 if (weights_website[current_pivot] < MIN_KEY_PIVOT_WEIGHT)
                     weights_website[current_pivot] = MIN_KEY_PIVOT_WEIGHT;
             }
             //Increase all others pivot, cancelling previous decrease from filling
             else{
-                console.info("Increasing current pivot " + current_pivot + " by: " + weight_key_filling_profil);
                 weights_website[current_pivot] += weight_key_filling_profil;
                 if (weights_website[current_pivot] > MAX_KEY_PIVOT_WEIGHT)
                     weights_website[current_pivot] = MAX_KEY_PIVOT_WEIGHT;
@@ -497,6 +499,19 @@ class WebsiteDb {
         var key_request = JSON.parse(JSON.stringify(weights_website));
         key_request["cle"] = key;
         xhttp_put_key_domain(key_request);
+    }
+
+    update_weight_clearing_all_fields(domain, keys){
+        for( var i=0 ; i<keys.length ; i++){
+            var current_key = keys[i];
+            var current_pivot_reference = this.get_referent_pivot_restitution(domain, current_key);
+
+            //No referent pivot for this input, cannot decrease it
+            if(current_pivot_reference == null){
+                continue;
+            }
+            this.update_weight_clearing_field(domain, current_key, current_pivot_reference);
+        }
     }
 
     //With the given list, increase weight in corresponding pivots
