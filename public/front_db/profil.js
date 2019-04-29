@@ -181,10 +181,10 @@ class UserProfil {
 
     xhttp_create_profil_value_user(email, pivot, value, profil_id){
         var xhttp_back_api = new XMLHttpRequest();
-        //Don't forget to capitalize user value
+        //Don't forget to capitalize user value, and encode it
         var url_final = url_create_value_v6.replace("{email}", email)
                                         .replace("{pivot_name}", pivot)
-                                        .replace("{value_text}", value.capitalize())
+                                        .replace("{value_text}", encodeURIComponent(value.capitalize()))
                                         .replace("{profil_id}", profil_id);
         xhttp_back_api.open("POST", url_final, true);
         xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -239,7 +239,7 @@ class UserProfil {
         //Don't forget to capitalize user value
         var url_final = url_create_value_v6.replace("{email}", email)
                                         .replace("{pivot_name}", pivot)
-                                        .replace("{value_text}", value.capitalize())
+                                        .replace("{value_text}", encodeURIComponent(value.capitalize()))
                                         .replace("{profil_id}", profil_id);
         
         console.debug("Final url: " + url_final);
@@ -600,6 +600,7 @@ class UserProfil {
                                     console.warn("response text for pivot: " + pivot + " : " + xhttp_user_value[pivot].responseText);
                                     console.warn("Could not create user value, aborting profil creation");
                                     delete current_obj.profil_values["0"];
+                                    return;
                                 }
                             console.debug("response text for pivot: " + pivot + " : " + xhttp_user_value[pivot].responseText);
                             var response_json = JSON.parse(xhttp_user_value[pivot].responseText);
