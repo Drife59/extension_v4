@@ -594,7 +594,14 @@ class UserProfil {
                 setTimeout(function () {
                     for(var pivot in new_profil){
                         if(liste_pivots.includes(pivot)){
-                            console.warn("response text for pivot: " + pivot + " : " + xhttp_user_value[pivot].responseText);
+                            if(xhttp_user_value[pivot].responseText == undefined || 
+                                xhttp_user_value[pivot].responseText == "" || 
+                                xhttp_user_value[pivot].responseText == " "){
+                                    console.warn("response text for pivot: " + pivot + " : " + xhttp_user_value[pivot].responseText);
+                                    console.warn("Could not create user value, aborting profil creation");
+                                    delete current_obj.profil_values["0"];
+                                }
+                            console.debug("response text for pivot: " + pivot + " : " + xhttp_user_value[pivot].responseText);
                             var response_json = JSON.parse(xhttp_user_value[pivot].responseText);
                             new_profil[pivot]["userValueId"] = response_json["userValueId"];
                         }
