@@ -144,7 +144,7 @@ Sample to create an async function
 async function fetch_create_value_user(email, pivot, value){
     var url_final = url_create_value_v5.replace("user_a_remplacer", email)
                                        .replace("pivot_to_replace", pivot)
-                                       .replace("value_text", value);
+                                       .replace("value_text", encodeURIComponent((value));
     const rawResponse = await fetch(url_final, {
       method: 'POST',
       headers: {
