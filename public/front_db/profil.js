@@ -284,14 +284,15 @@ class UserProfil {
 
             var value_object = {};
             value_object["userValueId"] = current_value["userValueId"];
-            value_object["valueText"] = current_value["value"];
+            //Don't forget to code value if it has been precedently encoded
+            value_object["valueText"] = decodeURIComponent(current_value["value"]);
 
             var profil_id_value = current_value["profil"]["profilId"];
             var pivot_user_value = current_value["pivot"]["name"];
 
             //Don't capitalize email
             if(pivot_user_value != CODE_MAIN_EMAIL){
-                value_object["valueText"] = current_value["value"].capitalize();
+                value_object["valueText"] = value_object["valueText"].capitalize();
             }
             if( !(this.profil_values.hasOwnProperty(profil_id_value)) ){
                 console.warn("The following user value claim to be related to profil: " + profil_id_value);
