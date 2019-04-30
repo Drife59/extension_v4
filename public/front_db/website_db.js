@@ -467,7 +467,7 @@ class WebsiteDb {
         xhttp_put_key_domain(key_request);
     }
 
-    update_weight_clearing_field(domain, key, pivot_reference){
+    update_weight_clearing_field(domain, key, pivot_reference, weight_decrease){
 
         var weights_website = this.website_key[domain][key];
 
@@ -477,9 +477,9 @@ class WebsiteDb {
 
             //Decrease pivot corresponding to cleared field
             if(current_pivot == pivot_reference){
-                console.info("Decreasing pivot referent " + pivot_reference + "by: " + weight_key_clear_input);
+                console.info("Decreasing pivot referent " + pivot_reference + "by: " + weight_decrease);
                 console.info("Will increase all others pivots by " + weight_key_filling_profil);
-                weights_website[current_pivot] -= weight_key_clear_input;
+                weights_website[current_pivot] -= weight_decrease;
                 if (weights_website[current_pivot] < MIN_KEY_PIVOT_WEIGHT)
                     weights_website[current_pivot] = MIN_KEY_PIVOT_WEIGHT;
             }
@@ -501,6 +501,7 @@ class WebsiteDb {
         xhttp_put_key_domain(key_request);
     }
 
+    //When clearing form, cancel what profil filling has done to weight
     update_weight_clearing_all_fields(domain, keys){
         for( var i=0 ; i<keys.length ; i++){
             var current_key = keys[i];
@@ -510,7 +511,7 @@ class WebsiteDb {
             if(current_pivot_reference == null){
                 continue;
             }
-            this.update_weight_clearing_field(domain, current_key, current_pivot_reference);
+            this.update_weight_clearing_field(domain, current_key, current_pivot_reference, weight_all_input_clear);
         }
     }
 

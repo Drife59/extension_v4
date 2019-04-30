@@ -125,7 +125,7 @@ function preprocess_input(input, key_domain, user_value){
 			//Found a pivot reference, and field was cleared. Decreasing current pivot 
 			else{
 				console.info("Field was filled by profil before beeing cleared. Decreasing pivot reference.");
-				website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference);
+				website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference, weight_key_clear_input);
 			}
 		}
 		//Then stop the process, we don't want any more update or worse, inserting blank value in db
@@ -177,7 +177,7 @@ function changeAlgo(evt) {
 	if (input.hasAttribute(CODE_FILLED_BY_PROFIL)){
 			console.info("Algo change profil: field has modified by user, decreasing pivot reference.");
 			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
-			website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference);
+			website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference, weight_key_clear_input);
 	}
 
 	//We want to execute "analyse_user_input_field_with_pivot" only once
