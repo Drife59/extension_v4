@@ -14,6 +14,19 @@ export class Signin extends Component {
     }
 
     handleConnection(e){
+
+        //When a new sign start, clear cache in case some old cache remain
+        //Should never happened, but I noticed sometimes it does
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.executeScript(tabs[0].id, {
+                code: "chrome.storage.sync.clear(); console.info(\"[Logout] Cleared all cache.\"); profil_id_chosen=null;"
+            },
+            function(response) {
+        
+            });
+        });
+
+
         var email = document.getElementById('email').value;
         var password = document.getElementById('password').value;
         var msg_wrong_email = document.getElementById('wrong_email');
