@@ -146,11 +146,11 @@ class UserProfil {
     }
 
     //Update all weight in back
-    /*update_all_weight_in_back(){
+    update_all_weight_in_back(){
         for(var profil_id in this.profil_values){
             this.xhttp_update_weight(this.current_user, profil_id, this.profil_values[profil_id]["weight"]);
         }
-    }*/
+    }
 
     // ############
     // RAW API CALL
