@@ -17,10 +17,19 @@ var app_launched = false;
 //Don't wait for DOM loading for the following action
 
 //1) init domain if needed
-init_domaine();
+if( !(skip_domain.includes(window.location.host))){
+    init_domaine();
+}
 
 //2) Preload user from cache, and it's front DB
 chrome.storage.sync.get("current_user", function (data) {
+
+    //Don't start process for certain domain defined in conf
+    if( skip_domain.includes(window.location.host)){
+        console.info("Domain " + window.location.host + " is defined to be skipped, aborting process.");
+        return;
+    }
+
     if (typeof data.current_user !== 'undefined') {
         //set global var current user for all app
         console.info("[Front launch] Loaded current user from cache: " + data.current_user);
@@ -42,6 +51,11 @@ chrome.storage.sync.get("current_user", function (data) {
 
 //Start app: parsing and binding fields
 function lancement_app() {
+
+    //Don't start process for certain domain defined in conf
+    if( skip_domain.includes(window.location.host)){
+        return;
+    }
 
     if(current_user == undefined){
         console.warn("Cannot find user, aborting software launch");

@@ -32,6 +32,9 @@ var separateur_cle = "_";
 //When filling, if the field already has a value then override it (or not)
 var override_field_with_value = true;
 
+//define domain where software should not be executed
+var skip_domain = ["www.corail.me", "corail.me", "localhost", "127.0.0.1"]; 
+
 // --------------
 // Log parameters
 // --------------
