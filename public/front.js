@@ -16,16 +16,17 @@ var app_launched = false;
 
 //Don't wait for DOM loading for the following action
 
+//1) init domain if needed
+init_domaine();
 
-
-//1) Preload user from cache, and it's front DB
+//2) Preload user from cache, and it's front DB
 chrome.storage.sync.get("current_user", function (data) {
     if (typeof data.current_user !== 'undefined') {
         //set global var current user for all app
         console.info("[Front launch] Loaded current user from cache: " + data.current_user);
         current_user = data.current_user;
 
-        //2) Preload website front DB
+        //3) Preload website front DB
         console.info("Loading website db from back, creating key and executing heuristics");
         load_website_db_from_back(true);
 
@@ -48,7 +49,7 @@ function lancement_app() {
     }
 
     app_launched = true;
-    init_domaine();
+    
     
     console.info("Parsing fields...")
     init_fields();
