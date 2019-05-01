@@ -121,6 +121,44 @@ class UserProfil {
         return JSON.parse(JSON.stringify(this.profil_values));
     }
 
+    //Check if there is too many profil in base (number define in conf).
+    //If this is the case, delete as many as needed.
+    //Having too many profil can lead to issues, as failing to save in cache
+    delete_too_many_profil(){
+
+        var list_id_delete = [];
+
+        var profil_clone = this.get_clone_profil_values();
+
+        var min_weight = 100;
+        var min_id_profil = null;
+
+        while(Object.keys(profil_clone).length > nb_maximum_profil_in_base){
+                
+            //Find min weight profil in all list
+            for (var id_profil in profil_clone) {
+                var current_profil = this.profil_values[id_profil];
+                
+                if( current_profil["weight"] <= min_weight){
+                    min_weight = current_profil["weight"];
+                    min_id_profil = id_profil
+                }
+            }
+
+            //Delete weakest profil
+            delete profil_clone[min_id_profil];
+            list_id_delete.push(min_id_profil);
+            min_weight = 100;
+        }
+
+        for(var i = 0 ; i < list_id_delete.length ; i++ ){
+            delete this.profil_values[list_id_delete[i]];
+            this.xhttp_delete_profil(this.current_user, list_id_delete[i]);
+            console.info("[delete_too_many_profil]: Deleted profil " + list_id_delete[i]);
+            this.set_profil_storage();
+        }
+    }
+
     //decrease all profil weight by the coefficient in conf
     //Don't update back here, will update it once for all when quitting navigator
     decrease_delete_profil(){
@@ -138,6 +176,10 @@ class UserProfil {
             this.profil_values[profil_key]["weight"] = new_weight;
             this.set_profil_storage();
         }
+
+        //If after "classical" delete on weight, there are still too many profil,
+        // delete the weakest until we have the wished nomber of profil (in config)
+        this.delete_too_many_profil();
     }
 
     //Profil has been chosen, increase his 

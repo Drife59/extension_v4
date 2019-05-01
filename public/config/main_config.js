@@ -93,6 +93,12 @@ var KEY_WEIGHT_MINIMAL_DISPLAY = 1;
 
 var nb_maximum_profil_restitution = 3;
 
+//Maximum number of profil allowed in front.
+//This should not be too much, too many profil
+//can cause saving in storage (cache) to fail, 
+//as we are limited to 8Ko (~12 profils depending on profil size)
+var nb_maximum_profil_in_base = 8;
+
 var profil_coeff_decrease = 0.95
 
 var minimum_weight_profil = 0.5;
