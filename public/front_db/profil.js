@@ -83,8 +83,9 @@ class UserProfil {
     //Save in storage current UserProfil
     set_profil_storage(){
         //chrome.storage.sync.set({"current_user": this.current_user});
-        chrome.storage.sync.set({"profil_user_values": JSON.stringify(this.profil_values)});
-        console.info("Set profil user db in google storage");
+        chrome.storage.sync.set({"profil_user_values": JSON.stringify(this.profil_values)}), function(){
+            console.info("Set profil user db in google storage");
+        };
     }
 
     //Load UserProfil object from local storage
@@ -145,11 +146,11 @@ class UserProfil {
     }
 
     //Update all weight in back
-    update_all_weight_in_back(){
+    /*update_all_weight_in_back(){
         for(var profil_id in this.profil_values){
             this.xhttp_update_weight(this.current_user, profil_id, this.profil_values[profil_id]["weight"]);
         }
-    }
+    }*/
 
     // ############
     // RAW API CALL
