@@ -560,7 +560,7 @@ class UserProfil {
 
     //Check if the profil sent as parameter is eligible to creation 
     has_minimum_attribute(profil_test){
-        if(Object.keys(profil_test).length < 4){
+        if(Object.keys(profil_test).length < 3){
             return false;
         }
 
