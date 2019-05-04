@@ -552,11 +552,24 @@ class WebsiteDb {
         console.info("Applying following coeff to update weight");
         console.info(JSON.stringify(pivot_coeff, null, 4));
 
+        //increase each pivot found by a defined weight
         for(var pivot in pivot_coeff ){
-            weights_website[pivot] += (pivot_coeff[pivot] * weight_to_add);
+            weights_website[pivot] += weight_to_add;
             if (weights_website[pivot] > MAX_KEY_PIVOT_WEIGHT)
                 weights_website[pivot] = MAX_KEY_PIVOT_WEIGHT;
         }
+
+        //Decrease each other pivot by the same weight
+        for(var i in liste_pivots_profil){
+            //just for the sake of clarity
+            var pivot = liste_pivots_profil[i];
+            if( !(Object.keys(pivot_coeff).includes(pivot))){
+                weights_website[pivot] -= weight_to_add;
+                if (weights_website[pivot] < MIN_KEY_PIVOT_WEIGHT)
+                    weights_website[pivot] = MIN_KEY_PIVOT_WEIGHT;
+            }
+        }
+
         this.compute_and_set_referent_pivot(domain, key);
         console.info("Key updated: " + JSON.stringify(weights_website, null, 4));
         this.set_websitedb_storage();
