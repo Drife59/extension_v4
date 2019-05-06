@@ -98,7 +98,7 @@ function fill_field_v6(input, domain, profil_id, profil_validated, fake_user_cha
         
         //Found a suitable value to fill
         if (user_value != null && user_value != ' ' && user_value != '') {
-            input.value = user_value;
+            fill_value(input, user_value);
             apply_corail_design(input);
             if(fake_user_change == true){
                 simulate_user_change(input, user_value);
@@ -107,6 +107,34 @@ function fill_field_v6(input, domain, profil_id, profil_validated, fake_user_cha
             console.debug("User does not have a value for pivot: " + pivot_reference);
         }
     }
+}
+
+//Fill a value (or select the good one in select field),
+// regardless of type or cases
+function fill_value(field, user_value){
+    //input field, easy :)
+    if(field.tagName == "input" || field.tagName == "Input" || field.tagName == "INPUT"){
+        field.value = user_value;
+    }
+    //Select field, more complicated 
+    else if(field.tagName == "select" || field.tagName == "Select" || field.tagName == "SELECT"){
+        
+        //Look for a matching in displayed values
+        for(var i_opt = 0 ; i_opt < field.options.length ; i_opt++){
+            var current_opt = field.options[i_opt];
+            var current_text = current_opt.text.replace(" ", "");
+
+            
+            //We want to match the value even if the are differences in "cases" (lower, upper...)
+            if( current_text.toLowerCase() == user_value || 
+                current_text.capitalize() == user_value || 
+                current_text.toUpperCase() == user_value){
+                    field.selectedIndex = i_opt;
+                    console.info("Found a match for value " + user_value + " ! Matching select with index " + i_opt + " in option list");
+                    break;
+            }
+        }
+	}
 }
 
 function fill_fields_v6(profil_id, profil_validated, fake_user_change) {
