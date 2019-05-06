@@ -114,9 +114,8 @@ class App extends Component {
         this.setState({ current_user: undefined });
         console.log("Set email as undefined in state");
 
-        chrome.storage.sync.remove('current_user', function(result){
-            console.log("Removed current user from chrome storage");
-        });
+        chrome.storage.sync.clear(); 
+        console.log("[logout] Clear cache from chrome storage");
         this.setDisconnectedContent();
     }
 

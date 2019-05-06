@@ -35,6 +35,7 @@ function bind_inputs() {
             inputs_type[j].addEventListener('keydown', keyDownAlgo, false);
         }
     }
+    console.info("[bind_inputs]Binding all events to input fileds")
 }
 
 //Reverse bind input
@@ -58,13 +59,15 @@ function bind_selects() {
     for (var i = 0; i < selects.length; i++) {
         selects[i].addEventListener('change', changeAlgo, false);
     }
+    console.info("[bind_selects]: binding all corail events to selects");
 }
 
 //Reverse bind_selects
-function bind_selects() {
+function unbind_selects() {
     for (var i = 0; i < selects.length; i++) {
         selects[i].removeEventListener('change', changeAlgo, false);
     }
+    console.info("[unbind_selects]: unbind all corail events from selects");
 }
 
 

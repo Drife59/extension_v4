@@ -86,7 +86,7 @@ class UserProfil {
         chrome.storage.sync.set({"profil_user_values": JSON.stringify(this.profil_values)}), function(){
             console.info("Set profil user db in google storage");
         };
-        console.info("Set profil user db in google storage outside");
+        console.info("Set profil user db in google storage.");
     }
 
     //Load UserProfil object from local storage
