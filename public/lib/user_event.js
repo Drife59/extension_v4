@@ -163,7 +163,7 @@ function get_user_value(field){
 		user_value = field.options[field.selectedIndex].text.replace(" ", "");
 	}
 
-	console.info("Raw user value from field: " + user_value);
+	console.debug("Raw user value from field: " + user_value);
 
 	//Don't normalize email or password field
 	if (field.type == "email" || check_email(user_value) || field.type == "password") {

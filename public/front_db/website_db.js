@@ -563,10 +563,14 @@ class WebsiteDb {
         for(var i in liste_pivots_profil){
             //just for the sake of clarity
             var pivot = liste_pivots_profil[i];
+
             if( !(Object.keys(pivot_coeff).includes(pivot))){
                 weights_website[pivot] -= weight_to_add;
                 if (weights_website[pivot] < MIN_KEY_PIVOT_WEIGHT)
                     weights_website[pivot] = MIN_KEY_PIVOT_WEIGHT;
+            }
+            else{
+                console.debug("Don't decrease pivot " + pivot + " in pivot coeff keys");
             }
         }
 
