@@ -26,6 +26,9 @@ export class Signin extends Component {
             });
         });
 
+        chrome.storage.sync.clear();
+        console.info("Clear all cache from React js app");
+
 
         var email = document.getElementById('email').value;
         var password = document.getElementById('password').value;

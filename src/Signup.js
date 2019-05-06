@@ -73,6 +73,10 @@ export class Signup extends Component {
             if (response.status === 200) {
                 signup_component.props.setWelcomeContent();
                 signup_component.props.setUser(email);
+
+                //Fist of all, clear all cache if any data remaining from previous user
+                chrome.storage.sync.clear();
+                console.info("Clear all cache from React js app");
                 
                 //Wait for the google cache to set user then launch app
                 //Build code to initialise all front db
