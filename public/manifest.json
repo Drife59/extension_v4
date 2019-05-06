@@ -19,28 +19,33 @@
     "default_popup": "index.html"
   },
   "content_scripts": [
-  {
-    "matches": [
-      "<all_urls>"
-    ],
-    "js": [
-      "config/main_config.js",
-      "config/pivot_config.js",
-      "config/heuristic_config.js",
-      "lib/globalvar.js",
-      "lib/input.js",
-      "lib/api_back.js",
-      "lib/utils.js",
-      "lib/heuristics.js",
-      "front_db/back_management.js",
-      "front_db/profil.js",
-      "front_db/user_db.js",
-      "front_db/website_db.js",
-      "lib/graphical_profil.js",
-      "lib/user_event.js",
-      "lib/fill_field.js",
-      "front.js"],
-    "css": ["styles/visited_pages.css","/static/css/app.css", "/static/css/content.css"]
-  }
+    {
+		"matches": ["<all_urls>"],
+		"run_at": "document_start",
+		"js": ["config/main_config.js",
+		"config/pivot_config.js",
+		"config/heuristic_config.js",
+		"lib/globalvar.js",
+		"lib/input.js",
+		"lib/api_back.js",
+		"lib/utils.js",
+		"lib/heuristics.js",
+		"front_db/back_management.js",
+		"front_db/profil.js",
+		"front_db/user_db.js",
+		"front_db/website_db.js",
+		"lib/graphical_profil.js",
+		"lib/user_event.js",
+		"lib/fill_field.js",
+		"lib/preload_front.js"]
+    },
+  	{
+		"matches": [
+		"<all_urls>"
+		],
+		"js": [
+		"front.js"],
+		"css": ["styles/visited_pages.css","/static/css/app.css", "/static/css/content.css"]
+  	}
   ]
 }
