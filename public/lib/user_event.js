@@ -148,24 +148,45 @@ function preprocess_input(input, key_domain, user_value){
 		return false;
 	}
 
-	//Don't normalize email or password field
-	if (input.type == "email" || check_email(user_value) || input.type == "password") {
-		user_value = input.value.toLowerCase();
-	}
+	
 	return user_value;
 
 }
 
+//Get the proper user value from field, regarding it's type (input/select) 
+//and the type of data (email/psd VS classical data)
+function get_user_value(field){
+	var user_value = null;
+	if(field.tagName == "input" || field.tagName == "Input" || field.tagName == "INPUT"){
+		user_value = field.value;
+	}else if(field.tagName == "select" || field.tagName == "Select" || field.tagName == "SELECT"){
+		user_value = field.options[field.selectedIndex].text.replace(" ", "");
+	}
+
+	console.info("Raw user value from field: " + user_value);
+
+	//Don't normalize email or password field
+	if (field.type == "email" || check_email(user_value) || field.type == "password") {
+		user_value = field.value.toLowerCase();
+	}else{
+		user_value = user_value.capitalize();
+	}
+
+	console.info("Final user value: " + user_value);
+	
+	return user_value;
+}
+
 //Main algo for event change detected on input field
 function changeAlgo(evt) {
-	var input = evt.target
-	console.info("Algo change: field " + input.tagName + " modified: " + HtmlEltToString(input));
-	var key_domain = construit_domaine_cle(input);
-	var user_value = input.value.capitalize();
+	var field = evt.target
+	console.info("Algo change: field " + field.tagName + " modified: " + HtmlEltToString(field));
+	var key_domain = construit_domaine_cle(field);
+	var user_value = get_user_value(field);
 
 	//First, do some check in preprocess function
-	user_value = preprocess_input(input, key_domain, user_value);
-	//Stop algo if input should not be processed
+	user_value = preprocess_input(field, key_domain, user_value);
+	//Stop algo if field should not be processed
 	if(user_value == false){
 		return;
 	}
@@ -174,7 +195,7 @@ function changeAlgo(evt) {
 	//We are in onChange event. So, if the change has been manual,
 	//that means that user modified the value. Therefore, we need to 
 	//decrease the weight as if the field was cleared
-	if (input.hasAttribute(CODE_FILLED_BY_PROFIL)){
+	if (field.hasAttribute(CODE_FILLED_BY_PROFIL)){
 			console.info("Algo change profil: field has modified by user, decreasing pivot reference.");
 			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
 			website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference, weight_key_clear_input);
@@ -185,13 +206,13 @@ function changeAlgo(evt) {
 	//So we need to execute it only if field has not been cleared
 	//This correspond to the case of a "partial" modification of a value
 
-	if (input.hasAttribute(CODE_FILLED_BY_PROFIL) &&
-		!(input.hasAttribute(CODE_FIELD_CLEARED_USER))) {
-		analyse_user_input_field_with_pivot(input, user_value, key_domain);
+	if (field.hasAttribute(CODE_FILLED_BY_PROFIL) &&
+		!(field.hasAttribute(CODE_FIELD_CLEARED_USER))) {
+		analyse_user_input_field_with_pivot(field, user_value, key_domain);
 	}
 
 	//This part correspond to a manual filling 
-	if (!input.hasAttribute(CODE_FILLED_BY_PROFIL)) {
+	if (!field.hasAttribute(CODE_FILLED_BY_PROFIL)) {
 		var referent_pivot = website_front_db.get_referent_pivot(window.location.host, key_domain);
 
 		//Manual filling, but on an input with a referent pivot 
@@ -230,9 +251,9 @@ function changeAlgo(evt) {
 	}
 
 	//V5 Process
-	if (input.hasAttribute(CODE_FILLED_BY_PROFILLESS)) {
+	if (field.hasAttribute(CODE_FILLED_BY_PROFILLESS)) {
 		//Don't process empty field
-		if (is_empty(input)) {
+		if (is_empty(field)) {
 			console.debug("Algo change profilless: field is empty, no process.");
 			return;
 		}
