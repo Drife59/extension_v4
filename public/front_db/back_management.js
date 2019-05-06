@@ -114,6 +114,7 @@ function load_website_db_from_cache(){
 }
 
 function load_profils_from_back(email, save_in_cache){
+    console.info("[load_profils_from_back] Loading profil for user " + email + ", with saving in cache option: " + save_in_cache);
     profil_db = new UserProfil(email);
     var xhttp_get_profil = profil_db.xhttp_get_profils(email);
     var xhttp_get_values = profil_db.xhttp_all_values_with_profil(email);
