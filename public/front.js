@@ -37,7 +37,7 @@ chrome.storage.sync.get("current_user", function (data) {
 
         //3) Preload website front DB
         console.info("Loading website db from back, creating key and executing heuristics");
-        load_website_db_from_back(true);
+        load_website_db_from_back(true, lancement_app);
 
         load_profils_from_cache(data.current_user);
 
@@ -90,11 +90,11 @@ function lancement_app() {
 window.addEventListener('hashchange', function () {
 });
 
-window.addEventListener('load', function () {
+/*window.addEventListener('load', function () {
     console.info("window.load event");
     if (!app_launched)
         lancement_app("Load");
-});
+});*/
 
 
 /*Note(BG): Be careful, it is impossible to predict how much execution time you have in unload event*/
