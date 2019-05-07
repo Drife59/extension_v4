@@ -4,10 +4,13 @@ import React, { Component } from 'react';
 
 import { FooterSkip } from './FooterSkip';
 
+import { config } from './config';
+
+
 export class Welcome extends Component {
 
     handleDemo(e){
-        var newURL = "https://www.corail.me/step1.html";
+        var newURL = config.url_create_profil;
         chrome.tabs.create({ url: newURL });
 
         this.props.setConnectedContent();
