@@ -12,13 +12,21 @@ This need to be set for any modification on pivot config.
 
 // All this code correspond identify each type of pivot.
 // There is a perfect correspondance to field "name" in Pivots table (back-end)
+var CODE_MAIN_EMAIL = "main_email";
+var CODE_CIVILITY = "civility";
 var CODE_FIRSTNAME = "first_name";
 var CODE_LASTNAME  = "family_name";
+
 var CODE_POSTALCODE = "postal_code";
 var CODE_CITY = "home_city";
+
+var CODE_INDICATIVE = "indicative";
 var CODE_CELLPHONE = "cellphone_number";
-var CODE_MAIN_EMAIL = "main_email";
+var CODE_SHORT_CELLPHONE = "short_cellphone_number";
+var CODE_FULL_CELLPHONE = "full_cellphone_number";
+
 var CODE_MAIN_FULL_ADDRESS = "main_full_address";
+
 var CODE_DAY_BIRTH = "day_of_birth";
 var CODE_MONTH_BIRTH = "month_of_birth";
 var CODE_YEAR_BIRTH = "year_of_birth";
@@ -52,9 +60,9 @@ var CODE_IBAN = "iban";
 var CODE_RESEARCH = "research";
 
 //Define all pivots in system
-var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME, CODE_FULL_NAME,
+var liste_pivots = [CODE_MAIN_EMAIL, CODE_CIVILITY, CODE_FIRSTNAME, CODE_LASTNAME, CODE_FULL_NAME,
                     CODE_POSTALCODE, CODE_CITY, CODE_MAIN_FULL_ADDRESS, CODE_ADDRESS, CODE_COUNTRY,
-                    CODE_CELLPHONE, CODE_HOMEPHONE,
+                    CODE_INDICATIVE, CODE_CELLPHONE, CODE_SHORT_CELLPHONE, CODE_FULL_CELLPHONE, CODE_HOMEPHONE,
                     CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH, CODE_FULL_BIRTHDATE,
                     CODE_COMPANY,
                     //CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR, CODE_IBAN,
@@ -63,9 +71,9 @@ var liste_pivots = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME, CODE_FULL_NA
                     CODE_DRIVING_LICENCE, CODE_LICENCE_PLATE, 
     ]
 
-var liste_pivots_profil = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME, CODE_FULL_NAME,
+var liste_pivots_profil = [CODE_MAIN_EMAIL, CODE_CIVILITY, CODE_FIRSTNAME, CODE_LASTNAME, CODE_FULL_NAME,
         CODE_POSTALCODE, CODE_CITY, CODE_MAIN_FULL_ADDRESS, CODE_ADDRESS, CODE_COUNTRY,
-        CODE_CELLPHONE, CODE_HOMEPHONE,
+        CODE_INDICATIVE, CODE_CELLPHONE, CODE_SHORT_CELLPHONE, CODE_FULL_CELLPHONE, CODE_HOMEPHONE,
         CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH, CODE_FULL_BIRTHDATE,
         CODE_COMPANY,
 ]
