@@ -13,7 +13,7 @@ Define specific heuristic config.
 
 //Define all code for available heuristics
 //This NEED to be updated when an heuristic is created
-var all_heuristics = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME, 
+var all_heuristics = [CODE_MAIN_EMAIL, CODE_CIVILITY, CODE_FIRSTNAME, CODE_LASTNAME, 
     CODE_MAIN_FULL_ADDRESS, CODE_ADDRESS, CODE_POSTALCODE, CODE_CITY, CODE_COUNTRY,
     CODE_INDICATIVE, CODE_CELLPHONE,
     CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH, CODE_FULL_BIRTHDATE,
@@ -24,6 +24,7 @@ var all_heuristics = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME,
 
 //Define ponderation for each list of keywords
 var heuristic_ponderation = new Object();
+heuristic_ponderation[CODE_CIVILITY] = 1;
 heuristic_ponderation[CODE_FIRSTNAME] = 1;
 heuristic_ponderation[CODE_LASTNAME] = 1;
 heuristic_ponderation[CODE_POSTALCODE] = 1.5;
@@ -63,6 +64,8 @@ heuristic_ponderation[CODE_RESEARCH] = 1;
 // Define keywords per heuristic we will look for
 
 var search_string = ["search", "recherche"];
+
+var civility_string = ["civility", "civilite", "genre", "gender"];
 
 /* List of keys after Ju Research in old Mongo DB*/
 var lastname_string = ["lastname", "familyname", "last-name", "last_name", "family-name", "family_name", "lname","nachname","surname"];

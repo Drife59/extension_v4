@@ -114,6 +114,10 @@ function get_occurence_search_field(field){
 	return nb_keyword_in_field(field, search_string, heuristic_ponderation[CODE_RESEARCH]);
 }
 
+function get_occurence_civility_field(field){
+	return nb_keyword_in_field(field, civility_string, heuristic_ponderation[CODE_CIVILITY]);
+}
+
 function get_occurence_firstname_field(field){
 	check_not_select(field,0);
 	return nb_keyword_in_field(field, firstname_string, heuristic_ponderation[CODE_FIRSTNAME]);
@@ -241,6 +245,7 @@ function get_occurence_iban(field){
 //This NEED to be updated when creating a new heuristic
 var heuristic_code_function_match = new Object();
 
+heuristic_code_function_match[CODE_CIVILITY] = get_occurence_civility_field;
 heuristic_code_function_match[CODE_FIRSTNAME] = get_occurence_firstname_field;
 heuristic_code_function_match[CODE_LASTNAME] = get_occurence_lastname_field;
 heuristic_code_function_match[CODE_POSTALCODE] = get_occurence_postalcode_field;
