@@ -13,14 +13,14 @@ Define specific heuristic config.
 
 //Define all code for available heuristics
 //This NEED to be updated when an heuristic is created
-var all_heuristics = [CODE_FIRSTNAME, CODE_LASTNAME, CODE_POSTALCODE, CODE_CITY, CODE_CELLPHONE,
-    CODE_MAIN_EMAIL, CODE_MAIN_FULL_ADDRESS, CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH,
+var all_heuristics = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME, 
+    CODE_MAIN_FULL_ADDRESS, CODE_ADDRESS, CODE_POSTALCODE, CODE_CITY, CODE_COUNTRY,
+    CODE_INDICATIVE, CODE_CELLPHONE,
+    CODE_DAY_BIRTH, CODE_MONTH_BIRTH, CODE_YEAR_BIRTH, CODE_FULL_BIRTHDATE,
     //V3.3 code 
     //CODE_COMPANY, CODE_HOMEPHONE, CODE_CVV_STRING, CODE_CARDEXPIRYMONTH, CODE_CARDEXPIRYYEAR,
     CODE_COMPANY, CODE_HOMEPHONE,
-    //V4.0 code
-    CODE_FULL_BIRTHDATE,
-    CODE_ADDRESS, CODE_COUNTRY];
+    ];
 
 //Define ponderation for each list of keywords
 var heuristic_ponderation = new Object();
@@ -28,6 +28,7 @@ heuristic_ponderation[CODE_FIRSTNAME] = 1;
 heuristic_ponderation[CODE_LASTNAME] = 1;
 heuristic_ponderation[CODE_POSTALCODE] = 1.5;
 heuristic_ponderation[CODE_CITY] = 1.5;
+heuristic_ponderation[CODE_INDICATIVE] = 1;
 heuristic_ponderation[CODE_CELLPHONE] = 1;
 heuristic_ponderation[CODE_MAIN_EMAIL] = 1;
 heuristic_ponderation[CODE_MAIN_FULL_ADDRESS] = 0.49;
@@ -69,7 +70,8 @@ var postalcode_string = ["postalcode", "zipcode", "codepostal", "code-postal", "
 
 var firstname_string = ["firstname", "forename", "prenom", "first-name", "first_name", "fname", "vorname", "forename", "prénom", "firstNM"];
 var city_string = ["city", "town", "ville"];
-//- ATTENTION, il y a souvent ADDRESS & CITY (ou adr ou addr) (exception de la règle de 2)
+
+var indicative_string = ["indicative", "indicatif"];
 var phone_string = ["phone", "telephone", "mobile","portable", "telefon", "telport"];
 //- A retirer : TEL ? (Trop petit… donc à risque "telecomande").
 //- ATTENTION, il y a souvent ADDRESS dans le tel ! (ou adr ou addr) (exception de la règle de 2) ?
