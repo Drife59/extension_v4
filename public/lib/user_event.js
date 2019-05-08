@@ -197,7 +197,10 @@ function changeAlgo(evt) {
 	//decrease the weight as if the field was cleared
 	if (field.hasAttribute(CODE_FILLED_BY_PROFIL)){
 			console.info("Algo change profil: field has modified by user, decreasing pivot reference.");
-			var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
+			var pivot_reference = website_front_db.get_referent_pivot_minimum(window.location.host, key_domain);
+			if(pivot_reference == null){
+				console.warn("Cannot execute algoritm clearing field, pivot_reference is undefined");
+			}
 			website_front_db.update_weight_clearing_field(window.location.host, key_domain, pivot_reference, weight_key_clear_input);
 	}
 

@@ -77,7 +77,7 @@ var WEIGHT_MINIMUM_RESTITUTION = 45;
 
 //Weight minimum for trying to identificate, a pivot
 //This can can usefull, if you want a tendancie of a pivot even if the weight is low
-var WEIGHT_ABSOLUT_MINIMUM = 20;
+var WEIGHT_ABSOLUT_MINIMUM = 30;
 
 //Weight set when creating pivot with heuristic
 var HEURISTIC_BASE_WEIGHT = 45;
