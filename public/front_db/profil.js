@@ -195,6 +195,127 @@ class UserProfil {
         }
     }
 
+
+    //Create a value on a profil, async
+    create_value_async(user, pivot_code, new_value, id_profil, profil){
+        var xhttp_create_value = this.xhttp_create_profil_value_user(user, pivot_code, new_value, id_profil);
+        xhttp_create_value.onreadystatechange = function () {
+            if (xhttp_create_value.readyState == 4 && xhttp_create_value.status == 200) {
+                var data = JSON.parse(xhttp_create_value.responseText);
+                profil[pivot_code] = {"userValueId": data["userValueId"], "valueText": new_value};
+                console.info("Following value added for profil: " + id_profil + " on pivot: " + pivot_code);
+                console.info(JSON.stringify(profil[pivot_code], null, 4));
+            }
+        }
+    }
+
+    /*Create the pivot translated from other pivot.*/
+    create_pivot_translated(id_profil){
+        if(! (this.profil_values.hasOwnProperty(id_profil))){
+            console.warn("[create_pivot_translated]Cannot create translated pivot, id_profil " + id_profil + " does not exist");
+            return;
+        }
+
+        var profil = this.profil_values[id_profil];
+
+        // fullname check
+        //---------------
+
+        if( !(profil.hasOwnProperty(CODE_FULL_NAME))){
+            if( profil.hasOwnProperty(CODE_FIRSTNAME) && profil.hasOwnProperty(CODE_LASTNAME)){
+                var new_value = build_fullname(profil[CODE_FIRSTNAME]["valueText"], profil[CODE_LASTNAME]["valueText"]);
+                console.info("[create_pivot_translated] Creating fullname from others pivots");
+                this.create_value_async(current_user, CODE_FULL_NAME, new_value, id_profil, profil);
+            }
+        }
+
+        if( !(profil.hasOwnProperty(CODE_FIRSTNAME)) && profil.hasOwnProperty(CODE_FULL_NAME)){
+            var new_value = get_firstname_from_fullname(profil[CODE_FULL_NAME]["valueText"]);
+            console.info("[create_pivot_translated] Creating " + CODE_FIRSTNAME + " from " + CODE_FULL_NAME);
+            this.create_value_async(current_user, CODE_FIRSTNAME, new_value, id_profil, profil);
+        }
+
+        if( !(profil.hasOwnProperty(CODE_LASTNAME)) && profil.hasOwnProperty(CODE_FULL_NAME)){
+            var new_value = get_familyname_from_fullname(profil[CODE_FULL_NAME]["valueText"]);
+            console.info("[create_pivot_translated] Creating " + CODE_LASTNAME + " from " + CODE_FULL_NAME);
+            this.create_value_async(current_user, CODE_LASTNAME, new_value, id_profil, profil);
+        }
+
+
+        //birthdate check
+        //---------------
+
+        //full birthdate check
+        if( !(profil.hasOwnProperty(CODE_FULL_BIRTHDATE))){
+            if( profil.hasOwnProperty(CODE_DAY_BIRTH) && 
+                profil.hasOwnProperty(CODE_MONTH_BIRTH) && 
+                profil.hasOwnProperty(CODE_YEAR_BIRTH)){
+                
+                    var new_value = build_fullbirthdate(profil[CODE_DAY_BIRTH]["valueText"], 
+                        profil[CODE_MONTH_BIRTH]["valueText"], 
+                        profil[CODE_YEAR_BIRTH]["valueText"]);
+                    console.info("[create_pivot_translated] Creating full birthdate from others pivots");
+                    this.create_value_async(current_user, CODE_FULL_BIRTHDATE, new_value, id_profil, profil)
+            }
+        }
+
+        // Solo (day, month, year) birth check
+        // -----------------------------------
+
+        if( !(profil.hasOwnProperty(CODE_DAY_BIRTH)) && profil.hasOwnProperty(CODE_FULL_BIRTHDATE)){
+            var new_value = get_day_of_birth_from_fullbirthdate(profil[CODE_FULL_BIRTHDATE]["valueText"]);
+            console.info("[create_pivot_translated] Creating " + CODE_DAY_BIRTH + " from " + CODE_FULL_BIRTHDATE);
+            this.create_value_async(current_user, CODE_DAY_BIRTH, new_value, id_profil, profil)
+
+        }
+
+        if( !(profil.hasOwnProperty(CODE_MONTH_BIRTH)) && profil.hasOwnProperty(CODE_FULL_BIRTHDATE)){
+            var new_value = get_month_of_birth_from_fullbirthdate(profil[CODE_FULL_BIRTHDATE]["valueText"]);
+            console.info("[create_pivot_translated] Creating " + CODE_MONTH_BIRTH + " from " + CODE_FULL_BIRTHDATE);
+            this.create_value_async(current_user, CODE_MONTH_BIRTH, new_value, id_profil, profil)
+        }
+
+        if( !(profil.hasOwnProperty(CODE_YEAR_BIRTH)) && profil.hasOwnProperty(CODE_FULL_BIRTHDATE)){
+            var new_value = get_year_of_birth_from_fullbirthdate(profil[CODE_FULL_BIRTHDATE]["valueText"]);
+            console.info("[create_pivot_translated] Creating " + CODE_YEAR_BIRTH + " from " + CODE_FULL_BIRTHDATE);
+            this.create_value_async(current_user, CODE_YEAR_BIRTH, new_value, id_profil, profil)
+        }
+
+        // cellphone number check
+        // ----------------------
+        
+        // Creation short number ?
+        if(profil.hasOwnProperty(CODE_CELLPHONE) && (!profil.hasOwnProperty(CODE_SHORT_CELLPHONE))){
+            var new_value = get_short_number_from_classical_number(profil[CODE_CELLPHONE]["valueText"]);
+            console.info("[create_pivot_translated] Creating " + CODE_SHORT_CELLPHONE + " from " + CODE_CELLPHONE);
+            this.create_value_async(current_user, CODE_SHORT_CELLPHONE, new_value, id_profil, profil);
+        }
+
+        // Creation classical number ?
+        if(profil.hasOwnProperty(CODE_SHORT_CELLPHONE) && (!profil.hasOwnProperty(CODE_CELLPHONE))){
+            var new_value = get_classical_number_from_short(profil[CODE_SHORT_CELLPHONE]["valueText"]);
+            console.info("[create_pivot_translated] Creating " + CODE_CELLPHONE + " from " + CODE_SHORT_CELLPHONE);
+            this.create_value_async(current_user, CODE_CELLPHONE, new_value, id_profil, profil)
+        }
+
+        // Creation full number ?
+        if(!(profil.hasOwnProperty(CODE_FULL_CELLPHONE)) && 
+             profil.hasOwnProperty(CODE_CELLPHONE) && 
+             profil.hasOwnProperty(CODE_INDICATIVE)){
+                var new_value = build_fullnumber_with_indicative(profil[CODE_INDICATIVE]["valueText"], profil[CODE_CELLPHONE]["valueText"]);
+                console.info("[create_pivot_translated] Creating " + CODE_FULL_CELLPHONE + " from " + CODE_INDICATIVE + " and " + CODE_CELLPHONE);
+                this.create_value_async(current_user, CODE_FULL_CELLPHONE, new_value, id_profil, profil);
+        }
+        else if(!(profil.hasOwnProperty(CODE_FULL_CELLPHONE)) && 
+             profil.hasOwnProperty(CODE_SHORT_CELLPHONE) && 
+             profil.hasOwnProperty(CODE_INDICATIVE)){
+                var new_value = build_fullnumber_with_indicative(profil[CODE_INDICATIVE]["valueText"], profil[CODE_SHORT_CELLPHONE]["valueText"]);
+                console.info("[create_pivot_translated] Creating " + CODE_FULL_CELLPHONE + " from " + CODE_INDICATIVE + " and " + CODE_SHORT_CELLPHONE);
+                this.create_value_async(current_user, CODE_FULL_CELLPHONE, new_value, id_profil, profil);
+        }
+
+    }
+
     // ############
     // RAW API CALL
     // ############
@@ -458,6 +579,7 @@ class UserProfil {
 
     //Return profil that should be displayed in the list for final user
     //Evolution: return list of profil sorted by weight, DESC
+    //Evolution: execute by the way the pivot translation creation 
     get_profil_for_list(){
         var result_list = [];
 
@@ -489,6 +611,11 @@ class UserProfil {
                 delete profil_to_return[min_id_profil];
                 min_weight = 100;
             }
+        }
+
+        //Complete profils returned with translated pivots
+        for (var id_profil in profil_to_return) {
+            this.create_pivot_translated(id_profil);
         }
 
         //Build the list of profil to return 

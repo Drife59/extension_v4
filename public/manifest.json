@@ -25,6 +25,7 @@
 		"js": ["config/main_config.js",
 		"config/pivot_config.js",
 		"config/heuristic_config.js",
+		"lib/pivot_translation.js",
 		"lib/globalvar.js",
 		"lib/input.js",
 		"lib/api_back.js",
