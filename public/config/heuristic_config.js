@@ -75,7 +75,7 @@ var firstname_string = ["firstname", "forename", "prenom", "first-name", "first_
 var city_string = ["city", "town", "ville"];
 
 var indicative_string = ["indicative", "indicatif"];
-var phone_string = ["phone", "telephone", "mobile","portable", "telefon", "telport"];
+var cellphone_string = ["cellphone", "mobile", "mobilephone","portable", "telport"];
 //- A retirer : TEL ? (Trop petit… donc à risque "telecomande").
 //- ATTENTION, il y a souvent ADDRESS dans le tel ! (ou adr ou addr) (exception de la règle de 2) ?
 var email_string = ["email","courriel", "login","mail"];

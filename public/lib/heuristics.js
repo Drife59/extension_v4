@@ -142,9 +142,9 @@ function get_occurence_indicative_field(field){
 	return nb_keyword_in_field(field, indicative_string, heuristic_ponderation[CODE_INDICATIVE]);
 }
 	
-function get_occurence_phone_field(field){
+function get_occurence_cellphone_field(field){
 	check_not_select(field,0);
-	return nb_keyword_in_field(field, phone_string, heuristic_ponderation[CODE_CELLPHONE]);
+	return nb_keyword_in_field(field, cellphone_string, heuristic_ponderation[CODE_CELLPHONE]);
 }
 
 function get_occurence_main_email_field(field){
@@ -251,7 +251,7 @@ heuristic_code_function_match[CODE_LASTNAME] = get_occurence_lastname_field;
 heuristic_code_function_match[CODE_POSTALCODE] = get_occurence_postalcode_field;
 heuristic_code_function_match[CODE_CITY] = get_occurence_city_field;
 heuristic_code_function_match[CODE_INDICATIVE] = get_occurence_indicative_field;
-heuristic_code_function_match[CODE_CELLPHONE] = get_occurence_phone_field;
+heuristic_code_function_match[CODE_CELLPHONE] = get_occurence_cellphone_field;
 heuristic_code_function_match[CODE_MAIN_EMAIL] = get_occurence_main_email_field;
 heuristic_code_function_match[CODE_MAIN_FULL_ADDRESS] = get_occurence_main_full_address_field;
 heuristic_code_function_match[CODE_DAY_BIRTH] = get_occurence_daybirth;
