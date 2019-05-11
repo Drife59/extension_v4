@@ -36,12 +36,6 @@ function lancement_app() {
         //If there is a temporary profil in cache, we need to create it in back
         profil_db.create_profil_from_temp_profil();
     }, timeout_parsing);
-
-    //In order to initialize events, we need all keys to be created in front
-    /*setTimeout(function () {
-        console.info("Initializing events...")
-        init_event_list();
-    }, timeout_key_creation);*/
 }
 
 lancement_app();
