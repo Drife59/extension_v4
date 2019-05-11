@@ -96,6 +96,13 @@ function build_display_list(input){
 }
 
 function display_list(){
+
+	//Don't start process for certain domain defined in conf
+	if( skip_domain.includes(window.location.host)){
+		console.info("Domain " + window.location.host + " is defined to be skipped, don't display list.");
+		return;
+	}
+
 	var position_current_input1 = getPosition(this);
 
 	//Display list as block, resize and position it

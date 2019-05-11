@@ -16,11 +16,6 @@ var app_launched = false;
 
 function lancement_app() {
 
-    //Don't start process for certain domain defined in conf
-    if( skip_domain.includes(window.location.host)){
-        return;
-    }
-
     if(current_user == undefined){
         console.warn("Cannot find user, aborting software launch");
         return;
