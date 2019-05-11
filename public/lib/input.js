@@ -119,6 +119,11 @@ function clear_selects() {
 //Parse page and bind event on field, then try to create key
 function init_fields(callback) {
     load_fields(callback);
+
+    //We don't want to bind events if we are on excluded website 
+	if( skip_domain.includes(window.location.host)){
+		return;
+	}
     bind_inputs();
     bind_selects();
     //fetch_all_field();

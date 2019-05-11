@@ -74,13 +74,11 @@ export class Signup extends Component {
                 signup_component.props.setWelcomeContent();
                 signup_component.props.setUser(email);
 
-                //Fist of all, clear all cache if any data remaining from previous user
-                chrome.storage.sync.clear();
-                console.info("Clear all cache from React js app");
                 
                 //Wait for the google cache to set user then launch app
                 //Build code to initialise all front db
-                var str_code = "init_new_user_db(\"" + email + "\");" + 
+                var str_code = "lancement_app();" + 
+                               "init_new_user_db(\"" + email + "\");" + 
                                "init_new_profil(\"" + email + "\");" +
                                "load_website_db_from_back(true);" + 
                                "init_fields();";

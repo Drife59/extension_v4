@@ -152,6 +152,11 @@ function click_for_display_list(){
 //Define event to create lists on input to display profil
 function init_event_list() {
 
+	//We don't want to init anything if we are on excluded website 
+	if( skip_domain.includes(window.location.host)){
+		return;
+	}
+
 	//We absolutely need to position the block at body root, in order 
 	//to have the profil list properly positionned.
 	//Profil list will have a position absolute, calculated from input position
