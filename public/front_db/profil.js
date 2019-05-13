@@ -80,6 +80,20 @@ class UserProfil {
         return Object.keys(this.profil_values);
     }
 
+    get_default_profil_id(){
+        var ids_profil = this.get_id_all_profil();
+
+        for(var i=0 ; i<ids_profil.length ; i++){
+            var id_profil = ids_profil[i];
+            var current_profil = this.profil_values[id_profil];
+
+            if(current_profil["profilName"] == "defaut_profil"){
+                return id_profil;
+            }
+        }
+        console.warn("Could not find defaut profil");
+    }
+
     //Save in storage current UserProfil
     set_profil_storage(){
         //chrome.storage.sync.set({"current_user": this.current_user});
@@ -765,6 +779,31 @@ class UserProfil {
         this.set_profil_storage();
     }
 
+    //Add in defaut profil all user values in input profil
+    complete_default_profil(profil){
+
+        //First, get defaut profil
+        var defaut_profil_id = this.get_default_profil_id();
+        console.info("Defaut profil id = " + defaut_profil_id);
+        var defaut_profil = this.profil_values[defaut_profil_id]
+
+        console.info("Adding the following profil in defaut profil: ");
+        console.info(JSON.stringify(profil, null, 4));
+        //For each pivot, create value in back
+        for(var pivot in profil){
+            if(liste_pivots.includes(pivot)){
+                this.create_value_async(current_user, pivot, profil[pivot]["valueText"], defaut_profil_id, profil)
+            }
+        }
+
+        //When we are sure all requests has been sent to back, delete temps profil and save cache
+        setTimeout(() => {
+            delete this.profil_values["0"];
+            this.set_profil_storage();
+        }, 5000);
+
+    }
+
     //If a fake temp profil has been created in front, this function
     //create it in back and save real profil id and user value id in front  
     //profil with id "0" is the special profil temp to be created
@@ -777,6 +816,17 @@ class UserProfil {
 
         var profil_name = "profil-" + guid();
         var profil = this.profil_values["0"];
+
+        //If there is only one profil, the defaut profil we complete it and don't create a new profil
+        //Minus 1 because we don't want to count the default profil
+        if( (this.get_number_of_profil() -1) == 1){
+            console.info("There is only the defaut profil and the temp profil.");
+            console.info("Adding the temp profil in default profil and don't create a new profil.");
+            this.complete_default_profil(profil);
+            return true;
+        }
+
+        //Else, create a brand new profil
 
         console.info("[create_profil_from_temp_profil] Request profil back creation with name : " + profil_name);
 
