@@ -195,9 +195,51 @@ class UserProfil {
         }
     }
 
+    //Check that the cellphone number is properly formatted 
+    sanitize_new_user_value(pivot_code, new_value){
+        if(pivot_code == CODE_CELLPHONE){
+            ///If we made a mistake by putting a short cellphone number 
+            //in classical cellphone field, correct it.
+            if(new_value.length == 9){
+                new_value = "0" + new_value;
+                console.info("new_value was corrected, detected a short cellphone number in classical cellphone field.");
+                console.info("Adding a 0 to create \"classical\" cellphone number, final new value: " + new_value);
+            }
+        }
+
+        if(pivot_code == CODE_SHORT_CELLPHONE){
+            ///If we made a mistake by putting a short cellphone number 
+            //in classical cellphone field, correct it.
+            if(new_value.length == 10){
+                new_value = new_value.slice(1);
+                console.info("new_value was corrected, detected a classical cellphone number in short cellphone field.");
+                console.info("Removing 0 to create \"short\" number, final new value: " + new_value);
+            }
+        }
+
+        //Add a zero if day or month has been entered without this zero
+        if(pivot_code == CODE_DAY_BIRTH || pivot_code == CODE_MONTH_BIRTH){
+            if( new_value.length == 1){
+                console.info("Adding '0' beside new value: " + new_value + " for pivot " + pivot_code);
+                new_value = "0" + new_value;
+            }
+        }
+
+        if(pivot_code == CODE_YEAR_BIRTH){
+            if( new_value.length == 2){
+                console.info("Adding '19' beside new value: " + new_value + " for pivot " + pivot_code);
+                new_value = "19" + new_value;
+            }
+        }
+
+        return new_value;
+    }
 
     //Create a value on a profil, async
     create_value_async(user, pivot_code, new_value, id_profil, profil){
+
+        new_value = this.sanitize_new_user_value(pivot_code, new_value);
+
         var xhttp_create_value = this.xhttp_create_profil_value_user(user, pivot_code, new_value, id_profil);
         xhttp_create_value.onreadystatechange = function () {
             if (xhttp_create_value.readyState == 4 && xhttp_create_value.status == 200) {
@@ -484,6 +526,8 @@ class UserProfil {
 
     async add_value_to_profil(email, pivot, value_text, profil_id, callback){
 
+        value_text = this.sanitize_new_user_value(pivot, value_text);
+
         var user_value_back = await this.fetch_create_profil_value_user(email, pivot, value_text, profil_id);
         console.debug("user value created from back: " + JSON.stringify(user_value_back, null, 4));
 
@@ -499,7 +543,6 @@ class UserProfil {
         if(callback != undefined){
             callback();
         }
-
     }
     
     get_value_for_pivot(profil_id, pivot_name){
@@ -760,6 +803,7 @@ class UserProfil {
                 //For each pivot, create value in back
                 for(var pivot in new_profil){
                     if(liste_pivots.includes(pivot)){
+                        new_profil[pivot]["valueText"] = current_obj.sanitize_new_user_value(pivot, new_profil[pivot]["valueText"]);
                         xhttp_user_value[pivot] = current_obj.xhttp_create_profil_value_user(current_user, pivot, new_profil[pivot]["valueText"], new_profil_id);
                     }
                 }
