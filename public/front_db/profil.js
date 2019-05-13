@@ -381,6 +381,8 @@ class UserProfil {
                 this.create_value_async(current_user, CODE_FULL_CELLPHONE, new_value, id_profil, profil);
         }
 
+        this.set_profil_storage();
+
     }
 
     // ############
