@@ -218,6 +218,8 @@ class UserProfil {
 
         var profil = this.profil_values[id_profil];
 
+        console.info("Starting translation process for profil: " + id_profil);
+
         // fullname check
         //---------------
 
@@ -287,15 +289,24 @@ class UserProfil {
         // Creation short number ?
         if(profil.hasOwnProperty(CODE_CELLPHONE) && (!profil.hasOwnProperty(CODE_SHORT_CELLPHONE))){
             var new_value = get_short_number_from_classical_number(profil[CODE_CELLPHONE]["valueText"]);
-            console.info("[create_pivot_translated] Creating " + CODE_SHORT_CELLPHONE + " from " + CODE_CELLPHONE);
-            this.create_value_async(current_user, CODE_SHORT_CELLPHONE, new_value, id_profil, profil);
+            if(new_value != false){
+                console.info("[create_pivot_translated] Creating " + CODE_SHORT_CELLPHONE + " from " + CODE_CELLPHONE);
+                this.create_value_async(current_user, CODE_SHORT_CELLPHONE, new_value, id_profil, profil);
+            }else{
+                console.warn("[create_pivot_translated] Cannot create short cellphone number.")
+            }
         }
 
         // Creation classical number ?
         if(profil.hasOwnProperty(CODE_SHORT_CELLPHONE) && (!profil.hasOwnProperty(CODE_CELLPHONE))){
             var new_value = get_classical_number_from_short(profil[CODE_SHORT_CELLPHONE]["valueText"]);
-            console.info("[create_pivot_translated] Creating " + CODE_CELLPHONE + " from " + CODE_SHORT_CELLPHONE);
-            this.create_value_async(current_user, CODE_CELLPHONE, new_value, id_profil, profil)
+            if(new_value != false){
+                console.info("[create_pivot_translated] Creating " + CODE_CELLPHONE + " from " + CODE_SHORT_CELLPHONE);
+                this.create_value_async(current_user, CODE_CELLPHONE, new_value, id_profil, profil)
+            }else{
+                console.warn("[create_pivot_translated] Cannot create classical cellphone number.")
+            }
+            
         }
 
         // Creation full number ?
