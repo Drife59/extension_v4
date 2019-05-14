@@ -794,7 +794,7 @@ class UserProfil {
         //For each pivot, create value in back
         for(var pivot in profil){
             if(liste_pivots.includes(pivot)){
-                this.create_value_async(current_user, pivot, profil[pivot]["valueText"], defaut_profil_id, profil)
+                this.create_value_async(current_user, pivot, profil[pivot]["valueText"], defaut_profil_id, defaut_profil)
             }
         }
 
