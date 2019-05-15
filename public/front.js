@@ -58,7 +58,7 @@ window.addEventListener('unload', function () {
     var pivot_value_page = create_pivot_value_from_page();
     console.info("Pivot-value from previous page: " + JSON.stringify(pivot_value_page, null,4));
 
-    var minimum_profil = profil_db.has_minimum_attribute(pivot_value_page);
+    var minimum_profil = has_minimum_attribute(pivot_value_page);
 
     //form content is suitable to create a profil
     if(minimum_profil == true){
