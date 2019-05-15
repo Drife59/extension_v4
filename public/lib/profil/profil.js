@@ -10,15 +10,6 @@ Define object to manage user profil
 */
 
 
-//Endpoint config 
-var url_all_profil = endpoint_back + "user/{email}/profils";
-var url_profil = endpoint_back + "user/{email}/profil/{profilId}";
-var url_create_profil = endpoint_back + "user/{email}/profil/{profilName}";
-var url_update_weight = endpoint_back + "user/{email}/profil/{profilId}/weight/{weight}";
-var url_create_value_v6 = endpoint_back + "user/{email}/pivot/{pivot_name}/value/{value_text}?profil_id={profil_id}";
-var url_all_values = endpoint_back + "user/{email}/values_with_profil";
-
-
 
 /*
 The content of an object Profil would be as the following:
@@ -170,7 +161,7 @@ class UserProfil {
 
         for(var i = 0 ; i < list_id_delete.length ; i++ ){
             delete this.profil_values[list_id_delete[i]];
-            this.xhttp_delete_profil(this.current_user, list_id_delete[i]);
+            xhttp_delete_profil(this.current_user, list_id_delete[i]);
             console.info("[delete_too_many_profil]: Deleted profil " + list_id_delete[i]);
             this.set_profil_storage();
         }
@@ -185,7 +176,7 @@ class UserProfil {
             //If profil is too weak, delete it
             if(new_weight < minimum_weight_profil){
                 delete this.profil_values[profil_key];
-                this.xhttp_delete_profil(this.current_user, profil_key);
+                xhttp_delete_profil(this.current_user, profil_key);
                 console.debug("[decrease_delete_profil]: Deleted profil " + profil_key + " which has weight too low: " + new_weight);
                 this.set_profil_storage();
                 continue;
@@ -207,58 +198,19 @@ class UserProfil {
     //Update all weight in back
     update_all_weight_in_back(){
         for(var profil_id in this.profil_values){
-            this.xhttp_update_weight(this.current_user, profil_id, this.profil_values[profil_id]["weight"]);
+            xhttp_profil_update_weight(this.current_user, profil_id, this.profil_values[profil_id]["weight"]);
         }
     }
 
-    //Check that the cellphone number is properly formatted 
-    sanitize_new_user_value(pivot_code, new_value){
-        if(pivot_code == CODE_CELLPHONE){
-            ///If we made a mistake by putting a short cellphone number 
-            //in classical cellphone field, correct it.
-            if(new_value.length == 9){
-                new_value = "0" + new_value;
-                console.info("new_value was corrected, detected a short cellphone number in classical cellphone field.");
-                console.info("Adding a 0 to create \"classical\" cellphone number, final new value: " + new_value);
-            }
-        }
-
-        if(pivot_code == CODE_SHORT_CELLPHONE){
-            ///If we made a mistake by putting a short cellphone number 
-            //in classical cellphone field, correct it.
-            if(new_value.length == 10){
-                new_value = new_value.slice(1);
-                console.info("new_value was corrected, detected a classical cellphone number in short cellphone field.");
-                console.info("Removing 0 to create \"short\" number, final new value: " + new_value);
-            }
-        }
-
-        //Add a zero if day or month has been entered without this zero
-        if(pivot_code == CODE_DAY_BIRTH || pivot_code == CODE_MONTH_BIRTH){
-            if( new_value.length == 1){
-                console.info("Adding '0' beside new value: " + new_value + " for pivot " + pivot_code);
-                new_value = "0" + new_value;
-            }
-        }
-
-        if(pivot_code == CODE_YEAR_BIRTH){
-            if( new_value.length == 2){
-                console.info("Adding '19' beside new value: " + new_value + " for pivot " + pivot_code);
-                new_value = "19" + new_value;
-            }
-        }
-
-        return new_value;
-    }
 
     //Create a value on a profil, async
     create_value_async(user, pivot_code, new_value, id_profil, profil){
 
-        new_value = this.sanitize_new_user_value(pivot_code, new_value);
+        new_value = sanitize_new_user_value(pivot_code, new_value);
 
         var current_obj = this;
 
-        var xhttp_create_value = this.xhttp_create_profil_value_user(user, pivot_code, new_value, id_profil);
+        var xhttp_create_value = xhttp_create_profil_value_user(user, pivot_code, new_value, id_profil);
         xhttp_create_value.onreadystatechange = function () {
             if (xhttp_create_value.readyState == 4 && xhttp_create_value.status == 200) {
                 var data = JSON.parse(xhttp_create_value.responseText);
@@ -391,89 +343,6 @@ class UserProfil {
 
     }
 
-    // ############
-    // RAW API CALL
-    // ############
-
-    // Pure profil API
-    // ---------------
-
-    xhttp_get_profils(email){
-        var xhttp_back_api = new XMLHttpRequest();
-        var url_final = url_all_profil.replace("{email}", email);
-    
-        xhttp_back_api.open("GET", url_final, true);
-        xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp_back_api.send();
-        return xhttp_back_api;
-    }
-    
-    xhttp_create_profil(email, profil_name){
-        var xhttp_back_api = new XMLHttpRequest();
-        var url_final = url_create_profil.replace("{email}", email)
-                                         .replace("{profilName}", profil_name);
-    
-        xhttp_back_api.open("POST", url_final, true);
-        xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp_back_api.send();
-        return xhttp_back_api;
-    }
-
-    xhttp_create_profil_value_user(email, pivot, value, profil_id){
-        var xhttp_back_api = new XMLHttpRequest();
-        //Don't forget to capitalize user value, and encode it
-        var url_final = url_create_value_v6.replace("{email}", email)
-                                        .replace("{pivot_name}", pivot)
-                                        .replace("{value_text}", encodeURIComponent(value.capitalize()))
-                                        .replace("{profil_id}", profil_id);
-        xhttp_back_api.open("POST", url_final, true);
-        xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp_back_api.send();
-        return xhttp_back_api;
-    }
-        
-
-    xhttp_update_weight(email, profil_id, new_weight){
-        var xhttp_back_api = new XMLHttpRequest();
-        var url_final = url_update_weight.replace("{email}", email)
-                                         .replace("{profilId}", profil_id)
-                                         .replace("{weight}", new_weight);
-
-        xhttp_back_api.open("PUT", url_final, true);
-        xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp_back_api.send();
-        return xhttp_back_api;
-    }
-
-
-    
-    xhttp_delete_profil(email, profil_id){
-        var xhttp_back_api = new XMLHttpRequest();
-        var url_final = url_profil.replace("{email}", email)
-                                      .replace("{profilId}", profil_id);
-    
-        xhttp_back_api.open("DELETE", url_final, true);
-        xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp_back_api.send();
-        return xhttp_back_api;
-    }
-    
-    // User value API
-    // --------------
-    
-    
-    //Return all values in a flat form
-    xhttp_all_values_with_profil(email){
-        var xhttp_back_api = new XMLHttpRequest();
-        var url_final = url_all_values.replace("{email}", email);
-    
-        console.debug("Final url: " + url_final);
-        xhttp_back_api.open("GET", url_final, true);
-        xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp_back_api.send();
-        return xhttp_back_api;
-    }
-
     //This is async because we need to create the value id from back
     async fetch_create_profil_value_user(email, pivot, value, profil_id){
         //Don't forget to capitalize user value
@@ -548,7 +417,7 @@ class UserProfil {
 
     async add_value_to_profil(email, pivot, value_text, profil_id, callback){
 
-        value_text = this.sanitize_new_user_value(pivot, value_text);
+        value_text = sanitize_new_user_value(pivot, value_text);
 
         var user_value_back = await this.fetch_create_profil_value_user(email, pivot, value_text, profil_id);
         console.debug("user value created from back: " + JSON.stringify(user_value_back, null, 4));
@@ -762,22 +631,7 @@ class UserProfil {
         return false;
     }
 
-    //Check if the profil sent as parameter is eligible to creation 
-    has_minimum_attribute(profil_test){
-        if(Object.keys(profil_test).length < 3){
-            return false;
-        }
-
-        //Check each required key is present in pivot
-        for(var i in liste_pivot_minimum_profil){
-            var pivot = liste_pivot_minimum_profil[i];
-            if( !(pivot in profil_test) ){
-                console.info("[has_minimum_attribute] Missing pivot " + pivot + " cannot create profil");
-                return false;
-            }
-        }
-        return true;
-    }
+    
 
     //Add only in front a fake profil, which need to be created 
     //in back later on.
@@ -843,7 +697,7 @@ class UserProfil {
         var current_obj = this;
 
         //First, create a profil 
-        var xhttp = this.xhttp_create_profil(current_user, profil_name);
+        var xhttp = xhttp_create_profil(current_user, profil_name);
 
         //Profil has been created in back
         xhttp.onreadystatechange = function () {
@@ -862,8 +716,8 @@ class UserProfil {
                 //For each pivot, create value in back
                 for(var pivot in new_profil){
                     if(liste_pivots.includes(pivot)){
-                        new_profil[pivot]["valueText"] = current_obj.sanitize_new_user_value(pivot, new_profil[pivot]["valueText"]);
-                        xhttp_user_value[pivot] = current_obj.xhttp_create_profil_value_user(current_user, pivot, new_profil[pivot]["valueText"], new_profil_id);
+                        new_profil[pivot]["valueText"] = sanitize_new_user_value(pivot, new_profil[pivot]["valueText"]);
+                        xhttp_user_value[pivot] = xhttp_create_profil_value_user(current_user, pivot, new_profil[pivot]["valueText"], new_profil_id);
                     }
                 }
 
@@ -904,84 +758,6 @@ class UserProfil {
                     }
                 }, 6000);
             }
-        }
-    }
-}
-
-/*Create a fake profil from page.
-input object: 
-{
-    pivot1: value,
-    pivot2: value,
-    ...
-    pivotn: value
-}
-
-return a unique profil, like the following:
-{
-    "profilName": "profil from page",
-    "weight": 1,
-    "first_name": {
-        "userValueId": 0,
-        "valueText": "Julien"
-    },
-    "family_name": {
-        "userValueId": 0,
-        "valueText": "Derville"
-    },
-    "postal_code": {
-        "userValueId": 0,
-        "valueText": "59000"
-    }
-}
-
-This profil is special, as it does not exist in back.
-We "mark" it so it can later on be created in back, with proper id.
-For now, all ids are faked.
-*/
-function create_profil_from_page(pivot_value_page){
-    var fake_profil = {}
-    fake_profil["profilName"] = "profil from page";
-    fake_profil["weight"] = 1;
-
-    for(var pivot in pivot_value_page){
-        //if the value is null, you should not collect it to create the profil...
-        if(pivot_value_page[pivot] == "" || pivot_value_page[pivot] == " " || pivot_value_page[pivot] == null){
-            continue;
-        }
-        var obj_user_value = {};
-        obj_user_value["userValueId"] = 0;
-        obj_user_value["valueText"] = pivot_value_page[pivot];
-        fake_profil[pivot] = obj_user_value;
-    }
-
-    console.info("Fake profil from page: " + JSON.stringify(fake_profil, null, 4));
-    return fake_profil;
-}
-
-function init_new_profil(user){
-    console.info("[init_new_profil] Creating a new empty user profil DB for: " + user);
-
-    profil_db = new UserProfil(user);
-
-    var xhttp_profil = profil_db.xhttp_create_profil(user, "defaut_profil");
-
-    //Profil has been created in back
-    xhttp_profil.onreadystatechange = function () {
-        if (xhttp_profil.readyState == 4 && xhttp_profil.status == 200) {
-            var data = JSON.parse(xhttp_profil.responseText);
-
-            //We can load it in front 
-            load_profils_from_back(user, true);
-
-            //We need to wait for the back result
-            setTimeout(function () {
-                //By default, create the main email pivot / user value
-                //We need the send the ref of profil_db obj because it will be lose due to "setTimeout"
-                profil_db.add_value_to_profil(user, CODE_MAIN_EMAIL, user, data["profilId"], init_event_list);
-                console.info("[init_new_profil] Adding " + CODE_MAIN_EMAIL + " to default profil");
-            }, timeout_profil_creation);
-            
         }
     }
 }
