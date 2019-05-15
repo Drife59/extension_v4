@@ -97,10 +97,11 @@ class UserProfil {
     //Save in storage current UserProfil
     set_profil_storage(){
         //chrome.storage.sync.set({"current_user": this.current_user});
+        console.info("Saving in cache the following profil object: " + JSON.stringify(this.profil_values, null, 4));
         chrome.storage.sync.set({"profil_user_values": JSON.stringify(this.profil_values)}), function(){
             console.info("Set profil user db in google storage");
         };
-        console.info("Set profil user db in google storage.");
+        console.debug("Set profil user db in google storage.");
     }
 
     //Load UserProfil object from local storage
@@ -108,6 +109,7 @@ class UserProfil {
         //To handle the change of context
         var current_obj = this;
         chrome.storage.sync.get("profil_user_values", function (data) {
+
             if (typeof data.profil_user_values !== 'undefined') {
                 current_obj.profil_values = JSON.parse(data.profil_user_values);
                 console.info("[get_profil_storage]Loaded profil user value from cache: " + 
@@ -254,6 +256,8 @@ class UserProfil {
 
         new_value = this.sanitize_new_user_value(pivot_code, new_value);
 
+        var current_obj = this;
+
         var xhttp_create_value = this.xhttp_create_profil_value_user(user, pivot_code, new_value, id_profil);
         xhttp_create_value.onreadystatechange = function () {
             if (xhttp_create_value.readyState == 4 && xhttp_create_value.status == 200) {
@@ -261,8 +265,10 @@ class UserProfil {
                 profil[pivot_code] = {"userValueId": data["userValueId"], "valueText": new_value};
                 console.info("Following value added for profil: " + id_profil + " on pivot: " + pivot_code);
                 console.info(JSON.stringify(profil[pivot_code], null, 4));
+                current_obj.profil_values[id_profil] = profil;
             }
         }
+        
     }
 
     /*Create the pivot translated from other pivot.*/
@@ -800,6 +806,7 @@ class UserProfil {
 
         //When we are sure all requests has been sent to back, delete temps profil and save cache
         setTimeout(() => {
+            this.profil_values[defaut_profil_id] = defaut_profil;
             delete this.profil_values["0"];
             this.set_profil_storage();
         }, 5000);
@@ -821,7 +828,7 @@ class UserProfil {
 
         //If there is only one profil, the defaut profil we complete it and don't create a new profil
         //Minus 1 because we don't want to count the default profil
-        if( (this.get_number_of_profil() -1) == 1){
+        if( (this.get_number_of_profil() -1) <= 1){
             console.info("There is only the defaut profil and the temp profil.");
             console.info("Adding the temp profil in default profil and don't create a new profil.");
             this.complete_default_profil(profil);
