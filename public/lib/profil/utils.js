@@ -123,6 +123,18 @@ function sanitize_new_user_value(pivot_code, new_value){
         }
     }
 
+    //For the civility, we need to do the mapping to the base value
+    if(pivot_code == CODE_CIVILITY){
+        if(mister_mapping.includes(new_value)){
+            console.info("Translate value " + new_value + " into " + base_value_mister);
+            new_value = base_value_mister;
+        }else if(madam_mapping.includes(new_value)){
+            console.info("Translate value " + new_value + " into " + base_value_madam);
+            new_value = base_value_madam;
+        }
+
+    }
+
     return new_value;
 }
 

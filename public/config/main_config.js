@@ -130,3 +130,25 @@ var weight_profil_filled_pivot_known = 25;
 //The weight to use when user fill manually a field which have a referent pivot
 var weight_manual_filling_pivot_known = 25;
 
+
+// ----------------------
+// civility configuration
+// ----------------------
+
+/* Note(BG): the civility is not consistent accross website.
+We need 2 dedicated algoritm to make the mapping, both for 
+collection and restitution of civility.
+The mapping below define values used by these algoritm.
+*/
+
+//This is the value in DB
+base_value_mister = "Mr";
+mister_mapping = ["Mr", "Mr.", "M.", "mister", "Mister", "monsieur", "Monsieur"];
+
+//This is the value in DB
+base_value_madam = "Mme";
+madam_mapping = ["Mme", "MMe", "Mme.", "MMe.", "madam", "Madam", "madame", "Madame", 
+                 "Mlle", "mlle", "mle", "Mlle.", "mlle.", "mle.", "Mademoiselle", "mademoiselle", "Mademoiselle.", "Mademoiselle."];
+
+
+
