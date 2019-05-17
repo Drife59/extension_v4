@@ -133,6 +133,13 @@ function fill_value(field, user_value){
                     console.info("Found a match for value " + user_value + " ! Matching select with index " + i_opt + " in option list");
                     break;
             }
+
+            //special case for civility. We need to check the mapping defined in conf
+            if( mister_mapping.includes(current_text) || madam_mapping.includes(current_text)){
+                field.selectedIndex = i_opt;
+                console.info("Found a civility match for value " + user_value + " ! Matching select with index " + i_opt + " in option list");
+                break;
+            }
         }
 	}
 }
