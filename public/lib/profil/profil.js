@@ -88,7 +88,7 @@ class UserProfil {
     //Save in storage current UserProfil
     set_profil_storage(){
         //chrome.storage.sync.set({"current_user": this.current_user});
-        console.info("Saving in cache the following profil object: " + JSON.stringify(this.profil_values, null, 4));
+        console.debug("Saving in cache the following profil object: " + JSON.stringify(this.profil_values, null, 4));
         chrome.storage.sync.set({"profil_user_values": JSON.stringify(this.profil_values)}), function(){
             console.info("Set profil user db in google storage");
         };
