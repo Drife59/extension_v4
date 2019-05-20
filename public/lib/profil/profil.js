@@ -680,10 +680,11 @@ class UserProfil {
         var profil_name = "profil-" + guid();
         var profil = this.profil_values["0"];
 
-        //If there is only one profil, the defaut profil we complete it and don't create a new profil
-        //Minus 1 because we don't want to count the default profil
-        if( (this.get_number_of_profil() -1) <= 1){
-            console.info("There is only the defaut profil and the temp profil.");
+        //If the defaut profil is empty, we need to fill it
+        var defaut_profil_id = this.get_default_profil_id();
+        
+        if( Object.keys(this.profil_values[defaut_profil_id]).length == 3){
+            console.info("The defaut profil was just created and is empty.");
             console.info("Adding the temp profil in default profil and don't create a new profil.");
             this.complete_default_profil(profil);
             return true;
