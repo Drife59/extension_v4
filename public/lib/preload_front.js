@@ -32,7 +32,7 @@ chrome.storage.sync.get("current_user", function (data) {
         console.info("Loading website db from back, creating key and executing heuristics");
         load_website_db_from_back(true);
 
-        load_profils_from_cache(data.current_user);
+        load_profils_from_back(data.current_user, true);
 
         //If the user is here, then the front db should also be here
         load_user_db_from_cache();
