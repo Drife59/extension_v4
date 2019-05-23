@@ -130,3 +130,24 @@ function getPosition(el) {
 		y: yPos
 	};
 }
+
+//Return the number of occurrence of the substring in string
+function occurrences_in_string(string, subString, allowOverlapping) {
+
+    string += "";
+    subString += "";
+    if (subString.length <= 0) return (string.length + 1);
+
+    var n = 0,
+        pos = 0,
+        step = allowOverlapping ? 1 : subString.length;
+
+    while (true) {
+        pos = string.indexOf(subString, pos);
+        if (pos >= 0) {
+            ++n;
+            pos += step;
+        } else break;
+    }
+    return n;
+}
