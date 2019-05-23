@@ -38,6 +38,7 @@
 		"lib/profil/utils.js",
 		"lib/profil/raw_api.js",
 		"lib/profil/graphical_profil.js",
+		"lib/login/graphical.js",
 		"lib/user_event.js",
 		"lib/fill_field.js",
 		"lib/preload_front.js"]

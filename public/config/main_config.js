@@ -156,7 +156,9 @@ madam_mapping = ["Mme", "MMe", "Mme.", "MMe.", "madam", "Madam", "madame", "Mada
 // ------------------------------
 
 /* This set up is to be use for login form detection.
-It pretty works like heuristics, using keywords to look for. */
+It pretty works like heuristics, using keywords to look for.
+CAREFUL: Include only word with lower case letter !
+*/
 
 //Will look url for these key word
 var url_keywords = ["login", "connexion", "signin"];
@@ -169,3 +171,6 @@ var field_login_keywords = ["email", "login", "e-mail", "authentication", "authe
 
 //Keywords to identify password
 var field_password_keywords = ["password"];
+
+//The number of keyword occurence needed to confirm that the form is a login form
+var keyword_occurence_needed = 2;
