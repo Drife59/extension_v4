@@ -2,7 +2,7 @@
 "manifest_version": 2,
   "name": "Autofill by Corail",
   "description": "Accurate, secure and private autofill that will make your life easier.",
-  "version": "6.1.0",
+  "version": "7.0",
   "author": "Made with love <3",
 
   "permissions": [
@@ -32,12 +32,12 @@
 		"lib/utils.js",
 		"lib/heuristics.js",
 		"front_db/back_management.js",
+		"front_db/user_db.js",
+		"front_db/website_db.js",
 		"lib/profil/profil.js",
 		"lib/profil/utils.js",
 		"lib/profil/raw_api.js",
-		"front_db/user_db.js",
-		"front_db/website_db.js",
-		"lib/graphical_profil.js",
+		"lib/profil/graphical_profil.js",
 		"lib/user_event.js",
 		"lib/fill_field.js",
 		"lib/preload_front.js"]
