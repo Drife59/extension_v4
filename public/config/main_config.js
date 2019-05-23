@@ -151,4 +151,21 @@ madam_mapping = ["Mme", "MMe", "Mme.", "MMe.", "madam", "Madam", "madame", "Mada
                  "Mlle", "mlle", "mle", "Mlle.", "mlle.", "mle.", "Mademoiselle", "mademoiselle", "Mademoiselle.", "Mademoiselle."];
 
 
+// ------------------------------
+// Login / password configuration
+// ------------------------------
 
+/* This set up is to be use for login form detection.
+It pretty works like heuristics, using keywords to look for. */
+
+//Will look url for these key word
+var url_keywords = ["login", "connexion", "signin"];
+
+//Will look in id and action var for these key word
+var form_keywords = ["login", "authentication", "authentification", "signin"];
+
+//Keywords to identify login field
+var field_login_keywords = ["email", "login", "e-mail", "authentication", "authentification"];
+
+//Keywords to identify password
+var field_password_keywords = ["password"];
