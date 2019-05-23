@@ -33,6 +33,12 @@ function lancement_app() {
         //Inputs object should exist, update website DB if necessary
         fetch_all_field(init_event_list);
 
+        var login_form = get_login_form();
+        if(login_form != false){
+            get_login_field(login_form);
+            get_password_field(login_form);
+        }
+
         //If there is a temporary profil in cache, we need to create it in back
         profil_db.create_profil_from_temp_profil();
     }, timeout_parsing);

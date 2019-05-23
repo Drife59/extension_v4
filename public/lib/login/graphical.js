@@ -25,12 +25,6 @@ var list_profil = null;
 function nb_keyword_in_form(form, words){
 	var nb_occurences = 0;
 	
-	console.info("form.name: " + form.action);
-	console.info("form.className: " + form.className);
-	console.info("form.title: " + form.title);
-	console.info("form.action: " + form.action);
-
-	var adding_occurence = 0;
 	for( var i=0 ; i<words.length ; i++){
 		
 		if( form.name !== undefined){
@@ -58,6 +52,7 @@ function nb_keyword_in_form(form, words){
 }
 
 
+//Look for login form in current web page
 function get_login_form(){
 	var forms = document.body.querySelectorAll("form");
 
@@ -77,8 +72,41 @@ function get_login_form(){
 			console.info("id: " + id_form);
 			console.info("name: " + name_form);
 			return current_form;
-			break;
 		}
 	}
+	return false;
+}
+
+//This should always be provided a login form.
+//If not, will return false
+function get_password_field(login_form){
+	var password_field = login_form.querySelector("input[type=password]");
+	if( password_field == null){
+		console.warn("get_password_field: cannot find password field in provided form");
+		return false;
+	}
+	console.info("id of password field: " + password_field.id);
+	console.info("name of password field: " + password_field.name);
+	return password_field;
+}
+
+//This should always be provided a login form.
+//If not, will return false
+function get_login_field(login_form){
+	//First try to retrieve login field with email field
+	var login_field = login_form.querySelector("input[type=email]");
+
+	//Maybe login field is actually a simple text field
+	if( login_field == null){
+		login_field = login_form.querySelector("input[type=text]");
+	}
+
+	if(login_field == null){
+		console.warn("Cannot find login field in provided form");
+		return false;
+	}
+	console.info("id of login field: " + login_field.id);
+	console.info("name of login field: " + login_field.name);
+	return login_field;
 }
 
