@@ -17,7 +17,18 @@
   "browser_action": {
     "default_icon": "logo_corail.png",
     "default_popup": "index.html"
-  },
+	},
+	"background": {
+		"scripts": 
+			[
+				"config/main_config.js",
+				"config/pivot_config.js",
+				"lib/utils.js",
+				"lib/profil/raw_api.js",
+			  "lib/profil/profil.js",
+			  "front_db/back_management.js",
+			  "lib/background.js"]
+	},
   "content_scripts": [
     {
 		"matches": ["<all_urls>"],
