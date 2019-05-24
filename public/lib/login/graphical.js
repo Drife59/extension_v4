@@ -132,8 +132,8 @@ function research_login_form(){
 			console.info("id: " + current_form.id);
 			console.info("name: " + current_form.name);
 
-			current_login.value = "moncul";
-			current_password.value = "mabite";
+			//current_login.value = "moncul";
+			//current_password.value = "mabite";
 			return current_form;
 		}
 	}
