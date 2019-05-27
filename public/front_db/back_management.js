@@ -132,6 +132,7 @@ function load_profils_from_back(email, save_in_cache){
                 if(save_in_cache == true){
                     profil_db.set_profil_storage();
                 }
+                
             }
         }else if(xhttp_get_profil.readyState == 4 && xhttp_get_profil.status != 200){
             console.warn("[load_profils]: loading profils for " + email + " failed.");
@@ -153,6 +154,7 @@ function load_profils_from_back(email, save_in_cache){
             console.warn("[load_profils]: loading profil values for " + email + " failed.");
         }
     }
+    return profil_db;
 }
 
 function load_profils_from_cache(email){

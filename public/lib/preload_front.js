@@ -20,6 +20,21 @@ var app_launched = false;
 init_domaine();
 
 
+chrome.runtime.onConnect.addListener(function(port) {
+    console.info("[preload_front] Got connection from background");
+    console.assert(port.name == "background_connect");
+    port.onMessage.addListener(function(msg) {
+        if (msg.profil_values !== undefined){
+            console.info("Received profil values objects from background: ");
+            console.info(JSON.stringify(request.profil_values, null, 4));
+            //sendResponse({farewell: "I got the profil values :)"});
+
+            //NOTE(BG): Here update the profil DB with value from background
+        }
+    });
+});
+
+
 //2) Preload user from cache, and it's front DB
 chrome.storage.sync.get("current_user", function (data) {
 
@@ -31,6 +46,11 @@ chrome.storage.sync.get("current_user", function (data) {
         //3) Preload website front DB
         console.info("Loading website db from back, creating key and executing heuristics");
         load_website_db_from_back(true);
+
+        //Sending a message to the background script
+        chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
+            console.info("Received from background script: " + response.farewell);
+        });
 
         load_profils_from_back(data.current_user, true);
 
