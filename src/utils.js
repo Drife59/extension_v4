@@ -1,4 +1,11 @@
+/*
+Projet Corail
+Auteur: Benjamin GRASSART
+Année: 2019
 
+utils.js
+
+*/
 
 //Validate syntaxically an email
 export function validateEmail(email) {

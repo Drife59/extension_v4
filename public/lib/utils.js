@@ -2,14 +2,13 @@
 Projet Corail
 Auteur: Benjamin GRASSART
 Année: 2019
+
 utils.js
 
 Défini des fonctions utilitaires transversales.
 Ce fichier est à importer avant toute fonctionnalitée.
 Cf config manifest.json
 */
-
-
 
 //Remplace tout les "." et les "$" par des underscores
 function securise_cle(cle){
