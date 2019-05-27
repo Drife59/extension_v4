@@ -8,28 +8,39 @@ front.js
 Entry point module when loading a webpage.
 */
 
-//Permet de savoir si l'app est déjà lancée
-//Evite le multiple lancement si plusieurs évènements sont déclenchés
-//par la page fille
-var app_launched = false;
-
 
 //Don't wait for DOM loading for the following action
 
-
 init_domaine();
 
-
+//Add a listener to update profil DB if background requests it
 chrome.runtime.onConnect.addListener(function(port) {
     console.info("[preload_front] Got connection from background");
     console.assert(port.name == "background_connect");
     port.onMessage.addListener(function(msg) {
         if (msg.profil_values !== undefined){
             console.info("Received profil values objects from background: ");
-            console.info(JSON.stringify(request.profil_values, null, 4));
-            //sendResponse({farewell: "I got the profil values :)"});
+            console.info(JSON.stringify(msg.profil_values, null, 4));
 
             //NOTE(BG): Here update the profil DB with value from background
+            if(current_user != null){
+                if(profil_db == null){
+                    console.info("Profil DB does not exist, creating it from values send by background");
+                    profil_db = new UserProfil(current_user, msg.profil_values);
+                }
+                //profil DB already exist, just set new values
+                else{
+                    console.info("Profil DB already exist, updating values and user");
+                    profil_db.current_user  = current_user;
+                    profil_db.profil_values = msg.profil_values; 
+                }
+
+                //After having update the profil DB object, we need to rebuild the display
+                init_event_list();
+            }
+            else{
+                console.warn("[preload front] Current user does not exist, cannot update profil DB");
+            }
         }
     });
 });
@@ -47,14 +58,17 @@ chrome.storage.sync.get("current_user", function (data) {
         console.info("Loading website db from back, creating key and executing heuristics");
         load_website_db_from_back(true);
 
-        //Sending a message to the background script
-        chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
-            console.info("Received from background script: " + response.farewell);
+        //Get current profil DB content from background script
+        chrome.runtime.sendMessage({action: ACTION_GET_PROFIL_BDD}, function(response) {
+            console.info("Profil value received from background: " + JSON.stringify(response.profil_values,null, 4));
+            console.info("Initializing profil with received profil values object from background");
+            profil_db = new UserProfil(current_user, response.profil_values);
+
+            //Here, the front script should take care of building the list
+            //We are in the preload script, after all :)
         });
 
-        load_profils_from_back(data.current_user, true);
-
-        //If the user is here, then the front db should also be here
+        //If the user is here, then the legacy profilless front db should also be here
         load_user_db_from_cache();
     }else{
         console.warn("Cannot find user, please log in.");

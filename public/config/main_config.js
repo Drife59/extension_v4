@@ -33,7 +33,7 @@ var separateur_cle = "_";
 var override_field_with_value = true;
 
 //define domain where software should not be executed
-var skip_domain = ["www.corail.me", "corail.me", "localhost", "127.0.0.1"]; 
+var skip_domain = ["www.corail.me", "corail.me", "localhost", "127.0.0.1"];
 
 // --------------
 // Log parameters
@@ -55,6 +55,18 @@ var endpoint_back = "http://localhost:1665/"
 
 //Serveur C# integ V4
 //var endpoint_back = "https://corail.me:2001/"
+
+
+// -------------------------------
+// App communication configuration
+// -------------------------------
+
+/* Define the different keyword to communicate
+   between the 3 parts of the application: content script, background script and app
+*/ 
+
+//I want the user profil values DB
+var ACTION_GET_PROFIL_BDD = "getProfilBDD";
 
 
 // ----------------------------
