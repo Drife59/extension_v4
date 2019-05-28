@@ -53,6 +53,7 @@ chrome.storage.sync.get("current_user", function (data) {
         //set global var current user for all app
         console.info("[Front launch] Loaded current user from cache: " + data.current_user);
         current_user = data.current_user;
+        console.info("Profil DB initialisation: requesting content from background");
 
         //3) Preload website front DB
         console.info("Loading website db from back, creating key and executing heuristics");
