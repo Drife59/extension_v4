@@ -78,6 +78,4 @@ window.addEventListener('unload', function () {
     }else{
         console.info("profil from form does not meet the minimum requirement");
     }
-
-    profil_db.set_profil_storage();
 });

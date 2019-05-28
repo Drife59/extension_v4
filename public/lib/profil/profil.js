@@ -654,7 +654,7 @@ class UserProfil {
     add_fake_profil_front_only(profil){
         console.info("Saving fake profil in front");
         this.profil_values["0"] = profil;
-        this.set_profil_storage();
+        this.set_profil_background();
     }
 
     //Add in defaut profil all user values in input profil
