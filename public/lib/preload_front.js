@@ -15,7 +15,7 @@ init_domaine();
 
 //Add a listener to update profil DB if background requests it
 chrome.runtime.onConnect.addListener(function(port) {
-    console.info("[preload_front] Got connection from background");
+    console.info("[preload_front] Received connection request from background");
     console.assert(port.name == "background_connect");
     port.onMessage.addListener(function(msg) {
         if (msg.profil_values !== undefined){

@@ -95,6 +95,19 @@ class UserProfil {
         console.debug("Set profil user db in google storage.");
     }
 
+    // Send to the background the current state of profil
+    set_profil_background(){
+        var msg = {
+            action: ACTION_SET_PROFIL_BDD,
+            profil_values: this.profil_values
+        }
+        chrome.runtime.sendMessage(msg, function(response) {
+            if(response.code == CODE_RECEPTION_OK){
+                console.info("[set_profil_background] Current profil DB was sent & received by background");
+            }
+        });
+    }
+
     //Load UserProfil object from local storage
     get_profil_storage(load_back_if_empty){
         //To handle the change of context
@@ -163,7 +176,7 @@ class UserProfil {
             delete this.profil_values[list_id_delete[i]];
             xhttp_delete_profil(this.current_user, list_id_delete[i]);
             console.info("[delete_too_many_profil]: Deleted profil " + list_id_delete[i]);
-            this.set_profil_storage();
+            this.set_profil_background();
         }
     }
 
@@ -178,11 +191,11 @@ class UserProfil {
                 delete this.profil_values[profil_key];
                 xhttp_delete_profil(this.current_user, profil_key);
                 console.debug("[decrease_delete_profil]: Deleted profil " + profil_key + " which has weight too low: " + new_weight);
-                this.set_profil_storage();
+                this.set_profil_background();
                 continue;
             }
             this.profil_values[profil_key]["weight"] = new_weight;
-            this.set_profil_storage();
+            this.set_profil_background();
         }
 
         //If after "classical" delete on weight, there are still too many profil,
@@ -218,6 +231,9 @@ class UserProfil {
                 console.info("Following value added for profil: " + id_profil + " on pivot: " + pivot_code);
                 console.info(JSON.stringify(profil[pivot_code], null, 4));
                 current_obj.profil_values[id_profil] = profil;
+
+                //After user creation from back, don't forget to update back the background
+                current_obj.set_profil_background();
             }
         }
         
@@ -338,9 +354,6 @@ class UserProfil {
                 console.info("[create_pivot_translated] Creating " + CODE_FULL_CELLPHONE + " from " + CODE_INDICATIVE + " and " + CODE_SHORT_CELLPHONE);
                 this.create_value_async(current_user, CODE_FULL_CELLPHONE, new_value, id_profil, profil);
         }
-
-        this.set_profil_storage();
-
     }
 
     //This is async because we need to create the value id from back
@@ -429,6 +442,9 @@ class UserProfil {
 
         console.info("The following user value was added to profil " + profil_id + 
                      " on pivot " + pivot + " : " + JSON.stringify(new_user_value, null, 4));
+
+        // After user value creation, we need to update background
+        this.set_profil_background();
 
         //Optional callback to execute after value creation
         if(callback != undefined){
@@ -662,7 +678,7 @@ class UserProfil {
         setTimeout(() => {
             this.profil_values[defaut_profil_id] = defaut_profil;
             delete this.profil_values["0"];
-            this.set_profil_storage();
+            this.set_profil_background();
         }, 5000);
 
     }
@@ -752,7 +768,7 @@ class UserProfil {
                     console.info("Profil id " + new_profil_id + " is now a regular profil");
                     current_obj.profil_values[new_profil_id] = new_profil;
                     delete current_obj.profil_values["0"];
-                    current_obj.set_profil_storage();
+                    current_obj.set_profil_background();
 
                     if(callback){
                         callback();

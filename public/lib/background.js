@@ -14,11 +14,21 @@ var background_profil_db = null;
 //Wait for messages from the content scripts
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-      console.log(sender.tab ?
-                  " Got request from tab id:" + sender.tab.url :
-                  "from the extension");
-      if (request.action == ACTION_GET_PROFIL_BDD)
-        sendResponse({"profil_values": background_profil_db.profil_values});
+        console.log(sender.tab ?
+            " Got request from tab id:" + sender.tab.url :
+            "from the extension");
+    if (request.action == ACTION_GET_PROFIL_BDD){
+        sendResponse({
+            "code": CODE_RECEPTION_OK,
+            "profil_values": background_profil_db.profil_values
+        });
+    }
+    else if( request.action == ACTION_SET_PROFIL_BDD){
+        console.info("[background] Got request to update profil DB, with following content: ");
+        console.info(JSON.stringify(request.profil_values, null, 4));
+        background_profil_db.profil_values = request.profil_values;
+        sendResponse({"code": CODE_RECEPTION_OK});
+    }
 });
 
 

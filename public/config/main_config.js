@@ -63,10 +63,15 @@ var endpoint_back = "http://localhost:1665/"
 
 /* Define the different keyword to communicate
    between the 3 parts of the application: content script, background script and app
-*/ 
+*/
+
+var CODE_RECEPTION_OK = "OK";
 
 //I want the user profil values DB
 var ACTION_GET_PROFIL_BDD = "getProfilBDD";
+
+//I want to update the profil DB for everybody
+var ACTION_SET_PROFIL_BDD = "setProfilBDD";
 
 
 // ----------------------------
