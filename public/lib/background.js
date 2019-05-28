@@ -53,13 +53,13 @@ chrome.storage.sync.get("current_user", function (data) {
             });
 
             /*
-            Note(BG): 
-
-            Following event to code:
-            
+            Note(BG): Here there are 2 events I was wondering if I should add it: 
+                - onCreated: Fired when a tab is created.
                 - onUpdated: Fired when a tab is updated.
-                - onCreated: Fired when a tab is created. Note that the tab's URL may not be set at the time this event is fired, but you can listen to onUpdated events so as to be notified when a URL is set.
 
+            However, I finnally decided to not add it.
+            Indeed, the main content script when loading is requesting the current state of the DB,
+            therefore we should not need to manage these events.
             */
 
 
