@@ -45,9 +45,8 @@ chrome.storage.sync.get("current_user", function (data) {
 
         //We wait for the request from back to be finished before initiate object to send to content scripts
         setTimeout( function(){
-            var loaded_profil_values = background_profil_db.profil_values
             console.info("[background.js] The profil values loaded from back are as follow: ");
-            console.info(JSON.stringify(loaded_profil_values, null, 4));
+            console.info(JSON.stringify(background_profil_db.profil_values, null, 4));
 
 
             //Connect the content scripts
@@ -59,7 +58,7 @@ chrome.storage.sync.get("current_user", function (data) {
                 console.log(port.name);
 
                 console.info("Sending current profil values db content");
-                port.postMessage({"profil_values": loaded_profil_values});
+                port.postMessage({"profil_values": background_profil_db.profil_values});
             });
 
             /*
