@@ -113,7 +113,7 @@ function load_website_db_from_cache(){
     console.info("[load_website_db_from_cache] Loaded website db from cache");
 }
 
-function load_profils_from_back(email, save_in_cache){
+function load_profils_from_back(email){
     console.info("[load_profils_from_back] Loading profil for user " + email + ", with saving in cache option: " + save_in_cache);
     profil_db = new UserProfil(email);
     var xhttp_get_profil = xhttp_get_profils(email);
@@ -129,10 +129,6 @@ function load_profils_from_back(email, save_in_cache){
             if (xhttp_get_values.readyState == 4 && xhttp_get_values.status == 200) {
                 console.info("[load_profils]: profils and values were loaded from back, starting building profil DB");
                 profil_db.build_profil_from_json(json_profil, json_values);
-                if(save_in_cache == true){
-                    profil_db.set_profil_storage();
-                }
-                
             }
         }else if(xhttp_get_profil.readyState == 4 && xhttp_get_profil.status != 200){
             console.warn("[load_profils]: loading profils for " + email + " failed.");
@@ -146,9 +142,6 @@ function load_profils_from_back(email, save_in_cache){
             if (xhttp_get_profil.readyState == 4 && xhttp_get_profil.status == 200) {
                 console.info("[load_profils]: profils and values were loaded from back, starting building profil DB");
                 profil_db.build_profil_from_json(json_profil, json_values);
-                if(save_in_cache == true){
-                    profil_db.set_profil_storage();
-                }
             }
         }else if(xhttp_get_values.readyState == 4 && xhttp_get_values.status != 200){
             console.warn("[load_profils]: loading profil values for " + email + " failed.");

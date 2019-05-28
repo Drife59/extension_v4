@@ -85,16 +85,6 @@ class UserProfil {
         console.warn("Could not find defaut profil");
     }
 
-    //Save in storage current UserProfil
-    set_profil_storage(){
-        //chrome.storage.sync.set({"current_user": this.current_user});
-        console.debug("Saving in cache the following profil object: " + JSON.stringify(this.profil_values, null, 4));
-        chrome.storage.sync.set({"profil_user_values": JSON.stringify(this.profil_values)}), function(){
-            console.info("Set profil user db in google storage");
-        };
-        console.debug("Set profil user db in google storage.");
-    }
-
     // Send to the background the current state of profil
     set_profil_background(){
         var msg = {
