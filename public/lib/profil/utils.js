@@ -154,3 +154,11 @@ function has_minimum_attribute(profil_test){
     }
     return true;
 }
+
+function set_user_content_script(user){
+    console.info("[set_user_content_script]: Setting user " + user + " for content scripts");
+    current_user = user;
+    chrome.storage.sync.set({current_user: user}, function() {
+        console.log('Google storage sync: current user => ' + user);
+    });
+}

@@ -71,6 +71,17 @@ class App extends Component {
         chrome.storage.sync.set({current_user: email}, function() {
             console.log('Storage sync: current user => ' + email);
         });
+
+        var str_code = "set_user_content_script(\"" + email + "\")";
+
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.executeScript(tabs[0].id, {
+                code: str_code
+            }, 
+            function(response) {
+            
+            });
+        });
     }
 
     getUser(){
