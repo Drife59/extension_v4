@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 
+import { config } from './config';
+
 export class Header extends Component {
 
     constructor(props){
@@ -33,6 +35,14 @@ export class Header extends Component {
             
                 });
             });
+
+            //Clear profil DB content of the background
+            chrome.runtime.sendMessage({action: config.ACTION_CLEAR_PROFIL_BDD}, function(response) {
+                if(response.code === config.CODE_RECEPTION_OK){
+                    console.info("Request to clear profil was received and process by background.");
+                }
+            });
+
         }, 100);
         this.props.logout();
     }

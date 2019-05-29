@@ -70,8 +70,11 @@ var CODE_RECEPTION_OK = "OK";
 //I want the user profil values DB
 var ACTION_GET_PROFIL_BDD = "getProfilBDD";
 
-//I want to update the profil DB for everybody
+//I want to update the profil DB for everytab
 var ACTION_SET_PROFIL_BDD = "setProfilBDD";
+
+//I want to clear the profil DB
+var ACTION_CLEAR_PROFIL_BDD = "clearProfilBDD";
 
 
 // ----------------------------
