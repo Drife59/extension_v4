@@ -27,7 +27,7 @@ export class Header extends Component {
             chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                 chrome.tabs.executeScript(tabs[0].id, {
                     code: "chrome.storage.sync.clear(); console.info(\"[Logout] Cleared all cache.\");" + 
-                        "unbind_inputs(); unbind_selects(); profil_id_chosen=null;"
+                        "unbind_inputs(); unbind_selects(); profil_id_chosen=null; current_user=null"
                 },
                 function(response) {
             
