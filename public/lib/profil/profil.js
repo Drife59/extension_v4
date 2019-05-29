@@ -415,7 +415,8 @@ class UserProfil {
             }
         }
 
-        console.info("User profil has been initiated with following content: " + JSON.stringify(this.profil_values, null,4));
+        console.info("[build_profil_from_json] User profil has been initiated with following content: " 
+            + JSON.stringify(this.profil_values, null,4));
     }
 
     async add_value_to_profil(email, pivot, value_text, profil_id, callback){
