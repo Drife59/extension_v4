@@ -35,6 +35,11 @@ chrome.runtime.onMessage.addListener(
         background_profil_db.current_user = null;
         sendResponse({"code": CODE_RECEPTION_OK});
     }
+    else if( request.action == ACTION_SEND_WEIGHT_PROFIL_BDD){
+        console.info("[background] Got request to send profil weight to backend");
+        background_profil_db.update_all_weight_in_back();
+        sendResponse({"code": CODE_RECEPTION_OK});
+    }
 });
 
 

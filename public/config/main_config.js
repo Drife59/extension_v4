@@ -76,6 +76,8 @@ var ACTION_SET_PROFIL_BDD = "setProfilBDD";
 //I want to clear the profil DB
 var ACTION_CLEAR_PROFIL_BDD = "clearProfilBDD";
 
+var ACTION_SEND_WEIGHT_PROFIL_BDD = "sendWeightProfilBDD";
+
 
 // ----------------------------
 // Key and values configuration

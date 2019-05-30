@@ -53,6 +53,16 @@ window.addEventListener('hashchange', function () {
 window.addEventListener('unload', function () {
     console.info("window.unload event");
 
+    //When quitting a tab, I want to send the updated weight.
+    //I do it from the background and not the content script, 
+    //because the content script is going to be deleted by brwser very soon
+    console.info("[unload event] Requesting background to update weight");
+    chrome.runtime.sendMessage({action: ACTION_SEND_WEIGHT_PROFIL_BDD}, function(response) {
+        if(response.code == CODE_RECEPTION_OK){
+            console.info("Request to update profil weight was received & processed by background");
+        }
+    });
+
     if(inputs == null){
         console.warn("[Unload Event] Inputs object (containing all inputs) does not exist. Abort check for new profil");
         return;
