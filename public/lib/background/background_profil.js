@@ -5,7 +5,9 @@ Année: 2019
 
 background.js
 
-Define functions to be executed in the background.
+Background management for profil interaction.
+Mainly save, maintain and retrieve profil DB for all tab.
+Manage some interaction with back-end. 
 */
 
 var background_profil_db = null;

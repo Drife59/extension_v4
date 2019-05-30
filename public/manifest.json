@@ -27,7 +27,7 @@
 				"lib/profil/raw_api.js",
 			  "lib/profil/profil.js",
 			  "front_db/back_management.js",
-				"lib/background.js"
+				"lib/background/background_profil.js"
 			]
 	},
   "content_scripts": [
