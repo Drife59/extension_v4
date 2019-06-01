@@ -18,124 +18,94 @@ var profil_validated = false;
 //We want this to be global so each function can access
 //Also, when using egvent you d'ont have to use "bind"
 //bind create many issues because it return a new function, therefore add / remove listenners become impossible
-var list_profil = null;
+var list_login = null;
 
 
-//Get number of keyword occurences for form
-function nb_keyword_in_form(form, words){
-	var nb_occurences = 0;
+/*
+    ---------------------------
+	Graphical construction part
+	---------------------------
+*/
+
+/*
+Build the list list like below.
+Use global var login_front_db
+
+<div class="dropdown-content">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+</div>
+*/
+function buildLoginList() {
+	var html_list_login = document.createElement('div');
+	//html_list_login.id = id_list;
+	html_list_login.className = "dropdown-content";
+
+
+	if(!login_front_db.has_login()){
+		console.info("No login for domain: " + login_front_db.domain);
+		console.info("Aborting building graphical list of login");
+		return null;
+	}
+
+	//Build dynamic list from login front db
+	var login_list = login_front_db.login_psd;
+
+	for (var i in login_list) {
+		var obj_login = login_list[i];
+		var opt = document.createElement('a');
+		opt.innerHTML = obj_login["login"] + "/" + obj_login["password"];
+		opt.setAttribute("login_id", obj_login["login_id"]);
+		opt.href = "#";
+
+		html_list_login.appendChild(opt);
+
+		//Cannot set listenner here, id_profil will stay in RAM and be the one for the last profil
+	}
+
+	//Add special option clear
+	var opt_clear = document.createElement('a');
+	opt_clear.innerHTML = "Clear";
+	opt_clear.setAttribute("id", "clear_corail");
+	opt_clear.href = "#";
 	
-	for( var i=0 ; i<words.length ; i++){
-		
-		if( form.name !== undefined){
-			nb_occurences = nb_occurences + occurrences_in_string(form.name.toLowerCase(), words[i], false);	
-		}
-		if( form.className !== undefined ){
-			nb_occurences = nb_occurences + occurrences_in_string(form.className.toLowerCase(), words[i], false);	
-		}
-		if( form.title !== undefined ){
-			nb_occurences = nb_occurences + occurrences_in_string(form.title.toLowerCase(), words[i], false);
-		}
-		if( form.id !== undefined ){
-			nb_occurences = nb_occurences + occurrences_in_string(form.id.toLowerCase(), words[i], false);	
-		}
-		//For some reason, action is not always a string. Need to check this
-		if( form.action !== undefined && typeof(form.action) == "string"){
-			nb_occurences = nb_occurences + occurrences_in_string(form.action.toLowerCase(), words[i], false)	
-		}
+	//At first, for hover, don't display clear option
+	opt_clear.style.display = "none";
+	html_list_login.appendChild(opt_clear);
 
-		//Bonus, look in url in all cases :)
-		nb_occurences = nb_occurences + occurrences_in_string(window.location.href.toLowerCase(), words[i], false);	
-    
+
+	html_list_login.onmouseleave = function (evt) {
+
+		//We need to wait a bit, if pointer is back in input
+		//So the var pointer_on_input has time to be true :)
+		setTimeout(function () {
+			//If not fetching list, hide it
+			if (pointer_on_input == false) {
+				list_login.style.display = "none";
+			}
+		}, 50);
+
+		//Inform all that the list is not fetched anymore
+		pointer_on_list = false;
+
+		//A profil has been selected, don't clear field
+		/*if( profil_id_chosen == null){
+			clear_inputs();
+			clear_selects();
+		}*/
 	}
-	return nb_occurences;
+
+	html_list_login.onmouseenter = function (evt) {
+		//Inform all that the list is now fetched
+		pointer_on_list = true;
+	}
+
+	html_list_login.onclick = function (evt) {
+		//Inform all that the list is now fetched
+		pointer_on_list = false;
+		html_list_login.style.display = "none";
+	}
+
+	return html_list_login;
 }
-
-
-// Look for login form in current web page
-// Return a list of eligible login form
-// Note(BG): on the contrary as I thought, this is not enough 
-// to find the good form in all cases. 
-// We need to check later on login and password
-function get_logins_form(){
-	var forms = document.body.querySelectorAll("form");
-
-	var login_form_list = [];
-	for (var i = 0; i < forms.length; i++) {
-		var current_form = forms[i];
-
-		var keyword_occurence = nb_keyword_in_form(current_form, form_keywords);
-		console.info("Found " + keyword_occurence + " keyword occurence for current form");
-		
-		if(keyword_occurence >= keyword_occurence_needed){
-			console.info("Adding in list the login form in page, which is as follow:");
-			console.info("Action: " + current_form.action);
-			console.info("id: " + current_form.id);
-			console.info("name: " + current_form.name);
-
-			login_form_list.push(current_form);
-		}
-	}
-
-	console.info("Number of eligible login form found: " + login_form_list.length);
-	return login_form_list;
-}
-
-//This should always be provided a login form.
-//If not, will return false
-function get_password_field(login_form){
-	var password_field = login_form.querySelector("input[type=password]");
-	if( password_field == null){
-		return false;
-	}
-	console.info("id of password field: " + password_field.id);
-	console.info("name of password field: " + password_field.name);
-	return password_field;
-}
-
-//This should always be provided a login form.
-//If not, will return false
-function get_login_field(login_form){
-	//First try to retrieve login field with email field
-	var login_field = login_form.querySelector("input[type=email]");
-
-	//Maybe login field is actually a simple text field
-	if( login_field == null){
-		login_field = login_form.querySelector("input[type=text]");
-	}
-
-	if(login_field == null){
-		return false;
-	}
-	console.info("id of login field: " + login_field.id);
-	console.info("name of login field: " + login_field.name);
-	return login_field;
-}
-
-// Research in current page the login form
-// Three conditions: 
-// 		 - there are forms eligible
-// 		 - There is a login field
-//		 - There is a password field
-function research_login_form(){
-	var forms_list = get_logins_form();
-
-	for(var i=0 ; i<forms_list.length ; i++){
-		var current_form = forms_list[i];
-
-		var current_login = get_login_field(current_form);
-		var current_password = get_password_field(current_form);
-
-		if(current_login != false && current_password != false){
-			console.info("[research_login_form]: Found the login form");
-			console.info("Action: " + current_form.action);
-			console.info("id: " + current_form.id);
-			console.info("name: " + current_form.name);
-
-			//current_login.value = "moncul";
-			//current_password.value = "mabite";
-			return current_form;
-		}
-	}
-}
-

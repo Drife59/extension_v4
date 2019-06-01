@@ -196,3 +196,12 @@ var field_password_keywords = ["password"];
 
 //The number of keyword occurence needed to confirm that the form is a login form
 var keyword_occurence_needed = 2;
+
+/* 
+    Others options for login / password configuration 
+*/
+
+//List of the code to insert in html to indicate type of field to other algo 
+
+var CODE_LOGIN_FIELD    = "login_field";
+var CODE_PASSWORD_FIELD = "password_field"; 
