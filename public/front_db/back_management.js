@@ -166,3 +166,24 @@ function load_profils_from_cache(email){
     profil_db = new UserProfil(email);
     profil_db.get_profil_storage(true);
 }
+
+
+// Load profil from back-end, and optionnally send back to background
+// the profil DB received 
+function load_login_from_back(email, domain){
+    console.info("[load_login_from_back] Loading login/psd for user " + email + ", on domain: " + domain);
+    login_front_db = new LoginPsd();
+    var xhttp_get_login = xhttp_get_login_psd(email, domain);
+
+    var json_login = null;
+
+    xhttp_get_login.onreadystatechange = function () {
+        if (xhttp_get_login.readyState == 4 && xhttp_get_login.status == 200) {
+
+            console.debug("Result Raw from back: " + xhttp_get_login.response);
+
+            json_login = JSON.parse(xhttp_get_login.response);
+            login_front_db.build_login_from_back(json_login);
+        }
+    }
+}

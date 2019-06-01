@@ -22,7 +22,8 @@ function lancement_app() {
     }
 
     app_launched = true;
-    
+
+    load_login_from_back(current_user, window.location.host);
     
     console.info("Parsing fields...")
     init_fields();

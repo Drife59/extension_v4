@@ -16,9 +16,9 @@ var url_login_domain = endpoint_back + "user/{email}/login/{domain}";
 // Pure profil API
 // ---------------
 
-function xhttp_get_login(email, domain){
+function xhttp_get_login_psd(email, domain){
     var xhttp_back_api = new XMLHttpRequest();
-    var url_final = url_all_profil.replace("{email}", email)
+    var url_final = url_login_domain.replace("{email}", email)
                                   .replace("{domain}", domain);
 
     xhttp_back_api.open("GET", url_final, true);
@@ -27,9 +27,9 @@ function xhttp_get_login(email, domain){
     return xhttp_back_api;
 }
 
-function xhttp_get_login(email, domain, login, password){
+function xhttp_add_login_psd(email, domain, login, password){
     var xhttp_back_api = new XMLHttpRequest();
-    var url_final = url_all_profil.replace("{email}", email)
+    var url_final = url_login_domain.replace("{email}", email)
                                   .replace("{domain}", domain);
 
     var login_obj = {
