@@ -149,6 +149,25 @@ function init_event_list() {
 				continue;
 			}
 
+			/* The 2 if below are needed but are not enough.
+				if login parsing (to detect login form) run before
+				profil parsing, this will prevent from displaying profil list on these field.
+				The other case is managed by login parsing, it disable
+				profil list events if set on field.
+			*/
+
+			//Don't process login form field
+			//These fields need to be managed by dedicated login process
+			if (is_login_field(inputs_type[j])) {
+				continue;
+			}
+
+			//Don't process password form field
+			//These fields need to be managed by dedicated login process
+			if (is_password_field(inputs_type[j])) {
+				continue;
+			}
+
 			var key_domain = construit_domaine_cle(inputs_type[j]);
 
 			//Don't display profil list if field cannot be filled
