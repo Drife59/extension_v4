@@ -109,3 +109,19 @@ function buildLoginList() {
 
 	return html_list_login;
 }
+
+
+//Entry point for login list management
+function init_event_login_list(){
+	var result_research_login_form = research_login_form();
+	if( result_research_login_form == false){
+		console.info("[init_event_login_list] Cannot find a login form, aborting logins event initialisation");
+		return false;
+	}
+	var {current_form:login_form, current_login:login_field, current_password:password_field} = result_research_login_form;
+
+	initialise_login_DOM(login_form, login_field, password_field);
+
+	var only_login = login_front_db.get_only_login();
+	console.info("[mark_login_field] only_login got: " + JSON.stringify(only_login));
+}

@@ -53,6 +53,7 @@
 		"lib/login/login.js",
 		"lib/login/raw_api.js",
 		"lib/login/detection.js",
+		"lib/login/graphical.js",
 		"front_db/back_management.js",
 		"lib/user_event.js",
 		"lib/fill_field.js",

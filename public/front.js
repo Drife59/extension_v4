@@ -34,8 +34,7 @@ function lancement_app() {
         //Inputs object should exist, update website DB if necessary
         fetch_all_field(init_event_list);
 
-        //Will continue this later
-        //research_login_form();
+        init_event_login_list();
 
         //If there is a temporary profil in cache, we need to create it in back
         profil_db.create_profil_from_temp_profil();

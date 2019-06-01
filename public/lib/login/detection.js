@@ -154,17 +154,10 @@ function research_login_form(){
 	return false;
 }
 
-function mark_login_field(){
-	var result_research = research_login_form();
-	if( result_research == false){
-		console.info("[mark_login_field] Cannot find a login form, aborting marking logins field");
-		return false;
-	}
-	var {current_form:login_form, current_login:login_field, current_password:password_field} = result_research;
 
+function initialise_login_DOM(login_form, login_field, password_field){
 	console.info("[mark_login_field]: Marking in DOM the following login form");
 	console.info("Id: " + login_form.id);
-	console.info("Action: " + login_form.action);
 
 	login_field.value = "login_detected";
 	//Disable futur profil list event binding
@@ -178,9 +171,5 @@ function mark_login_field(){
 	password_field.setAttribute(CODE_PASSWORD_FIELD, "true");
 	password_field.removeEventListener("mouseover", display_list_profil, false);
 	password_field.removeEventListener("click", display_list_profil);
-
-
-	var only_login = login_front_db.get_only_login();
-	console.info("[mark_login_field] only_login got: " + JSON.stringify(only_login));
 }
 
