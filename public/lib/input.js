@@ -47,8 +47,8 @@ function unbind_inputs() {
             inputs_type[j].removeEventListener('change', changeAlgo, false);
             inputs_type[j].removeEventListener('keydown', keyDownAlgo, false);
             //Front graphical_profil "init_event_list"
-            inputs_type[j].removeEventListener("mouseover", display_list, false);
-			inputs_type[j].removeEventListener("click", display_list);
+            inputs_type[j].removeEventListener("mouseover", display_list_profil, false);
+			inputs_type[j].removeEventListener("click", display_list_profil);
         }
     }
     console.info("[unbind_inputs]: unbind all corail events from inputs");

@@ -24,7 +24,7 @@ var list_profil = null;
 //Build a dynamic content for the profil list, 
 //to be consistent with the type of input
 //For example, display address if field is with pivot main_full_address
-function build_display_list(input){
+function build_display_list_profil(input){
 	var key_domain = construit_domaine_cle(input);
 	var pivot_referent = website_front_db.get_referent_pivot_restitution(window.location.host, key_domain);
 	
@@ -68,7 +68,7 @@ function build_display_list(input){
 	}
 }
 
-function display_list(){
+function display_list_profil(){
 
 	//Don't start process for certain domain defined in conf
 	if( skip_domain.includes(window.location.host)){
@@ -89,7 +89,7 @@ function display_list(){
 	str_style += "top: " + (position_current_input1.y + this.offsetHeight + window.scrollY) + "px;";
 	str_style += "position: absolute;";
 
-	build_display_list(this);
+	build_display_list_profil(this);
 
 	list_profil.setAttribute("style", str_style);
 	console.debug("List position was set to absolute: " + list_profil.style.left + " / " + list_profil.style.top);
@@ -97,7 +97,7 @@ function display_list(){
 
 // Disable mousehover event on input to display list of profil
 // Activate instead event click to display list of profil
-function click_for_display_list(){
+function click_for_display_list_profil(){
 	for (var i = 0; i < type_to_include.length; i++) {
 		var inputs_type = inputs[type_to_include[i]];
 		
@@ -116,8 +116,8 @@ function click_for_display_list(){
 			}
 
 			//Don't forget to remove these listenner in inputs.js "unbind_input"
-			inputs_type[j].removeEventListener("mouseover", display_list, false);
-			inputs_type[j].addEventListener("click", display_list);
+			inputs_type[j].removeEventListener("mouseover", display_list_profil, false);
+			inputs_type[j].addEventListener("click", display_list_profil);
 		}
 	}
 }
@@ -176,7 +176,7 @@ function init_event_list() {
 			} 
 
 			//At the first navigation, on hover bind and display the list
-			inputs_type[j].addEventListener("mouseover", display_list);
+			inputs_type[j].addEventListener("mouseover", display_list_profil);
 			inputs_type[j].onmouseover = function(){
 				pointer_on_input = true;
 			}
@@ -213,9 +213,9 @@ Use global var profil_db
 </div>
 */
 function buildProfilList() {
-	var html_list = document.createElement('div');
-	html_list.id = id_list;
-	html_list.className = "dropdown-content";
+	var html_list_profil = document.createElement('div');
+	html_list_profil.id = id_list;
+	html_list_profil.className = "dropdown-content";
 
 	//Build dynamic list from profil front db
 	//List is ordered by weight, DESC
@@ -228,7 +228,7 @@ function buildProfilList() {
 		opt.setAttribute("profil_id", obj_profil["id_profil"]);
 		opt.href = "#";
 
-		html_list.appendChild(opt);
+		html_list_profil.appendChild(opt);
 
 		//Cannot set listenner here, id_profil will stay in RAM and be the one for the last profil
 	}
@@ -241,10 +241,10 @@ function buildProfilList() {
 	
 	//At first, for hover, don't display clear option
 	opt_clear.style.display = "none";
-	html_list.appendChild(opt_clear);
+	html_list_profil.appendChild(opt_clear);
 
 
-	html_list.onmouseleave = function (evt) {
+	html_list_profil.onmouseleave = function (evt) {
 
 		//We need to wait a bit, if pointer is back in input
 		//So the var pointer_on_input has time to be true :)
@@ -265,18 +265,18 @@ function buildProfilList() {
 		}
 	}
 
-	html_list.onmouseenter = function (evt) {
+	html_list_profil.onmouseenter = function (evt) {
 		//Inform all that the list is now fetched
 		pointer_on_list = true;
 	}
 
-	html_list.onclick = function (evt) {
+	html_list_profil.onclick = function (evt) {
 		//Inform all that the list is now fetched
 		pointer_on_list = false;
-		html_list.style.display = "none";
+		html_list_profil.style.display = "none";
 	}
 
-	return html_list;
+	return html_list_profil;
 }
 
 
@@ -307,7 +307,7 @@ function bindListenner() {
 
 			//now displaying clear option
 			opt_clear.style.display = "block";
-			click_for_display_list();
+			click_for_display_list_profil();
 			//Don't scroll vertically to the top
 			evt.preventDefault();
 		}
