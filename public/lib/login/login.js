@@ -95,4 +95,36 @@ class LoginPsd {
         console.info("Website domain: " + this.domain);
         console.info("Login / psd obj: " + JSON.stringify(this.login_psd, null, 4));
     }
+
+    //Have we at least one login for current form
+    has_login(){
+        if(this.login_psd.length > 0){
+            return true;
+        }
+        console.info("[LoginPsd] No login for domain: " + this.domain);
+        return false;
+    }
+
+    //Have we one and only one login for this website ?
+    has_only_one_login(){
+        if(this.login_psd.length == 1){
+            return true;
+        }
+        return false;
+    }
+
+    //return login for website if there is only one
+    get_only_login(){
+        if( !this.has_login() ){
+            console.warn("[get_only_login] Cannot return solo login, no login at all");
+            return false;
+        }
+
+        if( !this.has_only_one_login() ){
+            console.warn("[get_only_login] Cannot return solo login, multiple login present");
+            return false;
+        }
+
+        return this.login_psd[0];
+    }
 }
