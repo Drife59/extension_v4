@@ -159,7 +159,6 @@ function initialise_login_DOM(login_form, login_field, password_field){
 	console.info("[mark_login_field]: Marking in DOM the following login form");
 	console.info("Id: " + login_form.id);
 
-	login_field.value = "login_detected";
 	//Disable futur profil list event binding
 	login_field.setAttribute(CODE_LOGIN_FIELD, "true");
 	//But we still need to disable any previous binding
@@ -167,7 +166,6 @@ function initialise_login_DOM(login_form, login_field, password_field){
 	login_field.removeEventListener("click", display_list_profil);
 
 	//Exact same process for password field
-	password_field.value = "password_detected";
 	password_field.setAttribute(CODE_PASSWORD_FIELD, "true");
 	password_field.removeEventListener("mouseover", display_list_profil, false);
 	password_field.removeEventListener("click", display_list_profil);
