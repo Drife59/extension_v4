@@ -215,7 +215,7 @@ Use global var profil_db
 function buildProfilList() {
 	var html_list_profil = document.createElement('div');
 	html_list_profil.id = id_list;
-	html_list_profil.className = "dropdown-content";
+	html_list_profil.className = "corail_list dropdown-content";
 
 	//Build dynamic list from profil front db
 	//List is ordered by weight, DESC

@@ -40,7 +40,7 @@ Use global var login_front_db
 function buildLoginList() {
 	var html_list_login = document.createElement('div');
 	html_list_login.id = id_list_login;
-	html_list_login.className = "dropdown-content";
+	html_list_login.className = "corail_list dropdown-content";
 
 
 	if(!login_front_db.has_login()){
