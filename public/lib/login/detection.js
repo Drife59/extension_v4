@@ -95,8 +95,8 @@ function get_password_field(login_form){
 	if( password_field == null){
 		return false;
 	}
-	console.info("id of password field: " + password_field.id);
-	console.info("name of password field: " + password_field.name);
+	console.debug("id of password field: " + password_field.id);
+	console.debug("name of password field: " + password_field.name);
 	return password_field;
 }
 
@@ -114,8 +114,8 @@ function get_login_field(login_form){
 	if(login_field == null){
 		return false;
 	}
-	console.info("id of login field: " + login_field.id);
-	console.info("name of login field: " + login_field.name);
+	console.debug("id of login field: " + login_field.id);
+	console.debug("name of login field: " + login_field.name);
 	return login_field;
 }
 
