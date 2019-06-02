@@ -10,8 +10,8 @@ Define graphical function for profil.
 
 */
 
-var pointer_on_list = false;
-var pointer_on_input = false;
+var pointer_on_list_profil = false;
+var pointer_on_input_profil = false;
 //At the beginning, no profil has been chosen (validated)
 var profil_validated = false;
 
@@ -80,7 +80,7 @@ function display_list_profil(){
 
 	//Display list as block, resize and position it
 	list_profil.style.display = "block";
-	pointer_on_input = true;
+	pointer_on_input_profil = true;
 
 	//Same size as the field
 	var str_style = "width:" + this.offsetWidth + "px;";
@@ -122,8 +122,9 @@ function click_for_display_list_profil(){
 	}
 }
 
+//Entry point
 //Define event to create lists on input to display profil
-function init_event_list() {
+function init_event_list_profil() {
 
 	//We don't want to init anything if we are on excluded website 
 	if( skip_domain.includes(window.location.host)){
@@ -178,18 +179,18 @@ function init_event_list() {
 			//At the first navigation, on hover bind and display the list
 			inputs_type[j].addEventListener("mouseover", display_list_profil);
 			inputs_type[j].onmouseover = function(){
-				pointer_on_input = true;
+				pointer_on_input_profil = true;
 			}
 		
 
 			//Hide list if leaving field and pointer is not on list
 			inputs_type[j].onmouseout = function () {
-				pointer_on_input = false;
+				pointer_on_input_profil = false;
 
-				//We need to wait a bit to allow value pointer_on_list to change
+				//We need to wait a bit to allow value pointer_on_list_profil to change
 				setTimeout(function () {
 					//If not fetching list, hide it
-					if (pointer_on_list == false && pointer_on_input == false) {
+					if (pointer_on_list_profil == false && pointer_on_input_profil == false) {
 						list_profil.style.display = "none";
 					}
 				}, 50);
@@ -197,7 +198,7 @@ function init_event_list() {
 			}
 		}
 	}
-	bindListenner();
+	bind_listenner_profil();
 }
 
 
@@ -247,16 +248,16 @@ function buildProfilList() {
 	html_list_profil.onmouseleave = function (evt) {
 
 		//We need to wait a bit, if pointer is back in input
-		//So the var pointer_on_input has time to be true :)
+		//So the var pointer_on_input_profil has time to be true :)
 		setTimeout(function () {
 			//If not fetching list, hide it
-			if (pointer_on_input == false) {
+			if (pointer_on_input_profil == false) {
 				list_profil.style.display = "none";
 			}
 		}, 50);
 
 		//Inform all that the list is not fetched anymore
-		pointer_on_list = false;
+		pointer_on_list_profil = false;
 
 		//A profil has been selected, don't clear field
 		if( profil_id_chosen == null){
@@ -267,12 +268,12 @@ function buildProfilList() {
 
 	html_list_profil.onmouseenter = function (evt) {
 		//Inform all that the list is now fetched
-		pointer_on_list = true;
+		pointer_on_list_profil = true;
 	}
 
 	html_list_profil.onclick = function (evt) {
 		//Inform all that the list is now fetched
-		pointer_on_list = false;
+		pointer_on_list_profil = false;
 		html_list_profil.style.display = "none";
 	}
 
@@ -281,7 +282,7 @@ function buildProfilList() {
 
 
 //This cannot be done in main loop of buildProfilList
-function bindListenner() {
+function bind_listenner_profil() {
 	var all_options = document.body.querySelectorAll("a[profil_id]");
 	var opt_clear = document.body.querySelector("a#clear_corail");
 

@@ -36,7 +36,7 @@ chrome.runtime.onConnect.addListener(function(port) {
                 }
 
                 //After having update the profil DB object, we need to rebuild the display
-                init_event_list();
+                init_event_list_profil();
             }
             else{
                 console.warn("[preload front] Current user does not exist, cannot update profil DB");

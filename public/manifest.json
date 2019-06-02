@@ -49,7 +49,7 @@
 		"front_db/website_db.js",
 		"lib/profil/profil.js",
 		"lib/profil/raw_api.js",
-		"lib/profil/graphical_profil.js",
+		"lib/profil/graphical.js",
 		"lib/login/login.js",
 		"lib/login/raw_api.js",
 		"lib/login/detection.js",

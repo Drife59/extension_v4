@@ -32,7 +32,7 @@ function lancement_app() {
     //we need to wait parsing field is finished
     setTimeout(function () {
         //Inputs object should exist, update website DB if necessary
-        fetch_all_field(init_event_list);
+        fetch_all_field(init_event_list_profil);
 
         init_event_login_list();
 
