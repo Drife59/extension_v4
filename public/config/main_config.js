@@ -204,4 +204,5 @@ var keyword_occurence_needed = 2;
 //List of the code to insert in html to indicate type of field to other algo 
 
 var CODE_LOGIN_FIELD    = "login_field";
-var CODE_PASSWORD_FIELD = "password_field"; 
+var CODE_PASSWORD_FIELD = "password_field";
+var id_list_login = "id_login_list";

@@ -10,8 +10,8 @@ Define graphical function for login.
 
 */
 
-var pointer_on_list = false;
-var pointer_on_input = false;
+var pointer_on_login_list = false;
+var pointer_on_input_login = false;
 //At the beginning, no profil has been chosen (validated)
 var profil_validated = false;
 
@@ -39,7 +39,7 @@ Use global var login_front_db
 */
 function buildLoginList() {
 	var html_list_login = document.createElement('div');
-	//html_list_login.id = id_list;
+	html_list_login.id = id_list_login;
 	html_list_login.className = "dropdown-content";
 
 
@@ -61,7 +61,7 @@ function buildLoginList() {
 
 		html_list_login.appendChild(opt);
 
-		//Cannot set listenner here, id_profil will stay in RAM and be the one for the last profil
+		//Cannot set listenner here, id_login will stay in RAM and be the one for the last login
 	}
 
 	//Add special option clear
@@ -78,36 +78,58 @@ function buildLoginList() {
 	html_list_login.onmouseleave = function (evt) {
 
 		//We need to wait a bit, if pointer is back in input
-		//So the var pointer_on_input has time to be true :)
+		//So the var pointer_on_input_login has time to be true :)
 		setTimeout(function () {
 			//If not fetching list, hide it
-			if (pointer_on_input == false) {
+			if (pointer_on_input_login == false) {
 				list_login.style.display = "none";
 			}
 		}, 50);
+		
 
 		//Inform all that the list is not fetched anymore
-		pointer_on_list = false;
-
-		//A profil has been selected, don't clear field
-		/*if( profil_id_chosen == null){
-			clear_inputs();
-			clear_selects();
-		}*/
+		pointer_on_login_list = false;
 	}
 
 	html_list_login.onmouseenter = function (evt) {
 		//Inform all that the list is now fetched
-		pointer_on_list = true;
+		pointer_on_login_list = true;
 	}
 
 	html_list_login.onclick = function (evt) {
 		//Inform all that the list is now fetched
-		pointer_on_list = false;
+		pointer_on_login_list = false;
 		html_list_login.style.display = "none";
 	}
 
 	return html_list_login;
+}
+
+function display_list_login(){
+
+	//Don't start process for certain domain defined in conf
+	if( skip_domain.includes(window.location.host)){
+		console.info("Domain " + window.location.host + " is defined to be skipped, don't display login list.");
+		return;
+	}
+
+	var position_current_input1 = getPosition(this);
+
+	//Display list as block, resize and position it
+	list_login.style.display = "block";
+	pointer_on_input_login = true;
+
+	//Same size as the field
+	var str_style = "width:" + this.offsetWidth + "px;";
+	str_style += "left: " + position_current_input1.x + "px;";
+	//Vertical position: original input position + vertical size input + vertical scroll
+	str_style += "top: " + (position_current_input1.y + this.offsetHeight + window.scrollY) + "px;";
+	str_style += "position: absolute;";
+
+	//build_display_list_login(this);
+
+	list_login.setAttribute("style", str_style);
+	console.debug("List login position was set to absolute: " + list_login.style.left + " / " + list_login.style.top);
 }
 
 
@@ -135,5 +157,32 @@ function init_event_login_list(){
 		password_field.value = only_login.password;
 		return true;
 	}
-	console.info("[mark_login_field] Many identifiers available for this domain. Building list");
+	else{
+		console.info("[mark_login_field] Many identifiers available for this domain. Building list");
+		list_login = buildLoginList();
+
+		window.document.body.appendChild(list_login)
+
+		//At the first navigation, on hover bind and display the list
+		login_field.addEventListener("mouseover", display_list_login);
+		login_field.onmouseover = function(){
+			pointer_on_login_input = true;
+		}
+	
+
+		//Hide list if leaving field and pointer is not on list
+		login_field.onmouseout = function () {
+			pointer_on_login_input = false;
+
+			//We need to wait a bit to allow value pointer_on_login_list to change
+			
+			setTimeout(function () {
+				//If not fetching list, hide it
+				if (pointer_on_login_list == false && pointer_on_login_input == false) {
+					list_login.style.display = "none";
+				}
+			}, 50);
+			
+		}
+	}
 }
