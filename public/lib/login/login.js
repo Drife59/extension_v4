@@ -84,7 +84,7 @@ class LoginPsd {
         for(var i = 0 ; i < json_login.length ; i++){
             var current_login = json_login[i];
             var new_login = {};
-            new_login["loginId"] = current_login["loginId"];
+            new_login["login_id"] = current_login["loginId"];
             new_login["login"] = current_login["login"];
             new_login["password"] = current_login["password"];
             this.login_psd.push(new_login);
