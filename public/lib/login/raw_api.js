@@ -10,10 +10,11 @@ Define Raw API call for login.
 
 //Endpoint config 
 var url_login_domain = endpoint_back + "user/{email}/login/{domain}";
+var url_login_delete = endpoint_back + "user/{email}/login/{login_id}";
 
 
 
-// Pure profil API
+// Pure login API
 // ---------------
 
 function xhttp_get_login_psd(email, domain){
@@ -41,5 +42,16 @@ function xhttp_add_login_psd(email, domain, login, password){
     xhttp_back_api.open("POST", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp_back_api.send(login_obj);
+    return xhttp_back_api;
+}
+
+function xhttp_delete_login_psd(email, login_id){
+    var xhttp_back_api = new XMLHttpRequest();
+    var url_final = url_login_domain.replace("{email}", email)
+                                    .replace("{login_id}", login_id);
+
+    xhttp_back_api.open("DELETE", url_final, true);
+    xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.send();
     return xhttp_back_api;
 }
