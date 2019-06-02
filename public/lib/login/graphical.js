@@ -12,8 +12,6 @@ Define graphical function for login.
 
 var pointer_on_login_list = false;
 var pointer_on_login_input = false;
-//At the beginning, no profil has been chosen (validated)
-var profil_validated = false;
 
 var login_id_chosen = null;
 
