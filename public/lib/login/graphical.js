@@ -122,6 +122,18 @@ function init_event_login_list(){
 
 	initialise_login_DOM(login_form, login_field, password_field);
 
-	var only_login = login_front_db.get_only_login();
-	console.info("[mark_login_field] only_login got: " + JSON.stringify(only_login));
+	if(! login_front_db.has_login()){
+		console.warn("No login at all for website, cannot initialise login list");
+		return false;
+	}
+
+	if( login_front_db.has_only_one_login()){
+		console.info("Only one login was detected for this domain.");
+		console.info("Filling login/psd field within the ones found in login DB.");
+		var only_login = login_front_db.get_only_login();
+		login_field.value = only_login.login;
+		password_field.value = only_login.password;
+		return true;
+	}
+	console.info("[mark_login_field] Many identifiers available for this domain. Building list");
 }
