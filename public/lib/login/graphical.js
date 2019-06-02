@@ -199,7 +199,7 @@ function init_event_login_list(){
 			
 		}
 	}
-	bindListenner(login_field, password_field);
+	bind_listenner_login(login_field, password_field);
 }
 
 //Get from DB the current login object corresponding to login id
@@ -212,7 +212,7 @@ function get_current_login_from_list(evt){
 	return current_login;
 }
 
-function bindListenner(login_field, password_field) {
+function bind_listenner_login(login_field, password_field) {
 	var all_options = document.body.querySelectorAll("a[login_id]");
 	var opt_clear = document.body.querySelector("a#clear_corail");
 
