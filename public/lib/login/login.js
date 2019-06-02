@@ -127,4 +127,16 @@ class LoginPsd {
 
         return this.login_psd[0];
     }
+
+    //return current login on id
+    get_login_by_id(login_id){
+        for(var i = 0 ; i < this.login_psd.length ; i++){
+            var current_login = this.login_psd[i];
+
+            if(current_login.login_id == login_id)
+                return current_login;
+        }
+        console.warn("[get_login_by_id] Could not get login id: " + login_id);
+        return null;
+    }
 }

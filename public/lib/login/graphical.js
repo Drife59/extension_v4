@@ -3,7 +3,7 @@ Projet Corail
 Auteur: Benjamin GRASSART
 Année: 2019
 
-login/graphical_profil.js
+login/graphical.js
 
 V7 functionnality.
 Define graphical function for login.
@@ -11,9 +11,11 @@ Define graphical function for login.
 */
 
 var pointer_on_login_list = false;
-var pointer_on_input_login = false;
+var pointer_on_login_input = false;
 //At the beginning, no profil has been chosen (validated)
 var profil_validated = false;
+
+var login_id_chosen = null;
 
 //We want this to be global so each function can access
 //Also, when using egvent you d'ont have to use "bind"
@@ -27,6 +29,40 @@ var list_login = null;
 	---------------------------
 */
 
+function build_DOM_profil_list(){
+	var html_list_login = document.createElement('div');
+	html_list_login.id = id_list_login;
+	html_list_login.className = "corail_list dropdown-content";
+
+	//Build dynamic list from login front db
+	var login_list = login_front_db.login_psd;
+
+	for (var i in login_list) {
+		var obj_login = login_list[i];
+		var opt = document.createElement('a');
+		opt.innerHTML = obj_login["login"] + "/ ********** ";
+		opt.setAttribute("login_id", obj_login["login_id"]);
+		opt.href = "#";
+
+		html_list_login.appendChild(opt);
+	}
+	return html_list_login;
+}
+
+function build_DOM_clear_option_login(){
+	//Add special option login clear
+	var opt_clear = document.createElement('a');
+	opt_clear.innerHTML = "Clear";
+	opt_clear.setAttribute("id", "clear_corail_login");
+	opt_clear.href = "#";
+	
+	//At first, for hover, don't display clear option
+	opt_clear.style.display = "none";
+
+	return opt_clear;
+}
+
+
 /*
 Build the list list like below.
 Use global var login_front_db
@@ -37,58 +73,38 @@ Use global var login_front_db
     <a href="#">Link 3</a>
 </div>
 */
-function buildLoginList() {
-	var html_list_login = document.createElement('div');
-	html_list_login.id = id_list_login;
-	html_list_login.className = "corail_list dropdown-content";
-
-
+function buildLoginList(login_field, password_field) {
+	
 	if(!login_front_db.has_login()){
 		console.info("No login for domain: " + login_front_db.domain);
 		console.info("Aborting building graphical list of login");
 		return null;
 	}
 
-	//Build dynamic list from login front db
-	var login_list = login_front_db.login_psd;
-
-	for (var i in login_list) {
-		var obj_login = login_list[i];
-		var opt = document.createElement('a');
-		opt.innerHTML = obj_login["login"] + "/" + obj_login["password"];
-		opt.setAttribute("login_id", obj_login["login_id"]);
-		opt.href = "#";
-
-		html_list_login.appendChild(opt);
-
-		//Cannot set listenner here, id_login will stay in RAM and be the one for the last login
-	}
-
-	//Add special option clear
-	var opt_clear = document.createElement('a');
-	opt_clear.innerHTML = "Clear";
-	opt_clear.setAttribute("id", "clear_corail");
-	opt_clear.href = "#";
-	
-	//At first, for hover, don't display clear option
-	opt_clear.style.display = "none";
-	html_list_login.appendChild(opt_clear);
+	var html_list_login = build_DOM_profil_list();
+	html_list_login.appendChild(build_DOM_clear_option_login());
 
 
 	html_list_login.onmouseleave = function (evt) {
-
 		//We need to wait a bit, if pointer is back in input
-		//So the var pointer_on_input_login has time to be true :)
+		//So the var pointer_on_login_input has time to be true :)
 		setTimeout(function () {
 			//If not fetching list, hide it
-			if (pointer_on_input_login == false) {
-				list_login.style.display = "none";
+			if (pointer_on_login_input == false) {
+				html_list_login.style.display = "none";
 			}
 		}, 50);
 		
 
 		//Inform all that the list is not fetched anymore
 		pointer_on_login_list = false;
+
+		//When leaving list, clearing field
+		//Unless a login has been selected
+		if( login_id_chosen == null){
+			login_field.value = "";
+			password_field.value = "";
+		}
 	}
 
 	html_list_login.onmouseenter = function (evt) {
@@ -117,7 +133,7 @@ function display_list_login(){
 
 	//Display list as block, resize and position it
 	list_login.style.display = "block";
-	pointer_on_input_login = true;
+	pointer_on_login_input = true;
 
 	//Same size as the field
 	var str_style = "width:" + this.offsetWidth + "px;";
@@ -159,7 +175,7 @@ function init_event_login_list(){
 	}
 	else{
 		console.info("[mark_login_field] Many identifiers available for this domain. Building list");
-		list_login = buildLoginList();
+		list_login = buildLoginList(login_field, password_field);
 
 		window.document.body.appendChild(list_login)
 
@@ -178,11 +194,72 @@ function init_event_login_list(){
 			
 			setTimeout(function () {
 				//If not fetching list, hide it
-				if (pointer_on_login_list == false && pointer_on_login_input == false) {
+				if (pointer_on_login_list == false) {
 					list_login.style.display = "none";
 				}
 			}, 50);
 			
 		}
+	}
+	bindListenner(login_field, password_field);
+}
+
+//Get from DB the current login object corresponding to login id
+function get_current_login_from_list(evt){
+	var current_login_id = evt.target.getAttribute("login_id");
+	if(current_login_id == null){
+		current_login_id = evt.target.getAttribute("login_id");
+	}
+	var current_login = login_front_db.get_login_by_id(current_login_id);
+	return current_login;
+}
+
+function bindListenner(login_field, password_field) {
+	var all_options = document.body.querySelectorAll("a[login_id]");
+	var opt_clear = document.body.querySelector("a#clear_corail");
+
+	for (var i = 0; i < all_options.length; i++) {
+		
+		
+		//Bind event to preselect a login
+		all_options[i].onmouseover = function (evt) {
+			var current_login = get_current_login_from_list(evt);	
+			login_field.value    = current_login["login"];
+			password_field.value = current_login["password"];
+		}
+
+		//Bind event to choose a login
+		all_options[i].onclick = function (evt) {
+			var current_login = get_current_login_from_list(evt);	
+
+			console.debug("Login chosen: " + JSON.stringify(current_login, null, 4));
+
+			//Inform all that a login has been chosen
+			login_id_chosen = current_login.login_id;
+
+			//now displaying clear option
+			opt_clear.style.display = "block";
+			//click_for_display_list_login();
+			//Don't scroll vertically to the top
+			evt.preventDefault();
+		}
+
+		//Don't display any value when hover clear option
+		opt_clear.onmouseover = function (evt) {
+			login_field.value    = "";
+			password_field.value = "";
+		}
+		
+		opt_clear.onclick = function (evt) {
+			console.info("Clearing login");
+			login_field.value    = "";
+			password_field.value = "";
+			//Don't scroll vertically to the top
+			evt.preventDefault();
+
+			//All clear, now hide option 'till the next login validation
+			opt_clear.style.display = "hidden";
+		}
+
 	}
 }
