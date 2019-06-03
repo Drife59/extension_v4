@@ -31,8 +31,8 @@ function bind_inputs() {
         var inputs_type = inputs[type_to_include[i]];
 
         for (j = 0; j < inputs_type.length; j++) {
-            inputs_type[j].addEventListener('change', changeAlgo, false);
-            inputs_type[j].addEventListener('keydown', keyDownAlgo, false);
+            inputs_type[j].addEventListener('change', changeAlgoProfil, false);
+            inputs_type[j].addEventListener('keydown', keyDownAlgoProfil, false);
         }
     }
     console.info("[bind_inputs]Binding all events to input fileds")
@@ -44,8 +44,8 @@ function unbind_inputs() {
         var inputs_type = inputs[type_to_include[i]];
 
         for (j = 0; j < inputs_type.length; j++) {
-            inputs_type[j].removeEventListener('change', changeAlgo, false);
-            inputs_type[j].removeEventListener('keydown', keyDownAlgo, false);
+            inputs_type[j].removeEventListener('change', changeAlgoProfil, false);
+            inputs_type[j].removeEventListener('keydown', keyDownAlgoProfil, false);
             //Front graphical_profil "init_event_list"
             inputs_type[j].removeEventListener("mouseover", display_list_profil, false);
 			inputs_type[j].removeEventListener("click", display_list_profil);
@@ -57,7 +57,7 @@ function unbind_inputs() {
 //Bind all select to change algo
 function bind_selects() {
     for (var i = 0; i < selects.length; i++) {
-        selects[i].addEventListener('change', changeAlgo, false);
+        selects[i].addEventListener('change', changeAlgoProfil, false);
     }
     console.info("[bind_selects]: binding all corail events to selects");
 }
@@ -65,7 +65,7 @@ function bind_selects() {
 //Reverse bind_selects
 function unbind_selects() {
     for (var i = 0; i < selects.length; i++) {
-        selects[i].removeEventListener('change', changeAlgo, false);
+        selects[i].removeEventListener('change', changeAlgoProfil, false);
     }
     console.info("[unbind_selects]: unbind all corail events from selects");
 }

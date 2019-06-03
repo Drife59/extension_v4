@@ -3,9 +3,10 @@ Projet Corail
 Auteur: Benjamin GRASSART
 Année: 2019
 
-user_event.js
+algo.js
 
-Manage algo bind to event on form.
+Profil algo to manage form interaction, db interaction.
+
 */
 
 function ChangeProfilless(key_domain, user_value) {
@@ -125,7 +126,7 @@ function preprocess_input(input, key_domain, user_value){
 
 
 //Main algo for event change detected on input field
-function changeAlgo(evt) {
+function changeAlgoProfil(evt) {
 	var field = evt.target
 	console.info("Algo change: field " + field.tagName + " modified: " + HtmlEltToString(field));
 	
@@ -222,7 +223,7 @@ function changeAlgo(evt) {
 	}
 }
 
-function keyDownAlgo(evt) {
+function keyDownAlgoProfil(evt) {
 	var input = evt.target
 	console.debug("Algo key press: field " + input.tagName + " modified by user: " + HtmlEltToString(input));
 	
@@ -235,9 +236,6 @@ function keyDownAlgo(evt) {
 		console.info("Field changed is a password field. Don't process it for now. ");
 		return false;
 	}
-	
-	var key_domain = construit_domaine_cle(input);
-
 	input.setAttribute(CODE_FIELD_USER_EDIT, true);
 }
 
