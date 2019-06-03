@@ -40,7 +40,7 @@
 		"lib/pivot_translation.js",
 		"lib/globalvar.js",
 		"lib/input.js",
-		"lib/api_back.js",
+		"lib/raw_api.js",
 		"lib/utils.js",
 		"lib/login/utils.js",
 		"lib/profil/utils.js",
