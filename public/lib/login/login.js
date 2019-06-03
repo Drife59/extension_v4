@@ -90,7 +90,7 @@ class LoginPsd {
             this.login_psd.push(new_login);
         }
 
-        console.info("[build_login_from_back] LoginPsd object was initialited with the following content: ");
+        console.info("[build_login_from_back] LoginPsd object was initialised with the following content: ");
         console.info("Website id: " + this.website_id);
         console.info("Website domain: " + this.domain);
         console.info("Login / psd obj: " + JSON.stringify(this.login_psd, null, 4));
