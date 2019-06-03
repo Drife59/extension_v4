@@ -116,6 +116,7 @@ function clear_selects() {
     }
 }
 
+//@ENTRY POINT
 //Parse page and bind event on field, then try to create key
 function init_fields(callback) {
     load_fields(callback);
@@ -208,7 +209,7 @@ function is_empty(field){
 	return false;
 }
 
-
+//@ENTRY POINT
 //Fetch all fields in page, create key - pivot where possible, else empty key
 //This function need the domain to exist in website_front_db
 function fetch_all_field(callback){
@@ -304,4 +305,28 @@ function create_pivot_value_from_page(){
         }
     }
     return pivot_value_page;
+}
+
+//Get the proper user value from field, regarding it's type (input/select) 
+//and the type of data (email/psd VS classical data)
+function get_user_value(field){
+	var user_value = null;
+	if(field.tagName == "input" || field.tagName == "Input" || field.tagName == "INPUT"){
+		user_value = field.value;
+	}else if(field.tagName == "select" || field.tagName == "Select" || field.tagName == "SELECT"){
+		user_value = field.options[field.selectedIndex].text.replace(" ", "");
+	}
+
+	console.debug("Raw user value from field: " + user_value);
+
+	//Don't normalize email or password field
+	if (field.type == "email" || check_email(user_value) || field.type == "password") {
+		user_value = field.value.toLowerCase();
+	}else{
+		user_value = user_value.capitalize();
+	}
+
+	console.info("Final user value: " + user_value);
+	
+	return user_value;
 }

@@ -48,32 +48,6 @@ function ChangeProfilless(key_domain, user_value) {
   ---------------------
 */
 
-function check_profil_creation(profil_used, key_domain, user_value){
-	console.info("Analysing if a new profil needs to be created");
-
-	var referent_pivot = website_front_db.get_referent_pivot(window.location.host, key_domain);
-
-	//This should not hapenned, but if profil is missing this value, just add it
-	if(profil_db.get_value_for_pivot(profil_used, referent_pivot) == false){
-		console.info("Pivot " + referent_pivot + " has no value in profil, adding it");
-		profil_db.add_value_to_profil(current_user, referent_pivot, user_value, profil_used);
-	}
-
-	//Create a clone of the profil used by user
-	var clone_profil = JSON.parse(JSON.stringify(profil_db.profil_values[profil_used]));
-	clone_profil[referent_pivot]["valueText"] = user_value;
-
-	console.info("Clone content: " + JSON.stringify(clone_profil, null, 4));
-	
-	//TODO continue
-	if(profil_db.check_profil_existence(clone_profil) == true){
-		console.info("Profil already exist, don't create it again");
-	}
-	else{
-		console.info("Profil does not exist, creating it");
-	}
-
-}
 
 /*Analyse content of field, and update weight accordingly
 */
@@ -96,9 +70,6 @@ function analyse_user_input_field_with_pivot(input, user_value, key_domain) {
 	if (Object.keys(pivots_coeff).length > 0) {
 		website_front_db.update_weight_coeff_pivot(window.location.host, key_domain,
 			pivots_coeff, weight_profil_filled_pivot_known);
-
-		//As the new value if not present in selected profil, we need to check for profil creation
-		//check_profil_creation(profil_used, key_domain, user_value);
 		return;
 	}
 
@@ -107,7 +78,6 @@ function analyse_user_input_field_with_pivot(input, user_value, key_domain) {
 	var pivot_reference = website_front_db.get_referent_pivot(window.location.host, key_domain);
 	if (pivot_reference != null) {
 		console.info("Pivot " + pivot_reference + " is still valid for input");
-		//check_profil_creation(profil_used, key_domain, user_value);
 	}
 	else {
 		console.info("Pivot referent not valid anymore, end of process");
@@ -153,29 +123,6 @@ function preprocess_input(input, key_domain, user_value){
 
 }
 
-//Get the proper user value from field, regarding it's type (input/select) 
-//and the type of data (email/psd VS classical data)
-function get_user_value(field){
-	var user_value = null;
-	if(field.tagName == "input" || field.tagName == "Input" || field.tagName == "INPUT"){
-		user_value = field.value;
-	}else if(field.tagName == "select" || field.tagName == "Select" || field.tagName == "SELECT"){
-		user_value = field.options[field.selectedIndex].text.replace(" ", "");
-	}
-
-	console.debug("Raw user value from field: " + user_value);
-
-	//Don't normalize email or password field
-	if (field.type == "email" || check_email(user_value) || field.type == "password") {
-		user_value = field.value.toLowerCase();
-	}else{
-		user_value = user_value.capitalize();
-	}
-
-	console.info("Final user value: " + user_value);
-	
-	return user_value;
-}
 
 //Main algo for event change detected on input field
 function changeAlgo(evt) {
