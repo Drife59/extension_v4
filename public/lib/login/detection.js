@@ -131,8 +131,10 @@ function get_login_field(login_form){
 		login_field: <login field>,
 		password_field: <password field>
 	}
+
+	Set the global var to share login form and field.  
 */
-function research_login_form(){
+function research_and_set_login_form(){
 	var forms_list = get_logins_form();
 
 	for(var i=0 ; i<forms_list.length ; i++){
@@ -147,6 +149,10 @@ function research_login_form(){
 			console.info("id: " + current_form.id);
 			console.debug("name: " + current_form.name);
 
+			current_login_form     = current_form;
+			current_login_field    = current_login;
+			current_password_field = current_password;
+
 			//Nice ES2015 syntax. Looks like Python :)
 			return {current_form, current_login, current_password};
 		}
@@ -155,19 +161,19 @@ function research_login_form(){
 }
 
 
-function initialise_login_DOM(login_form, login_field, password_field){
+function initialise_login_DOM(){
 	console.info("[mark_login_field]: Marking in DOM the following login form");
-	console.info("Id: " + login_form.id);
+	console.info("Id: " + current_login_form.id);
 
 	//Disable futur profil list event binding
-	login_field.setAttribute(CODE_LOGIN_FIELD, "true");
+	current_login_field.setAttribute(CODE_LOGIN_FIELD, "true");
 	//But we still need to disable any previous binding
-	login_field.removeEventListener("mouseover", display_list_profil, false);
-	login_field.removeEventListener("click", display_list_profil);
+	current_login_field.removeEventListener("mouseover", display_list_profil, false);
+	current_login_field.removeEventListener("click", display_list_profil);
 
 	//Exact same process for password field
-	password_field.setAttribute(CODE_PASSWORD_FIELD, "true");
-	password_field.removeEventListener("mouseover", display_list_profil, false);
-	password_field.removeEventListener("click", display_list_profil);
+	current_password_field.setAttribute(CODE_PASSWORD_FIELD, "true");
+	current_password_field.removeEventListener("mouseover", display_list_profil, false);
+	current_password_field.removeEventListener("click", display_list_profil);
 }
 

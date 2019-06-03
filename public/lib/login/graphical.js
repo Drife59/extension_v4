@@ -71,7 +71,7 @@ Use global var login_front_db
     <a href="#">Link 3</a>
 </div>
 */
-function buildLoginList(login_field, password_field) {
+function buildLoginList() {
 	
 	if(!login_front_db.has_login()){
 		console.info("No login for domain: " + login_front_db.domain);
@@ -100,8 +100,8 @@ function buildLoginList(login_field, password_field) {
 		//When leaving list, clearing field
 		//Unless a login has been selected
 		if( login_id_chosen == null){
-			login_field.value = "";
-			password_field.value = "";
+			current_login_field.value = "";
+			current_password_field.value = "";
 		}
 	}
 
@@ -149,14 +149,17 @@ function display_list_login(){
 
 //Entry point for login list management
 function init_event_login_list(){
-	var result_research_login_form = research_login_form();
+	var result_research_login_form = research_and_set_login_form();
 	if( result_research_login_form == false){
 		console.info("[init_event_login_list] Cannot find a login form, aborting logins event initialisation");
 		return false;
 	}
-	var {current_form:login_form, current_login:login_field, current_password:password_field} = result_research_login_form;
+	// Found the login form
 
-	initialise_login_DOM(login_form, login_field, password_field);
+	// Don't need this anymore, using global var 
+	//var {current_form:login_form, current_login:login_field, current_password:password_field} = result_research_login_form;
+
+	initialise_login_DOM();
 
 	if(! login_front_db.has_login()){
 		console.warn("No login at all for website, cannot initialise login list");
@@ -167,25 +170,25 @@ function init_event_login_list(){
 		console.info("Only one login was detected for this domain.");
 		console.info("Filling login/psd field within the ones found in login DB.");
 		var only_login = login_front_db.get_only_login();
-		login_field.value = only_login.login;
-		password_field.value = only_login.password;
+		current_login_field.value = only_login.login;
+		current_password_field.value = only_login.password;
 		return true;
 	}
 	else{
 		console.info("[mark_login_field] Many identifiers available for this domain. Building list");
-		list_login = buildLoginList(login_field, password_field);
+		list_login = buildLoginList();
 
 		window.document.body.appendChild(list_login)
 
 		//At the first navigation, on hover bind and display the list
-		login_field.addEventListener("mouseover", display_list_login);
-		login_field.onmouseover = function(){
+		current_login_field.addEventListener("mouseover", display_list_login);
+		current_login_field.onmouseover = function(){
 			pointer_on_login_input = true;
 		}
 	
 
 		//Hide list if leaving field and pointer is not on list
-		login_field.onmouseout = function () {
+		current_login_field.onmouseout = function () {
 			pointer_on_login_input = false;
 
 			//We need to wait a bit to allow value pointer_on_login_list to change
@@ -199,7 +202,7 @@ function init_event_login_list(){
 			
 		}
 	}
-	bind_listenner_login(login_field, password_field);
+	bind_listenner_login();
 }
 
 //Get from DB the current login object corresponding to login id
@@ -212,7 +215,7 @@ function get_current_login_from_list(evt){
 	return current_login;
 }
 
-function bind_listenner_login(login_field, password_field) {
+function bind_listenner_login() {
 	var all_options = document.body.querySelectorAll("a[login_id]");
 	var opt_clear = document.body.querySelector("a#clear_corail");
 
@@ -222,8 +225,8 @@ function bind_listenner_login(login_field, password_field) {
 		//Bind event to preselect a login
 		all_options[i].onmouseover = function (evt) {
 			var current_login = get_current_login_from_list(evt);	
-			login_field.value    = current_login["login"];
-			password_field.value = current_login["password"];
+			current_login_field.value    = current_login["login"];
+			current_password_field.value = current_login["password"];
 		}
 
 		//Bind event to choose a login
@@ -244,14 +247,14 @@ function bind_listenner_login(login_field, password_field) {
 
 		//Don't display any value when hover clear option
 		opt_clear.onmouseover = function (evt) {
-			login_field.value    = "";
-			password_field.value = "";
+			current_login_field.value    = "";
+			current_password_field.value = "";
 		}
 		
 		opt_clear.onclick = function (evt) {
 			console.info("Clearing login");
-			login_field.value    = "";
-			password_field.value = "";
+			current_login_field.value    = "";
+			current_password_field.value = "";
 			//Don't scroll vertically to the top
 			evt.preventDefault();
 

@@ -23,3 +23,11 @@ var profil_id_chosen = null;
 
 var current_user = null;
 
+// These 3 var are initiated when loading page
+// It allows to share the login form and its fields in all app 
+current_login_form     = null;
+current_login_field    = null;
+current_password_field = null;
+
+
+
