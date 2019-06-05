@@ -205,4 +205,8 @@ var keyword_occurence_needed = 2;
 
 var CODE_LOGIN_FIELD    = "login_field";
 var CODE_PASSWORD_FIELD = "password_field";
-var id_list_login = "id_login_list";
+var id_list_login       = "id_login_list";
+
+//Define the minimum length for saving a couple login / psd
+var minimum_login_length    = 4;
+var minimum_password_length = 6;

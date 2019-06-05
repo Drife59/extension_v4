@@ -172,7 +172,7 @@ function load_profils_from_cache(email){
 // the profil DB received 
 function load_login_from_back(email, domain){
     console.info("[load_login_from_back] Loading login/psd for user " + email + ", on domain: " + domain);
-    login_front_db = new LoginPsd();
+    login_front_db = new LoginPsd(null, domain);
     var xhttp_get_login = xhttp_get_login_psd(email, domain);
 
     var json_login = null;

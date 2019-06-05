@@ -139,4 +139,92 @@ class LoginPsd {
         console.warn("[get_login_by_id] Could not get login id: " + login_id);
         return null;
     }
+
+    //Check if this login / psd already exist for this domain
+    check_login_psd_existence(login_to_check, password_to_check){
+        for(var i=0 ; i<this.login_psd.length ; i++){
+            var current_login_obj = this.login_psd[i];
+            if(current_login_obj.login == login_to_check && 
+               current_login_obj.password == password_to_check){
+                console.debug("[check_login_psg_existence] login " + login_to_check + " / " + password_to_check + " already exist");
+                return current_login_obj;
+            }
+        }
+
+        //Nice ! This login / psd was not found
+        console.debug("[check_login_psg_existence] login " + login_to_check + " / " + password_to_check + " does not exist") 
+        return false;
+    }
+
+    //Check if this login already exist for this domain
+    check_login_existence(login_to_check){
+        for(var i=0 ; i<this.login_psd.length ; i++){
+            var current_login_obj = this.login_psd[i];
+            if(current_login_obj.login == login_to_check ){
+                console.debug("[check_login_psg_existence] login " + login_to_check + " already exist");
+                return current_login_obj;
+            }
+        }
+
+        // This login was not found 
+        console.debug("[check_login_psg_existence] login " + login_to_check + " does not exist") 
+        return false;
+    }
+
+    //Add in front and back a new couple login / psd
+    add_login_psd(login_to_add, psd_to_add){
+        var xhttp_local = xhttp_add_login_psd(current_user, this.domain, login_to_add, psd_to_add);
+        
+        //Will lose context in "onreadystatechange" function
+        var current_this = this;
+        xhttp_local.onreadystatechange = function () {
+            if (xhttp_local.readyState == 4 && xhttp_local.status == 200) {
+                var response_obj = JSON.parse(xhttp_local.responseText);
+                var obj_to_add = {
+                    login_id: response_obj["loginId"],
+                    login: login_to_add,
+                    password: psd_to_add
+                }
+                current_this.login_psd.push(obj_to_add);
+                console.info("[add_login_psd] Obj login : " + JSON.stringify(obj_to_add) + 
+                    " was added to login front DB & back-end");
+            }
+        }
+    }
+
+    //Add in front and back a new couple login / psd
+    update_login_psd(email, login_id, new_password){
+
+        //First get login / psd to update
+        var login_to_update = null;
+
+        for(var i=0 ; i<this.login_psd.length ; i++){
+            var current_login_obj = this.login_psd[i];
+            if(current_login_obj.login_id == login_id ){
+                console.debug("[check_login_psg_existence] login " + login_id + " already exist");
+                login_to_update = current_login_obj;
+                break;
+            }
+        }
+
+        if(login_to_update == null){
+            console.warn("Cannot find login to update id " + login_id + ". Aborting update");
+            return false;
+        }
+
+        login_to_update["password"] = new_password;
+
+        var xhttp_local = xhttp_update_login_psd(email, login_id, new_password);
+        
+        //Will lose context in "onreadystatechange" function
+        var current_this = this;
+        xhttp_local.onreadystatechange = function () {
+            if (xhttp_local.readyState == 4 && xhttp_local.status == 200) {
+                console.info("Login_psd: " + JSON.stringify(current_this.login_psd, null, 4));
+            }
+            else if(xhttp_local.readyState == 4 && xhttp_local.status != 200){
+                console.warn("Update login id " + login_id + "failed.");
+            }
+        }
+    }
 }

@@ -164,12 +164,12 @@ function init_event_login_list(){
 	bind_login_event();
 
 	if(! login_front_db.has_login()){
-		console.warn("No login at all for website, cannot initialise login list");
+		console.debug("No login at all for website, aborting login initialisation");
 		return false;
 	}
 
 	if( login_front_db.has_only_one_login()){
-		console.info("Only one login was detected for this domain.");
+		console.info("Only one login / psd was found for this domain.");
 		console.info("Filling login/psd field within the ones found in login DB.");
 		var only_login = login_front_db.get_only_login();
 		current_login_field.value = only_login.login;
