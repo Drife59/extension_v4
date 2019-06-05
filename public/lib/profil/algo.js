@@ -128,17 +128,17 @@ function preprocess_input(input, key_domain, user_value){
 //Main algo for event change detected on input field
 function changeAlgoProfil(evt) {
 	var field = evt.target
-	console.info("Algo change: field " + field.tagName + " modified: " + HtmlEltToString(field));
-	
+
+	//Don't process login field in profil process
 	if(is_login_field(field) ){
-		console.info("Field changed is a login field. Don't process it for now. ");
 		return false;
 	}
 
 	if(is_password_field(field) ){
-		console.info("Field changed is a password field. Don't process it for now. ");
 		return false;
 	}
+
+	console.info("Algo profil change: field " + field.tagName + " modified: " + HtmlEltToString(field));
 	
 	var key_domain = construit_domaine_cle(field);
 	var user_value = get_user_value(field);
@@ -226,14 +226,13 @@ function changeAlgoProfil(evt) {
 function keyDownAlgoProfil(evt) {
 	var input = evt.target
 	console.debug("Algo key press: field " + input.tagName + " modified by user: " + HtmlEltToString(input));
-	
+
+	//Don't process the login field in profil process
 	if(is_login_field(input) ){
-		console.info("Field changed is a login field. Don't process it for now. ");
 		return false;
 	}
 
 	if(is_password_field(input) ){
-		console.info("Field changed is a password field. Don't process it for now. ");
 		return false;
 	}
 	input.setAttribute(CODE_FIELD_USER_EDIT, true);
