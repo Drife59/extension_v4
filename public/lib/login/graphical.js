@@ -147,6 +147,7 @@ function display_list_login(){
 }
 
 
+//@ENTRYPOINT
 //Entry point for login list management
 function init_event_login_list(){
 	var result_research_login_form = research_and_set_login_form();
@@ -160,6 +161,7 @@ function init_event_login_list(){
 	//var {current_form:login_form, current_login:login_field, current_password:password_field} = result_research_login_form;
 
 	initialise_login_DOM();
+	bind_login_event();
 
 	if(! login_front_db.has_login()){
 		console.warn("No login at all for website, cannot initialise login list");

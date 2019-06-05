@@ -167,13 +167,24 @@ function initialise_login_DOM(){
 
 	//Disable futur profil list event binding
 	current_login_field.setAttribute(CODE_LOGIN_FIELD, "true");
-	//But we still need to disable any previous binding
-	current_login_field.removeEventListener("mouseover", display_list_profil, false);
-	current_login_field.removeEventListener("click", display_list_profil);
 
 	//Exact same process for password field
 	current_password_field.setAttribute(CODE_PASSWORD_FIELD, "true");
+}
+
+function bind_login_event(){
+	console.info("[bind_login_event]: Binding in DOM the login event for following form:");
+	console.info("Id: " + current_login_form.id);
+
+	//Disable futur profil list event binding, add login event
+	current_login_field.removeEventListener("mouseover", display_list_profil, false);
+	current_login_field.removeEventListener("click", display_list_profil);
+	current_login_field.addEventListener("blur", blur_field_login);
+
+	//Exact same process for password field
 	current_password_field.removeEventListener("mouseover", display_list_profil, false);
 	current_password_field.removeEventListener("click", display_list_profil);
+	current_password_field.addEventListener("blur", blur_field_login);
+
 }
 
