@@ -28,6 +28,7 @@ function lancement_app() {
     console.info("Parsing fields...")
     init_fields();
 
+
     //In order to load website db from back and execute heuristic,
     //we need to wait parsing field is finished
     setTimeout(function () {
@@ -38,6 +39,9 @@ function lancement_app() {
 
         //If there is a temporary profil in cache, we need to create it in back
         profil_db.create_profil_from_temp_profil();
+
+       // Start DOM observation
+       observer_corail.observe(document.body, observer_config);
     }, timeout_parsing);
 }
 

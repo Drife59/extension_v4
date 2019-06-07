@@ -58,7 +58,8 @@
 		"lib/login/graphical.js",
 		"front_db/back_management.js",
 		"lib/fill_field.js",
-		"lib/preload_front.js"]
+		"lib/preload_front.js",
+		"lib/observer.js"]
     },
   	{
 		"matches": [
