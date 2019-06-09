@@ -210,3 +210,10 @@ var id_list_login       = "id_login_list";
 //Define the minimum length for saving a couple login / psd
 var minimum_login_length    = 4;
 var minimum_password_length = 6;
+
+//Define all tag acceptable to detect a form modification
+//This type of tag insertion will trigger Corail reload on current page
+var tag_trigger_corail_relaunch = ["P", "OL", "DIV", "FORM", "FIELDSET", "TABLE"];
+
+//Don't consider DOM insertion if size < to var below
+var minimum_size_form_insertion = 30;
