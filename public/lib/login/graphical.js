@@ -226,9 +226,16 @@ function bind_listenner_login() {
 		
 		//Bind event to preselect a login
 		all_options[i].onmouseover = function (evt) {
-			var current_login = get_current_login_from_list(evt);	
+			var current_login = get_current_login_from_list(evt);
+			// Simulate that the value change has been made by a user.
+    		// This can be usefull for some form, to improve user experience
+    		// Example: minify label, delete placeholder, etc  
+			current_login_field.dispatchEvent(event = new Event('focus'));
+			current_password_field.dispatchEvent(event = new Event('focus'));		
 			current_login_field.value    = current_login["login"];
 			current_password_field.value = current_login["password"];
+			current_login_field.dispatchEvent(event = new Event('blur'));
+			current_password_field.dispatchEvent(event = new Event('blur'));	
 		}
 
 		//Bind event to choose a login
