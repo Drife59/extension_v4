@@ -9,31 +9,6 @@ Define dedicated algoritm to fill fields.
 */
 
 
-//Simulate that the user did really modify the field himself
-//If not used when should be, issue occur, like wrong design,
-//or impossibility to validate form
-function simulate_user_change(input, user_value) {
-    console.debug("Algo load: simulate user change on field: " + construit_domaine_cle(input));
-    
-    //Note(BG): the simulate click was commented as it fucks up the V6 profil system
-    //We monitor click and hover for V6 profil
-    
-    //Simulate click and focus on the field. Usefull for some form
-    //var event = new Event('click');
-    //input.dispatchEvent(event);
-
-    event = new Event('focus');
-    input.dispatchEvent(event);
-
-    //Simulate changing value and quitting form field
-    event = new Event('input');
-    input.dispatchEvent(event);
-
-    var event = new Event('blur');
-    input.dispatchEvent(event);
-}
-
-
 
 // --------------
 // V6 New filling
@@ -101,8 +76,18 @@ function fill_field_v6(input, domain, profil_id, profil_validated, fake_user_cha
             fill_value(input, user_value);
             apply_corail_design(input);
             if(fake_user_change == true){
-                simulate_user_change(input, user_value);
+
+                //Note(BG): the simulate click was commented as it fucks up the V6 profil system
+                //We monitor click and hover for V6 profil
+                
+                //Simulate click and focus on the field. Usefull for some form
+                //var event = new Event('click');
+                //input.dispatchEvent(event);
+
+                //Simulate changing value and quitting form field
+                input.dispatchEvent(new Event('input'));
             }
+
         }else{
             console.debug("User does not have a value for pivot: " + pivot_reference);
         }
@@ -112,6 +97,12 @@ function fill_field_v6(input, domain, profil_id, profil_validated, fake_user_cha
 //Fill a value (or select the good one in select field),
 // regardless of type or cases
 function fill_value(field, user_value){
+
+    // Simulate that the value change has been made by a user.
+    // This can be usefull for some form, to improve user experience
+    // Example: minify label, delete placeholder, etc  
+    field.dispatchEvent(event = new Event('focus'));
+
     //input field, easy :)
     if(field.tagName == "input" || field.tagName == "Input" || field.tagName == "INPUT"){
         field.value = user_value;
@@ -141,7 +132,12 @@ function fill_value(field, user_value){
                 break;
             }
         }
-	}
+    }
+    
+    // Value has been filled. Let's lose focus :)
+    // Usefull to garantee a good user experience regardless of
+    // the website currently visited
+    field.dispatchEvent(event = new Event('blur'));
 }
 
 function fill_fields_v6(profil_id, profil_validated, fake_user_change) {
