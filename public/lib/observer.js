@@ -40,6 +40,11 @@ function subscriber(mutations) {
             return false;
         }
 
+        if(mutation.addedNodes[0].id == "id_login_list" ){
+            console.debug("The added node was the login profil. Abort Corail relaunch.");
+            return false;
+        }
+
         if(mutation.addedNodes[0].length < minimum_size_form_insertion ){
             console.debug("The added node is too short. It's probably not a form. Abort Corail relaunch.");
             return false;
