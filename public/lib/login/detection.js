@@ -36,13 +36,13 @@ function nb_keyword_in_form(form, words){
 		
 		//For some reason, the var of a form are not always a string. Need to check this
 
-		if( form.name !== undefined && (typeof(form.action) === "string" ) ) {
+		if( form.name !== undefined && (typeof(form.name) === "string" ) ) {
 			nb_occurences = nb_occurences + occurrences_in_string(form.name.toLowerCase(), words[i], false);	
 		}
-		if( form.className !== undefined && (typeof(form.action) === "string" ) ){
+		if( form.className !== undefined && (typeof(form.className) === "string" ) ){
 			nb_occurences = nb_occurences + occurrences_in_string(form.className.toLowerCase(), words[i], false);	
 		}
-		if( form.title !== undefined && (typeof(form.action) === "string" ) ){
+		if( form.title !== undefined && (typeof(form.title) === "string" ) ){
 			nb_occurences = nb_occurences + occurrences_in_string(form.title.toLowerCase(), words[i], false);
 		}
 		if( form.id !== undefined && (typeof(form.id) === "string" ) ){
