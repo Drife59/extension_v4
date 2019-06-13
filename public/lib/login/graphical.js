@@ -30,7 +30,7 @@ var list_login = null;
 function build_DOM_profil_list(){
 	var html_list_login = document.createElement('div');
 	html_list_login.id = id_list_login;
-	html_list_login.className = "corail_list dropdown-content";
+	html_list_login.className = "corail_list";
 
 	//Build dynamic list from login front db
 	var login_list = login_front_db.login_psd;

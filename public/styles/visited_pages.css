@@ -67,40 +67,47 @@ note(BG): ho uiiiiiiiii the future :) */
 
 
 /* To build to list of profil (dropdown) */
-.dropdown-content {
+.corail_list {
     background-color: #f1f1f1;
     z-index: 1;
   }
   
-.dropdown-content a {
+.corail_list a {
     color: black;
     padding: 8px 20px;
     text-decoration: none;
     display: block;
 }
 
-.dropdown-content a:hover {
+.corail_list a:hover {
     color: black;
     padding: 8px 20px;
     text-decoration: none;
     display: block;
 }
 
-.dropdown-content a:visited {
+.corail_list a:visited {
     color: black;
     padding: 8px 20px;
     text-decoration: none;
     display: block;
 }
 
-.dropdown-content a:active {
+.corail_list a:visited:hover {
     color: black;
     padding: 8px 20px;
     text-decoration: none;
     display: block;
 }
 
-.dropdown-content a:focus {
+.corail_list a:active {
+    color: black;
+    padding: 8px 20px;
+    text-decoration: none;
+    display: block;
+}
+
+.corail_list a:focus {
     color: black;
     padding: 8px 20px;
     text-decoration: none;
