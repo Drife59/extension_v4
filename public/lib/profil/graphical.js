@@ -138,6 +138,12 @@ function init_event_list_profil() {
 	//Wait to display the list that it is ready
 	list_profil.style.display = "none";
 
+	//First, del old list if it was already there
+	var old_list_profil = document.body.querySelector("div[id=list_profil]");
+	if(old_list_profil != null){
+		old_list_profil.remove();
+	}
+
 	window.document.body.appendChild(list_profil)
 
 	for (var i = 0; i < type_to_include.length; i++) {
