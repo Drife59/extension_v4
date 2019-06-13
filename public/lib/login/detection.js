@@ -120,6 +120,20 @@ function get_login_field(login_form){
 	return login_field;
 }
 
+//Get the number of field we can find in form. 
+function get_number_field_in_form(login_form){
+	var nb = 0;
+
+	for(var i=0 ; i<type_login_form_detection.length ; i++){
+		var current_type_login_form = type_login_form_detection[i];
+
+		var current_fields = login_form.querySelectorAll("input[type=" + current_type_login_form + "]");
+		nb += current_fields.length; 
+	}
+	console.debug("[get_number_field_in_form] The total number of fields in form = " + nb);
+	return nb;
+}
+
 /* Research in current page the login form
    Three conditions: 
   		 - there are forms eligible
@@ -140,6 +154,13 @@ function research_and_set_login_form(){
 
 	for(var i=0 ; i<forms_list.length ; i++){
 		var current_form = forms_list[i];
+
+		// If there is more than 2 field in the form, it's not a login form
+		// Probably a "classical profil form" 
+		if(get_number_field_in_form(current_form) > 2){
+			console.debug("There is more than 2 field in form. It's not a login form. Going to next form.");
+			continue;
+		}
 
 		var current_login = get_login_field(current_form);
 		var current_password = get_password_field(current_form);

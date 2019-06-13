@@ -217,3 +217,6 @@ var tag_trigger_corail_relaunch = ["P", "OL", "DIV", "FORM", "FIELDSET", "TABLE"
 
 //Don't consider DOM insertion if size < to var below
 var minimum_size_form_insertion = 30;
+
+//list of type to check to look into login form
+var type_login_form_detection = ["text", "email", "password", "tel", "date", "time", "datetime", "number"];
