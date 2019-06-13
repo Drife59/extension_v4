@@ -116,6 +116,10 @@ function buildLoginList() {
 		html_list_login.style.display = "none";
 	}
 
+	// By default, the login list will not be displayed
+	// It will appear on particular events
+	html_list_login.style.display = "none";
+
 	return html_list_login;
 }
 
@@ -180,7 +184,8 @@ function init_event_login_list(){
 		console.info("[mark_login_field] Many identifiers available for this domain. Building list");
 		list_login = buildLoginList();
 
-		window.document.body.appendChild(list_login)
+		window.document.body.appendChild(list_login);
+
 
 		//At the first navigation, on hover bind and display the list
 		current_login_field.addEventListener("mouseover", display_list_login);
