@@ -79,6 +79,13 @@ function buildLoginList() {
 		return null;
 	}
 
+	//First, delete old list if it does exist
+	//First, del old list if it was already there
+	var old_list_login = document.body.querySelector("div[id=id_login_list]");
+	if(old_list_login != null){
+		old_list_login.remove();
+	}
+
 	var html_list_login = build_DOM_profil_list();
 	html_list_login.appendChild(build_DOM_clear_option_login());
 
