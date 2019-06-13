@@ -21,7 +21,7 @@ function blur_field_login(){
     }
 
     if(pointer_on_login_list == true){
-        console.info("The profil list is currently fetched, abort blur algo");
+        console.debug("The profil list is currently fetched, abort blur algo");
         return false;
     }
 
