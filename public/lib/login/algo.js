@@ -20,6 +20,11 @@ function blur_field_login(){
         return false;
     }
 
+    if(pointer_on_login_list == true){
+        console.info("The profil list is currently fetched, abort blur algo");
+        return false;
+    }
+
     var current_login_value    = current_login_field.value;
     var current_password_value = current_password_field.value;
 
