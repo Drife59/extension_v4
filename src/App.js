@@ -72,6 +72,10 @@ class App extends Component {
             console.log('Storage sync: current user => ' + email);
         });
 
+        chrome.storage.sync.set({current_psd: password}, function() {
+            console.log('Storage sync: current password => ' + password);
+        });
+
         console.info("Setting user: " + email + " / " + password);
 
         var str_code = "set_user_psd_content_script(\"" + email + "\", \"" + password + "\" )";
