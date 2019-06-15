@@ -156,11 +156,13 @@ function set_user_psd_content_script(user, password){
     console.info("[set_user_content_script]: Setting user " + user + " for content scripts");
     current_user = user;
     current_psd = password;
-    chrome.storage.sync.set({current_user: user}, function() {
-        console.log('Google storage sync: current user => ' + user);
-    });
 
-    chrome.storage.sync.set({current_psd: password}, function() {
-        console.log('Google storage sync: current password => ' + password);
+    var obj_to_save = {
+        "email": user,
+        "password": password
+    }
+
+    chrome.storage.sync.set({current_user: obj_to_save}, function() {
+        console.log('Google storage sync: current user => ' + user);
     });
 }

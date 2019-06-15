@@ -67,8 +67,13 @@ class App extends Component {
         this.setState({
             current_user: email,
         });
+
+        var obj_to_save = {
+            "email": email,
+            "password": password
+        }
         
-        chrome.storage.sync.set({current_user: email}, function() {
+        chrome.storage.sync.set({current_user: obj_to_save}, function() {
             console.log('Storage sync: current user => ' + email);
         });
 
