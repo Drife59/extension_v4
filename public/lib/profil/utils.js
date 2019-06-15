@@ -78,7 +78,7 @@ function init_new_profil(user){
             setTimeout(function () {
                 //By default, create the main email pivot / user value
                 //We need the send the ref of profil_db obj because it will be lose due to "setTimeout"
-                profil_db.add_value_to_profil(user, CODE_MAIN_EMAIL, user, data["profilId"], init_event_list);
+                profil_db.add_value_to_profil(user, CODE_MAIN_EMAIL, user, data["profilId"], init_event_list_profil);
                 console.info("[init_new_profil] Adding " + CODE_MAIN_EMAIL + " to default profil");
             }, timeout_profil_creation);
             
@@ -155,10 +155,3 @@ function has_minimum_attribute(profil_test){
     return true;
 }
 
-function set_user_content_script(user){
-    console.info("[set_user_content_script]: Setting user " + user + " for content scripts");
-    current_user = user;
-    chrome.storage.sync.set({current_user: user}, function() {
-        console.log('Google storage sync: current user => ' + user);
-    });
-}
