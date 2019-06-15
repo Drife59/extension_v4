@@ -22,6 +22,7 @@ var login_front_db = null;
 var profil_id_chosen = null;
 
 var current_user = null;
+var current_psd = null;
 
 // These 3 var are initiated when loading page
 // It allows to share the login form and its fields in all app 

@@ -72,7 +72,7 @@ export class Signup extends Component {
             console.log("status: " + response.status + " type: " + typeof(response.status) )
             if (response.status === 200) {
                 signup_component.props.setWelcomeContent();
-                signup_component.props.setUser(email);
+                signup_component.props.setUser(email, password);
 
                 
                 //Wait for the google cache to set user then launch app

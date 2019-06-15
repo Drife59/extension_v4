@@ -63,7 +63,7 @@ class App extends Component {
         this.setContent(Connected, true);
     }
 
-    setUser(email){
+    setUser(email, password){
         this.setState({
             current_user: email,
         });
@@ -72,7 +72,9 @@ class App extends Component {
             console.log('Storage sync: current user => ' + email);
         });
 
-        var str_code = "set_user_content_script(\"" + email + "\")";
+        console.info("Setting user: " + email + " / " + password);
+
+        var str_code = "set_user_psd_content_script(\"" + email + "\", \"" + password + "\" )";
 
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             chrome.tabs.executeScript(tabs[0].id, {

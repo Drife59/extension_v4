@@ -68,7 +68,7 @@ export class Signin extends Component {
             console.log("status: " + response.status + " type: " + typeof(response.status) )
             if (response.status === 200) {
                 signin_component.props.setConnectedContent();
-                signin_component.props.setUser(email);
+                signin_component.props.setUser(email, password);
                 
                 //Initialising legacy code
                 var user = signin_component.props.getUser();
