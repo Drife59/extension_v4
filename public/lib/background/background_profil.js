@@ -46,15 +46,19 @@ chrome.runtime.onMessage.addListener(
 
 
 //2) Preload user from cache, and it's front DB
-chrome.storage.sync.get("current_user", function (data) {
+chrome.storage.sync.get("current_user", function (data_user) {
 
-    if (typeof data.current_user !== 'undefined') {
+    if (typeof data_user.current_user !== 'undefined') {
         //set global var current user for all app
-        console.info("[Background launch] Loaded current user from cache: " + data.current_user);
-        current_user = data.current_user;
-
-        
-        background_profil_db = load_profils_from_back(data.current_user, false);
+        current_user = data_user.current_user.email;
+        current_psd = data_user.current_user.password;
+        if(current_psd != null && current_psd !== undefined){
+            background_profil_db = load_profils_from_back(current_user, false);
+                console.info("[background.js] find current user & psd. Loading profil.");
+        }
+        else{
+            console.warn("[background.js] Could not load current_psd, so could not load profil.");
+        }
 
         //We wait for the request from back to be finished before initiate object to send to content scripts
         setTimeout( function(){

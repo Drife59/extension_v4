@@ -51,8 +51,11 @@ chrome.storage.sync.get("current_user", function (data) {
 
     if (typeof data.current_user !== 'undefined') {
         //set global var current user for all app
-        console.info("[Front launch] Loaded current user from cache: " + data.current_user);
-        current_user = data.current_user;
+        current_user = data.current_user.email;
+        current_psd  = data.current_user.password; 
+        console.info("[Front launch] Loaded user / psd from cache: " + 
+            current_user + " / " + current_psd);
+
         console.info("Profil DB initialisation: requesting content from background");
 
         //3) Preload website front DB
@@ -71,17 +74,6 @@ chrome.storage.sync.get("current_user", function (data) {
 
         //If the user is here, then the legacy profilless front db should also be here
         load_user_db_from_cache();
-
-        //If we could find the current user, then we should be able to find the current psd
-        chrome.storage.sync.get("current_psd", function (data) {
-            if (typeof data.current_psd !== 'undefined') {
-                console.info("[Front launch] Loaded current psd " + data.current_psd);
-                current_psd = data.current_psd;
-            }
-            else{
-                console.warn("[Front launch] Could load user but not psd. Logging out");
-            }
-        });
     }else{
         console.warn("[Front launch] Cannot find user, please log in.");
     }
