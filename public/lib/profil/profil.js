@@ -360,7 +360,8 @@ class UserProfil {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                CODE_HEADER_PASSWORD: current_psd
             },
         });
         const content = await rawResponse.json();  

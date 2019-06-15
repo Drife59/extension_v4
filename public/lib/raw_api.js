@@ -149,7 +149,8 @@ async function fetch_create_value_user(email, pivot, value){
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        CODE_HEADER_PASSWORD: current_psd
       },
     });
     const content = await rawResponse.json();  
@@ -164,6 +165,8 @@ function xhttp_get_object_front_db(email){
 
     xhttp_back_api.open("GET", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send();
     return xhttp_back_api;
 }
@@ -177,6 +180,8 @@ function xhttp_update_weight(value_id, new_weight){
 
     xhttp_back_api.open("PUT", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send();
     return xhttp_back_api;
 }
@@ -188,6 +193,8 @@ function xhttp_delete_value(value_id){
 
     xhttp_back_api.open("DELETE", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send();
     return xhttp_back_api;
 }

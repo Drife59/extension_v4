@@ -25,6 +25,7 @@ function xhttp_get_login_psd(email, domain){
 
     xhttp_back_api.open("GET", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
     xhttp_back_api.send();
     return xhttp_back_api;
 }
@@ -34,6 +35,8 @@ function xhttp_add_login_psd(email, domain, login, password){
     var url_final = url_login_domain.replace("{email}", email)
                                   .replace("{domain}", domain);
 
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     var login_obj = {
         login: login,
         password: password
@@ -42,6 +45,8 @@ function xhttp_add_login_psd(email, domain, login, password){
     console.debug("Sending objet login to back: " + JSON.stringify(login_obj));
     xhttp_back_api.open("POST", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send(JSON.stringify(login_obj));
     return xhttp_back_api;
 }
@@ -54,6 +59,8 @@ function xhttp_update_login_psd(email, login_id, new_password){
 
     xhttp_back_api.open("PUT", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send();
     return xhttp_back_api;
 }
@@ -67,6 +74,8 @@ function xhttp_delete_login_psd(email, login_id){
 
     xhttp_back_api.open("DELETE", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send();
     return xhttp_back_api;
 }

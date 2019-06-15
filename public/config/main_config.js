@@ -35,6 +35,9 @@ var override_field_with_value = true;
 //define domain where software should not be executed
 var skip_domain = ["www.corail.me", "corail.me", "localhost", "127.0.0.1"];
 
+//Define the name of dedicated header to send Main Password
+var CODE_HEADER_PASSWORD = "Main-Password";
+
 // --------------
 // Log parameters
 // --------------

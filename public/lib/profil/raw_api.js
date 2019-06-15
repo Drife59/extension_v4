@@ -27,6 +27,8 @@ function xhttp_get_profils(email){
 
     xhttp_back_api.open("GET", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send();
     return xhttp_back_api;
 }
@@ -38,6 +40,8 @@ function xhttp_create_profil(email, profil_name){
 
     xhttp_back_api.open("POST", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send();
     return xhttp_back_api;
 }
@@ -51,6 +55,8 @@ function xhttp_create_profil_value_user(email, pivot, value, profil_id){
                                     .replace("{profil_id}", profil_id);
     xhttp_back_api.open("POST", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send();
     return xhttp_back_api;
 }
@@ -64,6 +70,8 @@ function xhttp_profil_update_weight(email, profil_id, new_weight){
 
     xhttp_back_api.open("PUT", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send();
     return xhttp_back_api;
 }
@@ -77,6 +85,8 @@ function xhttp_delete_profil(email, profil_id){
 
     xhttp_back_api.open("DELETE", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send();
     return xhttp_back_api;
 }
@@ -93,6 +103,8 @@ function xhttp_all_values_with_profil(email){
     console.debug("Final url: " + url_final);
     xhttp_back_api.open("GET", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
+
     xhttp_back_api.send();
     return xhttp_back_api;
 }
