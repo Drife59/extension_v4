@@ -65,7 +65,7 @@ class App extends Component {
 
     setUser(email, password){
         this.setState({
-            current_user: email,
+            "current_user": email,
         });
 
         var obj_to_save = {
@@ -73,17 +73,15 @@ class App extends Component {
             "password": password
         }
         
-        chrome.storage.sync.set({current_user: obj_to_save}, function() {
-            console.log('Storage sync: current user => ' + email);
+        chrome.storage.sync.set({"current_user": obj_to_save}, function() {
+            console.log('[setUser] Storage sync: current user => ' + email);
         });
 
-        chrome.storage.sync.set({current_psd: password}, function() {
-            console.log('Storage sync: current password => ' + password);
-        });
-
-        console.info("Setting user: " + email + " / " + password);
+        console.info("[setUser] Setting user: " + email + " / " + password);
 
         var str_code = "set_user_psd_content_script(\"" + email + "\", \"" + password + "\" )";
+
+        console.debug("Executing following code in content script: " + str_code);
 
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             chrome.tabs.executeScript(tabs[0].id, {
@@ -96,7 +94,7 @@ class App extends Component {
     }
 
     getUser(){
-        console.log("getting email...");
+        console.log("getting email: " + this.state.current_user);
         return this.state.current_user;
     }
 
@@ -123,10 +121,12 @@ class App extends Component {
 
         //Get user from storage and set it in State
         chrome.storage.sync.get('current_user', function(result) {
-            console.log('Current user is ' + result.current_user);
             if(result.current_user !== null && result.current_user !== undefined){
-                app.setUser(result.current_user);
-                console.log("Set connected content");
+                console.info('[componentDidMount] From cache current user is ' + result.current_user.email);
+                console.info('[componentDidMount] From cache current password is ' + result.current_user.password);
+
+                app.setUser(result.current_user.email, result.current_user.password);
+                console.log("[componentDidMount] Set connected content");
                 app.setConnectedContent();
             }
         });

@@ -153,7 +153,9 @@ function occurrences_in_string(string, subString, allowOverlapping) {
 
 // Set in storage and RAM the user and it's password
 function set_user_psd_content_script(user, password){
-    console.info("[set_user_content_script]: Setting user " + user + " for content scripts");
+    console.info("[set_user_psd_content_script]: Setting user " + user + " for content scripts");
+    console.info("[set_user_psd_content_script]: Setting password " + password + " for content scripts");
+
     current_user = user;
     current_psd = password;
 
@@ -163,6 +165,6 @@ function set_user_psd_content_script(user, password){
     }
 
     chrome.storage.sync.set({current_user: obj_to_save}, function() {
-        console.log('Google storage sync: current user => ' + user);
+        console.log('[set_user_psd_content_script]: Google storage sync: current user => ' + user);
     });
 }
