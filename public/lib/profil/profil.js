@@ -356,13 +356,14 @@ class UserProfil {
         
         console.debug("Final url: " + url_final);
 
+        var current_header = {};
+        current_header['Accept'] = 'application/json';
+        current_header['Content-Type'] = 'application/json';
+        current_header[CODE_HEADER_PASSWORD] = current_psd;
+
         const rawResponse = await fetch(url_final, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                CODE_HEADER_PASSWORD: current_psd
-            },
+            headers: current_header,
         });
         const content = await rawResponse.json();  
         return content;
