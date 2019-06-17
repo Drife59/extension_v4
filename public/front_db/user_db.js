@@ -111,15 +111,6 @@ class UserPivotValues {
                 }
             }
         });
-
-        chrome.storage.sync.get("current_user", function (data) {
-            if (typeof data.current_user !== 'undefined') {
-                current_obj.current_user = data.current_user;
-                console.info("[get_userdb_storage]Loaded current user from cache: " + data.current_user);
-            } else {
-                console.warn("[get_userdb_storage] Could not load current user  from cache");
-            }
-        });
     }
 
     //Generate a string easy to read
