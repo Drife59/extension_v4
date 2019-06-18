@@ -15,7 +15,7 @@ init_domaine();
 
 //Add a listener to update profil DB if background requests it
 chrome.runtime.onConnect.addListener(function(port) {
-    console.info("[Background request] Received profil DB from background");
+    console.debug("[Background request] Received profil DB from background");
     console.assert(port.name == "background_connect");
     port.onMessage.addListener(function(msg) {
         if (msg.profil_values !== undefined){
@@ -56,6 +56,8 @@ chrome.storage.sync.get("current_user", function (data) {
         console.info("[Front launch] Loaded user / psd from cache: " + 
             current_user + " / " + current_psd);
 
+        
+
         console.info("Profil DB initialisation: requesting content from background");
 
         //3) Preload website front DB
@@ -66,7 +68,17 @@ chrome.storage.sync.get("current_user", function (data) {
         chrome.runtime.sendMessage({action: ACTION_GET_PROFIL_BDD}, function(response) {
             console.info("Profil value received from background: " + JSON.stringify(response.profil_values,null, 4));
             console.info("Initializing profil with received profil values object from background");
-            profil_db = new UserProfil(current_user, response.profil_values);
+
+            // If the object is empty, it can be because the account is brand new and need an initialisation
+            if(Object.keys(response.profil_values).length === 0 && response.profil_values.constructor === Object){
+                console.info("[preload_front] No profil data at all. Check if default profil exist, create it if needed.");
+                init_new_profil(current_user);
+            }
+            
+            //If there are some data, we can go ahead and create the corresponding profil object
+            else{
+                profil_db = new UserProfil(current_user, response.profil_values);
+            }
 
             //Here, the front script should take care of building the list
             //We are in the preload script, after all :)
