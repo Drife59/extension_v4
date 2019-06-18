@@ -105,7 +105,7 @@ class UserPivotValues {
                 console.info("[get_userdb_storage]Loaded profilless user value from cache: " + 
                 current_obj.get_minimal_display());
             } else {
-                console.warn("[get_userdb_storage] Could not load user profilless value value from cache, try getting it from back");
+                console.info("[get_userdb_storage] Could not load user profilless value value from cache, try getting it from back");
                 if(load_back_if_empty == true){
                     load_user_db_from_back(this.current_user, true);
                 }

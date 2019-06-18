@@ -15,7 +15,7 @@ init_domaine();
 
 //Add a listener to update profil DB if background requests it
 chrome.runtime.onConnect.addListener(function(port) {
-    console.info("[preload_front] Received profil DB from background");
+    console.info("[Background request] Received profil DB from background");
     console.assert(port.name == "background_connect");
     port.onMessage.addListener(function(msg) {
         if (msg.profil_values !== undefined){
@@ -39,7 +39,7 @@ chrome.runtime.onConnect.addListener(function(port) {
                 init_event_list_profil();
             }
             else{
-                console.warn("[preload front] Current user does not exist, cannot update profil DB");
+                console.warn("[Background request] Current user does not exist, cannot update profil DB");
             }
         }
     });
