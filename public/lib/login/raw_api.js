@@ -35,8 +35,6 @@ function xhttp_add_login_psd(email, domain, login, password){
     var url_final = url_login_domain.replace("{email}", email)
                                   .replace("{domain}", domain);
 
-    xhttp_back_api.setRequestHeader(CODE_HEADER_PASSWORD, current_psd);
-
     var login_obj = {
         login: login,
         password: password
