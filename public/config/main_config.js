@@ -51,13 +51,13 @@ var enable_front_log = true;
 
 
 //Serveur C# dev local
-var endpoint_back = "http://localhost:1665/"
+//var endpoint_back = "http://localhost:1665/"
 
-//Serveur C# prod V4
+//Serveur C# prod
 //var endpoint_back = "https://corail.me:4001/"
 
-//Serveur C# integ V4
-//var endpoint_back = "https://corail.me:2001/"
+//Serveur C# integ 
+var endpoint_back = "https://corail.me:2001/"
 
 
 // -------------------------------
