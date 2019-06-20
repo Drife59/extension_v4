@@ -8,17 +8,30 @@ input.js
 Define all methods needed to manipulate input field/ 
 */
 
-//Parse page and get all input and select field
-function load_fields(callback) {
-    inputs = new Object();
-    
+// Return inputs & selects found in DOM
+function load_fields(in_inputs, in_selects){
+
+    var new_inputs = new Object();
+    var new_selects = [];
+
     //Initialisation des champs input
     for (var i = 0; i < type_to_include.length; i++) {
-        inputs[type_to_include[i]] = document.body.querySelectorAll("input[type=" +
+        new_inputs[type_to_include[i]] = document.body.querySelectorAll("input[type=" +
             type_to_include[i] + "]");
     }
     //Initialisation des champs selects
-    selects = document.body.querySelectorAll("select");
+    new_selects = document.body.querySelectorAll("select");
+
+    return {new_inputs, new_selects};
+}
+
+//Parse page and get all input and select field
+function set_global_fields(callback) {
+    inputs = new Object();
+
+    const result = load_fields();
+    inputs  = result.new_inputs;
+    selects = result.new_selects;
 
     if(callback != undefined){
         callback();
@@ -119,7 +132,7 @@ function clear_selects() {
 //@ENTRY POINT
 //Parse page and bind event on field, then try to create key
 function init_fields(callback) {
-    load_fields(callback);
+    set_global_fields(callback);
 
     //We don't want to bind events if we are on excluded website 
 	if( skip_domain.includes(window.location.host)){
