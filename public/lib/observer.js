@@ -66,8 +66,21 @@ function subscriber(mutations) {
             Similar to what occur on first DOM loading, except for user front DB.
         */
        
-        console.info("A notable DOM modification has been detected.");
-        console.info("It is possible a new classic or login form. Relaunching Corail.");
+        console.debug("A notable DOM modification has been detected.");
+
+        setTimeout(function(){
+
+        var new_dom_parsing = load_fields();
+        var new_inputs  = new_dom_parsing.new_inputs;
+        var new_selects = new_dom_parsing.new_selects;
+
+
+        if( isEqual(new_inputs, inputs) && isEqual(new_selects, selects) ){
+            console.info("The DOM update did not update the input or select parsed. Abort Corail relaunch.");
+            return false;
+        }
+
+        console.info("New input or select field have been detected. Relaunching Corail");
                 
         //parse again DOM and build again profil process
         init_fields();
@@ -79,6 +92,9 @@ function subscriber(mutations) {
             //Detect and build again login if needed
             init_event_login_list();
         }, timeout_parsing);
+
+        }, 500);
+
     });
 }
 
