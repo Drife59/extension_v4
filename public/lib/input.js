@@ -9,7 +9,7 @@ Define all methods needed to manipulate input field/
 */
 
 // Return inputs & selects found in DOM
-function load_fields(in_inputs, in_selects){
+function load_fields(){
 
     var new_inputs = new Object();
     var new_selects = [];
