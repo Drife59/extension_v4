@@ -19,34 +19,43 @@ const observer_config = {
     subtree: true
 };
 
+// Check if the following mutation is eligible to verify 
+// if there is a need for corail relaunch
+function check_eligible_update(mutation){
+    if(mutation.addedNodes.length == 0){
+        console.debug("This mutation dit not add any node. Aborting reloading Corail");
+        return false;
+    }
+    console.debug("Processing node added:" + mutation.addedNodes[0]);
+    console.debug("Name of type node: " + mutation.addedNodes[0].nodeName);
+
+    if( !(tag_trigger_corail_relaunch.includes(mutation.addedNodes[0].nodeName) ) ){
+        console.debug("The type of insertion is not a possible form insertion. Abort Corail relaunch.");
+        return false;
+    }
+
+    if(mutation.addedNodes[0].id == "list_profil" ){
+        console.debug("The added node was the list profil. Abort Corail relaunch.");
+        return false;
+    }
+
+    if(mutation.addedNodes[0].id == "id_login_list" ){
+        console.debug("The added node was the login profil. Abort Corail relaunch.");
+        return false;
+    }
+
+    if(mutation.addedNodes[0].length < minimum_size_form_insertion ){
+        console.debug("The added node is too short. It's probably not a form. Abort Corail relaunch.");
+        return false;
+    }
+    return true;
+}
+
 // subscriber function
 function subscriber(mutations) {
     mutations.forEach((mutation) => {
 
-        if(mutation.addedNodes.length == 0){
-            console.debug("This mutation dit not add any node. Aborting reloading Corail");
-            return false;
-        }
-        console.debug("Processing node added:" + mutation.addedNodes[0]);
-        console.debug("Name of type node: " + mutation.addedNodes[0].nodeName);
-
-        if( !(tag_trigger_corail_relaunch.includes(mutation.addedNodes[0].nodeName) ) ){
-            console.debug("The type of insertion is not a possible form insertion. Abort Corail relaunch.");
-            return false;
-        }
-
-        if(mutation.addedNodes[0].id == "list_profil" ){
-            console.debug("The added node was the list profil. Abort Corail relaunch.");
-            return false;
-        }
-
-        if(mutation.addedNodes[0].id == "id_login_list" ){
-            console.debug("The added node was the login profil. Abort Corail relaunch.");
-            return false;
-        }
-
-        if(mutation.addedNodes[0].length < minimum_size_form_insertion ){
-            console.debug("The added node is too short. It's probably not a form. Abort Corail relaunch.");
+        if(check_eligible_update(mutation) == false){
             return false;
         }
 
