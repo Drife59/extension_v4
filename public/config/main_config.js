@@ -38,6 +38,10 @@ var skip_domain = ["www.corail.me", "corail.me", "localhost", "127.0.0.1"];
 //Define the name of dedicated header to send Main Password
 var CODE_HEADER_PASSWORD = "Main-Password";
 
+//Activate hot reload or not
+//NOTE(BG): as for V7.0, this is not ready. Many experience degradation
+var hot_reload_activation = false;
+
 // --------------
 // Log parameters
 // --------------
