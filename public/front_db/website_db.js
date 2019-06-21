@@ -89,14 +89,14 @@ class WebsiteDb {
 
     //Save in storage current website db
     set_websitedb_storage(){
-        chrome.storage.sync.set({"website_key": JSON.stringify(this.website_key)});
+        chrome.storage.local.set({"website_key": JSON.stringify(this.website_key)});
     }
 
     //Load website db object from local storage
     get_websitedb_storage(){
         //To handle the change of context
         var current_obj = this;
-        chrome.storage.sync.get("website_key", function (data) {
+        chrome.storage.local.get("website_key", function (data) {
             if (typeof data.website_key !== 'undefined') {
                 current_obj.website_key = JSON.parse(data.website_key);
                 console.info("[get_websitedb_storage]Loaded Website db from cache: " + 
