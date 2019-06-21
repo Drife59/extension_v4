@@ -244,6 +244,7 @@ function buildProfilList() {
 	var opt_clear = document.createElement('a');
 	opt_clear.innerHTML = "Clear";
 	opt_clear.setAttribute("id", "clear_corail");
+	opt_clear.className = "clear_corail";
 	opt_clear.href = "#";
 	
 	//At first, for hover, don't display clear option

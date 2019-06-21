@@ -45,14 +45,23 @@ note(BG): ho uiiiiiiiii the future :) */
     min-width: 150px;
 }
 
+.corail_list a{
+    background-color: #fbfbfb;
+}
+
+.corail_list a.clear_corail{
+    background-color: #d4d4d5;
+}
+
 .corail_list a:hover {
     background-color: #b6e4ff;
     cursor: pointer;
-    background-image: url(https://i.goopics.net/kW4rG.png), url(https://image.ibb.co/bS0ZTS/logo_corail_1.png),url(https://i.goopics.net/9ay4w.png) !important;
-    background-size: 100%, 30px, 100% !important;
-    background-position: right !important;
-    background-repeat: no-repeat !important;
     text-decoration: none;
+}
+
+.corail_list a.clear_corail:hover{
+    color: white;
+    background-color: #e48181;
 }
 
 #new{
