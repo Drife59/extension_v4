@@ -203,10 +203,22 @@ function bind_login_event(){
 	current_login_field.removeEventListener("click", display_list_profil);
 	current_login_field.addEventListener("blur", blur_field_login);
 
+	current_login_field.addEventListener("keydown", function(event) {
+		if (event.key === "Enter") {
+			blur_field_login();
+		}
+	});
+
 	//Exact same process for password field
 	current_password_field.removeEventListener("mouseover", display_list_profil, false);
 	current_password_field.removeEventListener("click", display_list_profil);
 	current_password_field.addEventListener("blur", blur_field_login);
+
+	current_password_field.addEventListener("keydown", function(event) {
+		if (event.key === "Enter") {
+			blur_field_login();
+		}
+	});
 
 }
 
