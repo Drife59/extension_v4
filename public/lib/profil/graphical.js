@@ -63,7 +63,7 @@ function build_display_list_profil(input){
 		}
 
 		if(pertinent_value != null){
-			options[i].innerHTML = pertinent_value + "\n" + profil_db.get_value_for_pivot(profil_id, CODE_MAIN_EMAIL);
+			options[i].innerHTML = "<b> " + pertinent_value + "</b> \n" + profil_db.get_value_for_pivot(profil_id, CODE_MAIN_EMAIL);
 		}
 	}
 }

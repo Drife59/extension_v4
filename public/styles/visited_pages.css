@@ -49,6 +49,10 @@ note(BG): ho uiiiiiiiii the future :) */
     background-color: #fbfbfb;
 }
 
+.corail_list a b{
+    font-weight: bold;
+}
+
 .corail_list a.clear_corail{
     background-color: #d4d4d5;
 }
