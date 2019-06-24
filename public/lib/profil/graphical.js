@@ -63,7 +63,8 @@ function build_display_list_profil(input){
 		}
 
 		if(pertinent_value != null){
-			options[i].innerHTML = "<b> " + pertinent_value + "</b> \n" + profil_db.get_value_for_pivot(profil_id, CODE_MAIN_EMAIL);
+			options[i].innerHTML = "<b> " + pertinent_value + "</b> <span> " + 
+				profil_db.get_value_for_pivot(profil_id, CODE_MAIN_EMAIL) + " </span>";
 		}
 	}
 }
@@ -300,7 +301,7 @@ function bind_listenner_profil() {
 			
 			var profil_id = evt.target.getAttribute("profil_id");
 			if(profil_id == null){
-				profil_id = evt.target.getAttribute("profil_id");
+				profil_id = evt.target.parentNode.getAttribute("profil_id");
 			}
 			fill_fields_v6(profil_id, false, false);
 		}

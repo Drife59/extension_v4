@@ -53,6 +53,11 @@ note(BG): ho uiiiiiiiii the future :) */
     font-weight: bold;
 }
 
+.corail_list a span{
+    text-align: right;
+    float: right;
+}
+
 .corail_list a.clear_corail{
     background-color: #d4d4d5;
 }
