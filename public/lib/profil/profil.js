@@ -452,7 +452,7 @@ class UserProfil {
             return profil[pivot_name]["valueText"];
         }
 
-        console.info("[get_value_for_pivot]: Could not find value in profil " + profil_id + " for pivot " + pivot_name);
+        console.debug("[get_value_for_pivot]: Could not find value in profil " + profil_id + " for pivot " + pivot_name);
         return false;
     }
     
