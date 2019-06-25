@@ -447,6 +447,12 @@ class UserProfil {
     
     get_value_for_pivot(profil_id, pivot_name){
         console.debug("try to get value from profil id " + profil_id + " on pivot: " + pivot_name);
+
+        if(profil_id == null){
+            console.warn("Profil id is null. Abort value retrival");
+            return false;
+        }
+
         var profil = this.profil_values[profil_id];
         if( pivot_name in profil){
             return profil[pivot_name]["valueText"];
