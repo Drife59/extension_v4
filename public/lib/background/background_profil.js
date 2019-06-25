@@ -66,8 +66,6 @@ chrome.tabs.onActivated.addListener(function(tab) {
 
     port = chrome.tabs.connect(tab.tabId, { name: "background_connect"});
     console.info("Tab id " + tab.tabId + " was activated.");
-    console.log(port.name);
-
 
     //Wait for back request if needed
     setTimeout(function () {
