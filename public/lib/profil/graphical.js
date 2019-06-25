@@ -229,6 +229,10 @@ function buildProfilList() {
 	//List is ordered by weight, DESC
 	var profil_list = profil_db.get_profil_for_list();
 
+	if(profil_list.length == 0){
+		console.warn("There is no profil for current user.");
+	}
+
 	for (var i in profil_list) {
 		var obj_profil = profil_list[i];
 		var opt = document.createElement('a');
