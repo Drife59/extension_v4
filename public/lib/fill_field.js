@@ -144,13 +144,14 @@ function fill_fields_v6(profil_id, profil_validated, fake_user_change) {
     //New loading, we should reset heuristic utilisation
     heuristic_activated = {};
 
-    console.info("[fill_fields_v6]: loading input field...");
-
     //technical log is very verbose, must be explicit required for display
-    if(display_full_technical_log){
+    if(display_full_technical_log && display_website_db_content){
         console.debug("[fill_fields_v6]: Raw content in V5 website db: " + JSON.stringify(website_front_db.website_key, null, 4));
     }
-    console.info("[fill_fields_v6] Website Db content: " + website_front_db.get_all_key_minimal_display());
+
+    if(display_website_db_content == true){
+        console.info("[fill_fields_v6] Website Db content: " + website_front_db.get_all_key_minimal_display());
+    }
 
     var domain = window.location.host;
 
