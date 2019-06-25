@@ -49,6 +49,8 @@ var hot_reload_activation = false;
 var display_full_technical_log = true;
 var enable_front_log = true;
 
+var display_website_db_content = false;
+
 // ----------------------------
 // Config accès API (endpoints)
 // ----------------------------
