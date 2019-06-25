@@ -20,12 +20,12 @@ setInterval(function () {
 
     //At this point, if background_profil is null we need to reload it from back
     if(background_profil_db == null){
-        console.info("[background] background_profil_db = null. A reload from back-end for user profil is needed.");
+        console.debug("[background] background_profil_db = null. A reload from back-end for user profil is needed.");
         init_background_profil();
     }
 
     if(background_profil_db != null && background_profil_db.get_number_of_profil() == 0 ){
-        console.info("[background] background_profil_db is empty. A reload from back-end for user profil is needed.");
+        console.debug("[background] background_profil_db is empty. A reload from back-end for user profil is needed.");
         init_background_profil();
     }
 },333);
@@ -108,8 +108,13 @@ chrome.tabs.onActivated.addListener(function(tab) {
 });
 
 
-function init_background_profil(){
-    console.info("[background] Start background profil initialisation...");
+// Load background profil db
+// For periodical call, we don't want any log to avoid too many log
+// So we can desactivate it within "verbose" option
+function init_background_profil(verbose){
+    if(verbose == true)
+        console.info("[background] Start background profil initialisation...");
+    
     //2) Preload user from cache, and it's front DB
     chrome.storage.sync.get("current_user", function (data_user) {
 
@@ -119,13 +124,15 @@ function init_background_profil(){
             current_psd = data_user.current_user.password;
 
             if(current_psd == null || current_psd == undefined){
-                console.warn("Could load current user but not current psd. Abort loading profil.");
+                if(verbose == true)
+                    console.warn("Could load current user but not current psd. Abort loading profil.");
                 return false;
             }
             background_profil_db = load_profils_from_back(current_user, false);
         }
         else{
-            console.info("[background] No user could be found in cache.");
+            if(verbose == true)
+                console.info("[background] No user could be found in cache.");
         }
     });
 }
