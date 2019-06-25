@@ -89,7 +89,9 @@ function load_website_db_from_back(save_in_cache, callback) {
         if (xhttp_website_db.readyState == 4 && xhttp_website_db.status == 200) {
 
             website_front_db.add_domain_from_back(domain, xhttp_website_db.responseText);
-            console.info("[load_website_db_from_back] Website db content = " + website_front_db.get_all_key_minimal_display());
+            if(display_website_db_content == true){
+                console.info("[load_website_db_from_back] Website db content = " + website_front_db.get_all_key_minimal_display());
+            }
 
             if(callback != undefined){
                 callback();
