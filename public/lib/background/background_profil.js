@@ -49,38 +49,41 @@ chrome.runtime.onMessage.addListener(
 });
 
 
-//Load and init the background profil DB, + init message listenner
-function load_profil_background(user){
-    background_profil_db = load_profils_from_back(user, false);
 
-    //We wait for the request from back to be finished before initiate object to send to content scripts
-    setTimeout( function(){
-        //Connect the content scripts
+// When a tab gets activated. Need to send the update profil values DB
+// If background profil is null, because no user was connected when the background started,
+// Try to reload data from back
+chrome.tabs.onActivated.addListener(function(tab) {
+    var delay_to_send_request = 10;
+    
+    //At this point, if background_profil is null we need to reload it from back
+    if(background_profil_db == null){
+        console.info("[background] A reload from back-end for user profil is needed.");
+        init_background_profil();
+        //Will send to message only when background is loaded
+        delay_to_send_request = 2000;
+    }
 
-        // When a tab gets activated. Need to send the update profil values DB
-        chrome.tabs.onActivated.addListener(function(tab) {
-            port = chrome.tabs.connect(tab.tabId, { name: "background_connect"});
-            console.info("Tab id " + tab.tabId + " was activated.");
-            console.log(port.name);
+    port = chrome.tabs.connect(tab.tabId, { name: "background_connect"});
+    console.info("Tab id " + tab.tabId + " was activated.");
+    console.log(port.name);
 
+
+    //Wait for back request if needed
+    setTimeout(function () {
+        if(background_profil_db != null){
             console.info("Sending current profil values db content");
             port.postMessage({"profil_values": background_profil_db.profil_values});
-        });
+        }
+        else{
+            console.info("[background] Don't send profil values, background_profil is null");
+        }
+    }, delay_to_send_request); 
+});
 
-        /*
-        Note(BG): Here there are 2 events I was wondering if I should add it: 
-            - onCreated: Fired when a tab is created.
-            - onUpdated: Fired when a tab is updated.
-
-        However, I finally decided to not add it.
-        Indeed, the main content script when loading is requesting the current state of the DB,
-        therefore we should not need to manage these events.
-        */
-    },2000);
-}
 
 function init_background_profil(){
-    console.info("Start background profil initialisation...");
+    console.info("[background] Start background profil initialisation...");
     //2) Preload user from cache, and it's front DB
     chrome.storage.sync.get("current_user", function (data_user) {
 
@@ -93,7 +96,7 @@ function init_background_profil(){
                 console.warn("Could load current user but not current psd. Abort loading profil.");
                 return false;
             }
-            load_profil_background(current_user);
+            background_profil_db = load_profils_from_back(current_user, false);
         }
         else{
             console.info("[background] No user could be found in cache.");
