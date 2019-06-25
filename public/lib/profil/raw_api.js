@@ -51,7 +51,7 @@ function xhttp_create_profil_value_user(email, pivot, value, profil_id){
     //Don't forget to capitalize user value, and encode it
     var url_final = url_create_value_v6.replace("{email}", email)
                                     .replace("{pivot_name}", pivot)
-                                    .replace("{value_text}", encodeURIComponent(value.capitalize()))
+                                    .replace("{value_text}", encodeURIComponent(value))
                                     .replace("{profil_id}", profil_id);
     xhttp_back_api.open("POST", url_final, true);
     xhttp_back_api.setRequestHeader("Content-Type", "application/json;charset=UTF-8");

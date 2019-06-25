@@ -88,6 +88,11 @@ function init_new_profil(user){
 
 //Check that the cellphone number is properly formatted 
 function sanitize_new_user_value(pivot_code, new_value){
+
+    if(liste_pivots_to_capitalize.includes(pivot_code)){
+        new_value = new_value.capitalize();
+    }
+
     if(pivot_code == CODE_CELLPHONE){
         ///If we made a mistake by putting a short cellphone number 
         //in classical cellphone field, correct it.

@@ -351,7 +351,7 @@ class UserProfil {
         //Don't forget to capitalize user value
         var url_final = url_create_value_v6.replace("{email}", email)
                                         .replace("{pivot_name}", pivot)
-                                        .replace("{value_text}", encodeURIComponent(value.capitalize()))
+                                        .replace("{value_text}", encodeURIComponent(value))
                                         .replace("{profil_id}", profil_id);
         
         console.debug("Final url: " + url_final);

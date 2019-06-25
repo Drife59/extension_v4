@@ -88,4 +88,7 @@ var liste_pivots_profilless = [
 //Define the minimum set of pivot a profil need to have
 var liste_pivot_minimum_profil = [CODE_MAIN_EMAIL, CODE_FIRSTNAME, CODE_LASTNAME];
 
+//Define the list of pivot for which we want values to be capitalize
+var liste_pivots_to_capitalize = [CODE_FIRSTNAME, CODE_LASTNAME, CODE_CITY, CODE_ADDRESS, CODE_COUNTRY, CODE_COMPANY];
+
 
