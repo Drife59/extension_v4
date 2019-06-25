@@ -63,8 +63,8 @@ function build_display_list_profil(input){
 		}
 
 		if(pertinent_value != null){
-			options[i].innerHTML = "<b> " + pertinent_value + "</b> <span> " + 
-				profil_db.get_value_for_pivot(profil_id, CODE_MAIN_EMAIL) + " </span>";
+			options[i].innerHTML = "<b profil_id=" + profil_id + "> " + pertinent_value + "</b>" + 
+			    "<span profil_id=" + profil_id + " > " + profil_db.get_value_for_pivot(profil_id, CODE_MAIN_EMAIL) + " </span>";
 		}
 	}
 }
@@ -308,6 +308,14 @@ function bind_listenner_profil() {
 
 		//Bind event to choose a profil
 		all_options[i].onclick = function (evt) {
+			var current_profil_id = evt.target.getAttribute("profil_id");
+
+			if(current_profil_id == null || current_profil_id == undefined){
+				console.warn("[bind_listenner_profil] Cannot get profil_id from field. It has probably been deleted by website.");
+				console.warn("Aborting binding for field: " + construit_domaine_cle(evt.target));
+				return false;
+			}
+
 			fill_fields_v6(evt.target.getAttribute("profil_id"), true, true);
 			profil_id_chosen = evt.target.getAttribute("profil_id");
 			profil_db.increase_profil_weight(profil_id_chosen);
