@@ -19,7 +19,12 @@ setInterval(function () {
 
     //At this point, if background_profil is null we need to reload it from back
     if(background_profil_db == null){
-        console.info("[background] A reload from back-end for user profil is needed.");
+        console.info("[background] background_profil_db = null. A reload from back-end for user profil is needed.");
+        init_background_profil();
+    }
+
+    if(background_profil_db != null && background_profil_db.get_number_of_profil() == 0 ){
+        console.info("[background] background_profil_db is empty. A reload from back-end for user profil is needed.");
         init_background_profil();
     }
 },333);
@@ -59,8 +64,6 @@ chrome.runtime.onMessage.addListener(
     }
     else if( request.action == ACTION_CLEAR_PROFIL_BDD){
         console.info("[background] Got request to clear profil DB");
-        /*background_profil_db.profil_values = {};
-        background_profil_db.current_user = null;*/
         //We will reload later on background_profil_db
         background_profil_db = null;
         sendResponse({"code": CODE_RECEPTION_OK});
