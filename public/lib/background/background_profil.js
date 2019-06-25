@@ -13,6 +13,7 @@ This file is getting executed when browser is launch.
 */
 
 var background_profil_db = null;
+var current_user = null;
 
 setInterval(function () {
     console.info("checking background_profil_db state");
@@ -56,7 +57,7 @@ chrome.runtime.onMessage.addListener(
         console.info(JSON.stringify(request.profil_values, null, 4));
 
         //if for some reason background profil does not exist, create it
-        if(background_profil_db == null && current_user != null && current_user != undefined){
+        if(background_profil_db == null && current_user != undefined && current_user != null){
             background_profil_db = new UserProfil(current_user);
         }
         background_profil_db.profil_values = request.profil_values;
