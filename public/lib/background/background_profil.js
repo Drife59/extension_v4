@@ -14,6 +14,15 @@ This file is getting executed when browser is launch.
 
 var background_profil_db = null;
 
+setInterval(function () {
+    console.info("checking background_profil_db state");
+
+    //At this point, if background_profil is null we need to reload it from back
+    if(background_profil_db == null){
+        console.info("[background] A reload from back-end for user profil is needed.");
+        init_background_profil();
+    }
+},333);
 
 // Init communication listenner for message from content scripts
 // Note(BG): the runtime.onMessage only works for message from content scripts,
@@ -23,22 +32,37 @@ chrome.runtime.onMessage.addListener(
         console.log(sender.tab ?
             " Got request from tab :" + sender.tab.url :
             "from the extension");
+    
+    //If we get a "get profil" request and profil db is not properly instantiated, reload it
     if (request.action == ACTION_GET_PROFIL_BDD){
-        sendResponse({
-            "code": CODE_RECEPTION_OK,
-            "profil_values": background_profil_db.profil_values
-        });
+    
+        if(background_profil_db != null){
+            sendResponse({
+                "code": CODE_RECEPTION_OK,
+                "profil_values": background_profil_db.profil_values
+            });
+            return true;
+        }else{
+            console.warn("[background] background_profil_db is null, cannot sent content.");
+        }
     }
     else if( request.action == ACTION_SET_PROFIL_BDD){
         console.info("[background] Got request to update profil DB, with following content: ");
         console.info(JSON.stringify(request.profil_values, null, 4));
+
+        //if for some reason background profil does not exist, create it
+        if(background_profil_db == null && current_user != null && current_user != undefined){
+            background_profil_db = new UserProfil(current_user);
+        }
         background_profil_db.profil_values = request.profil_values;
         sendResponse({"code": CODE_RECEPTION_OK});
     }
     else if( request.action == ACTION_CLEAR_PROFIL_BDD){
         console.info("[background] Got request to clear profil DB");
-        background_profil_db.profil_values = {};
-        background_profil_db.current_user = null;
+        /*background_profil_db.profil_values = {};
+        background_profil_db.current_user = null;*/
+        //We will reload later on background_profil_db
+        background_profil_db = null;
         sendResponse({"code": CODE_RECEPTION_OK});
     }
     else if( request.action == ACTION_SEND_WEIGHT_PROFIL_BDD){
