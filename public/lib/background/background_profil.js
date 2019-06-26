@@ -28,6 +28,17 @@ setInterval(function () {
         console.debug("[background] background_profil_db is empty. A reload from back-end for user profil is needed.");
         init_background_profil();
     }
+
+    //If, for some reason the current_user var is not properly set up, reset it if possible
+    if(current_user == null){
+        chrome.storage.sync.get("current_user", function (data_user) {
+            if (typeof data_user.current_user !== 'undefined') {
+                //set global var current user for all app
+                current_user = data_user.current_user.email;
+            }
+        });
+    }
+
 },333);
 
 // Init communication listenner for message from content scripts
