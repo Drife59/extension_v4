@@ -2,7 +2,7 @@
 "manifest_version": 2,
   "name": "Autofill by Corail",
   "description": "Accurate, secure and private autofill that will make your life easier.",
-  "version": "7",
+  "version": "7.1 [Integ]",
   "author": "Made with love <3",
 
   "permissions": [
