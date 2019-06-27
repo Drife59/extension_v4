@@ -51,8 +51,6 @@ export class Header extends Component {
     componentDidUpdate(){
         var displayLogout = this.props.displayLogout;
         
-        console.log("componentDidUpdate, props.displayLogout: " + displayLogout);
-
         if(displayLogout === false){
             document.getElementById("menu").style.display = "none";
         }

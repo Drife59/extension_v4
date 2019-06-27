@@ -94,7 +94,7 @@ class App extends Component {
         }
         
         chrome.storage.sync.set({"current_user": obj_to_save}, function() {
-            console.log('[setUser] Storage sync: current user => ' + email);
+            console.debug('[setUser] Storage sync: current user => ' + email);
         });
 
         console.info("[setUser] Setting user: " + email + " / " + password);
@@ -114,18 +114,16 @@ class App extends Component {
     }
 
     getUser(){
-        console.log("getting email: " + this.state.current_user);
         return this.state.current_user;
     }
 
     getDisplayLogout(){
         try{
             var res = this.state.displayLogout;
-            console.log("found getDisplayLogout()");
             return res;
         }
         catch(error){
-            console.log("Could not find DisplayLogout in parent state");
+            console.warn("Could not find DisplayLogout in parent state");
             //By default, don't display logout button
             return false;
         }
@@ -146,7 +144,6 @@ class App extends Component {
                 console.info('[componentDidMount] From cache current password is ' + result.current_user.password);
 
                 app.setUser(result.current_user.email, result.current_user.password);
-                console.log("[componentDidMount] Set connected content");
                 app.setConnectedContent();
             }
         });
@@ -156,10 +153,9 @@ class App extends Component {
 
     logout() {
         this.setState({ current_user: undefined });
-        console.log("Set email as undefined in state");
 
         chrome.storage.sync.clear(); 
-        console.log("[logout] Clear cache from chrome storage");
+        console.info("[logout] Clear cache from chrome storage");
         this.setDisconnectedContent();
     }
 

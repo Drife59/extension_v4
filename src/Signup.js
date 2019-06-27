@@ -69,7 +69,7 @@ export class Signup extends Component {
             }
         )
         .then(function(response) {
-            console.log("status: " + response.status + " type: " + typeof(response.status) )
+            console.info("status: " + response.status + " type: " + typeof(response.status) )
             if (response.status === 200) {
                 signup_component.props.setWelcomeContent();
                 signup_component.props.setUser(email, password);
