@@ -5,6 +5,8 @@ export const config = {
     ACTION_GET_PROFIL_BDD: "getProfilBDD",
     ACTION_SET_PROFIL_BDD: "setProfilBDD",
     ACTION_CLEAR_PROFIL_BDD: "clearProfilBDD",
+    ACTION_SEND_WEIGHT_PROFIL_BDD: "sendWeightProfilBDD",
+    NOTIFICATION_ADD_VALUE_PROFIL: "addValueProfil",
 
     name: "Benjamin"
 }

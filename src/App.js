@@ -10,6 +10,8 @@ import { Signin } from './Signin';
 import { Connected } from './Connected';
 import { Header } from './Header';
 
+import { config } from './config';
+
 
 class App extends Component {
     
@@ -32,6 +34,24 @@ class App extends Component {
         this.setUser                = this.setUser.bind(this);
         this.getUser                = this.getUser.bind(this);
         this.logout                 = this.logout.bind(this);
+
+        // Initialise communication listenner
+        // We need to listen to Legacy App, to react from its events
+        chrome.runtime.onMessage.addListener(
+            function(request, sender, sendResponse) {
+                console.debug(sender.tab ?
+                    "Got request from tab :" + sender.tab.url :
+                    "from the extension");
+            
+                //If we get a "get profil" request and profil db is not properly instantiated, reload it
+                if (request.action === config.NOTIFICATION_ADD_VALUE_PROFIL){
+                    console.info("Received message with action: " + config.NOTIFICATION_ADD_VALUE_PROFIL);
+                    console.info("Launching notfication on user value added");
+                    sendResponse({
+                        "code": config.CODE_RECEPTION_OK
+                    });
+                }
+        });
     }
 
     /* Functions below set content except Header*/
@@ -130,6 +150,8 @@ class App extends Component {
                 app.setConnectedContent();
             }
         });
+
+        
     }
 
     logout() {

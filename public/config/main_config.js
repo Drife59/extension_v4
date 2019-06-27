@@ -87,6 +87,8 @@ var ACTION_CLEAR_PROFIL_BDD = "clearProfilBDD";
 
 var ACTION_SEND_WEIGHT_PROFIL_BDD = "sendWeightProfilBDD";
 
+var NOTIFICATION_ADD_VALUE_PROFIL = "addValueProfil";
+
 
 // ----------------------------
 // Key and values configuration

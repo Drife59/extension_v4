@@ -439,6 +439,13 @@ class UserProfil {
         // After user value creation, we need to update background
         this.set_profil_background();
 
+        //Send a message to react App to display a notification
+        chrome.runtime.sendMessage({action: NOTIFICATION_ADD_VALUE_PROFIL}, function(response) {
+            if(response.code === CODE_RECEPTION_OK){
+                console.info("[add_value_to_profil] Sent request to React APP to display notif user value added. got ACK.");
+            }
+        });
+
         //Optional callback to execute after value creation
         if(callback != undefined){
             callback();
