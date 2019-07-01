@@ -16,7 +16,7 @@ var app_launched = false;
 
 function lancement_app() {
 
-    if(current_user == undefined){
+    if (current_user == undefined) {
         console.warn("Cannot find user, aborting software launch");
         return;
     }
@@ -24,7 +24,7 @@ function lancement_app() {
     app_launched = true;
 
     load_login_from_back(current_user, window.location.host);
-    
+
     console.info("Parsing fields...")
     init_fields();
 
@@ -41,10 +41,37 @@ function lancement_app() {
         profil_db.create_profil_from_temp_profil();
 
         // Start DOM observation
-        if(hot_reload_activation == true){
-           observer_corail.observe(document.body, observer_config);
+        if (hot_reload_activation == true) {
+            observer_corail.observe(document.body, observer_config);
         }
     }, timeout_parsing);
+
+    new Noty({
+        type: 'error',
+        layout: 'topCenter',
+        theme: 'mint',
+        text: 'Test des notifications !',
+        timeout: false,
+        progressBar: true,
+        closeWith: ['click'],
+        killer: true,
+        force: true,
+        callbacks: {
+            beforeShow: function () {
+                console.info("On va afficher noty");
+            },
+            onShow: function () {
+                console.info("Noty affiche");
+            },
+            onHover: function () {
+            },
+            onClick: function () {
+            },
+            onClose: function () {
+                console.info("Noty fermé");
+            }
+        },
+    }).show();
 }
 
 lancement_app();
@@ -62,38 +89,38 @@ window.addEventListener('unload', function () {
     //When quitting a tab, I want to send the updated weight.
     //I do it from the background and not the content script, 
     //because the content script is going to be deleted by brwser very soon
-    if(current_user != null && current_user != undefined){
+    if (current_user != null && current_user != undefined) {
         console.info("[unload event] Requesting background to update weight");
-        chrome.runtime.sendMessage({action: ACTION_SEND_WEIGHT_PROFIL_BDD}, function(response) {
-            if(response.code == CODE_RECEPTION_OK){
+        chrome.runtime.sendMessage({ action: ACTION_SEND_WEIGHT_PROFIL_BDD }, function (response) {
+            if (response.code == CODE_RECEPTION_OK) {
                 console.info("Request to update profil weight was received & processed by background");
             }
         });
     }
 
-    if(inputs == null){
+    if (inputs == null) {
         console.warn("[Unload Event] Inputs object (containing all inputs) does not exist. Abort check for new profil");
         return;
     }
 
     var pivot_value_page = create_pivot_value_from_page();
-    console.info("Pivot-value from previous page: " + JSON.stringify(pivot_value_page, null,4));
+    console.info("Pivot-value from previous page: " + JSON.stringify(pivot_value_page, null, 4));
 
     var minimum_profil = has_minimum_attribute(pivot_value_page);
 
     //form content is suitable to create a profil
-    if(minimum_profil == true){
-    
+    if (minimum_profil == true) {
+
         var profil_page = create_profil_from_page(pivot_value_page);
         //The profil build from the page does not exist. Creating it.
-        if(profil_db.check_profil_existence(profil_page) == false){
+        if (profil_db.check_profil_existence(profil_page) == false) {
             //Last but not least, before execution fil is finished, 
             //add the new fake profil in front and save it in cache
             profil_db.add_fake_profil_front_only(profil_page);
-        }else{
+        } else {
             console.info("The profil analysed from previous form already exists");
         }
-    }else{
+    } else {
         console.info("profil from form does not meet the minimum requirement");
     }
 });

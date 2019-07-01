@@ -59,7 +59,9 @@
 		"front_db/back_management.js",
 		"lib/fill_field.js",
 		"lib/preload_front.js",
-		"lib/observer.js"]
+		"lib/observer.js",
+		"lib/noty.js"
+		]
     },
   	{
 		"matches": [
@@ -67,7 +69,13 @@
 		],
 		"js": [
 			"front.js"],
-		"css": ["styles/visited_pages.css","/static/css/app.css", "/static/css/content.css"]
+		"css": ["styles/visited_pages.css","/static/css/app.css", "/static/css/content.css",
+			"styles/noty.css",
+			"styles/themes_notif/bootstrap-v3.css", "styles/themes_notif/bootstrap-v4.css",
+			"styles/themes_notif/light.css", "styles/themes_notif/metroui.css", 
+			"styles/themes_notif/mint.css", "styles/themes_notif/nest.css",
+			"styles/themes_notif/relax.css","styles/themes_notif/semanticui.css", 
+			"styles/themes_notif/sunset.css"]
   	}
   ]
 }
