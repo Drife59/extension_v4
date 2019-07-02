@@ -814,5 +814,19 @@ class UserProfil {
                 }, 6000);
             }
         }
+
+        var str_msg = "News values detected. A new profil has been created.";
+
+        new Noty({
+            type: 'success',
+            layout: 'topCenter',
+            theme: 'mint',
+            text: str_msg,
+            timeout: dislay_time_notification,
+            progressBar: true,
+            closeWith: ['click'],
+            killer: true,
+            force: true,
+        }).show();
     }
 }
