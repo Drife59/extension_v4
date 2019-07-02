@@ -78,7 +78,7 @@ function init_new_profil(user){
             setTimeout(function () {
                 //By default, create the main email pivot / user value
                 //We need the send the ref of profil_db obj because it will be lose due to "setTimeout"
-                profil_db.add_value_to_profil(user, CODE_MAIN_EMAIL, user, data["profilId"], init_event_list_profil);
+                profil_db.add_value_to_profil(user, CODE_MAIN_EMAIL, user, data["profilId"], false, init_event_list_profil);
                 console.info("[init_new_profil] Adding " + CODE_MAIN_EMAIL + " to default profil");
             }, timeout_profil_creation);
             

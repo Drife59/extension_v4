@@ -207,7 +207,7 @@ class UserProfil {
 
 
     //Create a value on a profil, async
-    create_value_async(user, pivot_code, new_value, id_profil, profil){
+    create_value_async(user, pivot_code, new_value, id_profil, profil, display_notification){
 
         new_value = sanitize_new_user_value(pivot_code, new_value);
 
@@ -224,6 +224,22 @@ class UserProfil {
 
                 //After user creation from back, don't forget to update back the background
                 current_obj.set_profil_background();
+
+                var str_msg = "The value " + new_value + " has been added to your profil";
+
+                if(display_notification === true){
+                    new Noty({
+                        type: 'success',
+                        layout: 'topCenter',
+                        theme: 'mint',
+                        text: str_msg,
+                        timeout: dislay_time_notification,
+                        progressBar: true,
+                        closeWith: ['click'],
+                        killer: true,
+                        force: true,
+                    }).show();
+                }
             }
         }
         
@@ -247,20 +263,20 @@ class UserProfil {
             if( profil.hasOwnProperty(CODE_FIRSTNAME) && profil.hasOwnProperty(CODE_LASTNAME)){
                 var new_value = build_fullname(profil[CODE_FIRSTNAME]["valueText"], profil[CODE_LASTNAME]["valueText"]);
                 console.info("[create_pivot_translated] Creating fullname from others pivots");
-                this.create_value_async(current_user, CODE_FULL_NAME, new_value, id_profil, profil);
+                this.create_value_async(current_user, CODE_FULL_NAME, new_value, id_profil, profil, false);
             }
         }
 
         if( !(profil.hasOwnProperty(CODE_FIRSTNAME)) && profil.hasOwnProperty(CODE_FULL_NAME)){
             var new_value = get_firstname_from_fullname(profil[CODE_FULL_NAME]["valueText"]);
             console.info("[create_pivot_translated] Creating " + CODE_FIRSTNAME + " from " + CODE_FULL_NAME);
-            this.create_value_async(current_user, CODE_FIRSTNAME, new_value, id_profil, profil);
+            this.create_value_async(current_user, CODE_FIRSTNAME, new_value, id_profil, profil, false);
         }
 
         if( !(profil.hasOwnProperty(CODE_LASTNAME)) && profil.hasOwnProperty(CODE_FULL_NAME)){
             var new_value = get_familyname_from_fullname(profil[CODE_FULL_NAME]["valueText"]);
             console.info("[create_pivot_translated] Creating " + CODE_LASTNAME + " from " + CODE_FULL_NAME);
-            this.create_value_async(current_user, CODE_LASTNAME, new_value, id_profil, profil);
+            this.create_value_async(current_user, CODE_LASTNAME, new_value, id_profil, profil, false);
         }
 
 
@@ -277,7 +293,7 @@ class UserProfil {
                         profil[CODE_MONTH_BIRTH]["valueText"], 
                         profil[CODE_YEAR_BIRTH]["valueText"]);
                     console.info("[create_pivot_translated] Creating full birthdate from others pivots");
-                    this.create_value_async(current_user, CODE_FULL_BIRTHDATE, new_value, id_profil, profil)
+                    this.create_value_async(current_user, CODE_FULL_BIRTHDATE, new_value, id_profil, profil, false)
             }
         }
 
@@ -287,20 +303,20 @@ class UserProfil {
         if( !(profil.hasOwnProperty(CODE_DAY_BIRTH)) && profil.hasOwnProperty(CODE_FULL_BIRTHDATE)){
             var new_value = get_day_of_birth_from_fullbirthdate(profil[CODE_FULL_BIRTHDATE]["valueText"]);
             console.info("[create_pivot_translated] Creating " + CODE_DAY_BIRTH + " from " + CODE_FULL_BIRTHDATE);
-            this.create_value_async(current_user, CODE_DAY_BIRTH, new_value, id_profil, profil)
+            this.create_value_async(current_user, CODE_DAY_BIRTH, new_value, id_profil, profil, false)
 
         }
 
         if( !(profil.hasOwnProperty(CODE_MONTH_BIRTH)) && profil.hasOwnProperty(CODE_FULL_BIRTHDATE)){
             var new_value = get_month_of_birth_from_fullbirthdate(profil[CODE_FULL_BIRTHDATE]["valueText"]);
             console.info("[create_pivot_translated] Creating " + CODE_MONTH_BIRTH + " from " + CODE_FULL_BIRTHDATE);
-            this.create_value_async(current_user, CODE_MONTH_BIRTH, new_value, id_profil, profil)
+            this.create_value_async(current_user, CODE_MONTH_BIRTH, new_value, id_profil, profil, false)
         }
 
         if( !(profil.hasOwnProperty(CODE_YEAR_BIRTH)) && profil.hasOwnProperty(CODE_FULL_BIRTHDATE)){
             var new_value = get_year_of_birth_from_fullbirthdate(profil[CODE_FULL_BIRTHDATE]["valueText"]);
             console.info("[create_pivot_translated] Creating " + CODE_YEAR_BIRTH + " from " + CODE_FULL_BIRTHDATE);
-            this.create_value_async(current_user, CODE_YEAR_BIRTH, new_value, id_profil, profil)
+            this.create_value_async(current_user, CODE_YEAR_BIRTH, new_value, id_profil, profil, false)
         }
 
         // cellphone number check
@@ -311,7 +327,7 @@ class UserProfil {
             var new_value = get_short_number_from_classical_number(profil[CODE_CELLPHONE]["valueText"]);
             if(new_value != false){
                 console.info("[create_pivot_translated] Creating " + CODE_SHORT_CELLPHONE + " from " + CODE_CELLPHONE);
-                this.create_value_async(current_user, CODE_SHORT_CELLPHONE, new_value, id_profil, profil);
+                this.create_value_async(current_user, CODE_SHORT_CELLPHONE, new_value, id_profil, profil, false);
             }else{
                 console.warn("[create_pivot_translated] Cannot create short cellphone number.")
             }
@@ -322,7 +338,7 @@ class UserProfil {
             var new_value = get_classical_number_from_short(profil[CODE_SHORT_CELLPHONE]["valueText"]);
             if(new_value != false){
                 console.info("[create_pivot_translated] Creating " + CODE_CELLPHONE + " from " + CODE_SHORT_CELLPHONE);
-                this.create_value_async(current_user, CODE_CELLPHONE, new_value, id_profil, profil)
+                this.create_value_async(current_user, CODE_CELLPHONE, new_value, id_profil, profil, false)
             }else{
                 console.warn("[create_pivot_translated] Cannot create classical cellphone number.")
             }
@@ -335,14 +351,14 @@ class UserProfil {
              profil.hasOwnProperty(CODE_INDICATIVE)){
                 var new_value = build_fullnumber_with_indicative(profil[CODE_INDICATIVE]["valueText"], profil[CODE_CELLPHONE]["valueText"]);
                 console.info("[create_pivot_translated] Creating " + CODE_FULL_CELLPHONE + " from " + CODE_INDICATIVE + " and " + CODE_CELLPHONE);
-                this.create_value_async(current_user, CODE_FULL_CELLPHONE, new_value, id_profil, profil);
+                this.create_value_async(current_user, CODE_FULL_CELLPHONE, new_value, id_profil, profil, false);
         }
         else if(!(profil.hasOwnProperty(CODE_FULL_CELLPHONE)) && 
              profil.hasOwnProperty(CODE_SHORT_CELLPHONE) && 
              profil.hasOwnProperty(CODE_INDICATIVE)){
                 var new_value = build_fullnumber_with_indicative(profil[CODE_INDICATIVE]["valueText"], profil[CODE_SHORT_CELLPHONE]["valueText"]);
                 console.info("[create_pivot_translated] Creating " + CODE_FULL_CELLPHONE + " from " + CODE_INDICATIVE + " and " + CODE_SHORT_CELLPHONE);
-                this.create_value_async(current_user, CODE_FULL_CELLPHONE, new_value, id_profil, profil);
+                this.create_value_async(current_user, CODE_FULL_CELLPHONE, new_value, id_profil, profil, false);
         }
     }
 
@@ -421,7 +437,7 @@ class UserProfil {
             + JSON.stringify(this.profil_values, null,4));
     }
 
-    async add_value_to_profil(email, pivot, value_text, profil_id, callback){
+    async add_value_to_profil(email, pivot, value_text, profil_id, display_notification, callback){
 
         value_text = sanitize_new_user_value(pivot, value_text);
 
@@ -445,6 +461,22 @@ class UserProfil {
                 console.info("[add_value_to_profil] Sent request to React APP to display notif user value added. got ACK.");
             }
         });
+
+        var str_msg = "The value \"" + value_text + "\" has been added to current profil";
+
+        if(display_notification === true){
+            new Noty({
+                type: 'success',
+                layout: 'topCenter',
+                theme: 'mint',
+                text: str_msg,
+                timeout: dislay_time_notification,
+                progressBar: true,
+                closeWith: ['click'],
+                killer: true,
+                force: true,
+            }).show();
+        }
 
         //Optional callback to execute after value creation
         if(callback != undefined){

@@ -45,33 +45,6 @@ function lancement_app() {
             observer_corail.observe(document.body, observer_config);
         }
     }, timeout_parsing);
-
-    new Noty({
-        type: 'error',
-        layout: 'topCenter',
-        theme: 'mint',
-        text: 'Test des notifications !',
-        timeout: false,
-        progressBar: true,
-        closeWith: ['click'],
-        killer: true,
-        force: true,
-        callbacks: {
-            beforeShow: function () {
-                console.info("On va afficher noty");
-            },
-            onShow: function () {
-                console.info("Noty affiche");
-            },
-            onHover: function () {
-            },
-            onClick: function () {
-            },
-            onClose: function () {
-                console.info("Noty fermé");
-            }
-        },
-    }).show();
 }
 
 lancement_app();

@@ -27,6 +27,9 @@ var timeout_key_creation = timeout_parsing + 2000;
 //Time to wait for first profil creation
 var timeout_profil_creation = 2000;
 
+//Time to display notifications
+var dislay_time_notification = 5000;
+
 var separateur_cle = "_";
 
 //When filling, if the field already has a value then override it (or not)
