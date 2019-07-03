@@ -4,8 +4,8 @@
   border-radius: 2px;
   position: relative; }
   .noty_theme__mint.noty_bar .noty_body {
-    padding: 10px;
-    font-size: 14px; }
+    padding: 18px;
+    font-size: 22px; }
   .noty_theme__mint.noty_bar .noty_buttons {
     padding: 10px; }
 
@@ -27,8 +27,8 @@
 
 .noty_theme__mint.noty_type__info,
 .noty_theme__mint.noty_type__information {
-  background-color: #7F7EFF !important;
-  border-bottom: 1px solid #7473E8 !important;
+  background-color: #609BD6 !important;
+  border-bottom: 1px solid #609BD6 !important;
   color: #fff !important; }
 
 .noty_theme__mint.noty_type__success {

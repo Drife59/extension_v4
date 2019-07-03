@@ -229,7 +229,7 @@ class UserProfil {
 
                 if(display_notification === true){
                     new Noty({
-                        type: 'success',
+                        type: 'info',
                         layout: 'topCenter',
                         theme: 'mint',
                         text: str_msg,
@@ -466,7 +466,7 @@ class UserProfil {
 
         if(display_notification === true){
             new Noty({
-                type: 'success',
+                type: 'info',
                 layout: 'topCenter',
                 theme: 'mint',
                 text: str_msg,
@@ -818,7 +818,7 @@ class UserProfil {
         var str_msg = "News values detected. A new profil has been created.";
 
         new Noty({
-            type: 'success',
+            type: 'info',
             layout: 'topCenter',
             theme: 'mint',
             text: str_msg,
