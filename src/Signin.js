@@ -79,7 +79,8 @@ export class Signin extends Component {
                                "load_website_db_from_back(true);" + 
                                "init_fields();";
 
-                str_code += 'setTimeout(function () { init_event_list_profil(); }, (timeout_parsing + 500))';
+                str_code += 'setTimeout(function () { init_event_list_profil(); init_event_login_list(); ' 
+                    + ' }, (timeout_parsing + 500))';
                 
                 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     chrome.tabs.executeScript(tabs[0].id, {
