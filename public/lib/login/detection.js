@@ -223,6 +223,5 @@ function bind_login_event(){
 
 function bind_profil_event_login_field(){
 	current_login_field.addEventListener("mouseover", display_list_profil, false);
-	//current_login_field.addEventListener("click", display_list_profil);
 }
 
