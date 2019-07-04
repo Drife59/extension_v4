@@ -157,6 +157,30 @@ function display_list_login(){
 	console.debug("List login position was set to absolute: " + list_login.style.left + " / " + list_login.style.top);
 }
 
+//Bind on a login field events to display and manage list 
+function init_login_field_event(field){
+
+	//At the first navigation, on hover bind and display the list
+	field.addEventListener("mouseover", display_list_login);
+	field.onmouseover = function(){
+		pointer_on_login_input = true;
+	}
+
+	//Hide list if leaving field and pointer is not on list
+	field.onmouseout = function () {
+		pointer_on_login_input = false;
+
+		//We need to wait a bit to allow value pointer_on_login_list to change
+		
+		setTimeout(function () {
+			//If not fetching list, hide it
+			if (pointer_on_login_list == false) {
+				list_login.style.display = "none";
+			}
+		}, 50);			
+	}
+}
+
 
 //@ENTRYPOINT
 //Entry point for login list management
@@ -193,28 +217,8 @@ function init_event_login_list(){
 
 		window.document.body.appendChild(list_login);
 
-
-		//At the first navigation, on hover bind and display the list
-		current_login_field.addEventListener("mouseover", display_list_login);
-		current_login_field.onmouseover = function(){
-			pointer_on_login_input = true;
-		}
-	
-
-		//Hide list if leaving field and pointer is not on list
-		current_login_field.onmouseout = function () {
-			pointer_on_login_input = false;
-
-			//We need to wait a bit to allow value pointer_on_login_list to change
-			
-			setTimeout(function () {
-				//If not fetching list, hide it
-				if (pointer_on_login_list == false) {
-					list_login.style.display = "none";
-				}
-			}, 50);
-			
-		}
+		init_login_field_event(current_login_field);
+		init_login_field_event(current_password_field);
 	}
 	bind_listenner_login();
 }
