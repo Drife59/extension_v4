@@ -219,6 +219,10 @@ function bind_login_event(){
 			blur_field_login();
 		}
 	});
+}
 
+function bind_profil_event_login_field(){
+	current_login_field.addEventListener("mouseover", display_list_profil, false);
+	//current_login_field.addEventListener("click", display_list_profil);
 }
 

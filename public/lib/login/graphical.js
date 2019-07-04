@@ -195,14 +195,16 @@ function init_event_login_list(){
 	// Don't need this anymore, using global var 
 	//var {current_form:login_form, current_login:login_field, current_password:password_field} = result_research_login_form;
 
-	//If there is no login at all, let profil function manage these fields
-	if(! login_front_db.has_login()){
-		console.debug("No login at all for website, aborting login initialisation");
-		return false;
-	}
-
 	initialise_login_DOM();
 	bind_login_event();
+
+	//If there is no login at all, let profil function manage these fields
+	if(! login_front_db.has_login()){
+		console.info("No login detected for this website. Binding again profil list");
+		//Bind again the profil list on the field
+		bind_profil_event_login_field();
+		return false;
+	}
 
 	if( login_front_db.has_only_one_login()){
 		console.info("Only one login / psd was found for this domain.");
