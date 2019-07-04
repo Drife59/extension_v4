@@ -238,3 +238,10 @@ function keyDownAlgoProfil(evt) {
 	input.setAttribute(CODE_FIELD_USER_EDIT, true);
 }
 
+function keyUpAlgoProfil(evt){
+	var input = evt.target;
+	if(input.value == "" || input.value == " "){
+		remove_corail_design(input);
+	}
+}
+

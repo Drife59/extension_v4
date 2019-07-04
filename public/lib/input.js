@@ -46,6 +46,8 @@ function bind_inputs() {
         for (j = 0; j < inputs_type.length; j++) {
             inputs_type[j].addEventListener('change', changeAlgoProfil, false);
             inputs_type[j].addEventListener('keydown', keyDownAlgoProfil, false);
+            inputs_type[j].addEventListener('keyup', keyUpAlgoProfil, false);
+
         }
     }
     console.info("[bind_inputs]Binding all events to input fileds")
