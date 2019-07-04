@@ -210,8 +210,19 @@ function init_event_login_list(){
 		console.info("Only one login / psd was found for this domain.");
 		console.info("Filling login/psd field within the ones found in login DB.");
 		var only_login = login_front_db.get_only_login();
+
+		current_login_field.dispatchEvent(event = new Event('focus'));
+		current_password_field.dispatchEvent(event = new Event('focus'));
 		current_login_field.value = only_login.login;
 		current_password_field.value = only_login.password;
+
+		current_login_field.dispatchEvent(event = new Event('blur'));
+		current_password_field.dispatchEvent(event = new Event('blur'));
+
+		current_login_field.dispatchEvent(event = new Event('input'));
+		current_password_field.dispatchEvent(event = new Event('input'));	
+		
+		
 		return true;
 	}
 	else{
@@ -254,7 +265,10 @@ function bind_listenner_login() {
 			current_login_field.value    = current_login["login"];
 			current_password_field.value = current_login["password"];
 			current_login_field.dispatchEvent(event = new Event('blur'));
-			current_password_field.dispatchEvent(event = new Event('blur'));	
+			current_password_field.dispatchEvent(event = new Event('blur'));
+
+			current_login_field.dispatchEvent(event = new Event('input'));
+			current_password_field.dispatchEvent(event = new Event('input'));		
 		}
 
 		//Bind event to choose a login
