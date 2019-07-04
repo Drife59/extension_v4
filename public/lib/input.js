@@ -63,7 +63,17 @@ function unbind_inputs() {
             inputs_type[j].removeEventListener('keydown', keyDownAlgoProfil, false);
             //Front graphical_profil "init_event_list"
             inputs_type[j].removeEventListener("mouseover", display_list_profil, false);
-			inputs_type[j].removeEventListener("click", display_list_profil);
+            inputs_type[j].removeEventListener("click", display_list_profil);
+            
+            //Front login event
+            inputs_type[j].removeEventListener("blur", blur_field_login, false);
+            inputs_type[j].removeEventListener("mouseover", display_list_login);
+            
+            //The global "inputs" var does not include input type "password"
+            if(current_password_field != null){
+                current_password_field.removeEventListener("blur", blur_field_login, false);
+                current_password_field.removeEventListener("mouseover", display_list_login);
+            }
         }
     }
     console.info("[unbind_inputs]: unbind all corail events from inputs");
