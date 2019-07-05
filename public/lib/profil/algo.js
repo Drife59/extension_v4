@@ -225,7 +225,6 @@ function changeAlgoProfil(evt) {
 
 function keyDownAlgoProfil(evt) {
 	var input = evt.target
-	console.debug("Algo key press: field " + input.tagName + " modified by user: " + HtmlEltToString(input));
 
 	//Don't process the login field in profil process
 	if(is_login_field(input) ){
