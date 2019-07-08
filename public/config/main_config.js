@@ -198,17 +198,18 @@ CAREFUL: Include only word with lower case letter !
 
 //Will look url for these key word
 var url_keywords = ["login", "log-in", "log_in", 
-    "connexion", "connection", 
+    "connexion", "connection", "register",
     "signin", "sign-in", "sign_in"];
 
 //Will look in id and action var for these key word
 var form_keywords = ["login", "log-in", "log_in",
     "authentication", "authentification", 
     "signin", "sign-in", "sign_in", 
-    "connexion", "connection"];
+    "connexion", "connection", "register"];
 
 //Keywords to identify login field
-var field_login_keywords = ["email", "e-mail", "e_mail", "login", "log-in", "log_in", "authentication", "authentification"];
+var field_login_keywords = ["email", "e-mail", "e_mail", "*email", "*e-mail",
+    "login", "log-in", "log_in", "authentication", "authentification"];
 
 //Keywords to identify password
 var field_password_keywords = ["password"];
