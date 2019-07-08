@@ -197,19 +197,19 @@ CAREFUL: Include only word with lower case letter !
 */
 
 //Will look url for these key word
-var url_keywords = ["login", "connexion", "signin"];
+var url_keywords = ["login", "log-in", "log_in", "connexion", "signin", "sign-in", "sign_in"];
 
 //Will look in id and action var for these key word
-var form_keywords = ["login", "authentication", "authentification", "signin"];
+var form_keywords = ["login", "log-in", "log_in", "authentication", "authentification", "signin", "sign-in", "sign_in"];
 
 //Keywords to identify login field
-var field_login_keywords = ["email", "login", "e-mail", "authentication", "authentification"];
+var field_login_keywords = ["email", "login", "log-in", "log_in", "e-mail", "authentication", "authentification"];
 
 //Keywords to identify password
 var field_password_keywords = ["password"];
 
 //The number of keyword occurence needed to confirm that the form is a login form
-var keyword_occurence_needed = 2;
+var keyword_occurence_needed = 1;
 
 /* 
     Others options for login / password configuration 
