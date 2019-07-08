@@ -197,13 +197,14 @@ CAREFUL: Include only word with lower case letter !
 */
 
 //Will look url for these key word
-var url_keywords = ["login", "log-in", "log_in", 
-    "connexion", "connection", "register",
+var url_keywords = ["login", "log-in", "log_in",
+    "authentication", "authentification", "auth",
+    "connexion", "connection", "register", 
     "signin", "sign-in", "sign_in"];
 
 //Will look in id and action var for these key word
 var form_keywords = ["login", "log-in", "log_in",
-    "authentication", "authentification", 
+    "authentication", "authentification", "auth",
     "signin", "sign-in", "sign_in", 
     "connexion", "connection", "register"];
 
@@ -239,4 +240,4 @@ var tag_trigger_corail_relaunch = ["P", "OL", "DIV", "FORM", "FIELDSET", "TABLE"
 var minimum_size_form_insertion = 30;
 
 //list of type to check to look into login form
-var type_login_form_detection = ["text", "email", "password", "tel", "date", "time", "datetime", "number"];
+var type_login_form_detection = ["text", "email", "password", "tel", "date", "time", "datetime"];
