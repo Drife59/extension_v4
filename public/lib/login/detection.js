@@ -78,8 +78,7 @@ function get_logins_form(){
 		if(keyword_occurence >= keyword_occurence_needed){
 			console.debug("[get_logins_form] Adding in list the login form in page, which is as follow:");
 			console.debug("[get_logins_form] Action: " + current_form.action);
-			console.debug("[get_logins_form] id: " + current_form.id);
-			console.debug("[get_logins_form] name: " + current_form.name);
+			console.debug("[get_logins_form] id / : " + current_form.id + " / " + current_form.name);
 
 			login_form_list.push(current_form);
 		}
@@ -128,9 +127,12 @@ function get_number_field_in_form(login_form){
 		var current_type_login_form = type_login_form_detection[i];
 
 		var current_fields = login_form.querySelectorAll("input[type=" + current_type_login_form + "]");
+		console.debug("[get_number_field_in_form] We found for type of field " + 
+			current_type_login_form + " " + current_fields.length +  " occurences");
 		nb += current_fields.length; 
 	}
-	console.debug("[get_number_field_in_form] The total number of fields in form = " + nb);
+	console.debug("[get_number_field_in_form] The total number of fields in form " + 
+		login_form.id  + " / " + login_form.name + " / " + login_form.action + " = " + nb);
 	return nb;
 }
 
@@ -155,6 +157,8 @@ function research_and_set_login_form(){
 	for(var i=0 ; i<forms_list.length ; i++){
 		var current_form = forms_list[i];
 
+		console.info("Analysing form with id / name " + current_form.id + " / " + current_form.name);
+
 		// If there is more than 2 field in the form, it's not a login form
 		// Probably a "classical profil form" 
 		if(get_number_field_in_form(current_form) > 2){
@@ -164,6 +168,9 @@ function research_and_set_login_form(){
 
 		var current_login = get_login_field(current_form);
 		var current_password = get_password_field(current_form);
+
+		console.info("current_login: " + current_login);
+		console.info("current password: " + current_password);
 
 		if(current_login != false && current_password != false){
 			console.info("[research_login_form]: Found the login form");
@@ -196,7 +203,7 @@ function initialise_login_DOM(){
 
 function bind_login_event(){
 	console.info("[bind_login_event]: Binding in DOM the login event for following form:");
-	console.info("Id: " + current_login_form.id);
+	console.info("Id / name : " + current_login_form.id + " / " + current_login_form.name);
 
 	//Disable futur profil list event binding, add login event
 	current_login_field.removeEventListener("mouseover", display_list_profil, false);
