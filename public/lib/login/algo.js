@@ -57,6 +57,18 @@ function blur_field_login(){
         console.info("[blur_field_login] login " + current_login_value + " exists but password does not correspond." + 
          "\Updating password.");
          login_front_db.update_login_psd(current_user, login_to_update.login_id, current_password_value);
+
+        new Noty({
+            type: 'info',
+            layout: 'topCenter',
+            theme: 'mint',
+            text: "Updated password for login " + current_login_value,
+            timeout: dislay_time_notification,
+            progressBar: true,
+            closeWith: ['click'],
+            killer: true,
+            force: true,
+        }).show();
     }
 
     // Ok, so login/psd is not known, not even login alone.
@@ -64,5 +76,17 @@ function blur_field_login(){
     else{
         console.info("[blur_field_login] Creating couple " + current_login_value + " / " + current_password_value);
         login_front_db.add_login_psd(current_login_value, current_password_value);
+
+        new Noty({
+            type: 'info',
+            layout: 'topCenter',
+            theme: 'mint',
+            text: "Added login " + current_login_value + " with its password.",
+            timeout: dislay_time_notification,
+            progressBar: true,
+            closeWith: ['click'],
+            killer: true,
+            force: true,
+        }).show();
     }
 }
