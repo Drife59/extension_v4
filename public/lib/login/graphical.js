@@ -27,7 +27,7 @@ var list_login = null;
 	---------------------------
 */
 
-function build_DOM_profil_list(){
+function build_DOM_login_list(){
 	var html_list_login = document.createElement('div');
 	html_list_login.id = id_list_login;
 	html_list_login.className = "corail_list";
@@ -86,7 +86,7 @@ function buildLoginList() {
 		old_list_login.remove();
 	}
 
-	var html_list_login = build_DOM_profil_list();
+	var html_list_login = build_DOM_login_list();
 	html_list_login.appendChild(build_DOM_clear_option_login());
 
 
