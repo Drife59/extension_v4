@@ -20,6 +20,8 @@ var profil_validated = false;
 //bind create many issues because it return a new function, therefore add / remove listenners become impossible
 var list_profil = null;
 
+//Global var to be able to compare size (width) requested by profil list and DOM field width
+var current_size_list_px = 0;
 
 //Build a dynamic content for the profil list, 
 //to be consistent with the type of input
@@ -34,6 +36,8 @@ function build_display_list_profil(input){
 	//We have the pivot we shoud show on display 
 	//Now let's modify each option accordingly
 	var options = list_profil.childNodes;
+
+	var maximum_nb_char = 0;
 
 	for (var i = 0; i < options.length; i++) {
 
@@ -63,10 +67,19 @@ function build_display_list_profil(input){
 		}
 
 		if(pertinent_value != null){
+			var current_email = profil_db.get_value_for_pivot(profil_id, CODE_MAIN_EMAIL);
+			var final_size_field = current_email.length + pertinent_value.length + const_space_value_email;
+
+			if(final_size_field > maximum_nb_char){
+				maximum_nb_char = final_size_field;
+			}
+
 			options[i].innerHTML = "<b profil_id=" + profil_id + "> " + pertinent_value + "</b>" + 
-			    "<span profil_id=" + profil_id + " > " + profil_db.get_value_for_pivot(profil_id, CODE_MAIN_EMAIL) + " </span>";
+			    "<span profil_id=" + profil_id + " > " + current_email + " </span>";
 		}
 	}
+	current_size_list_px = maximum_nb_char*size_char_in_profil_list;
+	console.debug("[build_display_list_profil] Final size requested for list: " + current_size_list_px);
 }
 
 function display_list_profil(){
@@ -83,14 +96,23 @@ function display_list_profil(){
 	list_profil.style.display = "block";
 	pointer_on_input_profil = true;
 
-	//Same size as the field
-	var str_style = "width:" + this.offsetWidth + "px;";
-	str_style += "left: " + position_current_input1.x + "px;";
+	var str_style = "left: " + position_current_input1.x + "px;";
 	//Vertical position: original input position + vertical size input + vertical scroll
 	str_style += "top: " + (position_current_input1.y + this.offsetHeight + window.scrollY) + "px;";
 	str_style += "position: absolute;";
 
 	build_display_list_profil(this);
+
+	console.debug("The size in px of the current fields is: " + this.offsetWidth);
+
+	//If the option to display is larger than the field, size it as its need
+	if(current_size_list_px > this.offsetWidth){
+		str_style += "width:" + current_size_list_px + "px;";
+	}
+	//If the option to display is shorter than the field, use size of field
+	else{
+		str_style += "width:" + this.offsetWidth + "px;";
+	}
 
 	list_profil.setAttribute("style", str_style);
 	console.debug("List position was set to absolute: " + list_profil.style.left + " / " + list_profil.style.top);

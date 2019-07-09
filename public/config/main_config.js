@@ -45,6 +45,13 @@ var CODE_HEADER_PASSWORD = "Main-Password";
 //NOTE(BG): as for V7.0, this is not ready. Many experience degradation
 var hot_reload_activation = false;
 
+//Define the size of space between value and email in profil list 
+var const_space_value_email = 2;
+//Define the size of a char in profil to estimate the number of pixel needed for display
+//Example: a list of 10 char would need 80 px width if size_char_in_profil_list is 8
+var size_char_in_profil_list = 8;
+
+
 // --------------
 // Log parameters
 // --------------
