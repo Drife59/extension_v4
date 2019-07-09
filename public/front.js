@@ -44,6 +44,10 @@ function lancement_app() {
         if (hot_reload_activation == true) {
             observer_corail.observe(document.body, observer_config);
         }
+
+        setTimeout(function (){
+            launch_periodic_check_login();
+        }, 1000);
     }, timeout_parsing);
 }
 

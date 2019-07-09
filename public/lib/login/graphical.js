@@ -181,11 +181,37 @@ function init_login_field_event(field){
 	}
 }
 
+var timer_login_id = null;
+function periodic_check_login(){
+	if(current_login_form == null){
+		console.debug("[periodic_check_login] Periodical check for login form, it is currently null");
+		var result_research_login_form = research_and_set_login_form(display_log_login_periodic_check);
+		if(result_research_login_form != false){
+			console.info("[periodic_check_login] FOUND A NEW LOGIN FORM !!! initialising login event");
+			init_event_login_list(result_research_login_form);
+			clearInterval(timer_login_id);
+		}
+	}
+}
+
+function launch_periodic_check_login(){
+	console.info("[launch_periodic_check_login] Launching periodical check for login form");
+	timer_login_id = setInterval(periodic_check_login, 500);
+}
 
 //@ENTRYPOINT
 //Entry point for login list management
-function init_event_login_list(){
-	var result_research_login_form = research_and_set_login_form();
+function init_event_login_list(result_research){
+
+	var result_research_login_form = null;
+
+	//If provided a result of login form research, don't look for it
+	if(result_research === undefined){
+		//This is called only once after loading. We want it to be verbose
+		result_research_login_form = research_and_set_login_form(true);
+	}else{
+		result_research_login_form = result_research;
+	}
 	if( result_research_login_form == false){
 		console.info("[init_event_login_list] Cannot find a login form, aborting logins event initialisation");
 		return false;

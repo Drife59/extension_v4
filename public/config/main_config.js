@@ -61,6 +61,8 @@ var enable_front_log = true;
 
 var display_website_db_content = false;
 
+var display_log_login_periodic_check = false;
+
 // ----------------------------
 // Config accès API (endpoints)
 // ----------------------------
