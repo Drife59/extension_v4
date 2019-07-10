@@ -80,6 +80,9 @@ function nb_keyword_in_field(field, words, indice_ponderation){
 			nb_occurences = nb_occurences + 1*indice_ponderation;
 		if( field.placeholder !== undefined && field.placeholder.toLowerCase().indexOf(words[i]) != -1)
             nb_occurences = nb_occurences + 1*indice_ponderation;
+
+        if( field.type !== undefined && field.type.toLowerCase().indexOf(words[i]) != -1)
+            nb_occurences = nb_occurences + 1*indice_ponderation;
         
         //A field can have many sibling, even if label should be unique
         for(var j=0 ; j<labelSibling.length ; j++){

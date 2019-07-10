@@ -222,7 +222,8 @@ var field_login_keywords = ["email", "e-mail", "e_mail", "*email", "*e-mail",
     "login", "log-in", "log_in", "authentication", "authentification"];
 
 //Keywords to identify password
-var field_password_keywords = ["password"];
+var field_password_keywords = ["password", "passwd", "psd", "pswd", "pwd", 
+    "motdepasse", "mot-de-passe","mot_de_passe"];
 
 //The number of keyword occurence needed to confirm that the form is a login form
 var keyword_occurence_needed = 1;

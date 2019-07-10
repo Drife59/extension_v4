@@ -183,7 +183,8 @@ function init_login_field_event(field){
 
 var timer_login_id = null;
 function periodic_check_login(){
-	if(current_login_form == null){
+	//Be careful, login_form can be null but we could have found new login & psd isolated field
+	if(current_login_form == null && current_login_field == null && current_password_field == null){
 		console.debug("[periodic_check_login] Periodical check for login form, it is currently null");
 		var result_research_login_form = research_and_set_login_form(display_log_login_periodic_check);
 		if(result_research_login_form != false){
@@ -213,7 +214,21 @@ function init_event_login_list(result_research){
 		result_research_login_form = result_research;
 	}
 	if( result_research_login_form == false){
-		console.info("[init_event_login_list] Cannot find a login form, aborting logins event initialisation");
+		console.info("[init_event_login_list] Cannot find a login form, try 2nd algoritm looking for isolated login / psd field");
+		current_login_field = get_login_field_all_page();
+		if(current_login_field != null){
+			console.info("[init_event_login_list] Current login field was properly found and set, looking for password field");
+			current_password_field = get_password_field_all_page();
+		}
+	}
+
+	if( current_login_field != null && current_password_field != null){
+		console.info("[init_event_login_list] Login fields were found. starting login event initialisation.");
+	}else if( current_login_field == null){
+		console.info("[init_event_login_list] Could not find login field, abort login event init");
+		return false;
+	}else if(current_password_field == null) {
+		console.info("[init_event_login_list] Could not find password field, abort login event init");
 		return false;
 	}
 	// Found the login form

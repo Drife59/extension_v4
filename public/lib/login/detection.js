@@ -236,26 +236,79 @@ function research_and_set_login_form(verbose){
 	a login and a password field in page.
 */
 
-//This should always be provided a login form.
-//If not, will return false
-function get_login_field_from_form(verbose){
-	//First try to retrieve login field with email field
-	var login_field = login_form.querySelector("input[type=email]");
+//Try to find the better login field in page 
+function get_login_field_all_page(verbose){
+	//Get all input in page with type which could correspond to a login field
+	var login_field_list = document.querySelectorAll("input[type=email], input[type=text]");
 
-	//Maybe login field is actually a simple text field
-	if( login_field == null){
-		login_field = login_form.querySelector("input[type=text]");
-	}
+	console.info("[get_login_field_all_page] Found " + login_field_list.length + " node which could be login field");
 
-	if(login_field == null){
-		return false;
-	}
-	if(verbose == true){
-		console.debug("id of login field: " + login_field.id);
-		console.debug("name of login field: " + login_field.name);
-	}
+	//Try to find the best login candidate
+	var max_key_word_found = 0;
+	var best_login_field = null;
 	
-	return login_field;
+	var current_field_keywork_login = 0;
+	var current_field = null;
+
+	for(var i=0 ; i<login_field_list.length ; i++){
+		current_field = login_field_list[i];
+		console.info("Analysing following node: " + current_field.outerHTML);
+		current_field_keyword_found = nb_keyword_in_field(current_field, field_login_keywords , 1);
+		console.info("number of keyword found: " + current_field_keyword_found);
+
+		if( current_field_keyword_found > max_key_word_found){
+			console.info("[get_login_field_all_page]Found a new best login with nb of keyword: " + current_field_keyword_found);
+			max_key_word_found = current_field_keyword_found;
+			best_login_field = current_field;
+		}
+	}
+
+	if(best_login_field != null){
+		console.info("[get_login_field_all_page] The best login field we could find is: " 
+			+ best_login_field.outerHTML);
+	}else{
+		console.info("[get_login_field_all_page] Could not find a login field in this page.");
+	}
+
+	return best_login_field;
+}
+
+function get_password_field_all_page(verbose){
+	//Get all input in page with type which could correspond to a login field
+	var password_field_list = document.querySelectorAll("input[type=password]");
+
+	console.info("[get_password_field_all_page] Found " + password_field_list.length + " node which could be password field");
+
+	//Try to find the best password candidate
+	var max_key_word_found = 0;
+	var best_password_field = null;
+	
+	var current_field_keywork_password = 0;
+	var current_field = null;
+
+	for(var i=0 ; i<password_field_list.length ; i++){
+		current_field = password_field_list[i];
+		console.info("Analysing following node: " + current_field.outerHTML);
+		current_field_keyword_found = nb_keyword_in_field(current_field, field_password_keywords , 1);
+		console.info("number of keyword found: " + current_field_keyword_found);
+
+		current_field_keyword_found += 1;
+
+		if( current_field_keyword_found > max_key_word_found){
+			console.info("[get_password_field_all_page]Found a new best password with nb of keyword: " + current_field_keyword_found);
+			max_key_word_found = current_field_keyword_found;
+			best_password_field = current_field;
+		}
+	}
+
+	if(best_password_field != null){
+		console.info("[get_password_field_all_page] The best password field we could find is: " 
+			+ best_password_field.outerHTML);
+	}else{
+		console.info("[get_password_field_all_page] Could not find a password field in this page.");
+	}
+
+	return best_password_field;
 }
 
 
@@ -274,11 +327,15 @@ function initialise_login_DOM(){
 		console.info("Binding standalone field");
 	}
 
-	//Disable futur profil list event binding
-	current_login_field.setAttribute(CODE_LOGIN_FIELD, "true");
-
-	//Exact same process for password field
-	current_password_field.setAttribute(CODE_PASSWORD_FIELD, "true");
+	if(current_login_field != null){
+		//Disable futur profil list event binding
+		current_login_field.setAttribute(CODE_LOGIN_FIELD, "true");
+	}
+	
+	if(current_password_field != null){
+		//Exact same process for password field
+		current_password_field.setAttribute(CODE_PASSWORD_FIELD, "true");
+	}
 }
 
 function bind_login_event(){

@@ -11,7 +11,7 @@ Define dedicated algo for login functionnality.
 
 function blur_field_login(){
     //This should not happen, but you know :)
-    if(current_login_form == null || current_login_field == null || current_password_field == null){
+    if( current_login_field == null || current_password_field == null){
         console.warn("[blur_field_login] Abort blur event process, missing field or login");
         console.debug("[blur_field_login] current_login_form: " + current_login_form);
         console.debug("[blur_field_login] current_login_field: " + current_login_field);
