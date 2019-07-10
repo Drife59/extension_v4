@@ -35,3 +35,12 @@
   background-color: #AFC765 !important;
   border-bottom: 1px solid #A0B55C !important;
   color: #fff !important; }
+
+
+  .noty_has_timeout.noty_has_progressbar .noty_progressbar {
+  left: 0;
+  bottom: 0;
+  height: 10px;
+  width: 100%;
+  opacity: 0.8;
+  filter: alpha(opacity=10); }
