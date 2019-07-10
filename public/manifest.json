@@ -15,7 +15,7 @@
              	"webRequest"
   ],
   "browser_action": {
-    "default_icon": "logo_corail.png",
+    "default_icon": "images/corail_char_logo.png",
     "default_popup": "index.html"
 	},
 	"background": {
@@ -25,8 +25,8 @@
 				"config/pivot_config.js",
 				"lib/utils.js",
 				"lib/profil/raw_api.js",
-			  "lib/profil/profil.js",
-			  "front_db/back_management.js",
+			  	"lib/profil/profil.js",
+			  	"front_db/back_management.js",
 				"lib/background/background_profil.js"
 			]
 	},
