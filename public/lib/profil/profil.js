@@ -230,12 +230,12 @@ class UserProfil {
                 if(display_notification === true){
                     new Noty({
                         type: 'info',
-                        layout: 'topCenter',
+                        layout: 'topRight',
                         theme: 'mint',
                         text: str_msg,
                         timeout: dislay_time_notification,
                         progressBar: true,
-                        closeWith: ['click'],
+                        closeWith: ['click', 'button'],
                         killer: true,
                         force: true,
                     }).show();
@@ -467,12 +467,12 @@ class UserProfil {
         if(display_notification === true){
             new Noty({
                 type: 'info',
-                layout: 'topCenter',
+                layout: 'topRight',
                 theme: 'mint',
                 text: str_msg,
                 timeout: dislay_time_notification,
                 progressBar: true,
-                closeWith: ['click'],
+                closeWith: ['click', 'button'],
                 killer: true,
                 force: true,
             }).show();
@@ -819,12 +819,12 @@ class UserProfil {
 
         new Noty({
             type: 'info',
-            layout: 'topCenter',
+            layout: 'topRight',
             theme: 'mint',
             text: str_msg,
             timeout: dislay_time_notification,
             progressBar: true,
-            closeWith: ['click'],
+            closeWith: ['click', 'button'],
             killer: true,
             force: true,
         }).show();

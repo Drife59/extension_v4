@@ -60,12 +60,12 @@ function blur_field_login(){
 
         new Noty({
             type: 'info',
-            layout: 'topCenter',
+            layout: 'topRight',
             theme: 'mint',
             text: "Updated password for login " + current_login_value,
             timeout: dislay_time_notification,
             progressBar: true,
-            closeWith: ['click'],
+            closeWith: ['click', 'button'],
             killer: true,
             force: true,
         }).show();
@@ -79,12 +79,12 @@ function blur_field_login(){
 
         new Noty({
             type: 'info',
-            layout: 'topCenter',
+            layout: 'topRight',
             theme: 'mint',
             text: "Added login " + current_login_value + " with its password.",
             timeout: dislay_time_notification,
             progressBar: true,
-            closeWith: ['click'],
+            closeWith: ['click', 'button'],
             killer: true,
             force: true,
         }).show();
