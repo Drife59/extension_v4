@@ -21,10 +21,18 @@ var profil_validated = false;
 var list_login = null;
 
 
+
 /*
-    -------------------------
-	Login form detection part
-	-------------------------
+    ------------------------------------------------
+	First algoritm: form detection based on keywords
+	------------------------------------------------
+
+	This algoritm, according to our study works in 70% of cases.
+	Basically, what it does is to collect all form in pages and look for key word
+	to extract form that could be login form.
+	Then, it check if there is inside the form a login and a password field, and no other fields.
+	If there are others fields, it is certainly a classic form and not a login form.
+	Then it returns the form found. 
 */
 
 
@@ -60,18 +68,7 @@ function nb_keyword_in_form(form, words){
 }
 
 
-/*
-    ------------------------------------------------
-	First algoritm: form detection based on keywords
-	------------------------------------------------
 
-	This algoritm, according to our study works in 70% of cases.
-	Basically, what it does is to collect all form in pages and look for key word
-	to extract form that could be login form.
-	Then, it check if there is inside the form a login and a password field, and no other fields.
-	If there are others fields, it is certainly a classic form and not a login form.
-	Then it returns the form found. 
-*/
 
 
 
@@ -238,6 +235,28 @@ function research_and_set_login_form(verbose){
 	In this case, we'll try to analyse directly the input available to see if we can detect
 	a login and a password field in page.
 */
+
+//This should always be provided a login form.
+//If not, will return false
+function get_login_field_from_form(verbose){
+	//First try to retrieve login field with email field
+	var login_field = login_form.querySelector("input[type=email]");
+
+	//Maybe login field is actually a simple text field
+	if( login_field == null){
+		login_field = login_form.querySelector("input[type=text]");
+	}
+
+	if(login_field == null){
+		return false;
+	}
+	if(verbose == true){
+		console.debug("id of login field: " + login_field.id);
+		console.debug("name of login field: " + login_field.name);
+	}
+	
+	return login_field;
+}
 
 
 /*
