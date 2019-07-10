@@ -215,11 +215,13 @@ function init_event_login_list(result_research){
 	}
 	if( result_research_login_form == false){
 		console.info("[init_event_login_list] Cannot find a login form, try 2nd algoritm looking for isolated login / psd field");
+		
+		/*
 		current_login_field = get_login_field_all_page();
 		if(current_login_field != null){
 			console.info("[init_event_login_list] Current login field was properly found and set, looking for password field");
 			current_password_field = get_password_field_all_page();
-		}
+		}*/
 	}
 
 	if( current_login_field != null && current_password_field != null){
