@@ -60,6 +60,21 @@ function nb_keyword_in_form(form, words){
 }
 
 
+/*
+    ------------------------------------------------
+	First algoritm: form detection based on keywords
+	------------------------------------------------
+
+	This algoritm, according to our study works in 70% of cases.
+	Basically, what it does is to collect all form in pages and look for key word
+	to extract form that could be login form.
+	Then, it check if there is inside the form a login and a password field, and no other fields.
+	If there are others fields, it is certainly a classic form and not a login form.
+	Then it returns the form found. 
+*/
+
+
+
 // Look for login form in current web page
 // Return a list of eligible login form
 // Note(BG): on the contrary as I thought, this is not enough 
@@ -95,7 +110,7 @@ function get_logins_form(verbose){
 
 //This should always be provided a login form.
 //If not, will return false
-function get_password_field(login_form, verbose){
+function get_password_field_from_form(login_form, verbose){
 	var password_field = login_form.querySelector("input[type=password]");
 	if( password_field == null){
 		return false;
@@ -110,7 +125,7 @@ function get_password_field(login_form, verbose){
 
 //This should always be provided a login form.
 //If not, will return false
-function get_login_field(login_form, verbose){
+function get_login_field_from_form(login_form, verbose){
 	//First try to retrieve login field with email field
 	var login_field = login_form.querySelector("input[type=email]");
 
@@ -164,7 +179,9 @@ function get_number_field_in_form(login_form, verbose){
 		password_field: <password field>
 	}
 
-	Set the global var to share login form and field.  
+	Set the global var to share login form and field.
+	
+	This can be called as a regular task. That's why it has a "verbose" option, to silent it if needed.
 */
 function research_and_set_login_form(verbose){
 	var forms_list = get_logins_form(verbose);
@@ -183,8 +200,8 @@ function research_and_set_login_form(verbose){
 			continue;
 		}
 
-		var current_login = get_login_field(current_form, verbose);
-		var current_password = get_password_field(current_form, verbose);
+		var current_login = get_login_field_from_form(current_form, verbose);
+		var current_password = get_password_field_from_form(current_form, verbose);
 
 		if(verbose == true){
 			console.info("current_login: " + current_login);
@@ -209,10 +226,34 @@ function research_and_set_login_form(verbose){
 	return false;
 }
 
+/*
+    -------------------------------------------------
+	Second algoritm: login / psd standalone detection
+	-------------------------------------------------
+
+	This algoritm, according to our study should cover 10-15% missing cases.
+	The First algoritm does not work if the form is not properly tagged, or
+	worse if there is no form at all (I know, it's bad).
+
+	In this case, we'll try to analyse directly the input available to see if we can detect
+	a login and a password field in page.
+*/
+
+
+/*
+    ----------------------------------------
+	Event management: Common to all algoritm
+	----------------------------------------
+*/
+
 
 function initialise_login_DOM(){
-	console.info("[mark_login_field]: Marking in DOM the following login form");
-	console.info("Id: " + current_login_form.id);
+	if(current_login_form != null && current_login_form != undefined){
+		console.info("[mark_login_field]: Marking in DOM the following login form");
+		console.info("Id: " + current_login_form.id);
+	}else{
+		console.info("Binding standalone field");
+	}
 
 	//Disable futur profil list event binding
 	current_login_field.setAttribute(CODE_LOGIN_FIELD, "true");
@@ -222,9 +263,12 @@ function initialise_login_DOM(){
 }
 
 function bind_login_event(){
-	console.info("[bind_login_event]: Binding in DOM the login event for following form:");
-	console.info("Id / name : " + current_login_form.id + " / " + current_login_form.name);
-
+	if(current_login_form != null && current_login_form != undefined){
+		console.info("[bind_login_event]: Binding in DOM the login event for following form:");
+		console.info("Id / name : " + current_login_form.id + " / " + current_login_form.name);
+	}else{
+		console.info("Binding standalone field");
+	}
 	//Disable futur profil list event binding, add login event
 	current_login_field.removeEventListener("mouseover", display_list_profil, false);
 	current_login_field.removeEventListener("click", display_list_profil);
