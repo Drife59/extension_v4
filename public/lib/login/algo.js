@@ -56,13 +56,17 @@ function blur_field_login(){
         var login_to_update = login_front_db.check_login_existence(current_login_value);
         console.info("[blur_field_login] login " + current_login_value + " exists but password does not correspond." + 
          "\Updating password.");
-         login_front_db.update_login_psd(current_user, login_to_update.login_id, current_password_value);
+        login_front_db.update_login_psd(current_user, login_to_update.login_id, current_password_value);
+
+        var domain = window.location.host;
+        var current_domain = get_domain_from_host(window.location.host);
+        var str_msg = "Your password has been successfully updated for " + current_domain.capitalize();
 
         new Noty({
             type: 'info',
             layout: 'topRight',
             theme: 'mint',
-            text: "Updated password for login " + current_login_value,
+            text: str_msg,
             timeout: dislay_time_notification,
             progressBar: true,
             closeWith: ['click', 'button'],
@@ -77,11 +81,13 @@ function blur_field_login(){
         console.info("[blur_field_login] Creating couple " + current_login_value + " / " + current_password_value);
         login_front_db.add_login_psd(current_login_value, current_password_value);
 
+        var current_domain = get_domain_from_host();
+        var str_msg = "Your password has been successfully added for " + current_domain.capitalize();
         new Noty({
             type: 'info',
             layout: 'topRight',
             theme: 'mint',
-            text: "Added login " + current_login_value + " with its password.",
+            text: str_msg,
             timeout: dislay_time_notification,
             progressBar: true,
             closeWith: ['click', 'button'],
