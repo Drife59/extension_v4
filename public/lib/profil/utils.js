@@ -160,3 +160,12 @@ function has_minimum_attribute(profil_test){
     return true;
 }
 
+//Limit value display to 20 char
+function limit_value_size(value_text){
+    if(value_text.length < 20){
+        return value_text;
+    }
+    return value_text.substring(0,17) + "...";
+    
+}
+

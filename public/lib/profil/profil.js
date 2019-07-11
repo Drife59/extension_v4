@@ -209,7 +209,14 @@ class UserProfil {
     //Create a value on a profil, async
     create_value_async(user, pivot_code, new_value, id_profil, profil, display_notification){
 
+
         new_value = sanitize_new_user_value(pivot_code, new_value);
+
+        var total_new_value = false;
+
+        //Only display a notification if the value is saved for the first time
+        if(Object.entries(this.look_for_value_all_profil(new_value)).length === 0 )
+            total_new_value = true;
 
         var current_obj = this;
 
@@ -225,21 +232,24 @@ class UserProfil {
                 //After user creation from back, don't forget to update back the background
                 current_obj.set_profil_background();
 
-                var str_msg = "The value " + new_value + " has been added.";
-
-                if(display_notification === true){
-                    new Noty({
-                        type: 'info',
-                        layout: 'topRight',
-                        theme: 'mint',
-                        text: str_msg,
-                        timeout: dislay_time_notification,
-                        progressBar: true,
-                        closeWith: ['click', 'button'],
-                        killer: true,
-                        force: true,
-                    }).show();
+                //Only display a notification if the value is saved for the first time
+                if( total_new_value === false || display_notification !== true){
+                    return;
                 }
+                
+                var str_msg = "New information has been successfully added : " + limit_value_size(new_value);
+
+                new Noty({
+                    type: 'info',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: str_msg,
+                    timeout: dislay_time_notification,
+                    progressBar: true,
+                    closeWith: ['click', 'button'],
+                    killer: true,
+                    force: true,
+                }).show();
             }
         }
         
@@ -441,6 +451,13 @@ class UserProfil {
 
         value_text = sanitize_new_user_value(pivot, value_text);
 
+        //Is a new value in all profil
+        var total_new_value = false;
+
+        //Only display a notification if the value is saved for the first time
+        if(Object.entries(this.look_for_value_all_profil(value_text)).length === 0 )
+            total_new_value = true;
+
         var user_value_back = await this.fetch_create_profil_value_user(email, pivot, value_text, profil_id);
         console.debug("user value created from back: " + JSON.stringify(user_value_back, null, 4));
 
@@ -462,7 +479,13 @@ class UserProfil {
             }
         });
 
-        var str_msg = "The value \"" + value_text + "\" has been added.";
+        
+        //Only display a notification if the value is saved for the first time
+        if( total_new_value === false || display_notification !== true){
+            return;
+        }
+
+        var str_msg = "New information has been successfully added : " + limit_value_size(new_user_value["valueText"]);
 
         if(display_notification === true){
             new Noty({
