@@ -212,3 +212,38 @@ function isEqual (value, other) {
 	return true;
 
 };
+
+
+// Return the solo name of the domain, "boulanger", "rueducommerce"
+// from a domain like "corail.me" or "www.corail.me"
+function get_domain_from_host(domain){
+    var domain_to_do = domain;
+    if(domain == undefined){
+        domain_to_do = window.location.host;
+    }
+    words = domain_to_do.split(".");
+
+    console.info("Words: " + words.length);
+    console.info(JSON.stringify(words, null, 4));
+
+    if(words.length < 2 || words.length > 3){
+        console.warn("[get_domain_from_host] Cannot get domain from host " + domain_to_do);
+        return words[0];
+    }
+
+    //It's probably like "corail.me" or "boulanger.com"
+    if(words.length = 2){
+        return words[0];
+    }
+
+    //It's probably like www.outlook.fr
+    if(words.length = 3){
+        return words[1];
+    }
+
+    //This should never happen
+    console.warn("[get_domain_from_host] Cannot get domain from host " + domain_to_do);
+    return false;
+}
+
+console.info("\n\n Get domain from host: " + get_domain_from_host());
