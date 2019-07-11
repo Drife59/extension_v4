@@ -245,5 +245,3 @@ function get_domain_from_host(domain){
     console.warn("[get_domain_from_host] Cannot get domain from host " + domain_to_do);
     return false;
 }
-
-console.info("\n\n Get domain from host: " + get_domain_from_host());
