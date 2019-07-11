@@ -223,21 +223,18 @@ function get_domain_from_host(domain){
     }
     words = domain_to_do.split(".");
 
-    console.info("Words: " + words.length);
-    console.info(JSON.stringify(words, null, 4));
-
     if(words.length < 2 || words.length > 3){
         console.warn("[get_domain_from_host] Cannot get domain from host " + domain_to_do);
-        return words[0];
+        return false;
     }
 
     //It's probably like "corail.me" or "boulanger.com"
-    if(words.length = 2){
+    if(words.length == 2){
         return words[0];
     }
 
     //It's probably like www.outlook.fr
-    if(words.length = 3){
+    if(words.length == 3){
         return words[1];
     }
 
