@@ -225,7 +225,7 @@ class UserProfil {
                 //After user creation from back, don't forget to update back the background
                 current_obj.set_profil_background();
 
-                var str_msg = "The value " + new_value + " has been added to your profil";
+                var str_msg = "The value " + new_value + " has been added.";
 
                 if(display_notification === true){
                     new Noty({
@@ -462,7 +462,7 @@ class UserProfil {
             }
         });
 
-        var str_msg = "The value \"" + value_text + "\" has been added to current profil";
+        var str_msg = "The value \"" + value_text + "\" has been added.";
 
         if(display_notification === true){
             new Noty({
@@ -814,19 +814,5 @@ class UserProfil {
                 }, 6000);
             }
         }
-
-        var str_msg = "News values detected. A new profil has been created.";
-
-        new Noty({
-            type: 'info',
-            layout: 'topRight',
-            theme: 'mint',
-            text: str_msg,
-            timeout: dislay_time_notification,
-            progressBar: true,
-            closeWith: ['click', 'button'],
-            killer: true,
-            force: true,
-        }).show();
     }
 }
