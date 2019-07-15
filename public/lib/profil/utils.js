@@ -86,6 +86,26 @@ function init_new_profil(user){
     }
 }
 
+//Check that given the value and the type of pivot, the value is conform
+function coherence_controle_user_value(pivot_code, new_value){
+    if( (pivot_code == CODE_DAY_BIRTH) && (!isInt(new_value)) ){
+        console.warn("[coherence_controle_user_value] New value " + new_value + " cannot be a " + pivot_code);
+        return false;
+    }
+    
+    if( (pivot_code == CODE_MONTH_BIRTH) && (!isInt(new_value) ) ){
+        console.warn("[coherence_controle_user_value] New value " + new_value + " cannot be a " + pivot_code);
+        return false;
+    }
+
+    if( (pivot_code == CODE_YEAR_BIRTH) && (!isInt(new_value)) ){
+        console.warn("[coherence_controle_user_value] New value " + new_value + " cannot be a " + pivot_code);
+        return false;
+    }
+
+    return new_value;
+}
+
 //Check that the cellphone number is properly formatted 
 function sanitize_new_user_value(pivot_code, new_value){
 

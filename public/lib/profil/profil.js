@@ -209,6 +209,11 @@ class UserProfil {
     //Create a value on a profil, async
     create_value_async(user, pivot_code, new_value, id_profil, profil, display_notification){
 
+        new_value = coherence_controle_user_value(pivot_code, new_value);
+        if(new_value === false){
+            console.warn("[create_value_async] Cannot create new value: " + new_value);
+            return false;
+        }
 
         new_value = sanitize_new_user_value(pivot_code, new_value);
 
@@ -461,6 +466,12 @@ class UserProfil {
     }
 
     async add_value_to_profil(email, pivot, value_text, profil_id, display_notification, callback){
+
+        value_text = coherence_controle_user_value(pivot_code, value_text);
+        if(new_value === false){
+            console.warn("[create_value_async] Cannot create new value: " + new_value);
+            return false;
+        }
 
         value_text = sanitize_new_user_value(pivot, value_text);
 

@@ -242,3 +242,9 @@ function get_domain_from_host(domain){
     console.warn("[get_domain_from_host] Cannot get domain from host " + domain_to_do);
     return false;
 }
+
+function isInt(value) {
+    return !isNaN(value) && 
+            parseInt(Number(value)) == value && 
+            !isNaN(parseInt(value, 10));
+}

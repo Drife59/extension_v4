@@ -310,6 +310,14 @@ function create_pivot_value_from_page(){
             
             //Pivot is know for this field, need to add it
             if (pivot_referent != null && !(is_empty(inputs_type[j])) ){
+
+                //If the value is not properly formatted, don't add it
+                if( coherence_controle_user_value(pivot_referent, inputs_type[j].value) == false ) {
+                    console.warn("[create_pivot_value_from_page] Cannot create " + inputs_type[j].value + 
+                    " for pivot " + pivot_referent + ": wrong value format");
+                    continue;
+                }
+
                 if(pivot_referent == CODE_MAIN_EMAIL){
                     pivot_value_page[pivot_referent] = inputs_type[j].value.toLowerCase();
                 }else{
@@ -326,6 +334,13 @@ function create_pivot_value_from_page(){
             
         //Pivot is know for this field, need to add it
         if (pivot_referent != null && !(is_empty(selects[i] ) ) ){
+
+            //If the value is not properly formatted, don't add it
+            if( coherence_controle_user_value(pivot_referent, selects[i].value) == false ) {
+                console.warn("[create_pivot_value_from_page] Cannot create " + selects[i].value + 
+                " for pivot " + pivot_referent + ": wrong value format");
+                continue;
+            }
             pivot_value_page[pivot_referent] = selects[i].value.capitalize();
         }
     }
