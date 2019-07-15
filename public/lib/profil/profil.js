@@ -329,6 +329,19 @@ class UserProfil {
             this.create_value_async(current_user, CODE_YEAR_BIRTH, new_value, id_profil, profil, false)
         }
 
+        if( !(profil.hasOwnProperty(CODE_DAY_BIRTH_WITHOUT_ZERO)) && profil.hasOwnProperty(CODE_FULL_BIRTHDATE)){
+            var new_value = get_day_of_birth_without_zero_from_fullbirthdate(profil[CODE_FULL_BIRTHDATE]["valueText"]);
+            console.info("[create_pivot_translated] Creating " + CODE_DAY_BIRTH_WITHOUT_ZERO + " from " + CODE_FULL_BIRTHDATE);
+            this.create_value_async(current_user, CODE_DAY_BIRTH_WITHOUT_ZERO, new_value, id_profil, profil, false)
+
+        }
+
+        if( !(profil.hasOwnProperty(CODE_MONTH_BIRTH_WITHOUT_ZERO)) && profil.hasOwnProperty(CODE_FULL_BIRTHDATE)){
+            var new_value = get_month_of_birth_without_zero_from_fullbirthdate(profil[CODE_FULL_BIRTHDATE]["valueText"]);
+            console.info("[create_pivot_translated] Creating " + CODE_MONTH_BIRTH_WITHOUT_ZERO + " from " + CODE_FULL_BIRTHDATE);
+            this.create_value_async(current_user, CODE_MONTH_BIRTH_WITHOUT_ZERO, new_value, id_profil, profil, false)
+        }
+
         // cellphone number check
         // ----------------------
         

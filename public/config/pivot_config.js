@@ -31,6 +31,9 @@ var CODE_DAY_BIRTH = "day_of_birth";
 var CODE_MONTH_BIRTH = "month_of_birth";
 var CODE_YEAR_BIRTH = "year_of_birth";
 
+var CODE_DAY_BIRTH_WITHOUT_ZERO = "day_of_birth_without_zero";
+var CODE_MONTH_BIRTH_WITHOUT_ZERO = "month_of_birth_without_zero";
+
 var CODE_COMPANY = "company";
 var CODE_HOMEPHONE = "homephone";
 

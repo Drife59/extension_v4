@@ -49,7 +49,7 @@ function get_year_of_birth_from_fullbirthdate(fullbirthdate){
     return fullbirthdate.split('/')[2];
 }
 
-function get_day_of_birth_withtout_zero_from_fullbirthdate(fullbirthdate){
+function get_day_of_birth_without_zero_from_fullbirthdate(fullbirthdate){
     var current_day = fullbirthdate.split('/')[0];
 
     var current_day_int = parseInt(current_day);
@@ -78,7 +78,7 @@ function get_day_of_birth_withtout_zero_from_fullbirthdate(fullbirthdate){
     }
 }
 
-function get_month_of_birth_withtout_zero_from_fullbirthdate(fullbirthdate){
+function get_month_of_birth_without_zero_from_fullbirthdate(fullbirthdate){
     var current_month = fullbirthdate.split('/')[1];
 
     var current_month_int = parseInt(current_month);
