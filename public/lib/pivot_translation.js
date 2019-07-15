@@ -49,6 +49,72 @@ function get_year_of_birth_from_fullbirthdate(fullbirthdate){
     return fullbirthdate.split('/')[2];
 }
 
+function get_day_of_birth_withtout_zero_from_fullbirthdate(fullbirthdate){
+    var current_day = fullbirthdate.split('/')[0];
+
+    var current_day_int = parseInt(current_day);
+
+    if(current_day_int < 0 || current_day > 31){
+        console.warn("[get_day_of_birth_withtout_zero_from_fullbirthdate] Cannot create a current_day from " + current_day);
+    }
+
+    //Alway 2 number from 10 on :)
+    if(current_day_int > 9 )
+        return current_day;
+    
+    //Ok, so this is between 0 and 9
+
+    //There is no zero before the actual number (5) not (05)
+    if(current_day.length == 1)
+        return current_day;
+
+    //There is a zero before the actual number, we will need to delete it
+    else if(current_day.length == 2){
+        return current_day.substr(1,1);
+    }
+    //This should never happen
+    else{
+        console.warn("[get_day_of_birth_withtout_zero_from_fullbirthdate] Cannot create a current_day from " + current_day);
+    }
+}
+
+function get_month_of_birth_withtout_zero_from_fullbirthdate(fullbirthdate){
+    var current_month = fullbirthdate.split('/')[1];
+
+    var current_month_int = parseInt(current_month);
+
+    if(current_month_int < 0 || current_month > 12){
+        console.warn("[get_month_of_birth_withtout_zero_from_fullbirthdate] Cannot create a current_month from " + current_month);
+    }
+
+    //Alway 2 number from 10 on :)
+    if(current_month_int > 9 )
+        return current_month;
+    
+    //Ok, so this is between 0 and 9
+
+    //There is no zero before the actual number (5) not (05)
+    if(current_month.length == 1)
+        return current_month;
+
+    //There is a zero before the actual number, we will need to delete it
+    else if(current_month.length == 2){
+        return current_month.substr(1,1);
+    }
+    //This should never happen
+    else{
+        console.warn("[get_month_of_birth_withtout_zero_from_fullbirthdate] Cannot create a current_month from " + current_month);
+    }
+}
+
+function get_month_of_birth_from_fullbirthdate(fullbirthdate){
+    return fullbirthdate.split('/')[1];
+}
+
+function get_year_of_birth_from_fullbirthdate(fullbirthdate){
+    return fullbirthdate.split('/')[2];
+}
+
 //    cellphone number translation 
 //    ----------------------------
 
