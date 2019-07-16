@@ -784,7 +784,8 @@ class UserProfil {
         //If the defaut profil is empty, we need to fill it
         var defaut_profil_id = this.get_default_profil_id();
         
-        if( Object.keys(this.profil_values[defaut_profil_id]).length == 3){
+        //Length is equal to 2 if the default profil is empty: name & weight key only
+        if( Object.keys(this.profil_values[defaut_profil_id]).length < 3){
             console.info("The defaut profil was just created and is empty.");
             console.info("Adding the temp profil in default profil and don't create a new profil.");
             this.complete_default_profil(profil);
