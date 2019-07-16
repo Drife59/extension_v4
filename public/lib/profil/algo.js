@@ -193,6 +193,7 @@ function changeAlgoProfil(evt) {
 				console.info("Profil " + profil_id_chosen + " has been chosen before.");
 				console.info("Adding value " + user_value + " to it");
 				profil_db.add_value_to_profil(current_user, referent_pivot, user_value, profil_id_chosen, true);
+				apply_corail_design(field);
 			}
 		}
 		//Anonymous field, with no pivot associated for now
