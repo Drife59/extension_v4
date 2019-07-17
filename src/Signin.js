@@ -11,6 +11,14 @@ export class Signin extends Component {
     constructor(props){
         super(props);
         this.handleConnection = this.handleConnection.bind(this);
+        this.togglePassword   = this.togglePassword.bind(this);
+    }
+
+    componentDidMount() {
+        //A first display, don't show password
+        this.setState({
+            password_display: false
+        });
     }
 
     handleConnection(e){
@@ -103,6 +111,29 @@ export class Signin extends Component {
         });
     }
 
+    togglePassword(e){
+
+        //If password was hidden, display it
+        if(this.state.password_display == false){
+            e.target.src = "images/eye_open.png";
+            e.target.previousSibling.type = "text";
+            this.setState({
+                password_display: true
+            });
+        }
+        // If password was displayed, hide it
+        else if(this.state.password_display == true){
+            e.target.src = "images/eye_closed.png";
+            e.target.previousSibling.type = "password";
+
+            this.setState({
+                password_display: false
+            });
+        }
+
+        console.info(this.state.password_display);
+    }
+
     handleKeyPress = (event) => {
         if(event.key === 'Enter'){
             this.handleConnection(event);
@@ -114,6 +145,7 @@ export class Signin extends Component {
         var mailto = "mailto:contact@corail.me?subject=" + subject + "?body=" + mail_body;
         return(
         <section id="main">
+
             <div class="row">
                 <div class="col-1"></div>
                 <div class="col-10">
@@ -123,6 +155,7 @@ export class Signin extends Component {
             </div>
 
             <div id="login" class="container" onKeyPress={this.handleKeyPress}>
+
                     <div class="form col-12">
                         <p class="email">
                             <input required type="text" id="email" placeholder="Your email address"/>
@@ -131,6 +164,7 @@ export class Signin extends Component {
                     <div class="form col-12">
                         <p class="password">
                             <input required type="password" id="password" placeholder="Your password"/>
+                            <img class="corail_eye" alt="X" src="images/eye_closed.png" onClick={this.togglePassword} />
                         </p>
                     </div>
                     <div class="col-12">

@@ -95,6 +95,15 @@
   padding-top: 70px;
 }
 
+img.corail_eye {
+  z-index: 1000;
+  position: relative;
+  top: -31px; 
+  left: 113px;
+  width: 25px;
+  height: 25px;
+}
+
 /* Tout le reste c'est #copyright Ju */
 
 html, body {
