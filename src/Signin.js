@@ -130,8 +130,6 @@ export class Signin extends Component {
                 password_display: false
             });
         }
-
-        console.info(this.state.password_display);
     }
 
     handleKeyPress = (event) => {
